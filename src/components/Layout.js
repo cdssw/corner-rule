@@ -1,10 +1,12 @@
 import React from "react";
-import Header from "./Header/Header";
+import Bottom from "./Bottom";
+import Container from "./Container";
 
 export default function Layout() {
   return (
     <div>
-      <Header />
+      <Container />
+      <Bottom />
     </div>
   )
 }
