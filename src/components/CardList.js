@@ -8,7 +8,8 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
     flexDirection: "column",
-    marginBottom: "10px",
+    marginBottom: "50px",
+    paddingBottom: "20px",
     alignItems: "center",
   },
 }));
