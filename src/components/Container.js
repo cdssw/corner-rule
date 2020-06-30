@@ -13,6 +13,8 @@ const useStyles = makeStyles((theme) => ({
     overflow: "hidden",
     backgroundColor: "white",
     maxWidth: "inherit",
+    justifyContent: "center",
+    alignItems: "center",
   },
 }));
 

@@ -1,19 +1,27 @@
-import React from 'react';
-import { fade, makeStyles } from '@material-ui/core/styles';
+import React, { Fragment } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = makeStyles((theme) => ({
-  logoArea: {
+  headerContainer: {
     display: "flex",
-    padding: "10px 10px 10px",
-    flex: '0 0 50px',
+    flex: "100%",
+    maxWidth: "600px",
     justifyContent: "center",
     alignItems: "center",
   },
+  logoArea: {
+    padding: "10px",
+    flex: "20px",
+  },
+  logo: { // img 가운데 정렬
+    display: 'block',
+    margin: '0px auto',
+  },
   searchArea: {
     border: "1px solid #ccc",
-    flex: '75%',
+    flexGrow: 10,
     borderRadius: '5px',
   },
   inputInput: {
@@ -43,26 +51,28 @@ export default function SearchHeader() {
   const classes = useStyles();
 
   return (
-    <React.Fragment>
-      <div className={classes.logoArea}>
-        <img src={process.env.PUBLIC_URL + "/images/logo.png"} />
-      </div>
-      <div className={classes.searchArea}>
-        <div className={classes.search}>
-          <div className={classes.searchIcon}>
-            <SearchIcon />
+    <Fragment>
+      <div className={classes.headerContainer}>
+        <div className={classes.logoArea}>
+          <img className={classes.logo} src={process.env.PUBLIC_URL + "/images/logo.png"}/>
+        </div>
+        <div className={classes.searchArea}>
+          <div className={classes.search}>
+            <div className={classes.searchIcon}>
+              <SearchIcon />
+            </div>
+            <InputBase
+              placeholder="Search…"
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+              fullWidth={true}
+              inputProps={{ 'aria-label': 'search' }}
+            />
           </div>
-          <InputBase
-            placeholder="Search…"
-            classes={{
-              root: classes.inputRoot,
-              input: classes.inputInput,
-            }}
-            fullWidth={true}
-            inputProps={{ 'aria-label': 'search' }}
-          />
         </div>
       </div>
-    </React.Fragment>
+    </Fragment>
   );
 }
