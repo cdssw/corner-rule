@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     overflow: "hidden",
     backgroundColor: "white",
-    max-width: "inherit",
+    maxWidth: "inherit",
   },
 }));
 
