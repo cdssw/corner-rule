@@ -1,3 +1,4 @@
 .App {
   background-color: whitesmoke;
+  overflow-y: auto;
 }
