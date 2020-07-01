@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "50px",
     paddingBottom: "20px",
     alignItems: "center",
+    backgroundColor: "whitesmoke",
   },
 }));
 

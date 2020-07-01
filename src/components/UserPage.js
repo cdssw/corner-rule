@@ -4,18 +4,19 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import SearchHeader from './SearchHeader';
 import User from './User';
-import Bottom from "./Bottom";
 
 const useStyles = makeStyles((theme) => ({
   container: {
     padding: "0 20px 0 10px",
     display: "flex",
-    alignItems: "center",
     overflow: "hidden",
     backgroundColor: "white",
     maxWidth: "inherit",
     justifyContent: "center",
-    alignItems: "center",
+  },
+  root: {
+    padding: "0 10px 55px 10px",
+    backgroundColor: "whitesmoke",
   },
 }));
 
@@ -28,8 +29,9 @@ export default function UserPage() {
         <Container className={classes.container}>
           <SearchHeader />
         </Container>
-        <User />
-        <Bottom />
+        <div className={classes.root}>
+          <User />
+        </div>
     </React.Fragment>
   );
 }

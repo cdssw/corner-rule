@@ -1,13 +1,10 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Container from '@material-ui/core/Container';
 import { Avatar } from '@material-ui/core';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
@@ -15,12 +12,13 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     backgroundColor: "white",
-    margin: "10px",
+    margin: "10px auto",
     padding: "10px",
     borderRadius: "5px",
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "column",
+    maxWidth: 600,
   },
   large: {
     width: theme.spacing(10),
@@ -28,6 +26,8 @@ const useStyles = makeStyles((theme) => ({
   },
   userImage: {
     margin: "10px",
+  },
+  table: {
   },
 }));
 
@@ -40,7 +40,7 @@ export default function CardList() {
         <Avatar alt="Remy Sharp" src={process.env.PUBLIC_URL + "/images/foreigner1.png"} className={classes.large} />
       </div>
       <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="simple table">
+        <Table aria-label="simple table">
           <TableBody>
             <TableRow>
               <TableCell>이름</TableCell>
