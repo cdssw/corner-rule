@@ -10,18 +10,16 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "600px",
     justifyContent: "center",
     alignItems: "center",
-  },
-  logoArea: {
     padding: "10px",
-    flex: "20px",
   },
   logo: { // img 가운데 정렬
-    display: 'block',
-    margin: '0px auto',
+    flex: 0,
+    width: "30px",
+    marginRight: "10px",
   },
   searchArea: {
     border: "1px solid #ccc",
-    flexGrow: 10,
+    flexGrow: 1,
     borderRadius: '5px',
   },
   inputInput: {
@@ -53,9 +51,7 @@ export default function SearchHeader() {
   return (
     <Fragment>
       <div className={classes.headerContainer}>
-        <div className={classes.logoArea}>
-          <img className={classes.logo} src={process.env.PUBLIC_URL + "/images/logo.png"}/>
-        </div>
+        <img className={classes.logo} src={process.env.PUBLIC_URL + "/images/logo.png"}/>
         <div className={classes.searchArea}>
           <div className={classes.search}>
             <div className={classes.searchIcon}>

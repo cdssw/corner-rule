@@ -2,10 +2,10 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import RestoreIcon from '@material-ui/icons/Restore';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import HomeIcon from "@material-ui/icons/Home";
 import PersonIcon from "@material-ui/icons/Person";
+import { Link, useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   bottom: {
@@ -15,22 +15,24 @@ const useStyles = makeStyles({
   }
 });
 
-export default function SimpleBottomNavigation() {
+export default function Bottom(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const history = useHistory();
 
   return (
     <BottomNavigation
       value={value}
       onChange={(event, newValue) => {
+        history.push(`/${newValue}`);
         setValue(newValue);
       }}
       showLabels
       className={classes.bottom}
     >
-      <BottomNavigationAction label="Home" icon={<HomeIcon />} />
-      <BottomNavigationAction label="Favorite" icon={<FavoriteIcon />} />
-      <BottomNavigationAction label="User" icon={<PersonIcon />} />
+      <BottomNavigationAction label="Home" icon={<HomeIcon />} component={Link} to="/" />
+      <BottomNavigationAction label="Favorite" icon={<FavoriteIcon />} component={Link} to="/favorite" />
+      <BottomNavigationAction label="User" icon={<PersonIcon />} component={Link} to="/user" selected />
     </BottomNavigation>
   );
 }

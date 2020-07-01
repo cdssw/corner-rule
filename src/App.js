@@ -1,11 +1,14 @@
 import React from 'react';
 import './App.css';
-import Layout from './components/Layout';
+import { Route } from "react-router-dom";
+import Home from "./components/Home";
+import UserPage from "./components/UserPage";
 
 function App() {
   return (
     <div className="App">
-      <Layout />
+      <Route exact path="/" component={Home}/>
+      <Route exact path="/user" component={UserPage}/>
     </div>
   );
 }
