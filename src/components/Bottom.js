@@ -5,7 +5,7 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import HomeIcon from "@material-ui/icons/Home";
 import PersonIcon from "@material-ui/icons/Person";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const useStyles = makeStyles({
   bottom: {
@@ -18,12 +18,14 @@ const useStyles = makeStyles({
 export default function Bottom() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const location = useLocation();
 
   return (
     <BottomNavigation
       value={value}
       onChange={(event, newValue) => {
-        setValue(newValue);
+
+        location.pathname == 'user' ? setValue(2) : setValue(newValue);
       }}
       showLabels
       className={classes.bottom}
