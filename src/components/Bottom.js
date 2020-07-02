@@ -17,9 +17,11 @@ const useStyles = makeStyles({
 
 export default function Bottom() {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(null);
   React.useEffect(() => {
-    window.location.pathname === '/user' ? setValue(2) : setValue(0);
+    window.location.pathname === '/user' ? setValue(2) :
+    window.location.pathname === '/favorite' ? setValue(1) :
+    window.location.pathname === '/login' ? setValue() : setValue(0);
   }, []);
 
   return (

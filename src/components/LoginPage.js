@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
-import User from './User';
+import Login from "./Login";
 import LogoHeader from './LogoHeader';
 
 const useStyles = makeStyles((theme) => ({
@@ -15,11 +15,13 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   root: {
-    padding: "0 10px 55px 10px",
+    padding: "10px 10px 55px 10px",
+    display: "flex",
+    justifyContent: "center",
   },
 }));
 
-export default function UserPage() {
+export default function LoginPage() {
   const classes = useStyles();
 
   return (
@@ -29,7 +31,7 @@ export default function UserPage() {
           <LogoHeader />
         </Container>
         <div className={classes.root}>
-          <User />
+          <Login />
         </div>
     </React.Fragment>
   );

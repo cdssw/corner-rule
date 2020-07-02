@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CardList() {
+export default function User() {
   const classes = useStyles();
 
   return (

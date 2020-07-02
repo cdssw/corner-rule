@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     padding: "10px",
   },
-  logo: { // img 가운데 정렬
+  logo: {
     flex: 0,
     width: "30px",
     marginRight: "10px",
