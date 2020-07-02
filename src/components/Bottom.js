@@ -18,21 +18,22 @@ const useStyles = makeStyles({
 export default function Bottom() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-  const location = useLocation();
+  React.useEffect(() => {
+    window.location.pathname === '/user' ? setValue(2) : setValue(0);
+  }, []);
 
   return (
     <BottomNavigation
       value={value}
       onChange={(event, newValue) => {
-        console.log(location.pathname);
-        location.pathname == 'user' ? setValue(2) : setValue(newValue);
+        setValue(newValue);
       }}
       showLabels
       className={classes.bottom}
     >
       <BottomNavigationAction label="Home" icon={<HomeIcon />} component={Link} to="/" />
       <BottomNavigationAction label="Favorite" icon={<FavoriteIcon />} component={Link} to="/" />
-      <BottomNavigationAction label="User" icon={<PersonIcon />} component={Link} to="/user" selected />
+      <BottomNavigationAction label="User" icon={<PersonIcon />} component={Link} to="/user" />
     </BottomNavigation>
   );
 }
