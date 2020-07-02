@@ -15,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
     margin: "10px auto",
     padding: "10px",
     borderRadius: "5px",
-    justifyContent: "center",
     alignItems: "center",
     flexDirection: "column",
     maxWidth: 600,
