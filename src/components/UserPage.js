@@ -16,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     padding: "0 10px 55px 10px",
-    backgroundColor: "whitesmoke",
   },
 }));
 
