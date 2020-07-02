@@ -24,7 +24,7 @@ export default function Bottom() {
     <BottomNavigation
       value={value}
       onChange={(event, newValue) => {
-
+        console.log(location.pathname);
         location.pathname == 'user' ? setValue(2) : setValue(newValue);
       }}
       showLabels
