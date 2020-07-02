@@ -37,7 +37,6 @@ const useStyles = makeStyles((theme) => ({
   },
   search: {
     position: 'relative',
-    marginRight: theme.spacing(2),
     marginLeft: 0,
     width: '100%',
   },
