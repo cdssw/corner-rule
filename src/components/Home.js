@@ -7,7 +7,7 @@ import CardList from "./CardList";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    padding: "0 20px 0 10px",
+    padding: "0",
     display: "flex",
     overflow: "hidden",
     backgroundColor: "white",
