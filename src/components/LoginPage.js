@@ -15,9 +15,10 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   root: {
-    padding: "10px 10px 55px 10px",
     display: "flex",
     justifyContent: "center",
+    height: '100%',
+    backgroundColor: '#EBEFF7',
   },
 }));
 
@@ -26,13 +27,9 @@ export default function LoginPage() {
 
   return (
     <React.Fragment>
-      <CssBaseline />
-        <Container className={classes.container}>
-          <LogoHeader />
-        </Container>
-        <div className={classes.root}>
-          <Login />
-        </div>
+      <div className={classes.root}>
+        <Login />
+      </div>
     </React.Fragment>
   );
 }
