@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     height: '100%',
     backgroundColor: '#EBEFF7',
+    paddingBottom: '70px',
   },
 }));
 
