@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     height: '389px',
     borderRadius: '10px',
-    top: '138px',
+    top: '120px',
   },
   logo: {
     position: 'absolute',
