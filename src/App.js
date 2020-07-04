@@ -3,7 +3,6 @@ import './App.css';
 import { Route, Switch } from "react-router-dom";
 import Home from "./components/Home";
 import UserPage from "./components/UserPage";
-import Bottom from "./components/Bottom";
 import LoginPage from './components/LoginPage';
 
 function App() {
@@ -14,7 +13,6 @@ function App() {
         <Route exact path="/user" component={UserPage}/>
         <Route exact path="/login" component={LoginPage}/>
       </Switch>
-      <Bottom />
     </div>
   );
 }

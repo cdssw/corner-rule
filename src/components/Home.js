@@ -4,6 +4,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import SearchHeader from './SearchHeader';
 import CardList from "./CardList";
+import Bottom from "./Bottom";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -26,6 +27,7 @@ export default function Home() {
           <SearchHeader />
         </Container>
         <CardList />
+        <Bottom />
     </React.Fragment>
   );
 }

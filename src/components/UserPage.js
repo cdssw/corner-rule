@@ -4,6 +4,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import User from './User';
 import LogoHeader from './LogoHeader';
+import Bottom from "./Bottom";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -25,12 +26,13 @@ export default function UserPage() {
   return (
     <React.Fragment>
       <CssBaseline />
-        <Container className={classes.container}>
-          <LogoHeader />
-        </Container>
-        <div className={classes.root}>
-          <User />
-        </div>
+      <Container className={classes.container}>
+        <LogoHeader />
+      </Container>
+      <div className={classes.root}>
+        <User />
+      </div>
+      <Bottom />
     </React.Fragment>
   );
 }

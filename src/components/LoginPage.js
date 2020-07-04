@@ -1,9 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Container from '@material-ui/core/Container';
 import Login from "./Login";
-import LogoHeader from './LogoHeader';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -20,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     backgroundColor: '#EBEFF7',
     paddingBottom: '70px',
+    maxWidth: '600px',
   },
 }));
 

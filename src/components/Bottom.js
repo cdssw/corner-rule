@@ -34,7 +34,7 @@ export default function Bottom() {
       className={classes.bottom}
     >
       <BottomNavigationAction label="Home" icon={<HomeIcon />} component={Link} to="/" />
-      <BottomNavigationAction label="Favorite" icon={<FavoriteIcon />} component={Link} to="/" />
+      <BottomNavigationAction label="Login" icon={<FavoriteIcon />} component={Link} to="/login" />
       <BottomNavigationAction label="User" icon={<PersonIcon />} component={Link} to="/user" />
     </BottomNavigation>
   );

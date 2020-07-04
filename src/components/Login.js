@@ -5,11 +5,13 @@ import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import SvgIcon from '@material-ui/core/SvgIcon';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   main: {
-    backgroundColor: '#5257F2',
-    height: '200px',
+    backgroundColor: '#5475FF',
+    height: '180px',
     padding: '0 30px',
   },
   signin: {
@@ -18,22 +20,23 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     height: '389px',
     borderRadius: '10px',
-    top: '120px',
+    top: '138px',
   },
-  title: {
-    position: 'relative',
-    top: '80px',
-    textAlign: 'center',
-    color: 'white'
+  logo: {
+    position: 'absolute',
+    top: '15px',
+    left: '50%',
+    transform: 'translate(-50%)',
+    width: '130px',
   },
   signinTitle: {
     position: 'relative',
-    top: '30px',
+    top: '20px',
     textAlign: 'center',
+    color: '#2D305775',
   },
   signinDiv: {
     position: 'relative',
-    top: '20px',
     width: '100%',
     '& .MuiTextField-root': {
       margin: '10px auto',
@@ -56,6 +59,21 @@ const useStyles = makeStyles((theme) => ({
     width: '30px',
     color: '#70707080',
     fontSize: '15px',
+  },
+  signup: {
+    position: 'relative',
+    display: 'flex',
+    justifyContent: 'center',
+    top: '145px',
+    '& .MuiBox-root': {
+      color: '#2D3057',
+    }
+  },
+  arrow: {
+    color: 'white',
+    position: 'relative',
+    top: '10px',
+    left: '-16px',
   }
 }));
 
@@ -72,19 +90,20 @@ export default function Login() {
 
   return (
     <Container className={classes.main} component="main">
-      <Box className={classes.title} fontSize="h5.fontSize" fontWeight="fontWeightBold" m={1}>
-        You are ready to go
-      </Box>
+      <Link to="/">
+        <ArrowBackIcon className={classes.arrow} />
+      </Link>
+      <img className={classes.logo} src={process.env.PUBLIC_URL + "/images/login_logo.png"} />
       <Container component="div" className={classes.signin}>
         <Box className={classes.signinTitle} fontSize="h6.fontSize" fontWeight="fontWeightBold" m={1}>
-          Sign in
+          LOGIN
         </Box>
         <Container component="div" className={classes.signinDiv}>
           <form noValidate autoComplete="off">
             <TextField fullWidth={true} id="standard-basic" label="Email" />
             <TextField fullWidth={true} type="password" id="standard-basic" label="Password" p={1} />
             <div className={classes.loginBtnDiv}>
-              <Button fullWidth={true} variant="contained" color="primary">LOGIN</Button>
+              <Button fullWidth={true} variant="contained" color="primary">로그인</Button>
             </div>
             <div className={classes.bar}>
               <Box className={classes.barInText} fontWeight="fontWeightBold" m={1}>OR</Box> 
@@ -95,6 +114,14 @@ export default function Login() {
           </div>
         </Container>
       </Container>
+      <div className={classes.signup}>
+        <Box fontSize="caption.fontSize" m={1}>
+          아이디가 없으신가요?
+        </Box>
+        <Box fontSize="caption.fontSize" m={1}>
+          <a href='#'>회원가입</a>
+        </Box>
+      </div>
     </Container>
   );
 }
