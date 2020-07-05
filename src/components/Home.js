@@ -1,24 +1,18 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Box from '@material-ui/core/Box';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import SvgIcon from '@material-ui/core/SvgIcon';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import { Link } from "react-router-dom";
 import { Avatar } from '@material-ui/core';
+import StarIcon from '@material-ui/icons/Star';
 
 const useStyles = makeStyles((theme) => ({
   main: {
     backgroundColor: '#5475FF',
     height: '107px',
-    padding: '0 30px',
   },
   header: {
     position: 'relative',
     margin: '0 auto',
-    maxWidth: '400px',
+    maxWidth: '500px',
   },
   logo: {
     position: 'relative',
@@ -46,20 +40,160 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'white',
     position: 'relative',
     width: '100%',
-    height: '148px',
+    height: '170px',
     borderRadius: '10px',
     top: '45px',
-    maxWidth: '400px',
+    maxWidth: '500px',
+    padding: 0,
+  },
+  card_content: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    borderRadius: '10px',
+    '& img': {
+      width: '150px',
+      height: '150px',
+      margin: '10px',
+      borderRadius: '5px',
+    },
+    '& .title': {
+      position: 'absolute',
+      left: '170px',
+      top: '10px',
+      fontWeight: 'bold',
+      color: '#2D3057',
+      fontSize: '15px'
+    },
+    '& .star': {
+      position: 'absolute',
+      top: '10px',
+      right: '10px',
+      color: '#FF507C'
+    },
+    '& .address': {
+      position: 'absolute',
+      left: '170px',
+      top: '30px',
+      fontSize: '10px',
+      color: '#2D305770',
+    },
+    '& .desc': {
+      position: 'absolute',
+      left: '170px',
+      top: '50px',
+      fontSize: '12px',
+      color: '#2D3057',
+    },
+    '& .date': {
+      position: 'absolute',
+      left: '170px',
+      top: '70px',
+      fontSize: '13px',
+      fontWeight: 'bold',
+      color: '#2D3057',
+    },
+    '& .time': {
+      position: 'absolute',
+      left: '170px',
+      top: '90px',
+      fontSize: '11px',
+      color: '#2D3057',
+    },
+    '& .info_container': {
+      position: 'absolute',
+      top: '110px',
+      '& .cost_container': {
+        position: 'absolute',
+        left: '170px',
+        border: '2px solid #DDE3F6',
+        borderRadius: '5px',
+        width: '80px',
+        height: '47px',
+        '& .cost_title': {
+          position: 'absolute',
+          top: '3px',
+          fontSize: '8px',
+          color: '#2D3057',
+          left: '50%',
+          transform: 'translate(-50%)'
+        },
+        '& .cost': {
+          position: 'absolute',
+          fontSize: '18px',
+          top: '17px',
+          fontWeight: 'bold',
+          color: '#2D3057',
+          left: '50%',
+          transform: 'translate(-50%)'
+        },
+      },
+      '& .inter_container': {
+        position: 'absolute',
+        left: '260px',
+        border: '2px solid #DDE3F6',
+        borderRadius: '5px',
+        width: '50px',
+        height: '47px',
+        '& .inter_title': {
+          position: 'absolute',
+          top: '3px',
+          fontSize: '8px',
+          color: '#2D3057',
+          left: '50%',
+          transform: 'translate(-50%)'
+        },
+        '& .inter': {
+          position: 'absolute',
+          fontSize: '18px',
+          top: '17px',
+          fontWeight: 'bold',
+          color: '#13E1B0',
+          left: '50%',
+          transform: 'translate(-50%)'
+        },
+      },
+      '& .attend_container': {
+        position: 'absolute',
+        left: '320px',
+        border: '2px solid #DDE3F6',
+        borderRadius: '5px',
+        width: '118px',
+        height: '47px',
+        '& .attend_title': {
+          position: 'absolute',
+          top: '3px',
+          fontSize: '8px',
+          color: '#2D3057',
+          left: '10px',
+          '& span': {
+            position: 'absolute',
+            right: '-55px',
+          },
+        },
+        '& .attend_graph': {
+          position: 'absolute',
+          top: '24px',
+          color: '#13E1B0',
+          left: '50%',
+          height: '15px',
+          width: '90%',
+          transform: 'translate(-50%)',
+          borderRadius: '25px',
+          backgroundColor: '#DDE3F6',
+          '& span': {
+            position: 'absolute',
+            color: '#13E1B0',
+            height: '15px',
+            width: '50px',
+            borderRadius: '25px',
+            backgroundColor: '#1DDCAF',
+          }
+        },
+      },
+    },
   },
 }));
-
-function GoogleIcon(props) {
-  return (
-    <SvgIcon {...props}>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="24px" height="24px"><path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"/><path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"/><path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"/><path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"/></svg>
-    </SvgIcon>
-  );
-}
 
 export default function Home() {
   const classes = useStyles();
@@ -72,8 +206,30 @@ export default function Home() {
         <Avatar className={classes.avatar} alt="Remy Sharp" src={process.env.PUBLIC_URL + "/images/foreigner1.png"} />
       </div>
       <Container component="div" className={classes.card}>
-        <Container component="div" className={classes.signinDiv}>
-        </Container>
+        <div className={classes.card_content}>
+          <img src={process.env.PUBLIC_URL + "/images/street1.png"} />
+          <div className="title">테스트 모임</div>
+          <StarIcon className="star" />
+          <div className="address">경기도 용인시 처인구</div>
+          <div className="desc">테스트 모임 설명입니다. 진행테스트...</div>
+          <div className="date">2020년 7월 1일</div>
+          <div className="time">06:00 PM부터 11:00PM까지</div>
+          <div className="info_container">
+            <div className="cost_container">
+              <div className="cost_title">예상비용</div>
+              <div className="cost">10,000</div>
+            </div>
+            <div className="inter_container">
+              <div className="inter_title">관심</div>
+              <div className="inter">17</div>
+            </div>
+            <div className="attend_container">
+              <div className="attend_title">참석인원<span>3/8</span></div>
+              <div className="attend_graph"><span></span></div>
+            </div>
+
+          </div>
+        </div>
       </Container>
     </Container>
   );
