@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
     height: '389px',
     borderRadius: '10px',
     top: '120px',
+    maxWidth: '400px',
   },
   logo: {
     position: 'absolute',
