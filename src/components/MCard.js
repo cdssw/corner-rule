@@ -1,125 +1,103 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
-import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import StarIcon from '@material-ui/icons/Star';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: '600px',
-    marginTop: '10px',
+  card: {
+    backgroundColor: 'white',
+    position: 'relative',
+    height: '110px',
+    boxSizing: 'border-box',
+    borderRadius: '10px',
+    marginBottom: '10px',
   },
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
+  card_img: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    width: '30%',
+    padding: '7px',
+    boxSizing: 'border-box',
+    '& img': {
+      width: '100%',
+      height: '100%',
+      borderRadius: '5px',
+    },
   },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },
-  avatar: {
-    backgroundColor: red[500],
+  card_content: {
+    position: 'absolute',
+    width: '70%',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    boxSizing: 'border-box',
+    '& .title': {
+      position: 'absolute',
+      top: '10px',
+      fontWeight: 'bold',
+      color: '#2D3057',
+      fontSize: '1rem'
+    },
+    '& .star': {
+      position: 'absolute',
+      top: '10px',
+      right: '10px',
+      color: '#FF507C'
+    },
+    '& .address': {
+      position: 'absolute',
+      top: '30px',
+      fontSize: '0.9rem',
+      color: '#8154FF',
+      fontWeight: 'bold',
+    },
+    '& .date': {
+      position: 'absolute',
+      top: '50px',
+      fontSize: '1rem',
+      color: '#2D3057',
+    },
+    '& .info_container': {
+      position: 'absolute',
+      top: '80px',
+      boxSizing: 'border-box',
+      height: '30px',
+      width: '100%',
+      '& .cost': {
+        position: 'absolute',
+        fontSize: '1rem',
+        fontWeight: 'bold',
+        color: '#F85D84',
+      },
+      '& .attend_title': {
+        position: 'absolute',
+        fontSize: '1rem',
+        color: '#18AA49',
+        right: '10px',
+      },
+    },
   },
 }));
 
 export default function MCard(props) {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
 
   return (
-    <Card className={classes.root}>
-      <CardHeader
-        avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            R
-          </Avatar>
-        }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
-      />
-      <CardMedia
-        className={classes.media}
-        image={props.image}
-        title="Paella dish"
-      />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          This impressive paella is a perfect party dish and a fun meal to cook together with your
-          guests. Add 1 cup of frozen peas along with the mussels, if you like.
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography paragraph>Method:</Typography>
-          <Typography paragraph>
-            Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
-            minutes.
-          </Typography>
-          <Typography paragraph>
-            Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high
-            heat. Add chicken, shrimp and chorizo, and cook, stirring occasionally until lightly
-            browned, 6 to 8 minutes. Transfer shrimp to a large plate and set aside, leaving chicken
-            and chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes, onion, salt and
-            pepper, and cook, stirring often until thickened and fragrant, about 10 minutes. Add
-            saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
-          </Typography>
-          <Typography paragraph>
-            Add rice and stir very gently to distribute. Top with artichokes and peppers, and cook
-            without stirring, until most of the liquid is absorbed, 15 to 18 minutes. Reduce heat to
-            medium-low, add reserved shrimp and mussels, tucking them down into the rice, and cook
-            again without stirring, until mussels have opened and rice is just tender, 5 to 7
-            minutes more. (Discard any mussels that don’t open.)
-          </Typography>
-          <Typography>
-            Set aside off of the heat to let rest for 10 minutes, and then serve.
-          </Typography>
-        </CardContent>
-      </Collapse>
-    </Card>
+    <div className={classes.card}>
+      <div className={classes.card_img}>
+        <img src={process.env.PUBLIC_URL + "/images/street1.png"} />
+      </div>
+      <div className={classes.card_content}>
+        <div className="title">{Math.random().toString(36).substr(2,11)} {props.index}</div>
+        <StarIcon className="star" />
+        <div className="address">{Math.random().toString(36).substr(2,11)}</div>
+        <div className="date">2020년 {Math.floor(1 + (Math.random() * (12-7)))}월 {Math.floor(1 + (Math.random() * (31-1)))}일 {Math.floor(1 + (Math.random() * (24-1)))}:{Math.floor(1 + (Math.random() * (59-1)))}분</div>
+        <div className="info_container">
+          <div className="cost">￦{Math.floor(0 + (Math.random() * (100000-0))).toLocaleString()}</div>
+          <div className="attend_title">모집중 {Math.floor(1 + (Math.random() * (5-1)))}/{Math.floor(5 + (Math.random() * (10-5)))}</div>
+        </div>
+      </div>
+    </div>
   );
 }

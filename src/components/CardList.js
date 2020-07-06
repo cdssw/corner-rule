@@ -1,30 +1,43 @@
-import React from 'react';
-import {  makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Container from '@material-ui/core/Container';
+import React, { useState, useEffect } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import MCard from "./MCard";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const useStyles = makeStyles((theme) => ({
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    marginBottom: "50px",
-    paddingBottom: "20px",
-    alignItems: "center",
+  card_list: {
+    position: 'relative',
+    top: '-15px',
+    height: '100%',
   },
 }));
 
 export default function CardList() {
   const classes = useStyles();
+  const [items, setItems] = useState([]);
+
+  useEffect(e => {
+    setItems(Array.from({length: 20}));
+  }, []);
+
+  const fetchMoreData = () => {
+    setTimeout(() => {
+      setItems(items.concat(Array.from({length: 20})));
+    }, 1000);
+  }
 
   return (
     <React.Fragment>
-      <CssBaseline />
-      <Container className={classes.container}>
-        <MCard image="/images/paella.jpg" />
-        <MCard image="/images/back1.jpg" />
-        <MCard image="/images/food1.jpg" />
-      </Container>
+      <div className={classes.card_list}>
+        <InfiniteScroll
+          dataLength={items.length}
+          next={fetchMoreData}
+          hasMore={true}
+        >
+          {items.map((i, index) => (
+            <MCard index={index} />
+          ))}
+        </InfiniteScroll>
+      </div>
     </React.Fragment>
   );
 }

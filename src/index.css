@@ -1,4 +1,4 @@
-html, body, div#root, div.App {
+html {
   height: 100%;
 }
 body {
@@ -8,6 +8,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: 15px;
+  background-color: #EBEFF7;
 }
 
 code {
