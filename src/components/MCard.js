@@ -34,33 +34,33 @@ const useStyles = makeStyles((theme) => ({
     boxSizing: 'border-box',
     '& .title': {
       position: 'absolute',
-      top: '10px',
+      top: '10%',
       fontWeight: 'bold',
       color: '#2D3057',
       fontSize: '1rem'
     },
     '& .star': {
       position: 'absolute',
-      top: '10px',
+      top: '10%',
       right: '10px',
       color: '#FF507C'
     },
     '& .address': {
       position: 'absolute',
-      top: '30px',
+      top: '30%',
       fontSize: '0.9rem',
       color: '#8154FF',
       fontWeight: 'bold',
     },
     '& .date': {
       position: 'absolute',
-      top: '50px',
+      top: '47%',
       fontSize: '1rem',
       color: '#2D3057',
     },
     '& .info_container': {
       position: 'absolute',
-      top: '80px',
+      top: '70%',
       boxSizing: 'border-box',
       height: '30px',
       width: '100%',
