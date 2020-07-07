@@ -8,6 +8,8 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
     top: '-15px',
     height: '100%',
+    maxWidth: '600px',
+    margin: '0 10px',
   },
 }));
 
@@ -22,7 +24,7 @@ export default function CardList() {
   const fetchMoreData = () => {
     setTimeout(() => {
       setItems(items.concat(Array.from({length: 20})));
-    }, 1000);
+    }, 500);
   }
 
   return (
