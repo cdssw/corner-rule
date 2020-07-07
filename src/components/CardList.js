@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
     top: '-15px',
     height: '100%',
     maxWidth: '600px',
+    margin: '0 auto',
   },
 }));
 
