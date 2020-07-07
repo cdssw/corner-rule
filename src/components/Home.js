@@ -18,10 +18,9 @@ const useStyles = makeStyles((theme) => ({
   headerWrap: {
     boxSizing: 'border-box',
     height: '100%',
-    margin: '0 10px',
+    margin: '0 auto',
     maxWidth: '600px',
     position: 'relative',
-    padding: '0 10px',
   },
   logo: {
     position: 'absolute',
