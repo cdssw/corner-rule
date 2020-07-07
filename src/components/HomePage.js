@@ -4,14 +4,6 @@ import Home from "./Home";
 import Bottom from "./Bottom";
 
 const useStyles = makeStyles((theme) => ({
-  container: {
-    padding: "0",
-    display: "flex",
-    overflow: "hidden",
-    backgroundColor: "white",
-    maxWidth: "inherit",
-    justifyContent: "center",
-  },
   root: {
     display: "flex",
     justifyContent: "center",
