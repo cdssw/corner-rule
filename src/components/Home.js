@@ -6,16 +6,21 @@ import CardList from './CardList';
 
 const useStyles = makeStyles((theme) => ({
   main: {
-    backgroundColor: '#5475FF',
-    height: '80px',
-    padding: '0 10px',
+    padding: 0,
   },
   header: {
     position: 'relative',
     margin: '0 auto',
     boxSizing: 'border-box',
     height: '80px',
+    backgroundColor: '#5475FF',
+  },
+  headerWrap: {
+    boxSizing: 'border-box',
+    height: '100%',
+    margin: '0 10px',
     maxWidth: '600px',
+    position: 'relative',
   },
   logo: {
     position: 'absolute',
@@ -46,11 +51,13 @@ export default function Home() {
 
   return (
     <Container className={classes.main} component="main">
-      <div className={classes.header}>
-        <img className={classes.logo} src={process.env.PUBLIC_URL + "/images/logo_small.png"} />
-        <div className={classes.name}>홍길동</div>
-        <Avatar className={classes.avatar} alt="Remy Sharp" src={process.env.PUBLIC_URL + "/images/foreigner1.png"} />
-      </div>
+      <header className={classes.header}>
+        <div className={classes.headerWrap}>
+          <img className={classes.logo} src={process.env.PUBLIC_URL + "/images/logo_small.png"} />
+          <div className={classes.name}>홍길동</div>
+          <Avatar className={classes.avatar} alt="Remy Sharp" src={process.env.PUBLIC_URL + "/images/foreigner1.png"} />
+        </div>
+      </header>
       <CardList />
     </Container>
   );
