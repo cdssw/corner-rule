@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
     margin: '0 10px',
     maxWidth: '600px',
     position: 'relative',
+    padding: '0 10px',
   },
   logo: {
     position: 'absolute',
