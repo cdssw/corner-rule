@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     color: 'white',
     fontSize: '0.9rem',
     position: 'absolute',
-    right: '40px',
+    right: '45px',
     top: '25px',
   },
   avatar: {
