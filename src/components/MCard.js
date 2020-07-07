@@ -6,10 +6,10 @@ const useStyles = makeStyles((theme) => ({
   card: {
     backgroundColor: 'white',
     position: 'relative',
-    height: '110px',
     boxSizing: 'border-box',
     borderRadius: '10px',
     marginBottom: '10px',
+    paddingBottom: '30%',
   },
   card_img: {
     position: 'absolute',
