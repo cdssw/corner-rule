@@ -4,6 +4,9 @@ import MCard from "./MCard";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 const useStyles = makeStyles((theme) => ({
+  card_list_wrap: {
+    padding: '0 10px',
+  },
   card_list: {
     position: 'relative',
     top: '-15px',
@@ -29,16 +32,18 @@ export default function CardList() {
 
   return (
     <React.Fragment>
-      <div className={classes.card_list}>
-        <InfiniteScroll
-          dataLength={items.length}
-          next={fetchMoreData}
-          hasMore={true}
-        >
-          {items.map((i, index) => (
-            <MCard index={index} />
-          ))}
-        </InfiniteScroll>
+      <div className={classes.card_list_wrap}>
+        <div className={classes.card_list}>
+          <InfiniteScroll
+            dataLength={items.length}
+            next={fetchMoreData}
+            hasMore={true}
+          >
+            {items.map((i, index) => (
+              <MCard index={index} />
+            ))}
+          </InfiniteScroll>
+        </div>
       </div>
     </React.Fragment>
   );
