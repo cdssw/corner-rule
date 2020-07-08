@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#5475FF',
     height: '180px',
     padding: '0 30px',
+    maxWidth: '100%',
   },
   signin: {
     backgroundColor: 'white',
