@@ -7,6 +7,7 @@ import CardList from './CardList';
 const useStyles = makeStyles((theme) => ({
   main: {
     padding: 0,
+    maxWidth: '100%',
   },
   header: {
     position: 'relative',
