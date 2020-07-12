@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Avatar } from '@material-ui/core';
 import CardList from './CardList';
+import Person from "@material-ui/icons/Person";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -56,8 +58,10 @@ export default function Home() {
       <header className={classes.header}>
         <div className={classes.headerWrap}>
           <img className={classes.logo} src={process.env.PUBLIC_URL + "/images/logo_small.png"} />
-          <div className={classes.name}>홍길동</div>
-          <Avatar className={classes.avatar} alt="Remy Sharp" src={process.env.PUBLIC_URL + "/images/foreigner1.png"} />
+          <div className={classes.name}></div>
+          <Link to='/login'>
+            <Avatar className={classes.avatar}><Person/></Avatar>
+          </Link>
         </div>
       </header>
       <CardList />

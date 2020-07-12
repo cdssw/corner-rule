@@ -1,7 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Home from "./Home";
-import Bottom from "./Bottom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -9,7 +8,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     height: '100%',
     backgroundColor: '#EBEFF7',
-    paddingBottom: '70px',
   },
 }));
 
@@ -21,7 +19,6 @@ export default function HomePage() {
       <div className={classes.root}>
         <Home />
       </div>
-      <Bottom />
     </React.Fragment>
   );
 }

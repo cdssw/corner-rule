@@ -1,16 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Login from "./Login";
+import Signup from "./Singup";
 
 const useStyles = makeStyles((theme) => ({
-  container: {
-    padding: "0",
-    display: "flex",
-    overflow: "hidden",
-    backgroundColor: "white",
-    maxWidth: "inherit",
-    justifyContent: "center",
-  },
   root: {
     display: "flex",
     justifyContent: "center",
@@ -19,13 +11,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function LoginPage() {
+export default function SignupPage() {
   const classes = useStyles();
 
   return (
     <React.Fragment>
       <div className={classes.root}>
-        <Login />
+        <Signup />
       </div>
     </React.Fragment>
   );
