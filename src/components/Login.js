@@ -8,6 +8,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { Link } from "react-router-dom";
+import { loginCall } from "../services/Authorization";
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -70,10 +71,25 @@ export default function Login() {
   const classes = useStyles();
 
   const [checkId, setCheckId] = useState(false);
+  const [login, setLogin] = useState({
+    username: null,
+    password: null
+  });
 
   const handleChecked = (event) => {
     setCheckId(event.target.checked);
   };
+
+  const handleLogin = (event) => {
+    setLogin({
+      ...login,
+      [event.target.name]: event.target.value
+    });
+  };
+
+  const handleLoginButton = (event) => {
+    loginCall(login);    
+  }
 
   return (
     <Container className={classes.main} component="main">
@@ -86,17 +102,15 @@ export default function Login() {
           LOGIN
         </Box>
         <Container component="div" className={classes.signinDiv}>
-          <form noValidate autoComplete="off">
-            <TextField fullWidth={true} id="standard-basic" label="Email" />
-            <TextField fullWidth={true} type="password" id="standard-basic" label="Password" p={1} />
-            <FormControlLabel
-              control={<Checkbox checked={checkId} onChange={handleChecked} />}
-              label="아이디 저장"
-            />
-            <div className={classes.loginBtnDiv}>
-              <Button fullWidth={true} variant="contained" color="primary">로그인</Button>
-            </div>
-          </form>
+          <TextField fullWidth={true} name="username" label="Email" onChange={handleLogin} />
+          <TextField fullWidth={true} type="password" name="password" label="Password" onChange={handleLogin} />
+          <FormControlLabel
+            control={<Checkbox checked={checkId} onChange={handleChecked} />}
+            label="아이디 저장"
+          />
+          <div className={classes.loginBtnDiv}>
+            <Button fullWidth={true} variant="contained" color="primary" onClick={handleLoginButton}>로그인</Button>
+          </div>
         </Container>
       </Container>
       <div className={classes.signup}>
