@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Login() {
+export default function Login(props) {
   const classes = useStyles();
 
   const [checkId, setCheckId] = useState(false);
@@ -90,7 +90,8 @@ export default function Login() {
   const handleLoginButton = async event => {
     const response = await loginCall(login);
     console.log(response);
-    alert(response.data.access_token);    
+    alert(response.data.access_token);
+    props.history.push('/');    
   }
 
   return (
