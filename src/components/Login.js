@@ -87,8 +87,10 @@ export default function Login() {
     });
   };
 
-  const handleLoginButton = (event) => {
-    loginCall(login);    
+  const handleLoginButton = async event => {
+    const response = await loginCall(login);
+    console.log(response);
+    alert(response.data.access_token);    
   }
 
   return (
