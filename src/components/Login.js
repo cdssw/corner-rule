@@ -9,6 +9,9 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { Link, Redirect } from "react-router-dom";
 import { loginCall } from "../services/Authorization";
+import { getUserCall } from "../services/User";
+import { USER_INFO } from "../modules/userdata"; // 액션
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -77,6 +80,8 @@ export default function Login() {
     password: null
   });
 
+  const dispatch = useDispatch();
+
   const handleChecked = (event) => {
     setCheckId(event.target.checked);
   };
@@ -90,8 +95,9 @@ export default function Login() {
 
   const handleLoginButton = async event => {
     const response = await loginCall(login);
-    console.log(response);
-    alert(response.data.access_token);
+    localStorage.setItem("token", JSON.stringify(response.data)); // token을 localStorage에 저장
+    const userInfo = await getUserCall(response.data);
+    dispatch({type: USER_INFO, payload: userInfo.data}); // 가져온 user 정보를 redux에 저장
     setIsAuth(true);
   }
 

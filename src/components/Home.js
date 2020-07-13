@@ -5,6 +5,7 @@ import { Avatar } from '@material-ui/core';
 import CardList from './CardList';
 import Person from "@material-ui/icons/Person";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -53,12 +54,15 @@ const useStyles = makeStyles((theme) => ({
 export default function Home() {
   const classes = useStyles();
 
+  const {userInfo} = useSelector(state => state.userdata, []);
+  console.log(userInfo);
+
   return (
     <Container className={classes.main} component="main">
       <header className={classes.header}>
         <div className={classes.headerWrap}>
           <img className={classes.logo} src={process.env.PUBLIC_URL + "/images/logo_small.png"} />
-          <div className={classes.name}></div>
+          <div className={classes.name}>{userInfo && userInfo.userNm}</div>
           <Link to='/login'>
             <Avatar className={classes.avatar}><Person/></Avatar>
           </Link>
