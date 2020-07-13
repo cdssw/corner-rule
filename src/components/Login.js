@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { loginCall } from "../services/Authorization";
 
 const useStyles = makeStyles((theme) => ({
@@ -91,7 +91,7 @@ export default function Login() {
     const response = await loginCall(login);
     console.log(response);
     alert(response.data.access_token);
-    return <Redirect to={{ pathname: '/' }} />   
+    this.props.history.push("/");
   }
 
   return (
