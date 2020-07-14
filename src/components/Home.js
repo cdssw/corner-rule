@@ -54,8 +54,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Home() {
   const classes = useStyles();
 
-  const {userInfo} = useSelector(state => state.userdata, []);
-  console.log(userInfo);
+  const { userInfo } = useSelector(state => state.userdata, []);
 
   return (
     <Container className={classes.main} component="main">

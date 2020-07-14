@@ -10,7 +10,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { Link, Redirect } from "react-router-dom";
 import { loginCall } from "../services/Authorization";
 import { getUserCall } from "../services/User";
-import { USER_INFO } from "../modules/userdata"; // 액션
+import { setLoginUser } from "../modules/userdata"; // 액션
 import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
@@ -97,7 +97,7 @@ export default function Login() {
     const response = await loginCall(login);
     localStorage.setItem("token", JSON.stringify(response.data)); // token을 localStorage에 저장
     const userInfo = await getUserCall(response.data);
-    dispatch({type: USER_INFO, payload: userInfo.data}); // 가져온 user 정보를 redux에 저장
+    dispatch(setLoginUser(userInfo.data)); // 가져온 user 정보를 redux에 저장
     setIsAuth(true);
   }
 

@@ -1,12 +1,12 @@
-export const USER_INFO = 'userinfo/USER_INFO';
+const SET_LOGIN_USER = 'userinfo/SET_LOGIN_USER';
 
-export const userInfo = () => ({ type: USER_INFO});
+export const setLoginUser = (value) => ({ type: SET_LOGIN_USER, payload: value});
 
 const initialState = {};
 
 const userdata = (state = initialState, action) => {
   switch(action.type) {
-    case USER_INFO:
+    case SET_LOGIN_USER:
       return { ...state, userInfo: action.payload};
     default:
       return state;

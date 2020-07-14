@@ -2,8 +2,7 @@ import axios from "axios";
 import querystring from "querystring";
 
 export async function loginCall(props) {
-  const url = 'https://cdssw.duckdns.org:9015/';
-  // const url = 'http://localhost:8095/';
+  const url = process.env.REACT_APP_SERVICE_AUTHORIZATION;
   const data = {
     grant_type: 'password',
     client_id: 'auth_id',
