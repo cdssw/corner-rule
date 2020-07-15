@@ -80,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MCard(props) {
+export default function (props) {
   const classes = useStyles();
 
   return (

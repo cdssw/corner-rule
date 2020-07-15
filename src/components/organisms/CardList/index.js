@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import MCard from "./MCard";
 import InfiniteScroll from "react-infinite-scroll-component";
+import Card from '../../molecules/Card';
 
 const useStyles = makeStyles((theme) => ({
   card_list_wrap: {
@@ -16,31 +16,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CardList() {
+export default function (props) {
   const classes = useStyles();
-  const [items, setItems] = useState([]);
-
-  useEffect(e => {
-    setItems(Array.from({length: 20}));
-  }, []);
-
-  const fetchMoreData = () => {
-    setTimeout(() => {
-      setItems(items.concat(Array.from({length: 20})));
-    }, 500);
-  }
 
   return (
     <React.Fragment>
       <div className={classes.card_list_wrap}>
         <div className={classes.card_list}>
           <InfiniteScroll
-            dataLength={items.length}
-            next={fetchMoreData}
+            dataLength={props.items.length}
+            next={props.fetchMoreData}
             hasMore={true}
           >
-            {items.map((i, index) => (
-              <MCard index={index} />
+            {props.items.map((i, index) => (
+              <Card key={index} index={index} />
             ))}
           </InfiniteScroll>
         </div>

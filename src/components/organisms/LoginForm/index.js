@@ -8,10 +8,6 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { Link, Redirect } from "react-router-dom";
-import { loginCall } from "../services/Authorization";
-import { getUserCall } from "../services/User";
-import { setLoginUser } from "../modules/userdata"; // 액션
-import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -70,36 +66,15 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Login() {
+export default function (props) {
   const classes = useStyles();
 
   const [isAuth, setIsAuth] = useState(false);
   const [checkId, setCheckId] = useState(false);
-  const [login, setLogin] = useState({
-    username: null,
-    password: null
-  });
-
-  const dispatch = useDispatch();
 
   const handleChecked = (event) => {
     setCheckId(event.target.checked);
   };
-
-  const handleLogin = (event) => {
-    setLogin({
-      ...login,
-      [event.target.name]: event.target.value
-    });
-  };
-
-  const handleLoginButton = async event => {
-    const response = await loginCall(login);
-    localStorage.setItem("token", JSON.stringify(response.data)); // token을 localStorage에 저장
-    const userInfo = await getUserCall(response.data);
-    dispatch(setLoginUser(userInfo.data)); // 가져온 user 정보를 redux에 저장
-    setIsAuth(true);
-  }
 
   if(isAuth) return <Redirect to='/' />
   return (
@@ -113,14 +88,14 @@ export default function Login() {
           LOGIN
         </Box>
         <Container component="div" className={classes.signinDiv}>
-          <TextField fullWidth={true} name="username" label="Email" onChange={handleLogin} />
-          <TextField fullWidth={true} type="password" name="password" label="Password" onChange={handleLogin} />
+          <TextField fullWidth={true} name="username" label="Email" onChange={props.handleInput} />
+          <TextField fullWidth={true} type="password" name="password" label="Password" onChange={props.handleInput} />
           <FormControlLabel
             control={<Checkbox checked={checkId} onChange={handleChecked} />}
             label="아이디 저장"
           />
           <div className={classes.loginBtnDiv}>
-            <Button fullWidth={true} variant="contained" color="primary" onClick={handleLoginButton}>로그인</Button>
+            <Button fullWidth={true} variant="contained" color="primary" onClick={props.handleLogin}>로그인</Button>
           </div>
         </Container>
       </Container>
