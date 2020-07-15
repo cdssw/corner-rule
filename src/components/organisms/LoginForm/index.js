@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -69,14 +69,6 @@ const useStyles = makeStyles((theme) => ({
 export default function (props) {
   const classes = useStyles();
 
-  const [isAuth, setIsAuth] = useState(false);
-  const [checkId, setCheckId] = useState(false);
-
-  const handleChecked = (event) => {
-    setCheckId(event.target.checked);
-  };
-
-  if(isAuth) return <Redirect to='/' />
   return (
     <Container className={classes.main} component="main">
       <Link to="/">
@@ -88,14 +80,14 @@ export default function (props) {
           LOGIN
         </Box>
         <Container component="div" className={classes.signinDiv}>
-          <TextField fullWidth={true} name="username" label="Email" onChange={props.handleInput} />
-          <TextField fullWidth={true} type="password" name="password" label="Password" onChange={props.handleInput} />
+          <TextField fullWidth={true} name="username" label="Email" onChange={props.onInput} />
+          <TextField fullWidth={true} type="password" name="password" label="Password" onChange={props.onInput} />
           <FormControlLabel
-            control={<Checkbox checked={checkId} onChange={handleChecked} />}
+            control={<Checkbox checked={props.saveId} onChange={props.onSaveId} />}
             label="아이디 저장"
           />
           <div className={classes.loginBtnDiv}>
-            <Button fullWidth={true} variant="contained" color="primary" onClick={props.handleLogin}>로그인</Button>
+            <Button fullWidth={true} variant="contained" color="primary" onClick={props.onLogin}>로그인</Button>
           </div>
         </Container>
       </Container>

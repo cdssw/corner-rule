@@ -51,7 +51,7 @@ export default function (props) {
     <header className={classes.header}>
       <div className={classes.headerWrap}>
         <img className={classes.logo} src={process.env.PUBLIC_URL + "/images/logo_small.png"} />
-        <div className={classes.name}>{props.serInfo && props.userInfo.userNm}</div>
+        <div className={classes.name}>{props.userInfo && props.userInfo.userNm}</div>
         <Link to='/login'>
           <Avatar className={classes.avatar}><Person/></Avatar>
         </Link>
