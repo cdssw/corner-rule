@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from "react-redux";
-import HomeTemplate from '../../templates/HomeTemplate';
-import Header from '../../organisms/Header';
-import CardList from '../../organisms/CardList';
+import { PageTemplate2, Header, CardList } from "components";
 
-export default function Home() {
+export default function HomePage() {
   const { userInfo } = useSelector(state => state.userInfo, []);
   const [items, setItems] = useState([]);
 
@@ -19,9 +17,8 @@ export default function Home() {
   }
 
   return (
-    <HomeTemplate
-      header={<Header userInfo={userInfo} />}
-      cardList={<CardList fetchMoreData={fetchMoreData} items={items} />}
-    />
+    <PageTemplate2 header={<Header userInfo={userInfo} />}>
+      <CardList fetchMoreData={fetchMoreData} items={items} />
+    </PageTemplate2>
   );
 }

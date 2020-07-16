@@ -1,6 +1,5 @@
-import React, { Children } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import LoginForm from "../../organisms/LoginForm";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -11,13 +10,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function (props) {
+export default function LoginTemplate(props) {
   const classes = useStyles();
 
   return (
     <React.Fragment>
       <div className={classes.root}>
-        {props.loginForm && props.loginForm}
+        {props.children}
       </div>
     </React.Fragment>
   );

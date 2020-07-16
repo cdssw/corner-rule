@@ -9,21 +9,15 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     backgroundColor: '#EBEFF7',
   },  
-  main: {
-    padding: 0,
-    maxWidth: '100%',
-  },
 }));
 
-export default function (props) {
+export default function PageTemplate2(props) {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <Container className={classes.main} component="main">
-        {props.header && props.header}
-        {props.cardList && props.cardList}
-      </Container>
+      <header>{props.header}</header>
+      <section>{props.children}</section>
     </div>
   );
 }

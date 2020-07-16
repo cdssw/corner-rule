@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import InfiniteScroll from "react-infinite-scroll-component";
-import Card from '../../molecules/Card';
+import { Card } from "components";
 
 const useStyles = makeStyles((theme) => ({
   card_list_wrap: {
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function (props) {
+export default function CardList(props) {
   const classes = useStyles();
 
   return (

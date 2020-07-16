@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import LoginTemplate from "../../templates/LoginTemplate";
 import * as Authorization from "../../../services/Authorization";
 import * as User from "../../../services/User";
 import { setLoginUserInfo, setLogin } from "../../../modules/userInfo";
 import { useSelector, useDispatch } from "react-redux";
-import LoginForm from "../../organisms/LoginForm";
 import { Redirect } from "react-router-dom";
+import { LoginTemplate, LoginForm } from "components";
 
-export default function () {
+export default function LoginPage() {
   const { login } = useSelector(state => state.userInfo, []);
   const dispatch = useDispatch();
 
@@ -40,15 +39,13 @@ export default function () {
   if(login) return <Redirect to='/' />
 
   return (
-    <LoginTemplate
-      loginForm={
+    <LoginTemplate>
         <LoginForm
           saveId={saveId}
           onLogin={handleLogin}
           onInput={handleInput}
           onSaveId={handleSaveId}
         />
-      }
-    />
+    </LoginTemplate>
   );
 }
