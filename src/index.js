@@ -8,14 +8,33 @@ import { createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import rootReducer from "./modules";
 import { Provider } from "react-redux";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import { CssBaseline } from '@material-ui/core';
 
 const store = createStore(rootReducer, composeWithDevTools());
+const theme = createMuiTheme({
+  overrides: {
+    MuiCssBaseline: {
+      '@global': {
+        '*': {
+          boxSizing: 'border-box'
+        },
+        body: {
+          margin: 0,
+        }
+      }
+    }
+  }
+});
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
-        <App />
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <App />
+        </ThemeProvider>
       </Provider>
     </BrowserRouter>
   </React.StrictMode>,
