@@ -4,77 +4,18 @@ import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
-  main: {
-    backgroundColor: '#5475FF',
-    height: '180px',
-    padding: '0 30px',
-    maxWidth: '100%',
-  },
-  signin: { 
-    backgroundColor: 'white',
-    position: 'relative',
-    width: '100%',
-    height: '310px',
-    borderRadius: '10px',
-    top: '120px',
-    maxWidth: '400px',
-  },
-  logo: {
-    position: 'absolute',
-    top: '15px',
-    left: '50%',
-    transform: 'translate(-50%)',
-    width: '130px',
-  },
-  signinTitle: {
-    position: 'relative',
-    top: '20px',
-    textAlign: 'center',
-    color: '#2D305775',
-  },
-  signinDiv: {
-    position: 'relative',
-    width: '100%',
-    '& .MuiTextField-root': {
-      margin: '10px auto',
-    }
-  },
-  loginBtnDiv: {
-    paddingTop: '30px',
-    width: '100%',
-  },
-  signup: {
-    position: 'relative',
-    display: 'flex',
-    justifyContent: 'center',
-    top: '145px',
-    '& .MuiBox-root': {
-      color: '#2D3057', 
-    }
-  },
-  arrow: {
-    color: 'white',
-    position: 'relative',
-    top: '15px',
-    left: '-16px',
-  }
 }));
 
 export default function LoginForm(props) {
   const classes = useStyles();
 
   return (
-    <Container className={classes.main} component="main">
-      <Link to="/">
-        <ArrowBackIcon className={classes.arrow} />
-      </Link>
-      <img className={classes.logo} src={process.env.PUBLIC_URL + "/images/login_logo.png"} />
+    <div className={classes.root}>
       <Container component="div" className={classes.signin}>
         <Box className={classes.signinTitle} fontSize="h6.fontSize" fontWeight="fontWeightBold" m={1}>
           LOGIN
@@ -99,6 +40,6 @@ export default function LoginForm(props) {
           <Link to="/signup">회원가입</Link>
         </Box>
       </div>
-    </Container>
+    </div>
   );
 }

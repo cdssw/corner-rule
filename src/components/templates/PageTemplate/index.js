@@ -4,16 +4,15 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   wrap: {
     height: '100vh',
-    display: 'flex',
-    flexDirection: 'column',
   },
   header: {
     backgroundColor: 'gray',
-    flexBasis: '8vh',
-    flexGrow: 0,
-    flexShrink: 0,
     display: 'flex',
     justifyContent: 'center',
+    position: 'fixed',
+    width: '100%',
+    height: '8vh',
+    zIndex: '1000',
   },
   headerWrap: {
     flexGrow: 1,
@@ -31,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
   contentWrap: {
+    marginTop: '8vh',
     flexGrow: 1,
     display: 'flex',
     justifyContent: 'center',
@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function PageTemplate2(props) {
+export default function PageTemplate(props) {
   const classes = useStyles();
 
   return (

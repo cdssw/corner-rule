@@ -4,7 +4,7 @@ import * as User from "../../../services/User";
 import { setLoginUserInfo, setLogin } from "../../../modules/userInfo";
 import { useSelector, useDispatch } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { LoginTemplate, LoginForm } from "components";
+import { LoginTemplate, LoginForm, Footer } from "components";
 
 export default function LoginPage() {
   const { login } = useSelector(state => state.userInfo, []);
@@ -39,13 +39,16 @@ export default function LoginPage() {
   if(login) return <Redirect to='/' />
 
   return (
-    <LoginTemplate>
+    <LoginTemplate
+      loginForm={
         <LoginForm
           saveId={saveId}
           onLogin={handleLogin}
           onInput={handleInput}
           onSaveId={handleSaveId}
         />
-    </LoginTemplate>
+      }
+      footer={<Footer />}
+    />
   );
 }
