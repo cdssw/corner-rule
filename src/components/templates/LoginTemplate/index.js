@@ -11,24 +11,24 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     height: '100%',
   },
-  content: {
-    backgroundColor: '#5a6482',
-    flexGrow: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  wrapArrow: {
+  arrowWrap: {
+    padding: '10px 0 10px 10px',
   },
   arrow: {
     color: 'white',
   },
-  logo: {
+  contentWrap: {
+    backgroundColor: '#5a6482',
+    flexGrow: 1,
   },
-  footer: {
-    marginTop: 'auto',
+  logoWrap: {
+    padding: '50px auto',
+  },
+  footerWrap: {
     paddingTop: '13px',
     paddingBottom: '12px',
+    display: 'flex',
+    justifyContent: 'center',
   }
 }));
 
@@ -37,18 +37,18 @@ export default function LoginTemplate(props) {
 
   return (
     <div className={classes.root}>
-      <div className={classes.content}>
-        <div className={classes.wrapArrow}>
-          <Link to="/">
-            <ArrowBackIcon className={classes.arrow} />
-          </Link>
-        </div>
-        <div>
-          <img className={classes.logo} src={resources.logo} />
-        </div>
+      <div className={classes.arrowWrap}>
+        <Link to="/">
+          <ArrowBackIcon className={classes.arrow} />
+        </Link>
+      </div>
+      <div className={classes.logoWrap}>
+        <img className={classes.logo} src={resources.logo} />
+      </div>
+      <div className={classes.contentWrap}>
         {props.loginForm}
       </div>
-      <div className={classes.footer}>
+      <div className={classes.footerWrap}>
         {props.footer}
       </div>
     </div>
