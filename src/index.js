@@ -13,6 +13,11 @@ import { CssBaseline } from '@material-ui/core';
 
 const store = createStore(rootReducer, composeWithDevTools());
 const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#1b2c48'
+    },
+  }, 
   overrides: {
     MuiCssBaseline: {
       '@global': {
