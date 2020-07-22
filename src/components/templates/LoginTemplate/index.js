@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
   contentWrap: {
     flexGrow: 1,
+    padding: '0 20px',
   },
   footerWrap: {
     paddingTop: '13px',
