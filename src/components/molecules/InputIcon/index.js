@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
     height: '30px',
     outline: 'none',
     border: 'none',
+    fontSize: '1rem',
   },
   invalid: {
     color: theme.palette.error.dark,
