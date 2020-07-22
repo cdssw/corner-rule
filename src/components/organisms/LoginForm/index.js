@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '5px',
     border: '1px solid #DDD',
     outline: 'none',
+    backgroundColor: 'white',
   },
   password: {
     width : '100%',
@@ -33,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '5px',
     border: '1px solid #DDD',
     outline: 'none',
+    backgroundColor: 'white',
   },
   saveIdWrap: {
     alignSelf: 'flex-end',
