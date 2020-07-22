@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     color: 'white',
   },
   logoWrap: {
-    margin: '50px auto',
+    margin: '20px auto',
   },
   contentWrap: {
     flexGrow: 1,
