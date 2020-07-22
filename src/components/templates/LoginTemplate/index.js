@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     flexDirection: 'column',
     height: '100%',
-    backgroundColor: '#5a6482',
+    backgroundColor: theme.colorA,
   },
   arrowWrap: {
     padding: '10px 0 10px 10px',
@@ -21,9 +21,13 @@ const useStyles = makeStyles((theme) => ({
   logoWrap: {
     margin: '20px auto',
   },
+  logo: {
+    width: '154px',
+    height: '129px',
+  },
   contentWrap: {
     flexGrow: 1,
-    padding: '0 20px',
+    padding: '0 40px',
   },
   footerWrap: {
     paddingTop: '13px',

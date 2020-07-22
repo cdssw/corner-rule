@@ -1,2 +1,2 @@
-export const logoGray = 'images/logo-gray.png';
-export const logo = 'images/logo.png';
+export const logoGray = 'images/logo-gray.svg';
+export const logo = 'images/logo.svg';

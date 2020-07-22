@@ -1,12 +1,15 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import Box from '@material-ui/core/Box';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { Link } from "react-router-dom";
+import { InputIcon } from "components";
+import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
+import VpnKeyOutlinedIcon from '@material-ui/icons/VpnKeyOutlined';
+import RadioButtonUncheckedOutlinedIcon from '@material-ui/icons/RadioButtonUncheckedOutlined';
+import RadioButtonCheckedRoundedIcon from '@material-ui/icons/RadioButtonCheckedRounded';
+import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,58 +19,52 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: '10px',
     },
   },
-  email: {
-    width : '100%',
-    background: 'url("https://img.icons8.com/material-outlined/24/000000/google-web-search.png") no-repeat calc(100% - 5px)',
-    padding: '0 30px 0 10px',
-    height: '30px',
-    borderRadius: '5px',
-    border: '1px solid #DDD',
-    outline: 'none',
-    backgroundColor: 'white',
-  },
-  password: {
-    width : '100%',
-    background: 'url("https://img.icons8.com/material-outlined/24/000000/google-web-search.png") no-repeat calc(100% - 5px)',
-    padding: '0 30px 0 10px',
-    height: '30px',
-    borderRadius: '5px',
-    border: '1px solid #DDD',
-    outline: 'none',
-    backgroundColor: 'white',
-  },
   saveIdWrap: {
     alignSelf: 'flex-end',
-  }
+  },
+  signup: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    padding: '0 20px',
+    '& div': {
+      color: 'white',
+    }
+  },
+  button: {
+    backgroundColor: '#1b2c48',
+    color: 'white',
+  },
 }));
 
-export default function LoginForm(props) {
+export default function LoginForm({onInput, onLogin, saveId, onSaveId}) {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <div className={classes.emailWrap}>
-        <input className={classes.email} onChange={props.onInput} />
+        <InputIcon icon={<AccountCircleOutlinedIcon color="disabled" />} onChange={onInput} />
       </div>
       <div className={classes.passwordWrap}>
-        <input className={classes.password} type='password' onChange={props.onInput} />
+        <InputIcon type="password" icon={<VpnKeyOutlinedIcon color="disabled" />} onChange={onInput} />
       </div>
       <div className={classes.saveIdWrap}>
         <FormControlLabel
-          control={<Checkbox checked={props.saveId} onChange={props.onSaveId} />}
-          label="아이디 저장"
+          control={<Checkbox 
+            icon={<RadioButtonUncheckedOutlinedIcon />} 
+            checkedIcon={<RadioButtonCheckedRoundedIcon />} 
+            checked={saveId} 
+            onChange={onSaveId}
+            style={{color: 'white'}}
+          />}
+          label={<Typography variant="body2" style={{color: 'white'}}>아이디 저장</Typography>}
         />
       </div>
       <div className={classes.buttonWrap}>
-        <Button variant="contained" color="primary" onClick={props.onLogin}>로그인</Button>
+        <Button className={classes.button} variant="contained" fullWidth={true} onClick={onLogin}>LOGIN</Button>
       </div>
       <div className={classes.signup}>
-        <Box fontSize="caption.fontSize" m={1}>
-          아이디가 없으신가요?
-        </Box>
-        <Box fontSize="caption.fontSize" m={1}>
-          <Link to="/signup">회원가입</Link>
-        </Box>
+        <div>아이디가 없으신가요?</div>
+        <div><Link to="/signup">회원가입</Link></div>
       </div>
     </div>
   );

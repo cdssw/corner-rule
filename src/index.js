@@ -24,7 +24,9 @@ const theme = createMuiTheme({
         }
       }
     }
-  }
+  },
+  colorA: "#5a6482",
+  colorWhite: 'white',
 });
 
 ReactDOM.render(
