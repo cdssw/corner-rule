@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     flexDirection: 'column',
     height: '100%',
+    backgroundColor: '#5a6482',
   },
   arrowWrap: {
     padding: '10px 0 10px 10px',
@@ -17,19 +18,19 @@ const useStyles = makeStyles((theme) => ({
   arrow: {
     color: 'white',
   },
-  contentWrap: {
-    backgroundColor: '#5a6482',
-    flexGrow: 1,
-  },
   logoWrap: {
-    padding: '50px auto',
+    margin: '50px auto',
+  },
+  contentWrap: {
+    flexGrow: 1,
   },
   footerWrap: {
     paddingTop: '13px',
     paddingBottom: '12px',
+    backgroundColor: 'white',
     display: 'flex',
     justifyContent: 'center',
-  }
+  },
 }));
 
 export default function LoginTemplate(props) {
