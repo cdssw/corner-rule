@@ -9,6 +9,34 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    '& > div': {
+      marginBottom: '10px',
+    },
+  },
+  email: {
+    width : '100%',
+    background: 'url("https://img.icons8.com/material-outlined/24/000000/google-web-search.png") no-repeat calc(100% - 5px)',
+    padding: '0 30px 0 10px',
+    height: '30px',
+    borderRadius: '5px',
+    border: '1px solid #DDD',
+    outline: 'none',
+  },
+  password: {
+    width : '100%',
+    background: 'url("https://img.icons8.com/material-outlined/24/000000/google-web-search.png") no-repeat calc(100% - 5px)',
+    padding: '0 30px 0 10px',
+    height: '30px',
+    borderRadius: '5px',
+    border: '1px solid #DDD',
+    outline: 'none',
+  },
+  saveIdWrap: {
+    alignSelf: 'flex-end',
+  }
 }));
 
 export default function LoginForm(props) {
@@ -16,22 +44,21 @@ export default function LoginForm(props) {
 
   return (
     <div className={classes.root}>
-      <Container component="div" className={classes.signin}>
-        <Box className={classes.signinTitle} fontSize="h6.fontSize" fontWeight="fontWeightBold" m={1}>
-          LOGIN
-        </Box>
-        <Container component="div" className={classes.signinDiv}>
-          <TextField fullWidth={true} name="username" label="Email" onChange={props.onInput} />
-          <TextField fullWidth={true} type="password" name="password" label="Password" onChange={props.onInput} />
-          <FormControlLabel
-            control={<Checkbox checked={props.saveId} onChange={props.onSaveId} />}
-            label="아이디 저장"
-          />
-          <div className={classes.loginBtnDiv}>
-            <Button fullWidth={true} variant="contained" color="primary" onClick={props.onLogin}>로그인</Button>
-          </div>
-        </Container>
-      </Container>
+      <div className={classes.emailWrap}>
+        <input className={classes.email} onChange={props.onInput} />
+      </div>
+      <div className={classes.passwordWrap}>
+        <input className={classes.password} type='password' onChange={props.onInput} />
+      </div>
+      <div className={classes.saveIdWrap}>
+        <FormControlLabel
+          control={<Checkbox checked={props.saveId} onChange={props.onSaveId} />}
+          label="아이디 저장"
+        />
+      </div>
+      <div className={classes.buttonWrap}>
+        <Button variant="contained" color="primary" onClick={props.onLogin}>로그인</Button>
+      </div>
       <div className={classes.signup}>
         <Box fontSize="caption.fontSize" m={1}>
           아이디가 없으신가요?
