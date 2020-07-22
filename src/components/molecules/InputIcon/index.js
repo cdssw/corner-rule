@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function InputIcon({type, icon, invalid, validMessage, onInput}) {
+export default function InputIcon({type, name, icon, invalid, validMessage, onChange}) {
   const classes = useStyles();
 
   return (
@@ -35,7 +35,8 @@ export default function InputIcon({type, icon, invalid, validMessage, onInput}) 
         <input
           className={classes.input} // props에 따른 class 추가
           type={type || 'text'}
-          onChange={onInput}
+          name={name}
+          onChange={onChange}
         />
         <span className={classes.icon}>{icon}</span>
       </div>

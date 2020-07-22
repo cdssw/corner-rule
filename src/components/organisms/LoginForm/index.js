@@ -34,6 +34,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#1b2c48',
     color: 'white',
   },
+  checkboxWrap: {
+    marginRight: 0,
+  },
 }));
 
 export default function LoginForm({onInput, onLogin, saveId, onSaveId}) {
@@ -42,21 +45,25 @@ export default function LoginForm({onInput, onLogin, saveId, onSaveId}) {
   return (
     <div className={classes.root}>
       <div className={classes.emailWrap}>
-        <InputIcon icon={<AccountCircleOutlinedIcon color="disabled" />} onChange={onInput} />
+        <InputIcon icon={<AccountCircleOutlinedIcon color="disabled" />} name="username" onChange={onInput} />
       </div>
       <div className={classes.passwordWrap}>
-        <InputIcon type="password" icon={<VpnKeyOutlinedIcon color="disabled" />} onChange={onInput} />
+        <InputIcon type="password" icon={<VpnKeyOutlinedIcon color="disabled" />} name="password" onChange={onInput} />
       </div>
       <div className={classes.saveIdWrap}>
         <FormControlLabel
-          control={<Checkbox 
-            icon={<RadioButtonUncheckedOutlinedIcon />} 
-            checkedIcon={<RadioButtonCheckedRoundedIcon />} 
-            checked={saveId} 
-            onChange={onSaveId}
-            style={{color: 'white'}}
-          />}
-          label={<Typography variant="body2" style={{color: 'white'}}>아이디 저장</Typography>}
+          className={classes.checkboxWrap}
+          control={
+            <Checkbox 
+              icon={<RadioButtonUncheckedOutlinedIcon />} 
+              checkedIcon={<RadioButtonCheckedRoundedIcon />} 
+              checked={saveId} 
+              onChange={onSaveId}
+              style={{color: 'white', padding: 0}}
+              size="small"
+            />
+          }
+          label={<Typography variant="body1" style={{color: 'white', paddingLeft: '5px'}}>아이디 저장</Typography>}
         />
       </div>
       <div className={classes.buttonWrap}>
