@@ -67,7 +67,7 @@ export default function LoginForm({onInput, onLogin, saveId, onSaveId}) {
         />
       </div>
       <div className={classes.buttonWrap}>
-        <Button className={classes.button} variant="contained" fullWidth={true} onClick={onLogin}>LOGIN</Button>
+        <Button color='primary' variant="contained" fullWidth={true} onClick={onLogin}>LOGIN</Button>
       </div>
       <div className={classes.signup}>
         <div>아이디가 없으신가요?</div>
