@@ -14,14 +14,6 @@ const useStyles = makeStyles((theme) => ({
     height: '8vh',
     zIndex: '1000',
   },
-  header: {
-    flexGrow: 1,
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    maxWidth: '600px',
-    padding: '0 10px',
-  },
   contentWrap: {
     display: 'flex',
     justifyContent: 'center',
@@ -43,7 +35,7 @@ export default function PageTemplate(props) {
   return (
     <div className={classes.root}>
       <header className={classes.headerWrap}>
-        <div className={classes.header}>{props.header}</div>
+        {props.header}
       </header>
       <section className={classes.contentWrap}>
         <div className={classes.content}>{props.children}</div>
