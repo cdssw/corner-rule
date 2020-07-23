@@ -20,7 +20,6 @@ export default function HomePage() {
   return (
     <PageTemplate header={<Header userInfo={userInfo} />}>
       <div>
-        <select></select>
         <InputIcon icon={<SearchIcon />} />
       </div>
       <CardList fetchMoreData={fetchMoreData} items={items} />
