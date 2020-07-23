@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Header(props) {
+export default function Header({userInfo}) {
   const classes = useStyles();
 
   return (
@@ -18,7 +18,11 @@ export default function Header(props) {
       <img className={classes.logo} src={process.env.PUBLIC_URL + "/images/logo_small.png"} />
       <div>
         <Link to='/login'>
-          <Avatar><Person/></Avatar>
+          <Avatar
+            alt={userInfo && userInfo.userNm}
+            src={userInfo && process.env.PUBLIC_URL + "/images/foreigner1.png"}
+          >
+            {!userInfo && <Person />}</Avatar>
         </Link>
       </div>
     </>
