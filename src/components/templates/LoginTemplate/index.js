@@ -52,7 +52,7 @@ export default function LoginTemplate(props) {
         <img className={classes.logo} src={resources.logo} />
       </div>
       <div className={classes.contentWrap}>
-        {props.loginForm}
+        {props.children}
       </div>
       <div className={classes.footerWrap}>
         {props.footer}
