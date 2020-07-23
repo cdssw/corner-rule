@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from "react-redux";
-import { PageTemplate, Header, CardList } from "components";
+import { PageTemplate, Header, CardList, InputIcon } from "components";
 import SearchIcon from '@material-ui/icons/Search';
 
 export default function HomePage() {
