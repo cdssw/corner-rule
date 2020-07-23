@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from "react-redux";
 import { PageTemplate, Header, CardList } from "components";
+import SearchIcon from '@material-ui/icons/Search';
 
 export default function HomePage() {
   const { userInfo } = useSelector(state => state.userInfo, []);
@@ -18,6 +19,10 @@ export default function HomePage() {
 
   return (
     <PageTemplate header={<Header userInfo={userInfo} />}>
+      <div>
+        <select></select>
+        <InputIcon icon={<SearchIcon />} />
+      </div>
       <CardList fetchMoreData={fetchMoreData} items={items} />
     </PageTemplate>
   );
