@@ -39,16 +39,13 @@ export default function LoginPage() {
   if(login) return <Redirect to='/' />
 
   return (
-    <LoginTemplate
-      loginForm={
-        <LoginForm
-          saveId={saveId}
-          onLogin={handleLogin}
-          onInput={handleInput}
-          onSaveId={handleSaveId}
-        />
-      }
-      footer={<Footer />}
-    />
+    <LoginTemplate footer={<Footer />}>
+      <LoginForm
+        saveId={saveId}
+        onLogin={handleLogin}
+        onInput={handleInput}
+        onSaveId={handleSaveId}
+      />
+    </LoginTemplate>
   );
 }
