@@ -2,10 +2,10 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  wrap: {
+  root: {
     height: '100vh',
   },
-  header: {
+  headerWrap: {
     backgroundColor: theme.colorA,
     display: 'flex',
     justifyContent: 'center',
@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     height: '8vh',
     zIndex: '1000',
   },
-  headerWrap: {
+  header: {
     flexGrow: 1,
     display: 'flex',
     justifyContent: 'space-between',
@@ -22,21 +22,18 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '600px',
     padding: '0 10px',
   },
-  content: {
-    flexGrow: 1,
-    flexShrink: 1,
-    flexBasis: 'auto',
+  contentWrap: {
     display: 'flex',
     justifyContent: 'center',
   },
-  contentWrap: {
+  content: {
     marginTop: '8vh',
     flexGrow: 1,
     display: 'flex',
     justifyContent: 'center',
+    flexDirection: 'column',
     maxWidth: '600px',
     padding: '0 10px',
-    flexDirection: 'column',
   }
 }));
 
@@ -44,12 +41,12 @@ export default function PageTemplate(props) {
   const classes = useStyles();
 
   return (
-    <div className={classes.wrap}>
-      <header className={classes.header}>
-        <div className={classes.headerWrap}>{props.header}</div>
+    <div className={classes.root}>
+      <header className={classes.headerWrap}>
+        <div className={classes.header}>{props.header}</div>
       </header>
-      <section className={classes.content}>
-        <div className={classes.contentWrap}>{props.children}</div>
+      <section className={classes.contentWrap}>
+        <div className={classes.content}>{props.children}</div>
       </section>
     </div>
   );
