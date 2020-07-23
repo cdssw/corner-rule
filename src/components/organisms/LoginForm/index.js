@@ -30,10 +30,6 @@ const useStyles = makeStyles((theme) => ({
       color: 'white',
     }
   },
-  button: {
-    backgroundColor: '#1b2c48',
-    color: 'white',
-  },
   checkboxWrap: {
     marginRight: 0,
   },

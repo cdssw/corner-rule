@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.error.dark,
   },
   icon: {
-    paddingTop: '3px',
+    paddingTop: '5px',
   }
 }));
 
@@ -33,7 +33,7 @@ export default function InputIcon({type, name, icon, invalid, validMessage, onCh
     <div className={classes.root}>
       <div className={classes.inputWrap}>
         <input
-          className={classes.input} // props에 따른 class 추가
+          className={classes.input}
           type={type || 'text'}
           name={name}
           onChange={onChange}

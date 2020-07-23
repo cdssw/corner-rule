@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Avatar } from '@material-ui/core';
 import Person from "@material-ui/icons/Person";
 import { Link } from "react-router-dom";
+import * as resources from "constants/resources";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,7 +15,8 @@ const useStyles = makeStyles((theme) => ({
     padding: '0 10px',
   },
   logo: {
-    width: '110px',
+    width: '120px',
+    height: '35px',
   },
 }));
 
@@ -23,8 +25,9 @@ export default function Header({userInfo}) {
 
   return (
     <div className={classes.root}>
-      <img className={classes.logo} src={process.env.PUBLIC_URL + "/images/logo_small.png"} />
+      <img className={classes.logo} src={resources.logoHorizon} />
       <div>
+        {userInfo && <span>{userInfo.userNm}</span>}
         <Link to='/login'>
           <Avatar
             alt={userInfo && userInfo.userNm}

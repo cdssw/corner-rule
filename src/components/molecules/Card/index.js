@@ -4,7 +4,7 @@ import StarIcon from '@material-ui/icons/Star';
 
 const useStyles = makeStyles((theme) => ({
   card: {
-    backgroundColor: 'white',
+    backgroundColor: '#f6f6f6',
     position: 'relative',
     boxSizing: 'border-box',
     borderRadius: '10px',
