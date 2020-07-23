@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
   },
   header: {
-    backgroundColor: 'gray',
+    backgroundColor: theme.colorA,
     display: 'flex',
     justifyContent: 'center',
     position: 'fixed',
