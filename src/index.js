@@ -35,9 +35,11 @@ const theme = createMuiTheme({
         paddingBottom: '9px',
       },
     },
-    MuiInputBaseRoot: {
-      '&:focused': {
-        border: 'none',
+    MuiInputBase: {
+      root: {
+        '&:focused': {
+          border: 'none',
+        },
       },
     },
   },
