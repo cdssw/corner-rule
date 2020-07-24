@@ -35,10 +35,8 @@ const theme = createMuiTheme({
         paddingBottom: '9px',
       },
     },
-    MuiInput: {
-      '&:hover': {
-        border: 'none',
-      },
+    MuiFocused: {
+      border: 'none',
     },
   },
   colorA: "#5a6482",
