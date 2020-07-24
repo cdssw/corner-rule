@@ -28,7 +28,12 @@ const theme = createMuiTheme({
           margin: 0,
         }
       }
-    }
+    },
+    MuiOutlinedInput: {
+      inputMarginDense: {
+        padding: 0,
+      },
+    },
   },
   colorA: "#5a6482",
   colorWhite: 'white',
