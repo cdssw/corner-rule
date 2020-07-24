@@ -31,7 +31,8 @@ const theme = createMuiTheme({
     },
     MuiOutlinedInput: {
       inputMarginDense: {
-        padding: 0,
+        paddingTop: '9px',
+        paddingBottom: '9px',
       },
     },
   },
