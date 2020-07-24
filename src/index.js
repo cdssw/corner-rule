@@ -37,7 +37,7 @@ const theme = createMuiTheme({
     },
     MuiInputBase: {
       root: {
-        '&:focused': {
+        '&$focused': {
           border: 'none',
         },
       },
