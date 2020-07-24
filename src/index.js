@@ -35,8 +35,10 @@ const theme = createMuiTheme({
         paddingBottom: '9px',
       },
     },
-    MuiFocused: {
-      border: 'none',
+    MuiInputBaseRoot: {
+      '&:focused': {
+        border: 'none',
+      },
     },
   },
   colorA: "#5a6482",
