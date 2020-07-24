@@ -1,23 +1,25 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import StarIcon from '@material-ui/icons/Star';
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import ForumIcon from '@material-ui/icons/Forum';
+import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 
 const useStyles = makeStyles((theme) => ({
-  card: {
-    backgroundColor: '#f6f6f6',
+  root: {
     position: 'relative',
     boxSizing: 'border-box',
-    borderRadius: '10px',
     marginBottom: '10px',
     paddingBottom: '30%',
+    border: '1px solid #EBEBEB',
+    height: '120px',
   },
-  card_img: {
+  img: {
     position: 'absolute',
     top: 0,
     left: 0,
     bottom: 0,
-    width: '30%',
-    padding: '7px',
+    width: '35%',
+    padding: '10px',
     boxSizing: 'border-box',
     '& img': {
       width: '100%',
@@ -25,56 +27,72 @@ const useStyles = makeStyles((theme) => ({
       borderRadius: '5px',
     },
   },
-  card_content: {
+  content: {
+    padding: '10px',
     position: 'absolute',
-    width: '70%',
+    width: '68%',
     top: 0,
     right: 0,
     bottom: 0,
     boxSizing: 'border-box',
     '& .title': {
       position: 'absolute',
-      top: '10%',
+      top: '7%',
       fontWeight: 'bold',
       color: '#2D3057',
-      fontSize: '1rem'
+      fontSize: '0.9rem'
     },
-    '& .star': {
+    '& .addressWrap': {
+      padding: '0 10px',
+      top: '26%',
       position: 'absolute',
-      top: '10%',
-      right: '10px',
-      color: '#FF507C'
-    },
-    '& .address': {
-      position: 'absolute',
-      top: '30%',
-      fontSize: '0.9rem',
-      color: '#8154FF',
-      fontWeight: 'bold',
+      border: '1px solid #707070',
+      borderRadius: '12px',
+      height: '23px',
+      display: 'flex',
+      alignItems: 'center',
+      '& .address': {
+        color: '#707070',
+        fontSize: '0.8rem'
+      },
     },
     '& .date': {
       position: 'absolute',
-      top: '47%',
-      fontSize: '1rem',
-      color: '#2D3057',
+      top: '48%',
+      color: '#707070',
+      display: 'flex',
+      '& div': {
+        paddingRight: '3px',
+      },
+      '& div:nth-child(2)': {
+        paddingTop: '2px',
+      }
     },
-    '& .info_container': {
+    '& .info': {
       position: 'absolute',
       top: '70%',
       boxSizing: 'border-box',
-      height: '30px',
       width: '100%',
-      '& .cost': {
+      '& .costWrap': {
+        padding: '0 10px',
         position: 'absolute',
-        fontSize: '1rem',
-        fontWeight: 'bold',
-        color: '#F85D84',
+        borderRadius: '12px',
+        backgroundColor: '#FFC7E3',
+        height: '23px',
+        display: 'flex',
+        alignItems: 'center',
+        '& .cost': {
+          paddingTop: '2px',
+          color: '#FF3096',
+          fontWeight: 'bold',
+        },
       },
-      '& .attend_title': {
+      '& .commWrap': {
         position: 'absolute',
-        fontSize: '1rem',
-        color: '#18AA49',
-        right: '10px',
+        fontSize: '0.9rem',
+        color: '#95989A',
+        right: '20px',
+        display: 'flex',
       },
     },
   },
@@ -84,18 +102,29 @@ export default function Card(props) {
   const classes = useStyles();
 
   return (
-    <div className={classes.card}>
-      <div className={classes.card_img}>
-        <img src={process.env.PUBLIC_URL + "/images/street1.png"} />
+    <div className={classes.root}>
+      <div className={classes.img}>
+        <img src={process.env.PUBLIC_URL + "/images/back1.jpg"} />
       </div>
-      <div className={classes.card_content}>
-        <div className="title">{Math.random().toString(36).substr(2,11)} {props.index}</div>
-        <StarIcon className="star" />
-        <div className="address">{Math.random().toString(36).substr(2,11)}</div>
-        <div className="date">2020년 {Math.floor(1 + (Math.random() * (12-7)))}월 {Math.floor(1 + (Math.random() * (31-1)))}일 {Math.floor(1 + (Math.random() * (24-1)))}:{Math.floor(1 + (Math.random() * (59-1)))}분</div>
-        <div className="info_container">
-          <div className="cost">￦{Math.floor(0 + (Math.random() * (100000-0))).toLocaleString()}</div>
-          <div className="attend_title">모집중 {Math.floor(1 + (Math.random() * (5-1)))}/{Math.floor(5 + (Math.random() * (10-5)))}</div>
+      <div className={classes.content}>
+        <div className="title">Can you bring my child to me!!</div>
+        <div className="addressWrap">
+          <div className="address">처인구 역북동</div>
+        </div>
+        <div className="date">
+          <div><CalendarTodayIcon fontSize="small" /></div>
+          <div>7.10 - 8.10, 주말</div>
+        </div>
+        <div className="info">
+          <div className="costWrap">
+            <div className="cost">￦ 10,000</div>
+          </div>
+          <div className="commWrap">
+            <div><ForumIcon fontSize="small" /></div>
+            <div>5</div>
+            <div><PermIdentityIcon fontSize="small" /></div>
+            <div>3</div>
+          </div>
         </div>
       </div>
     </div>

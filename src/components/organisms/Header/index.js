@@ -9,7 +9,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     display: 'flex',
-    justifyContent: 'space-between',
     alignItems: 'center',
     maxWidth: '600px',
     padding: '0 10px',
@@ -18,6 +17,13 @@ const useStyles = makeStyles((theme) => ({
     width: '120px',
     height: '35px',
   },
+  space: {
+    flexGrow: 1,
+  },
+  userName: {
+    color: theme.colorWhite,
+    paddingRight: '5px',
+  }
 }));
 
 export default function Header({userInfo}) {
@@ -26,8 +32,9 @@ export default function Header({userInfo}) {
   return (
     <div className={classes.root}>
       <img className={classes.logo} src={resources.logoHorizon} />
+      <div className={classes.space}></div>
+      <div className={classes.userName}>{userInfo && userInfo.userNm}</div>
       <div>
-        {userInfo && <span>{userInfo.userNm}</span>}
         <Link to='/login'>
           <Avatar
             alt={userInfo && userInfo.userNm}
