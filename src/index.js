@@ -26,19 +26,6 @@ const theme = createMuiTheme({
         },
         body: {
           margin: 0,
-        }
-      }
-    },
-    MuiOutlinedInput: {
-      inputMarginDense: {
-        paddingTop: '9px',
-        paddingBottom: '9px',
-      },
-    },
-    MuiInputBase: {
-      root: {
-        '&$focused': {
-          border: 'none',
         },
       },
     },

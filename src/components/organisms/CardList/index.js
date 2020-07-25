@@ -4,8 +4,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { Card } from "components";
 
 const useStyles = makeStyles((theme) => ({
-  card_list: {
-    // width: '100%',
+  root: {
   },
 }));
 
@@ -14,14 +13,14 @@ export default function CardList(props) {
 
   return (
     <>
-      <div className={classes.card_list}>
+      <div className={classes.root}>
         <InfiniteScroll
           dataLength={props.items.length}
           next={props.fetchMoreData}
           hasMore={true}
         >
           {props.items.map((i, index) => (
-            <Card key={index} index={index} />
+            <Card key={index} index={index} image={index % 3 === 0 && true} />
           ))}
         </InfiniteScroll>
       </div>

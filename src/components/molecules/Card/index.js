@@ -1,76 +1,88 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import ForumIcon from '@material-ui/icons/Forum';
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
+
+const cardTheme = createMuiTheme({
+  overrides: {
+    MuiSvgIcon: {
+      root: {
+        width: '0.7em',
+        height: '0.8em',
+      },
+    },
+  },
+});
 
 const useStyles = makeStyles((theme) => ({
   root: {
     position: 'relative',
     boxSizing: 'border-box',
     marginBottom: '10px',
-    paddingBottom: '30%',
     border: '1px solid #EBEBEB',
-    height: '120px',
+    height: '110px',
   },
   img: {
     position: 'absolute',
     top: 0,
     left: 0,
     bottom: 0,
-    width: '35%',
     padding: '10px',
     boxSizing: 'border-box',
     '& img': {
-      width: '100%',
-      height: '100%',
+      width: '90px',
+      height: '90px',
       borderRadius: '5px',
     },
   },
   content: {
-    padding: '10px',
     position: 'absolute',
-    width: '68%',
+    left: '110px',
     top: 0,
     right: 0,
     bottom: 0,
     boxSizing: 'border-box',
     '& .title': {
       position: 'absolute',
-      top: '7%',
+      top: '9px',
       fontWeight: 'bold',
-      color: '#2D3057',
-      fontSize: '0.9rem'
+      color: '#3e3e3e',
+      fontSize: '15px',
+      textOverflow: 'ellipsis',
+      width: '95%',
+      overflow: 'hidden',
+      whiteSpace: 'nowrap',
     },
     '& .addressWrap': {
       padding: '0 10px',
-      top: '26%',
+      top: '31px',
       position: 'absolute',
       border: '1px solid #707070',
       borderRadius: '12px',
-      height: '23px',
+      height: '20px',
       display: 'flex',
       alignItems: 'center',
       '& .address': {
         color: '#707070',
-        fontSize: '0.8rem'
+        fontSize: '12px'
       },
     },
     '& .date': {
       position: 'absolute',
-      top: '48%',
+      top: '53px',
       color: '#707070',
       display: 'flex',
       '& div': {
         paddingRight: '3px',
       },
       '& div:nth-child(2)': {
-        paddingTop: '2px',
+        fontSize: '13px',
       }
     },
     '& .info': {
       position: 'absolute',
-      top: '70%',
+      top: '79px',
       boxSizing: 'border-box',
       width: '100%',
       '& .costWrap': {
@@ -78,55 +90,66 @@ const useStyles = makeStyles((theme) => ({
         position: 'absolute',
         borderRadius: '12px',
         backgroundColor: '#FFC7E3',
-        height: '23px',
+        height: '21px',
         display: 'flex',
         alignItems: 'center',
         '& .cost': {
           paddingTop: '2px',
           color: '#FF3096',
           fontWeight: 'bold',
+          fontSize: '15px',
         },
       },
       '& .commWrap': {
         position: 'absolute',
-        fontSize: '0.9rem',
+        fontSize: '15px',
         color: '#95989A',
-        right: '20px',
+        right: '10px',
         display: 'flex',
+        '& div': {
+          paddingLeft: '2px',
+        },
+        '& .ico': {
+          paddingTop: '2px',
+        },
       },
     },
   },
 }));
 
-export default function Card(props) {
+export default function Card({image}) {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <div className={classes.img}>
-        <img src={process.env.PUBLIC_URL + "/images/back1.jpg"} />
-      </div>
-      <div className={classes.content}>
-        <div className="title">Can you bring my child to me!!</div>
-        <div className="addressWrap">
-          <div className="address">처인구 역북동</div>
-        </div>
-        <div className="date">
-          <div><CalendarTodayIcon fontSize="small" /></div>
-          <div>7.10 - 8.10, 주말</div>
-        </div>
-        <div className="info">
-          <div className="costWrap">
-            <div className="cost">￦ 10,000</div>
+    <ThemeProvider theme={cardTheme}>
+      <div className={classes.root}>
+        {image &&
+          <div className={classes.img}>
+            <img src={process.env.PUBLIC_URL + "/images/back1.jpg"} />
           </div>
-          <div className="commWrap">
-            <div><ForumIcon fontSize="small" /></div>
-            <div>5</div>
-            <div><PermIdentityIcon fontSize="small" /></div>
-            <div>3</div>
+        }
+        <div className={classes.content} style={{left : !image && '10px'}}>
+          <div className="title">Can you bring my child to me!! child to me!!</div>
+          <div className="addressWrap">
+            <div className="address">처인구 역북동</div>
+          </div>
+          <div className="date">
+            <div><CalendarTodayIcon fontSize="small" /></div>
+            <div>7.10 - 8.10, 주말</div>
+          </div>
+          <div className="info">
+            <div className="costWrap">
+              <div className="cost">￦ 10,000</div>
+            </div>
+            <div className="commWrap">
+              <div className="ico"><ForumIcon fontSize="small" /></div>
+              <div>5</div>
+              <div className="ico"><PermIdentityIcon fontSize="small" /></div>
+              <div>3</div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </ThemeProvider>
   );
 }

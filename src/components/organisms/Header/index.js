@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   userName: {
     color: theme.colorWhite,
     paddingRight: '5px',
-  }
+  },
 }));
 
 export default function Header({userInfo}) {
