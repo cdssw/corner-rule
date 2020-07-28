@@ -12,6 +12,19 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 const useStyles = makeStyles((theme) => ({
   root: {
   },
+  button: {
+    marginTop: theme.spacing(1),
+    marginRight: theme.spacing(1),
+  },
+  actionsContainer: {
+    marginBottom: theme.spacing(2),
+  },
+  resetContainer: {
+    padding: theme.spacing(3),
+  },
+  inputWrap: {
+    marginBottom: '10px',
+  },
 }));
 
 function getSteps() {
@@ -19,14 +32,16 @@ function getSteps() {
 }
 
 function getStepContent(step) {
+  const classes = useStyles();
+
   switch (step) {
     case 0:
       return (
         <>
-          <div>
+          <div className={classes.inputWrap}>
             <OutlinedInput id="standard-basic" placeholder="이메일 ID" />
           </div>
-          <div>
+          <div className={classes.inputWrap}>
             <OutlinedInput id="standard-basic" placeholder="비밀번호" />
           </div>
         </>
