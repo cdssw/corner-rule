@@ -29,6 +29,25 @@ const theme = createMuiTheme({
         },
       },
     },
+    MuiOutlinedInput: {
+      root: {
+        width: '100%',
+        '& $notchedOutline': {
+          borderColor: '#707070',
+        },
+        '&$focused $notchedOutline': {
+          borderColor: '#707070',
+          borderWidth: 1,
+        },
+      },
+      input: {
+        padding: '10px 10px',
+      },
+      inputMarginDense: {
+        paddingTop: '9px',
+        paddingBottom: '9px',
+      },
+    },
   },
   colorA: "#5a6482",
   colorWhite: 'white',
