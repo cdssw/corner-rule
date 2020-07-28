@@ -1,30 +1,10 @@
 import React from "react";
-import { makeStyles, ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { InputIcon } from "components";
 import FormControl from '@material-ui/core/FormControl';
-
-const placeTheme = createMuiTheme({
-  overrides: {
-    MuiOutlinedInput: {
-      root: {
-        '& $notchedOutline': {
-          borderColor: '#707070',
-        },
-        '&$focused $notchedOutline': {
-          borderColor: '#707070',
-          borderWidth: 1,
-        },
-      },
-      inputMarginDense: {
-        paddingTop: '9px',
-        paddingBottom: '9px',
-      },
-    }
-  }
-});
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,7 +27,7 @@ export default function PlaceSearch({place, onPlace, onSearch}) {
   const classes = useStyles();
 
   return (
-    <ThemeProvider theme={placeTheme}>
+    <> 
       <div className={classes.root}>
         <div className={classes.placeWrap}>
           <FormControl variant="outlined" size="small" className={classes.place}>
@@ -68,6 +48,6 @@ export default function PlaceSearch({place, onPlace, onSearch}) {
       </div>
       {/* hr */}
       <div style={{borderBottom: '1px solid #dfdfdf', marginBottom: '10px'}}></div>
-    </ThemeProvider>
+    </>
   );
 }
