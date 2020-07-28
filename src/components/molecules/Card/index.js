@@ -30,10 +30,14 @@ const useStyles = makeStyles((theme) => ({
     bottom: 0,
     padding: '10px',
     boxSizing: 'border-box',
+    overflow: 'hidden',    
+    width: '110px',
+    height: '110px',
     '& img': {
-      width: '90px',
-      height: '90px',
       borderRadius: '5px',
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover',
     },
   },
   content: {
@@ -117,7 +121,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Card({image}) {
+export default function Card({image, index}) {
   const classes = useStyles();
 
   return (
@@ -125,7 +129,7 @@ export default function Card({image}) {
       <div className={classes.root}>
         {image &&
           <div className={classes.img}>
-            <img src={process.env.PUBLIC_URL + "/images/back1.jpg"} />
+            <img src={process.env.PUBLIC_URL + index % 9 === 0 ? "/images/food1.jpg" : "/images/back1.jpg"} />
           </div>
         }
         <div className={classes.content} style={{left : !image && '10px'}}>

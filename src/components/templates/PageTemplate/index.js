@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     position: 'fixed',
     width: '100%',
-    height: '60px',
+    height: '50px',
     zIndex: '1000',
   },
   contentWrap: {
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
   content: {
-    marginTop: '60px',
+    marginTop: '50px',
     flexGrow: 1,
     display: 'flex',
     justifyContent: 'center',
