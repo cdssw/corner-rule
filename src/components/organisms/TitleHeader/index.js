@@ -22,9 +22,10 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     color: theme.colorWhite,
+    fontSize: '1rem',
   },
   space: {
-    padding: '10px 44px 10px 0px',
+    padding: '10px 24px 10px 0px',
   }
 }));
 
