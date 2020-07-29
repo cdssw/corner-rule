@@ -24,12 +24,16 @@ const useStyles = makeStyles((theme) => ({
   },
   inputWrap: {
     marginBottom: '10px',
+    display: 'flex',
   },
   stepperRoot: {
     padding: '24px 10px',
   },
   stepContentRoot: {
     paddingRight: 0,
+  },
+  checkInput: {
+    flexGrow: 1,
   },
 }));
 
@@ -45,7 +49,8 @@ function getStepContent(step) {
       return (
         <>
           <div className={classes.inputWrap}>
-            <OutlinedInput id="standard-basic" placeholder="이메일 ID" />
+            <OutlinedInput className={classes.checkInput} id="standard-basic" placeholder="이메일 ID" />
+            <Button variant='contained'>확인</Button>
           </div>
           <div className={classes.inputWrap}>
             <OutlinedInput id="standard-basic" placeholder="비밀번호" />
