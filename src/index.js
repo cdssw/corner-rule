@@ -45,6 +45,11 @@ const theme = createMuiTheme({
         paddingBottom: '9px',
       },
     },
+    MuiSelect: {
+      outlined: {
+        backgroundColor: 'white',
+      },
+    },
   },
   colorA: "#5a6482",
   colorWhite: 'white',
