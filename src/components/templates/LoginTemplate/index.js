@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.colorA,
   },
   arrowWrap: {
-    padding: '10px 0 10px 10px',
+    padding: '15px 0 10px 10px',
   },
   arrow: {
     color: 'white',
