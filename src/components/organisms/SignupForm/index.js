@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import ChipInput from 'material-ui-chip-input';
+import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,6 +37,32 @@ const useStyles = makeStyles((theme) => ({
   checkInput: {
     flexGrow: 1,
     marginRight: '5px',
+  },
+  profileWrap: {
+    margin: '0 auto 20px auto',
+    width: '100px',
+    height: '100px',
+    padding: '10px',
+    position: 'relative',
+  },
+  profile: {
+    position: 'absolute',
+    left: '-12px',
+    border: '2px solid #919394',
+    borderRadius: '90px',
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'lightgray',
+  },
+  profileAdd: {
+    position: 'absolute',
+    width: '28px',
+    height: '28px',
+    border: '2px solid #95989a',
+    borderRadius: '90px',
+    backgroundColor: 'white',
+    right: '15px',
+    bottom: '-10px',
   },
 }));
 
@@ -79,6 +106,10 @@ function getStepContent(step, classes) {
     case 2:
       return (
         <>
+          <div className={classes.profileWrap}>
+            <div className={classes.profile}></div>
+            <div className={classes.profileAdd}><AddIcon /></div>
+          </div>
           <div className={classes.inputWrap}>
             <OutlinedInput id="standard-basic" placeholder="주특기" />
           </div>
