@@ -28,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
     padding: '0 20px',
     '& div': {
       color: 'white',
+    },
+    '& a': {
+      textDecoration: 'none',
     }
   },
   checkboxWrap: {
@@ -67,7 +70,7 @@ export default function LoginForm({onInput, onLogin, saveId, onSaveId}) {
       </div>
       <div className={classes.signup}>
         <div>아이디가 없으신가요?</div>
-        <div><Link to="/signup">회원가입</Link></div>
+        <div className={classes.signup}><Link to="/signup"><div>회원가입</div></Link></div>
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
   inputWrap: {
     border: '1px solid #c4c4c4',
     borderRadius: '5px',
-    padding: '0 10px 0 5px',
+    padding: '0 5px 0 5px',
     backgroundColor: 'white',
     display: 'flex',
     alignItems: 'center',

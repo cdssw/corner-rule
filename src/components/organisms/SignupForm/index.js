@@ -8,6 +8,7 @@ import StepContent from '@material-ui/core/StepContent';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
+import ChipInput from 'material-ui-chip-input';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,8 +43,7 @@ function getSteps() {
   return ['기본정보', '회원정보', '부가정보'];
 }
 
-function getStepContent(step) {
-  const classes = useStyles();
+function getStepContent(step, classes) {
 
   switch (step) {
     case 0:
@@ -77,10 +77,19 @@ function getStepContent(step) {
         </>
       );
     case 2:
-      return `Try out different ad text to see what brings in the most customers,
-              and learn how to enhance your ads using features like ad extensions.
-              If you run into any problems with your ads, find out how to tell if
-              they're running and how to resolve approval issues.`;
+      return (
+        <>
+          <div className={classes.inputWrap}>
+            <OutlinedInput id="standard-basic" placeholder="주특기" />
+          </div>
+          <div className={classes.inputWrap}>
+            <ChipInput placeholder="특기" variant="outlined" fullWidth={true} />
+          </div>        
+          <div className={classes.inputWrap}>
+            <ChipInput placeholder="관심사" variant="outlined" fullWidth={true} />
+          </div>
+        </>
+      );
     default:
       return 'Unknown step';
   }
@@ -117,7 +126,7 @@ export default function SignupForm(props) {
           <Step key={label}>
             <StepLabel>{label}</StepLabel>
             <StepContent classes={{root: classes.stepContentRoot}}>
-              <Typography>{getStepContent(index)}</Typography>
+              <Typography>{getStepContent(index, classes)}</Typography>
               <div className={classes.actionsContainer}>
                 <div>
                   <Button
@@ -125,7 +134,7 @@ export default function SignupForm(props) {
                     onClick={handleBack}
                     className={classes.button}
                   >
-                    Back
+                    뒤로
                   </Button>
                   <Button
                     variant="contained"
@@ -133,7 +142,7 @@ export default function SignupForm(props) {
                     onClick={handleNext}
                     className={classes.button}
                   >
-                    {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                    {activeStep === steps.length - 1 ? '완료' : '다음'}
                   </Button>
                 </div>
               </div>
@@ -143,9 +152,9 @@ export default function SignupForm(props) {
       </Stepper>
       {activeStep === steps.length && (
         <Paper square elevation={0} className={classes.resetContainer}>
-          <Typography>All steps completed - you&apos;re finished</Typography>
+          <Typography>회원가입이 완료되었습니다.</Typography>
           <Button onClick={handleReset} className={classes.button}>
-            Reset
+            초기화
           </Button>
         </Paper>
       )}
