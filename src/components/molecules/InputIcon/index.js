@@ -4,12 +4,15 @@ import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   inputWrap: {
-    border: '1px solid #707070',
+    border: '1px solid #c4c4c4',
     borderRadius: '5px',
     padding: '0 10px 0 5px',
     backgroundColor: 'white',
     display: 'flex',
     alignItems: 'center',
+    '&:focus-within': {
+      borderColor: '#707070',
+    },
   },
   input: {
     width: '100%',
