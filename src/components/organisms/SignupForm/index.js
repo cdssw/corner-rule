@@ -28,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
   stepperRoot: {
     padding: '24px 10px',
   },
+  stepContentRoot: {
+    paddingRight: 0,
+  },
 }));
 
 function getSteps() {
@@ -91,7 +94,7 @@ export default function SignupForm(props) {
         {steps.map((label, index) => (
           <Step key={label}>
             <StepLabel>{label}</StepLabel>
-            <StepContent>
+            <StepContent classes={{root: classes.stepContentRoot}}>
               <Typography>{getStepContent(index)}</Typography>
               <div className={classes.actionsContainer}>
                 <div>
