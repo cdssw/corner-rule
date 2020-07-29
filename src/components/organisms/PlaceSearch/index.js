@@ -21,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
   searchWrap: {
     flexGrow: 1,
   },
+  select: {
+    backgroundColor: theme.colorWhite,
+  },
 }));
 
 export default function PlaceSearch({place, onPlace, onSearch}) {
