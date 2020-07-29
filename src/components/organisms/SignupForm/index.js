@@ -25,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
   inputWrap: {
     marginBottom: '10px',
   },
+  stepperRoot: {
+    padding: '24px 10px',
+  },
 }));
 
 function getSteps() {
@@ -78,7 +81,13 @@ export default function SignupForm(props) {
 
   return (
     <div className={classes.root}>
-      <Stepper activeStep={activeStep} orientation="vertical">
+      <Stepper
+        activeStep={activeStep}
+        orientation="vertical"
+        classes={{
+          root: classes.stepperRoot,
+        }}
+      >
         {steps.map((label, index) => (
           <Step key={label}>
             <StepLabel>{label}</StepLabel>
