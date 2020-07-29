@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
   checkInput: {
     flexGrow: 1,
+    marginRight: '5px',
   },
 }));
 
@@ -50,15 +51,31 @@ function getStepContent(step) {
         <>
           <div className={classes.inputWrap}>
             <OutlinedInput className={classes.checkInput} id="standard-basic" placeholder="이메일 ID" />
-            <Button variant='contained'>확인</Button>
+            <Button variant='contained' color='primary'>확인</Button>
           </div>
           <div className={classes.inputWrap}>
-            <OutlinedInput id="standard-basic" placeholder="비밀번호" />
+            <OutlinedInput type='password' id="standard-basic" placeholder="비밀번호" />
+          </div>
+          <div className={classes.inputWrap}>
+            <OutlinedInput type='password' id="standard-basic" placeholder="비밀번호 확인" />
           </div>
         </>
       );
     case 1:
-      return 'An ad group contains one or more ads which target a shared set of keywords.';
+      return (
+        <>
+          <div className={classes.inputWrap}>
+            <OutlinedInput id="standard-basic" placeholder="이름" />
+          </div>
+          <div className={classes.inputWrap}>
+            <OutlinedInput className={classes.checkInput} id="standard-basic" placeholder="닉네임" />
+            <Button variant='contained' color='primary'>확인</Button>
+          </div>
+          <div className={classes.inputWrap}>
+            <OutlinedInput id="standard-basic" placeholder="전화번호" />
+          </div>
+        </>
+      );
     case 2:
       return `Try out different ad text to see what brings in the most customers,
               and learn how to enhance your ads using features like ad extensions.
