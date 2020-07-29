@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   searchWrap: {
     flexGrow: 1,
   },
-  selectRoot: {
+  selectOutlined: {
     backgroundColor: theme.colorWhite,
   },
 }));
@@ -38,7 +38,7 @@ export default function PlaceSearch({place, onPlace, onSearch}) {
               value={place}
               onChange={onPlace}
               fullWidth={true}
-              classes={{root: classes.selectRoot}}
+              classes={{outlined: classes.selectRoot}}
             >
               <MenuItem value={10}>역북동</MenuItem>
               <MenuItem value={20}>동부동</MenuItem>
