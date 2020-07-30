@@ -62,6 +62,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'white',
     right: '15px',
     bottom: 0,
+    color: '#707070',
   },
   chip: {
     '& > div': {
