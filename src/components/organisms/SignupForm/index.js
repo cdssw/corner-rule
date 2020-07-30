@@ -11,6 +11,7 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 import ChipInput from 'material-ui-chip-input';
 import AddIcon from '@material-ui/icons/Add';
 import Person from "@material-ui/icons/Person";
+import { Avatar } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,6 +54,10 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     height: '100%',
     backgroundColor: 'lightgray',
+  },
+  avatarRoot: {
+    width: '100px',
+    height: '100px',
   },
   profileAdd: {
     position: 'absolute',
@@ -125,7 +130,11 @@ function getStepContent(step, classes) {
       return (
         <>
           <div className={classes.profileWrap}>
-            <div className={classes.profile}><Person /></div>
+            <div className={classes.profile}>
+              <Avatar classes={{root: classes.avatarRoot}}>
+                <Person />
+              </Avatar>
+            </div>
             <div className={classes.profileAdd}><AddIcon /></div>
           </div>
           <div className={classes.inputWrap}>
