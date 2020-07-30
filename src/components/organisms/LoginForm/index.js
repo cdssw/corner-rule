@@ -25,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
   signup: {
     display: 'flex',
     justifyContent: 'space-between',
-    padding: '0 20px',
     '& div': {
       color: 'white',
     },
