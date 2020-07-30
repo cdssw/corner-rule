@@ -64,6 +64,9 @@ const useStyles = makeStyles((theme) => ({
     right: '15px',
     bottom: '-10px',
   },
+  chip: {
+    backgroundColor: 'lightgray',
+  },
 }));
 
 function getSteps() {
@@ -114,10 +117,10 @@ function getStepContent(step, classes) {
             <OutlinedInput id="standard-basic" placeholder="주특기" />
           </div>
           <div className={classes.inputWrap}>
-            <ChipInput placeholder="특기" variant="outlined" fullWidth={true} />
+            <ChipInput className={classes.chip} placeholder="특기" variant="outlined" fullWidth={true} />
           </div>        
           <div className={classes.inputWrap}>
-            <ChipInput placeholder="관심사" variant="outlined" fullWidth={true} />
+            <ChipInput className={classes.chip} placeholder="관심사" variant="outlined" fullWidth={true} />
           </div>
         </>
       );
