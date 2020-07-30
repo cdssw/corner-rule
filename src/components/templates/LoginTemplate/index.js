@@ -41,14 +41,18 @@ const useStyles = makeStyles((theme) => ({
   contentWrap: {
     display: 'flex',
     justifyContent: 'center',
+    padding: '40px',
   },
   content: {
     padding: '0 30px',
   },
   footerWrap: {  
     backgroundColor: 'white',
-    display: 'flex',
-    justifyContent: 'center',
+    position: 'fixed',
+    bottom: 0,
+    width: '100%',
+    margin: '0 auto',
+    padding: '10px 0 30px 0',
   },
 }));
 
