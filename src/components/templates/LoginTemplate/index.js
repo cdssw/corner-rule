@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '600px',
   },
   arrowWrap: {
-    padding: '9px 0 10px 10px',
+    padding: '12px 0 10px 10px',
   },
   arrow: {
     color: 'white',
