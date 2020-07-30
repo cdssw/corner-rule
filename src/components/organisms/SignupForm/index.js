@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
   chip: {
     '& > div': {
       '& > div': {
-        paddingTop: 0,
+        paddingTop: '0 !important',
         paddingLeft: '10px',
         '& > input': {
           margin: 0,
