@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
   flexWrap: {
     display: 'flex',
     justifyContent: 'center',
+    height: '100%',
   },
   container: {
     flexGrow: 1,
