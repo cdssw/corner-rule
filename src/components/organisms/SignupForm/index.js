@@ -66,6 +66,11 @@ const useStyles = makeStyles((theme) => ({
   },
   chip: {
     backgroundColor: 'lightgray',
+    '& > div': {
+      '& > div': {
+        paddingLeft: '10px',
+      },
+    },
   },
 }));
 
