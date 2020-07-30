@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
   input: {
     width: '100%',
-    height: '30px',
+    lineHeight: 'normal',
     outline: 'none',
     border: 'none',
     fontSize: '1rem',
