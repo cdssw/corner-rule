@@ -79,6 +79,7 @@ const useStyles = makeStyles((theme) => ({
         paddingTop: '0 !important',
         paddingLeft: '10px',
         '& > input': {
+          height: '19px',
           margin: 0,
           paddingTop: 0,
           paddingBottom: 0,
