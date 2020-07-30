@@ -1,8 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import { Link } from "react-router-dom";
-import * as resources from "constants/resources";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,15 +27,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function TitleHeader({children}) {
+export default function TitleHeader({children, history}) {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <div className={classes.arrowWrap}>
-        <Link to="/">
-          <ArrowBackIcon className={classes.arrow} />
-        </Link>
+        <ArrowBackIcon className={classes.arrow} onClick={() => history.goBack()} />
       </div>
       <div className={classes.title}>{children}</div>
       <div className={classes.space}></div>

@@ -12,6 +12,7 @@ import ChipInput from 'material-ui-chip-input';
 import AddIcon from '@material-ui/icons/Add';
 import Person from "@material-ui/icons/Person";
 import { Avatar } from '@material-ui/core';
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
   },
   resetContainer: {
     padding: theme.spacing(3),
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   inputWrap: {
     marginBottom: '10px',
@@ -97,21 +101,34 @@ function getSteps() {
   return ['기본정보', '회원정보', '부가정보'];
 }
 
-function getStepContent(step, classes) {
+function getStepContent(step, props, classes) {
+  const {email, emailConfirm, password, passwordCheck, userNm, userNickNm, userNickNmCheck, phoneNo, mainTalent, talent, interest } = props.state;
+
+  const onEmailCheck = e => {
+    // api 호출
+    // 결과에 따라
+    props.onChange(true);
+  };
+
+  const onNickNmCheck = e => {
+    // api 호출
+    // 결과에 따라
+    props.onChange(true);
+  };
 
   switch (step) {
     case 0:
       return (
         <>
           <div className={classes.inputWrap}>
-            <OutlinedInput className={classes.checkInput} id="standard-basic" placeholder="이메일 ID" />
-            <Button variant='contained' color='primary'>확인</Button>
+            <OutlinedInput className={classes.checkInput} name="email" placeholder="이메일 ID" value={email} onChange={props.onChange} />
+            <Button variant='contained' color='primary' onClick={onEmailCheck}>확인</Button>
           </div>
           <div className={classes.inputWrap}>
-            <OutlinedInput type='password' id="standard-basic" placeholder="비밀번호" />
+            <OutlinedInput type='password' name="password" placeholder="비밀번호" value={password} onChange={props.onChange} />
           </div>
           <div className={classes.inputWrap}>
-            <OutlinedInput type='password' id="standard-basic" placeholder="비밀번호 확인" />
+            <OutlinedInput type='password' name="passwordCheck" placeholder="비밀번호 확인" value={passwordCheck} onChange={props.onChange}  />
           </div>
         </>
       );
@@ -119,14 +136,14 @@ function getStepContent(step, classes) {
       return (
         <>
           <div className={classes.inputWrap}>
-            <OutlinedInput id="standard-basic" placeholder="이름" />
+            <OutlinedInput name="userNm" placeholder="이름" value={userNm} onChange={props.onChange}  />
           </div>
           <div className={classes.inputWrap}>
-            <OutlinedInput className={classes.checkInput} id="standard-basic" placeholder="닉네임" />
-            <Button variant='contained' color='primary'>확인</Button>
+            <OutlinedInput className={classes.checkInput} name="userNickNm" placeholder="닉네임" value={userNickNm} onChange={props.onChange}  />
+            <Button variant='contained' color='primary' onChange={onNickNmCheck}>확인</Button>
           </div>
           <div className={classes.inputWrap}>
-            <OutlinedInput id="standard-basic" placeholder="전화번호" />
+            <OutlinedInput name="phoneNo" placeholder="전화번호" value={phoneNo} onChange={props.onChange}  />
           </div>
         </>
       );
@@ -142,13 +159,13 @@ function getStepContent(step, classes) {
             <div className={classes.profileAdd}><AddIcon /></div>
           </div>
           <div className={classes.inputWrap}>
-            <OutlinedInput id="standard-basic" placeholder="주특기" />
+            <OutlinedInput name="mainTalent" placeholder="주특기" value={mainTalent} onChange={props.onChange}  />
           </div>
           <div className={classes.inputWrap}>
-            <ChipInput className={classes.chip} placeholder="특기" variant="outlined" fullWidth={true} />
+            <ChipInput name="talent" className={classes.chip} placeholder="특기" variant="outlined" fullWidth={true} value={talent} onChange={props.onChange}  />
           </div>        
           <div className={classes.inputWrap}>
-            <ChipInput className={classes.chip} placeholder="관심사" variant="outlined" fullWidth={true} />
+            <ChipInput name="interest" className={classes.chip} placeholder="관심사" variant="outlined" fullWidth={true} value={interest} onChange={props.onChange}  />
           </div>
         </>
       );
@@ -171,10 +188,6 @@ export default function SignupForm(props) {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
-  };
-
   return (
     <div className={classes.root}>
       <Stepper
@@ -188,7 +201,7 @@ export default function SignupForm(props) {
           <Step key={label}>
             <StepLabel>{label}</StepLabel>
             <StepContent classes={{root: classes.stepContentRoot}}>
-              <Typography>{getStepContent(index, classes)}</Typography>
+              <Typography>{getStepContent(index, props, classes)}</Typography>
               <div className={classes.actionsContainer}>
                 <div>
                   <Button
@@ -196,7 +209,7 @@ export default function SignupForm(props) {
                     onClick={handleBack}
                     className={classes.button}
                   >
-                    뒤로
+                    이전
                   </Button>
                   <Button
                     variant="contained"
@@ -213,11 +226,12 @@ export default function SignupForm(props) {
         ))}
       </Stepper>
       {activeStep === steps.length && (
-        <Paper square elevation={0} className={classes.resetContainer}>
+        <Paper className={classes.resetContainer}>
           <Typography>회원가입이 완료되었습니다.</Typography>
-          <Button onClick={handleReset} className={classes.button}>
-            초기화
-          </Button>
+          <Link to="/">
+            <Button  variant='contained' color='primary'>HOME</Button>
+          </Link>
+          
         </Paper>
       )}
     </div>
