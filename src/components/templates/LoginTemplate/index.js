@@ -9,11 +9,11 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.colorA,
     display: 'flex',
     flexDirection: 'column',
+    height: '100vh',
   },
   flexWrap: {
     display: 'flex',
     justifyContent: 'center',
-    height: '100vh',
   },
   container: {
     flexGrow: 1,
