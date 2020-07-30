@@ -68,7 +68,13 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'lightgray',
     '& > div': {
       '& > div': {
+        paddingTop: 0,
         paddingLeft: '10px',
+        '& > input': {
+          margin: 0,
+          paddingTop: 0,
+          paddingBottom: 0,
+        },
       },
     },
   },
