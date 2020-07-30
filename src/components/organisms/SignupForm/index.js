@@ -56,8 +56,11 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'lightgray',
   },
   avatarRoot: {
-    width: '100px',
-    height: '100px',
+    width: '96px',
+    height: '96px',
+  },
+  fontSizeLarge: {
+    fontSize: '3.5rem',
   },
   profileAdd: {
     position: 'absolute',
@@ -132,7 +135,7 @@ function getStepContent(step, classes) {
           <div className={classes.profileWrap}>
             <div className={classes.profile}>
               <Avatar classes={{root: classes.avatarRoot}}>
-                <Person />
+                <Person classes={{fontSizeLarge: classes.fontSizeLarge}} fontSize='large' />
               </Avatar>
             </div>
             <div className={classes.profileAdd}><AddIcon /></div>
