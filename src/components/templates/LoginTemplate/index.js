@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
   flexWrap: {
     display: 'flex',
     justifyContent: 'center',
+    marginBottom: '50px',
   },
   container: {
     flexGrow: 1,
@@ -48,7 +49,6 @@ const useStyles = makeStyles((theme) => ({
   footerWrap: {  
     backgroundColor: 'white',
     width: '100%',
-    margin: '100px auto 0',
     padding: '10px 0 30px 0',
   },
 }));
