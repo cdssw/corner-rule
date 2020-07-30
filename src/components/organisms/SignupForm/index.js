@@ -74,6 +74,9 @@ const useStyles = makeStyles((theme) => ({
           paddingTop: 0,
           paddingBottom: 0,
         },
+        '& > .MuiChip-root': {
+          margin: '0 5px 0 0',
+        },
       },
     },
   },
