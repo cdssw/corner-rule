@@ -42,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
     margin: '0 auto 20px auto',
     width: '100px',
     height: '100px',
-    padding: '10px',
     position: 'relative',
   },
   profile: {
@@ -62,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '90px',
     backgroundColor: 'white',
     right: '15px',
-    bottom: '-10px',
+    bottom: 0,
   },
   chip: {
     '& > div': {
