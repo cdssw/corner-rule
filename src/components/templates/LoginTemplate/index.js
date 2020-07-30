@@ -58,21 +58,23 @@ export default function LoginTemplate(props) {
   return (
     <div className={classes.root}>
       <div className={classes.flexWrap}>
-        <header className={classes.headerWrap}>
-          <div className={classes.header}>
-            <div className={classes.arrowWrap}>
-              <Link to="/">
-                <ArrowBackIcon className={classes.arrow} />
-              </Link>
+        <div className={classes.container}>
+          <header className={classes.headerWrap}>
+            <div className={classes.header}>
+              <div className={classes.arrowWrap}>
+                <Link to="/">
+                  <ArrowBackIcon className={classes.arrow} />
+                </Link>
+              </div>
             </div>
+          </header>
+          <div className={classes.logoWrap}>
+            <img className={classes.logo} src={resources.logo} />
           </div>
-        </header>
-        <div className={classes.logoWrap}>
-          <img className={classes.logo} src={resources.logo} />
-        </div>
-        <div className={classes.contentWrap}>
-          <div className={classes.content}>
-            {props.children}
+          <div className={classes.contentWrap}>
+            <div className={classes.content}>
+              {props.children}
+            </div>
           </div>
         </div>
       </div>
