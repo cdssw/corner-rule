@@ -10,21 +10,15 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     height: '100vh',
-  },
-  flexWrap: {
+  }, 
+  headerWrap: {
+    flexBasis: '50px',
     display: 'flex',
     justifyContent: 'center',
   },
-  container: {
-    flexGrow: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    maxWidth: '600px',
-  },
-  headerWrap: {
-    height: '50px',
-  },
   header: {
+    flexGrow: 1,
+    maxWidth: '600px',
   },
   arrowWrap: {
     padding: '13px 0 10px 10px',
@@ -42,18 +36,19 @@ const useStyles = makeStyles((theme) => ({
     height: '129px',
   },
   contentWrap: {
+    flexGrow: 1,
     display: 'flex',
     justifyContent: 'center',
   },
   content: {
+    flexGrow: 1,
     padding: '0 30px',
-    width: '100%',
+    maxWidth: '600px',
   },
-  footerWrap: {  
+  footerWrap: {
+    flexBasis: '50px',
     backgroundColor: 'white',
-    width: '100%',
     padding: '10px 0 30px 0',
-    marginTop: 'auto',
   },
 }));
 
@@ -62,30 +57,26 @@ export default function LoginTemplate(props) {
 
   return (
     <div className={classes.root}>
-      <div className={classes.flexWrap}>
-        <div className={classes.container}>
-          <header className={classes.headerWrap}>
-            <div className={classes.header}>
-              <div className={classes.arrowWrap}>
-                <Link to="/">
-                  <ArrowBackIcon className={classes.arrow} />
-                </Link>
-              </div>
-            </div>
-          </header>
-          <div className={classes.logoWrap}>
-            <img className={classes.logo} src={resources.logo} />
+      <div className={classes.headerWrap}>
+        <header className={classes.header}>
+          <div className={classes.arrowWrap}>
+            <Link to="/">
+              <ArrowBackIcon className={classes.arrow} />
+            </Link>
           </div>
-          <div className={classes.contentWrap}>
-            <div className={classes.content}>
-              {props.children}
-            </div>
-          </div>
-        </div>
+        </header>
       </div>
-      <div className={classes.footerWrap}>
+      <div className={classes.logoWrap}>
+        <img className={classes.logo} src={resources.logo} />
+      </div>
+      <div className={classes.contentWrap}>
+        <section className={classes.content}>
+          {props.children}
+        </section>
+      </div>
+      <footer className={classes.footerWrap}>
         {props.footer}
-      </div>
+      </footer>
     </div>
   );
 }
