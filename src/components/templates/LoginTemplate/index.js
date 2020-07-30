@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
   logoWrap: {
     display: 'flex',
     justifyContent: 'center',
+    padding: '40px',
   },
   logo: {
     width: '154px',
@@ -41,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
   contentWrap: {
     display: 'flex',
     justifyContent: 'center',
-    padding: '40px',
   },
   content: {
     padding: '0 30px',
