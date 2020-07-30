@@ -10,6 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import ChipInput from 'material-ui-chip-input';
 import AddIcon from '@material-ui/icons/Add';
+import Person from "@material-ui/icons/Person";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -124,7 +125,7 @@ function getStepContent(step, classes) {
       return (
         <>
           <div className={classes.profileWrap}>
-            <div className={classes.profile}></div>
+            <div className={classes.profile}><Person /></div>
             <div className={classes.profileAdd}><AddIcon /></div>
           </div>
           <div className={classes.inputWrap}>
