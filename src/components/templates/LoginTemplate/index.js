@@ -7,11 +7,12 @@ import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.colorA,
+    display: 'flex',
+    flexDirection: 'column',
   },
   flexWrap: {
     display: 'flex',
     justifyContent: 'center',
-    marginBottom: '50px',
   },
   container: {
     flexGrow: 1,
@@ -50,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'white',
     width: '100%',
     padding: '10px 0 30px 0',
+    marginTop: 'auto',
   },
 }));
 
