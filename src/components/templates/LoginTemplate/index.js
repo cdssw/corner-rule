@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: '100%',
     backgroundColor: theme.colorA,
   },
   flexWrap: {
@@ -48,10 +47,8 @@ const useStyles = makeStyles((theme) => ({
   },
   footerWrap: {  
     backgroundColor: 'white',
-    position: 'fixed',
-    bottom: 0,
     width: '100%',
-    margin: '0 auto',
+    margin: '100px auto 0',
     padding: '10px 0 30px 0',
   },
 }));
