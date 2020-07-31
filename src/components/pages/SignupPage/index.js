@@ -32,7 +32,7 @@ function reducer(state, action) {
           [action.name]: action.value
         }
       };
-    case 'CHANGE_ARRAY':
+    case 'ADD_ARRAY':
       return {
         ...state,
         array: {
@@ -58,13 +58,18 @@ export default function SignupPage(props) {
     });
   }
 
-  const onArrayChange = e => {
+  const onArrayAdd = e => {
+    console.log(e);
     const { name, value } = e;
     dispatch({
-      type: 'CHANGE_ARRAY',
+      type: 'ADD_ARRAY',
       name,
       value
     });
+  }
+
+  const onArrayDelete = e => {
+    console.log(e);
   }
 
   return (
@@ -72,7 +77,8 @@ export default function SignupPage(props) {
       <SignupForm
         state={state}
         onInputChange={onInputChange}
-        onArrayChange={onArrayChange}
+        onArrayAdd={onArrayAdd}
+        onArrayDelete={onArrayDelete}
       />
     </PageTemplate>
   );
