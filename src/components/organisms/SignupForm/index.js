@@ -182,8 +182,14 @@ export default function SignupForm(props) {
   const { emailConfirm, userNickNmConfirm } = props.state.boolean;
 
   const handleNext = () => {
-    if (activeStep === 0 && !emailConfirm) alert('이메일ID 중복확인을 하세요.');
-    if (activeStep === 1 && !userNickNmConfirm) alert('닉네임 중복확인을 하세요.');
+    if (activeStep === 0 && !emailConfirm) {
+      alert('이메일ID 중복확인을 하세요.');
+      return;
+    }
+    if (activeStep === 1 && !userNickNmConfirm) {
+      alert('닉네임 중복확인을 하세요.');
+      return;
+    }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
