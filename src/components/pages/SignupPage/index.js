@@ -37,7 +37,15 @@ function reducer(state, action) {
         ...state,
         array: {
           ...state.array,
-          [action.name]: action.value
+          [action.name]: [action.name].concat(action.value)
+        }
+      };
+    case 'DELETE_ARRAY':
+      return {
+        ...state,
+        array: {
+          ...state.array,
+          [action.name]: [action.name].slice(action.index, 1)
         }
       };
     default:
@@ -59,7 +67,6 @@ export default function SignupPage(props) {
   }
 
   const onArrayAdd = e => {
-    console.log(e);
     const { name, value } = e;
     dispatch({
       type: 'ADD_ARRAY',
@@ -68,8 +75,13 @@ export default function SignupPage(props) {
     });
   }
 
-  const onArrayDelete = (chip, index) => {
-    console.log(chip, index);
+  const onArrayDelete = e => {
+    const { name, value, index } = e;
+    dispatch({
+      type: 'DELETE_ARRAY',
+      name,
+      index
+    });
   }
 
   return (
