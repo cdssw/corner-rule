@@ -104,6 +104,7 @@ function getSteps() {
 function getStepContent(step, props, classes) {
   const { username, password, passwordCheck, userNm, userNickNm, phoneNo, mainTalent } = props.state.input;
   const { talent, interest } = props.state.array;
+  const { emailConfirm, userNickNmConfirm } = props.state.boolean;
 
   switch (step) {
     case 0:
@@ -111,7 +112,7 @@ function getStepContent(step, props, classes) {
         <>
           <div className={classes.inputWrap}>
             <OutlinedInput className={classes.checkInput} name="username" placeholder="이메일 ID" value={username} onChange={props.onInputChange} />
-            <Button variant='contained' color='primary' value='emailConfirm'
+            <Button variant='contained' color='primary' value='emailConfirm' {emailConfirm && disabled}
               onClick={props.onBooleanConfirm}>확인</Button>
           </div>
           <div className={classes.inputWrap}>
@@ -130,7 +131,7 @@ function getStepContent(step, props, classes) {
           </div>
           <div className={classes.inputWrap}>
             <OutlinedInput className={classes.checkInput} name="userNickNm" placeholder="닉네임" value={userNickNm} onChange={props.onInputChange}  />
-            <Button variant='contained' color='primary' value='userNickNmConfirm'
+            <Button variant='contained' color='primary' value='userNickNmConfirm' {userNickNmConfirm && disabled}
               onClick={props.onBooleanConfirm}>확인</Button>
           </div>
           <div className={classes.inputWrap}>
@@ -181,6 +182,8 @@ export default function SignupForm(props) {
   const { emailConfirm, userNickNmConfirm } = props.state.boolean;
 
   const handleNext = () => {
+    if (prevActiveStep === 0 && !emailConfirm) alert('이메일ID 중복확인을 하세요.');
+    if (prevActiveStep === 1 && !userNickNmConfirm) alert('닉네임 중복확인을 하세요.');
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
