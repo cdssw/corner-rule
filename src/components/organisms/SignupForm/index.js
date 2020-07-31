@@ -165,8 +165,8 @@ function getStepContent(step, props, classes) {
           <div className={classes.inputWrap}>
             <ChipInput className={classes.chip} placeholder="특기" variant="outlined" fullWidth={true}
               value={talent}
-              onAdd={props.onArrayAdd}
-              onDelete={(value) => props.onArrayDelete({name: 'talent', value})}
+              onAdd={(chip) => props.onArrayAdd(chip)}
+              onDelete={(chip, index) => props.onArrayDelete(chip, index)}
             />
           </div>        
           <div className={classes.inputWrap}>
