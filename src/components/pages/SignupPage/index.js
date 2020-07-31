@@ -13,7 +13,7 @@ const initialState = {
       mainTalent: '',
     },
     array: {
-      talnet: [],
+      talent: [],
       interest: []
     },
     boolean: {
@@ -68,8 +68,8 @@ export default function SignupPage(props) {
     });
   }
 
-  const onArrayDelete = e => {
-    console.log(e);
+  const onArrayDelete = (chip, index) => {
+    console.log(chip, index);
   }
 
   return (
