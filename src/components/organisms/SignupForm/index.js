@@ -122,7 +122,7 @@ function getStepContent(step, props, classes) {
         <>
           <div className={classes.inputWrap}>
             <OutlinedInput className={classes.checkInput} name="username" placeholder="이메일 ID" value={username} onChange={props.onChange} />
-            <Button variant='contained' color='primary' onClick={onEmailCheck}>확인</Button>
+            <Button variant='contained' color='primary' onClick={onEmailConfirm}>확인</Button>
           </div>
           <div className={classes.inputWrap}>
             <OutlinedInput type='password' name="password" placeholder="비밀번호" value={password} onChange={props.onChange} />
