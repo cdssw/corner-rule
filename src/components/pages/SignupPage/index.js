@@ -2,31 +2,52 @@ import React, { useState, useReducer } from 'react';
 import { useSelector } from "react-redux";
 import { PageTemplate, TitleHeader, SignupForm } from "components";
 
+const initialState = {
+    input: {
+      username: '',
+      password: '',
+      passwordCheck: '',
+      userNm: '',
+      userNickNm: '',
+      phoneNo: '',
+      mainTalent: '',
+    },
+    array: {
+      talnet: [],
+      interest: []
+    },
+    boolean: {
+      emailConfirm: false,
+      userNickNmCheck: false,
+    }  
+};
+
 function reducer(state, action) {
-  return {
-    ...state,
-    [action.name]: action.value
-  };
+  switch (action.type) {
+    case 'CHANGE_INPUT':
+      return {
+        ...state,
+        input: {
+          ...state.input,
+          [action.name]: action.value
+        }
+      };
+    default:
+      return state;
+  } 
 }
 
 export default function SignupPage(props) {
 
-  const [state, dispatch] = useReducer(reducer, {
-    email: '',
-    emailConfirm: false,
-    password: '',
-    passwordCheck: '',
-    userNm: '',
-    userNickNm: '',
-    userNickNmCheck: false,
-    phoneNo: '',
-    mainTalent: '',
-    talnet: [],
-    interest: []
-  });
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   const onChange = e => {
-    dispatch(e.target);
+    const { name, value } = e.target;
+    dispatch({
+      type: 'CHANGE_INPUT',
+      name,
+      value
+    });
   }
 
   return (
