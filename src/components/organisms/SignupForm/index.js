@@ -102,7 +102,9 @@ function getSteps() {
 }
 
 function getStepContent(step, props, classes) {
-  const {email, emailConfirm, password, passwordCheck, userNm, userNickNm, userNickNmCheck, phoneNo, mainTalent, talent, interest } = props.state;
+  const { email, password, passwordCheck, userNm, userNickNm, phoneNo, mainTalent } = props.state.input;
+  const { talent, interest } = props.state.array;
+  const { emailConfirm, userNickNmConfirm } = props.state.boolean;
 
   const onEmailCheck = e => {
     // api 호출
@@ -140,7 +142,7 @@ function getStepContent(step, props, classes) {
           </div>
           <div className={classes.inputWrap}>
             <OutlinedInput className={classes.checkInput} name="userNickNm" placeholder="닉네임" value={userNickNm} onChange={props.onChange}  />
-            <Button variant='contained' color='primary' onChange={onNickNmCheck}>확인</Button>
+            <Button variant='contained' color='primary' onChange={onNickNmConfirm}>확인</Button>
           </div>
           <div className={classes.inputWrap}>
             <OutlinedInput name="phoneNo" placeholder="전화번호" value={phoneNo} onChange={props.onChange}  />
