@@ -33,6 +33,7 @@ function reducer(state, action) {
         }
       };
     case 'ADD_ARRAY':
+      console.log(state.array[action.name]);
       return {
         ...state,
         array: {
