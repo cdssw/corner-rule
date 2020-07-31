@@ -102,17 +102,15 @@ function getSteps() {
 }
 
 function getStepContent(step, props, classes) {
-  const { email, password, passwordCheck, userNm, userNickNm, phoneNo, mainTalent } = props.state.input;
+  const { username, password, passwordCheck, userNm, userNickNm, phoneNo, mainTalent } = props.state.input;
   const { talent, interest } = props.state.array;
-  const { emailConfirm, userNickNmConfirm } = props.state.boolean;
-
-  const onEmailCheck = e => {
+  const onEmailConfirm = e => {
     // api 호출
     // 결과에 따라
     props.onChange(true);
   };
 
-  const onNickNmCheck = e => {
+  const onNickNmConfirm = e => {
     // api 호출
     // 결과에 따라
     props.onChange(true);
@@ -123,7 +121,7 @@ function getStepContent(step, props, classes) {
       return (
         <>
           <div className={classes.inputWrap}>
-            <OutlinedInput className={classes.checkInput} name="email" placeholder="이메일 ID" value={email} onChange={props.onChange} />
+            <OutlinedInput className={classes.checkInput} name="username" placeholder="이메일 ID" value={username} onChange={props.onChange} />
             <Button variant='contained' color='primary' onClick={onEmailCheck}>확인</Button>
           </div>
           <div className={classes.inputWrap}>
@@ -181,6 +179,7 @@ export default function SignupForm(props) {
 
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
+  const { emailConfirm, userNickNmConfirm } = props.state.boolean;
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
