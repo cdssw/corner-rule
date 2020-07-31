@@ -41,12 +41,11 @@ function reducer(state, action) {
         }
       };
     case 'DELETE_ARRAY':
-      console.log(state.array[action.name].slice(action.index, 1));
       return {
         ...state,
         array: {
           ...state.array,
-          [action.name]: state.array[action.name].slice(action.index, 1)
+          [action.name]: state.array[action.name].filter(value => value !== action.value)
         }
       };
     default:
@@ -81,7 +80,7 @@ export default function SignupPage(props) {
     dispatch({
       type: 'DELETE_ARRAY',
       name,
-      index
+      value
     });
   }
 
