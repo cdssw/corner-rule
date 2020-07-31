@@ -96,7 +96,7 @@ export default function SignupPage(props) {
     // api 호출
     // 결과에 따라 set
     dispatch({
-      type: 'BOOLEAN_CONFIRM',
+      type: 'CONFIRM_BOOLEAN',
       name: e.currentTarget.value
     });
   }
