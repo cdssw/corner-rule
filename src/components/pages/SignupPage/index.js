@@ -18,7 +18,7 @@ const initialState = {
     },
     boolean: {
       emailConfirm: false,
-      userNickNmCheck: false,
+      userNickNmConfirm: false,
     }  
 };
 
