@@ -32,6 +32,14 @@ function reducer(state, action) {
           [action.name]: action.value
         }
       };
+    case 'ADD_ARRAY':
+      return {
+        ...state,
+        array: {
+          ...state.array,
+          [action.name]: [action.name].concat(action.value)
+        }
+      };
     default:
       return state;
   } 
@@ -50,9 +58,22 @@ export default function SignupPage(props) {
     });
   }
 
+  const onAdd = e => {
+    const { name, value } = e.target;
+    dispatch({
+      type: 'ADD_ARRAY',
+      name,
+      value
+    });
+  }
+
   return (
     <PageTemplate header={<TitleHeader {...props}>회원가입</TitleHeader>}>
-      <SignupForm state={state} onChange={onChange} />
+      <SignupForm
+        state={state}
+        onChange={onChange}
+        onAdd={onAdd}
+      />
     </PageTemplate>
   );
 }
