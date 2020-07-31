@@ -111,8 +111,8 @@ function getStepContent(step, props, classes) {
         <>
           <div className={classes.inputWrap}>
             <OutlinedInput className={classes.checkInput} name="username" placeholder="이메일 ID" value={username} onChange={props.onInputChange} />
-            <Button variant='contained' color='primary'
-              onClick={e => props.onBooleanConfirm('emailConfirm')}>확인</Button>
+            <Button variant='contained' color='primary' value='emailConfirm'
+              onClick={props.onBooleanConfirm}>확인</Button>
           </div>
           <div className={classes.inputWrap}>
             <OutlinedInput type='password' name="password" placeholder="비밀번호" value={password} onChange={props.onInputChange} />
@@ -130,8 +130,8 @@ function getStepContent(step, props, classes) {
           </div>
           <div className={classes.inputWrap}>
             <OutlinedInput className={classes.checkInput} name="userNickNm" placeholder="닉네임" value={userNickNm} onChange={props.onInputChange}  />
-            <Button variant='contained' color='primary'
-              onChange={e => props.onBooleanConfirm('userNickNmConfirm')}>확인</Button>
+            <Button variant='contained' color='primary' value='userNickNmConfirm'
+              onClick={props.onBooleanConfirm}>확인</Button>
           </div>
           <div className={classes.inputWrap}>
             <OutlinedInput name="phoneNo" placeholder="전화번호" value={phoneNo} onChange={props.onInputChange}  />
