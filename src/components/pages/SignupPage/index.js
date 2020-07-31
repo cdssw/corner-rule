@@ -32,12 +32,12 @@ function reducer(state, action) {
           [action.name]: action.value
         }
       };
-    case 'ADD_ARRAY':
+    case 'CHANGE_ARRAY':
       return {
         ...state,
         array: {
           ...state.array,
-          [action.name]: [action.name].concat(action.value)
+          [action.name]: action.value
         }
       };
     default:
@@ -49,7 +49,7 @@ export default function SignupPage(props) {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const onChange = e => {
+  const onInputChange = e => {
     const { name, value } = e.target;
     dispatch({
       type: 'CHANGE_INPUT',
@@ -58,10 +58,10 @@ export default function SignupPage(props) {
     });
   }
 
-  const onAdd = e => {
+  const onArrayChange = e => {
     const { name, value } = e.target;
     dispatch({
-      type: 'ADD_ARRAY',
+      type: 'CHANGE_ARRAY',
       name,
       value
     });
@@ -71,8 +71,8 @@ export default function SignupPage(props) {
     <PageTemplate header={<TitleHeader {...props}>회원가입</TitleHeader>}>
       <SignupForm
         state={state}
-        onChange={onChange}
-        onAdd={onAdd}
+        onInputChange={onInputChange}
+        onArrayChange={onArrayChange}
       />
     </PageTemplate>
   );
