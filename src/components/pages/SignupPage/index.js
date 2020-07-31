@@ -41,6 +41,7 @@ function reducer(state, action) {
         }
       };
     case 'DELETE_ARRAY':
+      console.log(state.array[action.name].slice(action.index, 1));
       return {
         ...state,
         array: {
