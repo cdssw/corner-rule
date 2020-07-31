@@ -165,13 +165,15 @@ function getStepContent(step, props, classes) {
           <div className={classes.inputWrap}>
             <ChipInput className={classes.chip} placeholder="특기" variant="outlined" fullWidth={true}
               value={talent}
-              onAdd={(chip) => props.onArrayAdd(chip)}
-              onDelete={(chip, index) => props.onArrayDelete(chip, index)}
+              onAdd={(value) => props.onArrayAdd({name: 'talent', value)}
+              onDelete={(value, index) => props.onArrayDelete({name: 'talent', value, index)}
             />
           </div>        
           <div className={classes.inputWrap}>
             <ChipInput className={classes.chip} placeholder="관심사" variant="outlined" fullWidth={true}
-              onChange={(value) => props.onArrayChange({name: 'interest', value})}
+              value={interest}
+              onAdd={(value) => props.onArrayAdd({name: 'interest', value)}
+              onDelete={(value, index) => props.onArrayDelete({name: 'interest', value, index)}
             />
           </div>
         </>
