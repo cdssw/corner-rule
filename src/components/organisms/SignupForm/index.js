@@ -164,12 +164,12 @@ function getStepContent(step, props, classes) {
           </div>
           <div className={classes.inputWrap}>
             <ChipInput className={classes.chip} placeholder="특기" variant="outlined" fullWidth={true} value={talent}
-              onChange={(value) => { props.onArrayChange({name: 'talent', value}) }}
+              onAdd={(value) => { props.onArrayChange({name: 'talent', value}) }}
             />
           </div>        
           <div className={classes.inputWrap}>
             <ChipInput className={classes.chip} placeholder="관심사" variant="outlined" fullWidth={true} value={interest}
-              onChange={(value) => { props.onArrayChange({name: 'interest', value}) }}
+              onAdd={(value) => { props.onArrayChange({name: 'interest', value}) }}
             />
           </div>
         </>
