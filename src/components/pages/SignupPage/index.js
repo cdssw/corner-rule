@@ -48,6 +48,14 @@ function reducer(state, action) {
           [action.name]: state.array[action.name].filter(value => value !== action.value)
         }
       };
+    case 'CONFIRM_BOOLEAN':
+      return {
+        ...state,
+        boolean: {
+          ...state.boolean,
+          [action.name]: true
+        }
+      };
     default:
       return state;
   } 
@@ -84,6 +92,15 @@ export default function SignupPage(props) {
     });
   }
 
+  const onBooleanConfirm = async name => {
+    // api 호출
+    // 결과에 따라 set
+    dispatch({
+      type: 'BOOLEAN_CONFIRM',
+      name
+    });
+  }
+
   return (
     <PageTemplate header={<TitleHeader {...props}>회원가입</TitleHeader>}>
       <SignupForm
@@ -91,6 +108,7 @@ export default function SignupPage(props) {
         onInputChange={onInputChange}
         onArrayAdd={onArrayAdd}
         onArrayDelete={onArrayDelete}
+        onBooleanConfirm={onBooleanConfirm}
       />
     </PageTemplate>
   );
