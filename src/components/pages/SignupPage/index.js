@@ -59,7 +59,7 @@ export default function SignupPage(props) {
   }
 
   const onArrayChange = e => {
-    const { name, value } = e.target;
+    const { name, value } = e;
     dispatch({
       type: 'CHANGE_ARRAY',
       name,
