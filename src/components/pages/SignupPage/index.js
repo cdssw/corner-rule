@@ -33,12 +33,11 @@ function reducer(state, action) {
         }
       };
     case 'ADD_ARRAY':
-      console.log(state.array[action.name]);
       return {
         ...state,
         array: {
           ...state.array,
-          [action.name]: [action.name].concat(action.value)
+          [action.name]: state.array[action.name].concat(action.value)
         }
       };
     case 'DELETE_ARRAY':
@@ -46,7 +45,7 @@ function reducer(state, action) {
         ...state,
         array: {
           ...state.array,
-          [action.name]: [action.name].slice(action.index, 1)
+          [action.name]: state.array[action.name].slice(action.index, 1)
         }
       };
     default:
