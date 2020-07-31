@@ -30,6 +30,13 @@ export default function LoginPage() {
 
   const handleLogin = async event => {
     const response = await Authorization.loginCall(loginData);
+    if(response === undefined) {
+      setLoginData({
+        username: '',
+        password: '',
+      });
+      return;
+    }
     localStorage.setItem("token", JSON.stringify(response.data)); // token을 localStorage에 저장
     const userInfo = await User.getUserCall(response.data);
     dispatch(setLoginUserInfo(userInfo.data)); // 가져온 user 정보를 redux에 저장
@@ -45,6 +52,8 @@ export default function LoginPage() {
         onLogin={handleLogin}
         onInput={handleInput}
         onSaveId={handleSaveId}
+        username={loginData.username}
+        password={loginData.password}
       />
     </LoginTemplate>
   );

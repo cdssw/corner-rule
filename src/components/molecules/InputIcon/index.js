@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function InputIcon({type, name, icon, invalid, validMessage, onChange}) {
+export default function InputIcon({type, name, icon, invalid, validMessage, value, onChange}) {
   const classes = useStyles();
 
   return (
@@ -40,6 +40,7 @@ export default function InputIcon({type, name, icon, invalid, validMessage, onCh
           type={type || 'text'}
           name={name}
           onChange={onChange}
+          value={value}
         />
         <span className={classes.icon}>{icon}</span>
       </div>

@@ -37,16 +37,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function LoginForm({onInput, onLogin, saveId, onSaveId}) {
+export default function LoginForm({username, password, onInput, onLogin, saveId, onSaveId}) {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <div className={classes.emailWrap}>
-        <InputIcon icon={<AccountCircleOutlinedIcon color="disabled" />} name="username" onChange={onInput} />
+        <InputIcon icon={<AccountCircleOutlinedIcon color="disabled" />} name="username" onChange={onInput} value={username} />
       </div>
       <div className={classes.passwordWrap}>
-        <InputIcon type="password" icon={<VpnKeyOutlinedIcon color="disabled" />} name="password" onChange={onInput} />
+        <InputIcon type="password" icon={<VpnKeyOutlinedIcon color="disabled" />} name="password" onChange={onInput} value={password} />
       </div>
       <div className={classes.saveIdWrap}>
         <FormControlLabel

@@ -176,31 +176,12 @@ function getStepContent(step, props, classes) {
 
 export default function SignupForm(props) {
   const classes = useStyles();
-
-  const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
-  const { emailConfirm, userNickNmConfirm } = props.state.boolean;
-
-  const handleNext = () => {
-    if (activeStep === 0 && !emailConfirm) {
-      alert('이메일ID 중복확인을 하세요.');
-      return;
-    }
-    if (activeStep === 1 && !userNickNmConfirm) {
-      alert('닉네임 중복확인을 하세요.');
-      return;
-    }
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
 
   return (
     <div className={classes.root}>
       <Stepper
-        activeStep={activeStep}
+        activeStep={props.activeStep}
         orientation="vertical"
         classes={{
           root: classes.stepperRoot,
@@ -214,8 +195,8 @@ export default function SignupForm(props) {
               <div className={classes.actionsContainer}>
                 <div>
                   <Button
-                    disabled={activeStep === 0}
-                    onClick={handleBack}
+                    disabled={props.activeStep === 0}
+                    onClick={props.handleBack}
                     className={classes.button}
                   >
                     이전
@@ -223,10 +204,10 @@ export default function SignupForm(props) {
                   <Button
                     variant="contained"
                     color="primary"
-                    onClick={handleNext}
+                    onClick={props.handleNext}
                     className={classes.button}
                   >
-                    {activeStep === steps.length - 1 ? '완료' : '다음'}
+                    {props.activeStep === steps.length - 1 ? '완료' : '다음'}
                   </Button>
                 </div>
               </div>
@@ -234,13 +215,12 @@ export default function SignupForm(props) {
           </Step>
         ))}
       </Stepper>
-      {activeStep === steps.length && (
+      {props.activeStep === steps.length && (
         <Paper className={classes.resetContainer}>
           <Typography>회원가입이 완료되었습니다.</Typography>
           <Link to="/">
             <Button  variant='contained' color='primary'>HOME</Button>
           </Link>
-          
         </Paper>
       )}
     </div>
