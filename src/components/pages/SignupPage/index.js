@@ -92,12 +92,12 @@ export default function SignupPage(props) {
     });
   }
 
-  const onBooleanConfirm = async (name) => {
+  const onBooleanConfirm = async e => {
     // api 호출
     // 결과에 따라 set
     dispatch({
       type: 'BOOLEAN_CONFIRM',
-      name
+      name: e.currentTarget.value
     });
   }
 
