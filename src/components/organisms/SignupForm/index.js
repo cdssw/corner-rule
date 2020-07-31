@@ -104,6 +104,7 @@ function getSteps() {
 function getStepContent(step, props, classes) {
   const { username, password, passwordCheck, userNm, userNickNm, phoneNo, mainTalent } = props.state.input;
   const { talent, interest } = props.state.array;
+
   const onEmailConfirm = e => {
     // api 호출
     // 결과에 따라
@@ -162,10 +163,10 @@ function getStepContent(step, props, classes) {
             <OutlinedInput name="mainTalent" placeholder="주특기" value={mainTalent} onChange={props.onChange}  />
           </div>
           <div className={classes.inputWrap}>
-            <ChipInput name="talent" className={classes.chip} placeholder="특기" variant="outlined" fullWidth={true} value={talent} onChange={props.onChange}  />
+            <ChipInput name="talent" className={classes.chip} placeholder="특기" variant="outlined" fullWidth={true} value={talent} onChange={props.onAdd}  />
           </div>        
           <div className={classes.inputWrap}>
-            <ChipInput name="interest" className={classes.chip} placeholder="관심사" variant="outlined" fullWidth={true} value={interest} onChange={props.onChange}  />
+            <ChipInput name="interest" className={classes.chip} placeholder="관심사" variant="outlined" fullWidth={true} value={interest} onChange={props.onAdd}  />
           </div>
         </>
       );
