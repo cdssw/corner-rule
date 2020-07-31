@@ -122,14 +122,14 @@ function getStepContent(step, props, classes) {
       return (
         <>
           <div className={classes.inputWrap}>
-            <OutlinedInput className={classes.checkInput} name="username" placeholder="이메일 ID" value={username} onChange={props.onChange} />
+            <OutlinedInput className={classes.checkInput} name="username" placeholder="이메일 ID" value={username} onChange={props.onInputChange} />
             <Button variant='contained' color='primary' onClick={onEmailConfirm}>확인</Button>
           </div>
           <div className={classes.inputWrap}>
-            <OutlinedInput type='password' name="password" placeholder="비밀번호" value={password} onChange={props.onChange} />
+            <OutlinedInput type='password' name="password" placeholder="비밀번호" value={password} onChange={props.onInputChange} />
           </div>
           <div className={classes.inputWrap}>
-            <OutlinedInput type='password' name="passwordCheck" placeholder="비밀번호 확인" value={passwordCheck} onChange={props.onChange}  />
+            <OutlinedInput type='password' name="passwordCheck" placeholder="비밀번호 확인" value={passwordCheck} onChange={props.onInputChange}  />
           </div>
         </>
       );
@@ -137,14 +137,14 @@ function getStepContent(step, props, classes) {
       return (
         <>
           <div className={classes.inputWrap}>
-            <OutlinedInput name="userNm" placeholder="이름" value={userNm} onChange={props.onChange}  />
+            <OutlinedInput name="userNm" placeholder="이름" value={userNm} onChange={props.onInputChange}  />
           </div>
           <div className={classes.inputWrap}>
-            <OutlinedInput className={classes.checkInput} name="userNickNm" placeholder="닉네임" value={userNickNm} onChange={props.onChange}  />
+            <OutlinedInput className={classes.checkInput} name="userNickNm" placeholder="닉네임" value={userNickNm} onChange={props.onInputChange}  />
             <Button variant='contained' color='primary' onChange={onNickNmConfirm}>확인</Button>
           </div>
           <div className={classes.inputWrap}>
-            <OutlinedInput name="phoneNo" placeholder="전화번호" value={phoneNo} onChange={props.onChange}  />
+            <OutlinedInput name="phoneNo" placeholder="전화번호" value={phoneNo} onChange={props.onInputChange}  />
           </div>
         </>
       );
@@ -160,13 +160,13 @@ function getStepContent(step, props, classes) {
             <div className={classes.profileAdd}><AddIcon /></div>
           </div>
           <div className={classes.inputWrap}>
-            <OutlinedInput name="mainTalent" placeholder="주특기" value={mainTalent} onChange={props.onChange}  />
+            <OutlinedInput name="mainTalent" placeholder="주특기" value={mainTalent} onChange={props.onInputChange}  />
           </div>
           <div className={classes.inputWrap}>
-            <ChipInput name="talent" className={classes.chip} placeholder="특기" variant="outlined" fullWidth={true} value={talent} onChange={props.onAdd}  />
+            <ChipInput className={classes.chip} placeholder="특기" variant="outlined" fullWidth={true} value={talent} onChange={(value) => { props.onArrayChange({name: 'talent', value}) } />
           </div>        
           <div className={classes.inputWrap}>
-            <ChipInput name="interest" className={classes.chip} placeholder="관심사" variant="outlined" fullWidth={true} value={interest} onChange={props.onAdd}  />
+            <ChipInput className={classes.chip} placeholder="관심사" variant="outlined" fullWidth={true} value={interest} onChange={(value) => { props.onArrayChange({name: 'interest', value}) } />
           </div>
         </>
       );
