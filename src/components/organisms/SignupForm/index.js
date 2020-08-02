@@ -154,14 +154,14 @@ function getStepContent(step, props, classes) {
             <OutlinedInput name="mainTalent" placeholder="주특기" value={mainTalent} onChange={props.onInputChange}  />
           </div>
           <div className={classes.inputWrap}>
-            <ChipInput clearInputValueOnChange={true} className={classes.chip} placeholder="특기" variant="outlined" fullWidth={true}
+            <ChipInput className={classes.chip} placeholder="특기" variant="outlined" fullWidth={true}
               value={talent}
-              onAdd={(value) => props.onArrayAdd({name: 'talent', value})}
+              onAdd={(value) => props.onArrayAdd({name: 'talent', value: value + ' '})}
               onDelete={(value, index) => props.onArrayDelete({name: 'talent', value, index})}
             />
           </div>        
           <div className={classes.inputWrap}>
-            <ChipInput clearInputValueOnChange={true} className={classes.chip} placeholder="관심사" variant="outlined" fullWidth={true}
+            <ChipInput className={classes.chip} placeholder="관심사" variant="outlined" fullWidth={true}
               value={interest}
               onAdd={(value) => props.onArrayAdd({name: 'interest', value})}
               onDelete={(value, index) => props.onArrayDelete({name: 'interest', value, index})}
@@ -191,7 +191,7 @@ export default function SignupForm(props) {
           <Step key={label}>
             <StepLabel>{label}</StepLabel>
             <StepContent classes={{root: classes.stepContentRoot}}>
-              <Typography>{getStepContent(index, props, classes)}</Typography>
+              <Typography component="span">{getStepContent(index, props, classes)}</Typography>
               <div className={classes.actionsContainer}>
                 <div>
                   <Button

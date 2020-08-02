@@ -1,3 +1,4 @@
+/* eslint no-restricted-globals: ["off"] */
 import React, { useState, useReducer } from 'react';
 import { useSelector } from "react-redux";
 import { PageTemplate, TitleHeader, SignupForm } from "components";

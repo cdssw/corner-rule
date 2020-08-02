@@ -44,7 +44,7 @@ export default function InputIcon({type, name, icon, invalid, validMessage, valu
         />
         <span className={classes.icon}>{icon}</span>
       </div>
-      {invalid && <div className={classes.invalid}><Typography variant="caption">{validMessage}</Typography></div>}
+      {invalid && <div className={classes.invalid}><Typography component="span" variant="caption">{validMessage}</Typography></div>}
     </div>
   );
 }
