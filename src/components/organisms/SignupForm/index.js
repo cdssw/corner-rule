@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import Stepper from '@material-ui/core/Stepper';
@@ -110,6 +110,12 @@ function getStepContent(step, props, classes) {
   const { emailConfirm, userNickNmConfirm } = props.state.boolean;
   const { avatarPath } = props.state.file;
 
+  const hiddenFileInput = React.useRef(null);
+  
+  const handleClick = event => {
+    hiddenFileInput.current.click();
+  };
+
   switch (step) {
     case 0:
       return (
@@ -156,8 +162,8 @@ function getStepContent(step, props, classes) {
               </Avatar>
             </div>
             <label>
-              <div className={classes.profileAdd}><AddIcon /></div>
-              <input type="file" onChange={props.onSetAvatar} style={{display: 'none'}} />
+              <div onClick={handleClick} className={classes.profileAdd}><AddIcon /></div>
+              <input type="file" ref={hiddenFileInput} onChange={props.onSetAvatar} style={{display: 'none'}} />
             </label>
           </div>         
         <div className={classes.inputWrap}>
