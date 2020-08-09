@@ -198,7 +198,6 @@ export default function SignupPage(props) {
   }
 
   const onSetAvatar = async e => {
-    alert("onSetAvatar");
     e.preventDefault();
     const file = e.target.files[0];
 

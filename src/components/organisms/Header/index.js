@@ -39,7 +39,7 @@ export default function Header({userInfo}) {
 
   return (
     <div className={classes.root}>
-      <img className={classes.logo} src={resources.logoHorizon} />
+      <img className={classes.logo} src={resources.logoHorizon} alt="logo" />
       <div className={classes.space}></div>
       <div className={classes.userName}>{userInfo && userInfo.userNm}</div>
       <div>

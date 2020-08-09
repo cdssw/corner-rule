@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import Stepper from '@material-ui/core/Stepper';
@@ -110,12 +110,6 @@ function getStepContent(step, props, classes) {
   const { emailConfirm, userNickNmConfirm } = props.state.boolean;
   const { avatarPath } = props.state.file;
 
-  const hiddenFileInput = useRef(null);
-  
-  const handleClick = event => {
-    hiddenFileInput.current.click();
-  };
-
   switch (step) {
     case 0:
       return (
@@ -152,36 +146,38 @@ function getStepContent(step, props, classes) {
     case 2:
       return (
         <>
-          <div className={classes.profileWrap}>
-            <div className={classes.profile}>
-              <Avatar classes={{root: classes.avatarRoot}}>
-                {avatarPath
-                ? <img src={process.env.REACT_APP_IMAGE + avatarPath} alt='' />
-                : <Person classes={{fontSizeLarge: classes.fontSizeLarge}} fontSize='large' />
-                }
-              </Avatar>
+          <label htmlFor="upload-avatar">
+            <div className={classes.profileWrap}>
+              <div className={classes.profile}>
+                <Avatar classes={{root: classes.avatarRoot}}>
+                  {avatarPath
+                  ? <img src={process.env.REACT_APP_IMAGE + avatarPath} alt='' />
+                  : <Person classes={{fontSizeLarge: classes.fontSizeLarge}} fontSize='large' />
+                  }
+                </Avatar>
+              </div>
+              <div className={classes.profileAdd}><AddIcon /></div>
+              <input id="upload-avatar" type="file" onChange={props.onSetAvatar} style={{display: 'none'}} />
             </div>
-              <div onClick={handleClick} className={classes.profileAdd}><AddIcon /></div>
-              <input type="file" ref={hiddenFileInput} onChange={props.onSetAvatar} hidden />
-          </div>         
-        <div className={classes.inputWrap}>
-          <OutlinedInput name="mainTalent" placeholder="주특기" value={mainTalent} onChange={props.onInputChange}  />
-        </div>
-        <div className={classes.inputWrap}>
-          <ChipInput className={classes.chip} placeholder="특기" variant="outlined" fullWidth={true}
-            value={talent}
-            onAdd={(value) => props.onArrayAdd({name: 'talent', value})}
-            onDelete={(value, index) => props.onArrayDelete({name: 'talent', value, index})}
-          />
-        </div>        
-        <div className={classes.inputWrap}>
-          <ChipInput className={classes.chip} placeholder="관심사" variant="outlined" fullWidth={true}
-            value={interest}
-            onAdd={(value) => props.onArrayAdd({name: 'interest', value})}
-            onDelete={(value, index) => props.onArrayDelete({name: 'interest', value, index})}
-          />
-        </div>
-      </>
+          </label>
+          <div className={classes.inputWrap}>
+            <OutlinedInput name="mainTalent" placeholder="주특기" value={mainTalent} onChange={props.onInputChange}  />
+          </div>
+          <div className={classes.inputWrap}>
+            <ChipInput className={classes.chip} placeholder="특기" variant="outlined" fullWidth={true}
+              value={talent}
+              onAdd={(value) => props.onArrayAdd({name: 'talent', value})}
+              onDelete={(value, index) => props.onArrayDelete({name: 'talent', value, index})}
+            />
+          </div>        
+          <div className={classes.inputWrap}>
+            <ChipInput className={classes.chip} placeholder="관심사" variant="outlined" fullWidth={true}
+              value={interest}
+              onAdd={(value) => props.onArrayAdd({name: 'interest', value})}
+              onDelete={(value, index) => props.onArrayDelete({name: 'interest', value, index})}
+            />
+          </div>
+        </>
       );
     default:
       return 'Unknown step';

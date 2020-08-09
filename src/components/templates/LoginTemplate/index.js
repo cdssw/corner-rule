@@ -68,7 +68,7 @@ export default function LoginTemplate(props) {
         </header>
       </div>
       <div className={classes.logoWrap}>
-        <img className={classes.logo} src={resources.logo} />
+        <img className={classes.logo} src={resources.logo} alt="logo" />
       </div>
       <div className={classes.contentWrap}>
         <section className={classes.content}>

@@ -129,7 +129,7 @@ export default function Card({image, index}) {
       <div className={classes.root}>
         {image &&
           <div className={classes.img}>
-            <img src={process.env.PUBLIC_URL + index % 9 === 0 ? "/images/food1.jpg" : "/images/back1.jpg"} />
+            <img alt="img" src={process.env.PUBLIC_URL + index % 9 === 0 ? "/images/food1.jpg" : "/images/back1.jpg"} />
           </div>
         }
         <div className={classes.content} style={{left : !image && '10px'}}>
