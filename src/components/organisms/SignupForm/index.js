@@ -110,7 +110,7 @@ function getStepContent(step, props, classes) {
   const { emailConfirm, userNickNmConfirm } = props.state.boolean;
   const { avatarPath } = props.state.file;
 
-  const hiddenFileInput = React.useRef(null);
+  const hiddenFileInput = useRef(null);
   
   const handleClick = event => {
     hiddenFileInput.current.click();
@@ -161,9 +161,8 @@ function getStepContent(step, props, classes) {
                 }
               </Avatar>
             </div>
-           
               <div onClick={handleClick} className={classes.profileAdd}><AddIcon /></div>
-              <input type="file" ref={hiddenFileInput} onChange={props.onSetAvatar} style={{display: 'none'}} />
+              <input type="file" ref={hiddenFileInput} onChange={props.onSetAvatar} hidden />
           </div>         
         <div className={classes.inputWrap}>
           <OutlinedInput name="mainTalent" placeholder="주특기" value={mainTalent} onChange={props.onInputChange}  />
