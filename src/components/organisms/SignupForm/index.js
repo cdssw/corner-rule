@@ -161,10 +161,9 @@ function getStepContent(step, props, classes) {
                 }
               </Avatar>
             </div>
-            <label>
+           
               <div onClick={handleClick} className={classes.profileAdd}><AddIcon /></div>
               <input type="file" ref={hiddenFileInput} onChange={props.onSetAvatar} style={{display: 'none'}} />
-            </label>
           </div>         
         <div className={classes.inputWrap}>
           <OutlinedInput name="mainTalent" placeholder="주특기" value={mainTalent} onChange={props.onInputChange}  />
