@@ -62,6 +62,9 @@ const useStyles = makeStyles((theme) => ({
   avatarRoot: {
     width: '96px',
     height: '96px',
+    '& img': {
+      maxWidth: '100%',
+    },
   },
   fontSizeLarge: {
     fontSize: '3.5rem',
@@ -102,9 +105,10 @@ function getSteps() {
 }
 
 function getStepContent(step, props, classes) {
-  const { username, password, passwordCheck, userNm, userNickNm, phoneNo, mainTalent } = props.state.input;
+  const { username, password, passwordCheck, userNm, userNickNm, phone, mainTalent } = props.state.input;
   const { talent, interest } = props.state.array;
   const { emailConfirm, userNickNmConfirm } = props.state.boolean;
+  const { avatarPath } = props.state.file;
 
   switch (step) {
     case 0:
@@ -135,28 +139,34 @@ function getStepContent(step, props, classes) {
               onClick={props.onBooleanConfirm}>확인</Button>
           </div>
           <div className={classes.inputWrap}>
-            <OutlinedInput name="phoneNo" placeholder="전화번호" value={phoneNo} onChange={props.onInputChange}  />
+            <OutlinedInput name="phone" placeholder="전화번호" value={phone} onChange={props.onInputChange}  />
           </div>
         </>
       );
     case 2:
       return (
         <>
-          <div className={classes.profileWrap}>
-            <div className={classes.profile}>
-              <Avatar classes={{root: classes.avatarRoot}}>
-                <Person classes={{fontSizeLarge: classes.fontSizeLarge}} fontSize='large' />
-              </Avatar>
+          <label htmlFor="upload-avatar">
+            <div className={classes.profileWrap}>
+              <div className={classes.profile}>
+                <Avatar classes={{root: classes.avatarRoot}}>
+                  {avatarPath
+                  ? <img src={process.env.REACT_APP_IMAGE + avatarPath} alt='' />
+                  : <Person classes={{fontSizeLarge: classes.fontSizeLarge}} fontSize='large' />
+                  }
+                </Avatar>
+              </div>
+              <div className={classes.profileAdd}><AddIcon /></div>
+              <input id="upload-avatar" type="file" onChange={props.onSetAvatar} style={{display: 'none'}} />
             </div>
-            <div className={classes.profileAdd}><AddIcon /></div>
-          </div>
+          </label>
           <div className={classes.inputWrap}>
             <OutlinedInput name="mainTalent" placeholder="주특기" value={mainTalent} onChange={props.onInputChange}  />
           </div>
           <div className={classes.inputWrap}>
             <ChipInput className={classes.chip} placeholder="특기" variant="outlined" fullWidth={true}
               value={talent}
-              onAdd={(value) => props.onArrayAdd({name: 'talent', value: value + ' '})}
+              onAdd={(value) => props.onArrayAdd({name: 'talent', value})}
               onDelete={(value, index) => props.onArrayDelete({name: 'talent', value, index})}
             />
           </div>        

@@ -28,6 +28,10 @@ const useStyles = makeStyles((theme) => ({
     width: '35px',
     height: '35px',
   },
+  avatarImg: {
+    width: '100%',
+    height: 'auto',
+  },
 }));
 
 export default function Header({userInfo}) {
@@ -41,9 +45,9 @@ export default function Header({userInfo}) {
       <div>
         <Link to='/login'>
           <Avatar
-            classes={{root: classes.avatarRoot}}
+            classes={{root: classes.avatarRoot, img: classes.avatarImg}}
             alt={userInfo && userInfo.userNm}
-            src={userInfo && process.env.PUBLIC_URL + "/images/foreigner1.png"}
+            src={userInfo && process.env.REACT_APP_IMAGE + userInfo.avatarPath}
           >
             {!userInfo && <Person />}</Avatar>
         </Link>

@@ -3,6 +3,7 @@ import React, { useState, useReducer } from 'react';
 import { useSelector } from "react-redux";
 import { PageTemplate, TitleHeader, SignupForm } from "components";
 import * as User from "../../../services/User";
+import * as File from "../../../services/File";
 
 const initialState = {
     input: {
@@ -11,7 +12,7 @@ const initialState = {
       passwordCheck: '',
       userNm: '',
       userNickNm: '',
-      phoneNo: '',
+      phone: '',
       mainTalent: '',
     },
     array: {
@@ -21,7 +22,10 @@ const initialState = {
     boolean: {
       emailConfirm: false,
       userNickNmConfirm: false,
-    }  
+    },
+    file: {
+      avatarPath: '',
+    }
 };
 
 function reducer(state, action) {
@@ -58,6 +62,13 @@ function reducer(state, action) {
           [action.name]: true
         }
       };
+    case 'SET_AVATAR':
+      return {
+        ...state,
+        file: {
+          avatarPath: action.value
+        }
+      }
     default:
       return state;
   } 
@@ -68,7 +79,9 @@ export default function SignupPage(props) {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [activeStep, setActiveStep] = React.useState(0);
 
-  const { username, userNickNm } = state.input;
+  const { username, password, userNm, userNickNm, phone, mainTalent } = state.input;
+  const { talent, interest } = state.array;
+  const { avatarPath } = state.file;
   const { emailConfirm, userNickNmConfirm } = state.boolean;
 
   const handleNext = () => {
@@ -80,8 +93,34 @@ export default function SignupPage(props) {
       alert('닉네임 중복확인을 하세요.');
       return;
     }
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    if (activeStep === 2) {
+      signUp();
+    } else {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    }
   };
+
+  const signUp = async e => {
+    
+    const body = {
+      username,
+      password,
+      userNm,
+      userNickNm,
+      phone,
+      mainTalent,
+      talent: talent.join(','),
+      interest: interest.join(','),
+      avatarPath: avatarPath
+    }
+    // api 호출
+    const response = await User.signup(body);
+    // 결과에 따라 set
+    if(response) {
+      console.log(response);
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    }
+  }
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -118,6 +157,10 @@ export default function SignupPage(props) {
     const { value } = e.currentTarget;
 
     if(value === "emailConfirm") {
+      if(username === "") {
+        alert("이메일ID를 입력하세요.");
+        return;
+      }
       // api 호출
       const response = await User.getCheckUsername({username: username});
       // 결과에 따라 set
@@ -133,6 +176,10 @@ export default function SignupPage(props) {
         alert("이미 존재하는 아이디 입니다.");
       }
     } else {
+      if(userNickNm === "") {
+        alert("닉네임을 입력하세요.");
+        return;
+      }
       // api 호출
       const response = await User.getCheckNicknm({nicknm: userNickNm});
       // 결과에 따라 set
@@ -150,6 +197,21 @@ export default function SignupPage(props) {
     }
   }
 
+  const onSetAvatar = async e => {
+    e.preventDefault();
+    const file = e.target.files[0];
+
+    // api 호출
+    const response = await File.postAvatar(file);
+    // 결과에 따라 set
+    if(response) {
+      dispatch({
+        type: 'SET_AVATAR',
+        value: response.data.filePath
+      });
+    }
+  }
+
   return (
     <PageTemplate header={<TitleHeader {...props}>회원가입</TitleHeader>}>
       <SignupForm
@@ -158,6 +220,7 @@ export default function SignupPage(props) {
         onArrayAdd={onArrayAdd}
         onArrayDelete={onArrayDelete}
         onBooleanConfirm={onBooleanConfirm}
+        onSetAvatar={onSetAvatar}
         activeStep={activeStep}
         handleNext={handleNext}
         handleBack={handleBack}

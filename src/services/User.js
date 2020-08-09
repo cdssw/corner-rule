@@ -26,3 +26,14 @@ export async function getCheckNicknm(props) {
     console.log(error);
   });
 }
+
+export async function signup(body) {
+  const url = process.env.REACT_APP_SERVICE_USER + "/signup";
+
+  return axios.post(
+    url, body
+  ).catch(error => {
+    console.log(error.response);
+  });
+}
+
