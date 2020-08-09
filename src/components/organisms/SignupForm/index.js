@@ -146,38 +146,38 @@ function getStepContent(step, props, classes) {
     case 2:
       return (
         <>
-          <label htmlFor="upload-avatar">
-            <div className={classes.profileWrap}>
-              <div className={classes.profile}>
-                <Avatar classes={{root: classes.avatarRoot}}>
-                  {avatarPath
-                  ? <img src={process.env.REACT_APP_IMAGE + avatarPath} alt='' />
-                  : <Person classes={{fontSizeLarge: classes.fontSizeLarge}} fontSize='large' />
-                  }
-                </Avatar>
-              </div>
-              <div className={classes.profileAdd}><AddIcon /></div>
-              <input id="upload-avatar" type="file" onChange={props.onSetAvatar} style={{display: 'none'}} />
+          <div className={classes.profileWrap}>
+            <div className={classes.profile}>
+              <Avatar classes={{root: classes.avatarRoot}}>
+                {avatarPath
+                ? <img src={process.env.REACT_APP_IMAGE + avatarPath} alt='' />
+                : <Person classes={{fontSizeLarge: classes.fontSizeLarge}} fontSize='large' />
+                }
+              </Avatar>
             </div>
-          </label>
-          <div className={classes.inputWrap}>
-            <OutlinedInput name="mainTalent" placeholder="주특기" value={mainTalent} onChange={props.onInputChange}  />
-          </div>
-          <div className={classes.inputWrap}>
-            <ChipInput className={classes.chip} placeholder="특기" variant="outlined" fullWidth={true}
-              value={talent}
-              onAdd={(value) => props.onArrayAdd({name: 'talent', value})}
-              onDelete={(value, index) => props.onArrayDelete({name: 'talent', value, index})}
-            />
-          </div>        
-          <div className={classes.inputWrap}>
-            <ChipInput className={classes.chip} placeholder="관심사" variant="outlined" fullWidth={true}
-              value={interest}
-              onAdd={(value) => props.onArrayAdd({name: 'interest', value})}
-              onDelete={(value, index) => props.onArrayDelete({name: 'interest', value, index})}
-            />
-          </div>
-        </>
+            <label>
+              <div className={classes.profileAdd}><AddIcon /></div>
+              <input type="file" onChange={props.onSetAvatar} style={{display: 'none'}} />
+            </label>
+          </div>         
+        <div className={classes.inputWrap}>
+          <OutlinedInput name="mainTalent" placeholder="주특기" value={mainTalent} onChange={props.onInputChange}  />
+        </div>
+        <div className={classes.inputWrap}>
+          <ChipInput className={classes.chip} placeholder="특기" variant="outlined" fullWidth={true}
+            value={talent}
+            onAdd={(value) => props.onArrayAdd({name: 'talent', value})}
+            onDelete={(value, index) => props.onArrayDelete({name: 'talent', value, index})}
+          />
+        </div>        
+        <div className={classes.inputWrap}>
+          <ChipInput className={classes.chip} placeholder="관심사" variant="outlined" fullWidth={true}
+            value={interest}
+            onAdd={(value) => props.onArrayAdd({name: 'interest', value})}
+            onDelete={(value, index) => props.onArrayDelete({name: 'interest', value, index})}
+          />
+        </div>
+      </>
       );
     default:
       return 'Unknown step';
