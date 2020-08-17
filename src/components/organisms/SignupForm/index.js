@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useReducer, useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Typography } from '@material-ui/core';
+import { Typography, FormHelperText, FormControl } from '@material-ui/core';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
@@ -32,7 +32,9 @@ const useStyles = makeStyles((theme) => ({
   },
   inputWrap: {
     marginBottom: '10px',
-    display: 'flex',
+    '& div': {
+      display: 'flex',
+    },
   },
   stepperRoot: {
     padding: '24px 10px',
@@ -100,30 +102,133 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const initialValid = {
+  username: {
+    error: false,
+    required: false,
+    valid: false,
+  },
+  password: {
+    error: false,
+    required: false,
+  },
+  passwordCheck: {
+    error: null,
+    required: false,
+    valid: false,
+  },
+  userNm: {
+    error: null,
+    required: false,
+  },
+  userNickNm: {
+    error: false,
+    required: false,
+  },
+  phone: {
+    error: null,
+    required: false,
+  }
+}
+
+const reducer = (state, action) => {
+    return { ...state, [action.type]: { error: action.value.error, required: action.value.required, valid: action.value.valid } }
+}
+
+const isEmail = email => {
+  const emailRegex = /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+
+  return emailRegex.test(email);
+};
+
 function getSteps() {
   return ['기본정보', '회원정보', '부가정보'];
 }
 
-function getStepContent(step, props, classes) {
+function getStepContent(step, props, classes, valid, dispatchValid) {
   const { username, password, passwordCheck, userNm, userNickNm, phone, mainTalent } = props.state.input;
   const { talent, interest } = props.state.array;
   const { emailConfirm, userNickNmConfirm } = props.state.boolean;
   const { avatarPath } = props.state.file;
+
+  const handleBlur = e => {
+    let value = {};
+    switch(e.target.name) {
+      case 'username': {
+        value.error = false;
+        value.required = username === '' ? true : false;
+        if(value.required === true) {
+          value.error = true;
+          break;
+        }
+        value.valid = isEmail(username) === false ? true: false;
+        if(value.valid === true) value.error = true;
+        break;
+      }
+      case 'password':
+        value.required = password === '' ? true : false;
+        if(value.required === true) value.error = true;
+        if(valid.passwordCheck.error !== null) {
+          handleBlur({target: {name:'passwordCheck'}});
+        }
+        break;
+      case 'passwordCheck':
+        value.required = passwordCheck === '' ? true : false;
+        if(value.required === true) {
+          value.error = true;
+          break;
+        }
+        value.valid = password === passwordCheck ? false: true;
+        value.error = value.valid === true ? true : false;
+        break;
+      case 'userNm':
+        value.required = userNm === '' ? true : false;
+        if(value.required === true) value.error = true;
+        value.error = value.required === true ? true : false;
+        break;        
+      case 'userNickNm':
+        value.required = userNickNm === '' ? true : false;
+        if(value.required === true) value.error = true;
+        break;        
+      case 'phone':
+        value.required = phone === '' ? true : false;
+        if(value.required === true) value.error = true;
+        value.error = value.required === true ? true : false;
+        break;        
+    }
+    dispatchValid({type: e.target.name, value: value});
+  }
 
   switch (step) {
     case 0:
       return (
         <>
           <div className={classes.inputWrap}>
-            <OutlinedInput className={classes.checkInput} name="username" placeholder="이메일 ID" value={username} disabled={emailConfirm} onChange={props.onInputChange} />
-            <Button variant='contained' color='primary' value='emailConfirm' disabled={emailConfirm}
-              onClick={props.onBooleanConfirm}>확인</Button>
+            <FormControl error={valid.username.error}>
+              <div>
+                <OutlinedInput onBlur={handleBlur} type='email' className={classes.checkInput} name="username" placeholder="이메일 ID" value={username} disabled={emailConfirm} onChange={props.onInputChange} />
+                <Button variant='contained' color='primary' value='emailConfirm' disabled={emailConfirm}
+                  onClick={(e) => {
+                    if(valid.username.error) return;
+                    props.onBooleanConfirm(e);
+                  }}>확인</Button>
+              </div>
+              {valid.username.required && <FormHelperText>필수값 입니다.</FormHelperText>}
+              {valid.username.valid && <FormHelperText>이메일 형식이 아닙니다.</FormHelperText>}
+            </FormControl>
           </div>
           <div className={classes.inputWrap}>
-            <OutlinedInput type='password' name="password" placeholder="비밀번호" value={password} onChange={props.onInputChange} />
+            <FormControl error={valid.password.error}>
+              <OutlinedInput onBlur={handleBlur} type='password' name="password" placeholder="비밀번호" value={password} onChange={props.onInputChange} />
+              {valid.password.required && <FormHelperText>필수값 입니다.</FormHelperText>}
+            </FormControl>
           </div>
           <div className={classes.inputWrap}>
-            <OutlinedInput type='password' name="passwordCheck" placeholder="비밀번호 확인" value={passwordCheck} onChange={props.onInputChange}  />
+            <FormControl error={valid.passwordCheck.error}>
+              <OutlinedInput onBlur={handleBlur} type='password' name="passwordCheck" placeholder="비밀번호 확인" value={passwordCheck} onChange={props.onInputChange}  />
+              {valid.passwordCheck.required && <FormHelperText>필수값 입니다.</FormHelperText>}
+              {valid.passwordCheck.valid && <FormHelperText>비밀번호가 일치하지 않습니다.</FormHelperText>}
+            </FormControl>
           </div>
         </>
       );
@@ -131,15 +236,26 @@ function getStepContent(step, props, classes) {
       return (
         <>
           <div className={classes.inputWrap}>
-            <OutlinedInput name="userNm" placeholder="이름" value={userNm} onChange={props.onInputChange}  />
+            <FormControl error={valid.userNm.error}>
+              <OutlinedInput onBlur={handleBlur} name="userNm" placeholder="이름" value={userNm} onChange={props.onInputChange}  />
+              {valid.userNm.required && <FormHelperText>필수값 입니다.</FormHelperText>}
+            </FormControl>
           </div>
           <div className={classes.inputWrap}>
-            <OutlinedInput className={classes.checkInput} name="userNickNm" placeholder="닉네임" value={userNickNm} disabled={userNickNmConfirm} onChange={props.onInputChange}  />
-            <Button variant='contained' color='primary' value='userNickNmConfirm' disabled={userNickNmConfirm}
-              onClick={props.onBooleanConfirm}>확인</Button>
+            <FormControl error={valid.userNickNm.error}>
+              <div>
+                <OutlinedInput onBlur={handleBlur} className={classes.checkInput} name="userNickNm" placeholder="닉네임" value={userNickNm} disabled={userNickNmConfirm} onChange={props.onInputChange}  />
+                <Button variant='contained' color='primary' value='userNickNmConfirm' disabled={userNickNmConfirm}
+                  onClick={props.onBooleanConfirm}>확인</Button>
+              </div>
+              {valid.userNickNm.required && <FormHelperText>필수값 입니다.</FormHelperText>}
+            </FormControl>                  
           </div>
           <div className={classes.inputWrap}>
-            <OutlinedInput name="phone" placeholder="전화번호" value={phone} onChange={props.onInputChange}  />
+            <FormControl error={valid.phone.error}>
+              <OutlinedInput onBlur={handleBlur} name="phone" placeholder="전화번호" value={phone} onChange={props.onInputChange}  />
+              {valid.phone.required && <FormHelperText>필수값 입니다.</FormHelperText>}
+            </FormControl>
           </div>
         </>
       );
@@ -187,6 +303,28 @@ function getStepContent(step, props, classes) {
 export default function SignupForm(props) {
   const classes = useStyles();
   const steps = getSteps();
+  const [valid, dispatchValid] = useReducer(reducer, initialValid);
+  const [active, setActive] = useState(true);
+  const { emailConfirm, userNickNmConfirm } = props.state.boolean;
+
+  useEffect(e => {
+    if(props.activeStep === 0) {
+      if(emailConfirm === true && valid.passwordCheck.error === false) {
+        setActive(false);
+      } else {
+        setActive(true);
+      }
+    }
+    if(props.activeStep === 1) {
+      if(userNickNmConfirm === true
+         && valid.userNm.error === false
+         && valid.phone.error === false) {
+        setActive(false);
+      } else {
+        setActive(true);
+      }
+    }
+  });
 
   return (
     <div className={classes.root}>
@@ -201,7 +339,7 @@ export default function SignupForm(props) {
           <Step key={label}>
             <StepLabel>{label}</StepLabel>
             <StepContent classes={{root: classes.stepContentRoot}}>
-              <Typography component="span">{getStepContent(index, props, classes)}</Typography>
+              <Typography component="span">{getStepContent(index, props, classes, valid, dispatchValid)}</Typography>
               <div className={classes.actionsContainer}>
                 <div>
                   <Button
@@ -216,6 +354,7 @@ export default function SignupForm(props) {
                     color="primary"
                     onClick={props.handleNext}
                     className={classes.button}
+                    disabled={active}
                   >
                     {props.activeStep === steps.length - 1 ? '완료' : '다음'}
                   </Button>

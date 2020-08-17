@@ -157,10 +157,6 @@ export default function SignupPage(props) {
     const { value } = e.currentTarget;
 
     if(value === "emailConfirm") {
-      if(username === "") {
-        alert("이메일ID를 입력하세요.");
-        return;
-      }
       // api 호출
       const response = await User.getCheckUsername({username: username});
       // 결과에 따라 set
@@ -176,10 +172,6 @@ export default function SignupPage(props) {
         alert("이미 존재하는 아이디 입니다.");
       }
     } else {
-      if(userNickNm === "") {
-        alert("닉네임을 입력하세요.");
-        return;
-      }
       // api 호출
       const response = await User.getCheckNicknm({nicknm: userNickNm});
       // 결과에 따라 set
