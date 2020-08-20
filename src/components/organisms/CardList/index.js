@@ -19,8 +19,8 @@ export default function CardList(props) {
           next={props.fetchMoreData}
           hasMore={true}
         >
-          {props.items.map((i, index) => (
-            <Card key={index} index={index} image={index % 3 === 0 && true} />
+          {props.items.map((item, index) => (
+            <Card key={index} index={index} image={index % 3 === 0 && true} item={item} />
           ))}
         </InfiniteScroll>
       </div>

@@ -3,6 +3,7 @@ import { makeStyles, ThemeProvider, createMuiTheme } from '@material-ui/core/sty
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import ForumIcon from '@material-ui/icons/Forum';
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
+import Utils from "../../Utils";
 
 const cardTheme = createMuiTheme({
   overrides: {
@@ -121,8 +122,31 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Card({image, index}) {
+export default function Card({item, image, index}) {
   const classes = useStyles();
+
+  const detailDay = term => {
+    let str = term.startDt.substring(5, 10).replace('-', '.') + " ~ " + term.endDt.substring(5, 10).replace('-', '.');
+    switch(term.detailDay) {
+      case 128: str += '. 협의'; break;
+      case 127: str += '. 매일'; break;
+      case 65: str += '. 주말'; break;
+      case 62: str += '. 주중'; break;
+      default: {
+        let l = '';
+        l = term.detailDay & 64 ? ', 일' : '';
+        l += term.detailDay & 32 ? ', 월' : '';
+        l += term.detailDay & 16 ? ', 화' : '';
+        l += term.detailDay & 8 ? ', 수' : '';
+        l += term.detailDay & 4 ? ', 목' : '';
+        l += term.detailDay & 2 ? ', 금' : '';
+        l += term.detailDay & 1 ? ', 토' : '';
+        str += l;
+        break;
+      }
+    }
+    return str;
+  }
 
   return (
     <ThemeProvider theme={cardTheme}>
@@ -133,23 +157,23 @@ export default function Card({image, index}) {
           </div>
         }
         <div className={classes.content} style={{left : !image && '10px'}}>
-          <div className="title">Can you bring my child to me!! child to me!!</div>
+          <div className="title">{item.meetNm}</div>
           <div className="addressWrap">
-            <div className="address">처인구 역북동</div>
+            <div className="address">{item.address.address1}</div>
           </div>
           <div className="date">
             <div><CalendarTodayIcon fontSize="small" /></div>
-            <div>7.10 - 8.10, 주말</div>
+            <div>{detailDay(item.term)}</div>
           </div>
           <div className="info">
             <div className="costWrap">
-              <div className="cost">￦ 10,000</div>
+              <div className="cost">{item.cost === 0 ? 'Free' : `￦` + Utils.numberWithCommas(item.cost)}</div>
             </div>
             <div className="commWrap">
               <div className="ico"><ForumIcon fontSize="small" /></div>
               <div>5</div>
               <div className="ico"><PermIdentityIcon fontSize="small" /></div>
-              <div>3</div>
+              <div>{item.recruitment}</div>
             </div>
           </div>
         </div>

@@ -40,7 +40,7 @@ export default function InputIcon({type, name, icon, invalid, validMessage, valu
           type={type || 'text'}
           name={name}
           onChange={onChange}
-          value={value || ''}
+          defaultValue={value || ''}
         />
         <span className={classes.icon}>{icon}</span>
       </div>

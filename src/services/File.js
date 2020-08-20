@@ -6,8 +6,8 @@ export async function postAvatar(file) {
   formData.append('file', file);
 
   return axios.post(
-    url, formData, {headers: { 'content-type': 'multipart/form-data' }
-  }).catch(error => {
+    url, formData, {headers: { 'content-type': 'multipart/form-data' }}
+  ).catch(error => {
     console.log(error);
   });
 }
