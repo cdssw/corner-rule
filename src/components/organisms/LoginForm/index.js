@@ -64,7 +64,7 @@ export default function LoginForm({username, password, onInput, onLogin, saveId,
           label={<Typography component="span" variant="body1" style={{color: 'white', paddingLeft: '5px'}}>아이디 저장</Typography>}
         />
       </div>
-      <div className={classes.buttonWrap}>
+      <div>
         <Button color='primary' variant="contained" fullWidth={true} onClick={onLogin}>LOGIN</Button>
       </div>
       <div className={classes.signup}>

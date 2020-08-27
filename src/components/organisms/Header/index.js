@@ -34,22 +34,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Header({userInfo}) {
+export default function Header({userInfo, path}) {
   const classes = useStyles();
 
+  console.log("userInfo:" + userInfo);
   return (
     <div className={classes.root}>
       <img className={classes.logo} src={resources.logoHorizon} alt="logo" />
       <div className={classes.space}></div>
       <div className={classes.userName}>{userInfo && userInfo.userNm}</div>
       <div>
-        <Link to='/login'>
+        <Link to={path}>
           <Avatar
             classes={{root: classes.avatarRoot, img: classes.avatarImg}}
             alt={userInfo && userInfo.userNm}
             src={userInfo && process.env.REACT_APP_IMAGE + userInfo.avatarPath}
           >
-            {!userInfo && <Person />}</Avatar>
+            {userInfo == null && <Person />}</Avatar>
         </Link>
       </div>
     </div>

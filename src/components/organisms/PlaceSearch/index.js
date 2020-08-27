@@ -50,8 +50,6 @@ export default function PlaceSearch({place, onPlace, onSearch}) {
           <InputIcon icon={<SearchIcon />} onChange={onSearch} />
         </div>
       </div>
-      {/* hr */}
-      <div style={{borderBottom: '1px solid #dfdfdf', marginBottom: '10px'}}></div>
     </>
   );
 }

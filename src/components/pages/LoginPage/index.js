@@ -40,7 +40,7 @@ export default function LoginPage() {
     localStorage.setItem("token", JSON.stringify(response.data)); // token을 localStorage에 저장
     const userInfo = await User.getUserCall(response.data);
     dispatch(setLoginUserInfo(userInfo.data)); // 가져온 user 정보를 redux에 저장
-    dispatch(setLogin()); // login 상태로 처리
+    dispatch(setLogin(true)); // login 상태로 처리
   }
 
   if(login) return <Redirect to='/' />

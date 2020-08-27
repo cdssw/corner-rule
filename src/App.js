@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { Route, Switch } from "react-router-dom";
-import { LoginPage, HomePage, SignupPage } from "components";
+import { LoginPage, HomePage, SignupPage, MyPage } from "components";
 
 function App() {
   return (
@@ -10,6 +10,7 @@ function App() {
         <Route exact path="/" component={HomePage}/>
         <Route exact path="/login" component={LoginPage}/>
         <Route exact path="/signup" component={SignupPage}/>
+        <Route exact path="/mypage" component={MyPage}/>
       </Switch>
     </div>
   );
