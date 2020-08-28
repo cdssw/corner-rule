@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
     border: 'none',
     fontSize: '1rem',
     height: '19px',
+    padding: 0,
   },
   invalid: {
     color: theme.palette.error.dark,
