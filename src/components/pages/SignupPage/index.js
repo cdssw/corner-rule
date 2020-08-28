@@ -1,6 +1,5 @@
 /* eslint no-restricted-globals: ["off"] */
-import React, { useState, useReducer } from 'react';
-import { useSelector } from "react-redux";
+import React, { useReducer } from 'react';
 import { PageTemplate, TitleHeader, SignupForm } from "components";
 import * as User from "../../../services/User";
 import * as File from "../../../services/File";
@@ -145,7 +144,7 @@ export default function SignupPage(props) {
   }
 
   const onArrayDelete = e => {
-    const { name, value, index } = e;
+    const { name, value } = e;
     dispatch({
       type: 'DELETE_ARRAY',
       name,

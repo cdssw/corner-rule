@@ -16,10 +16,10 @@ const useStyles = makeStyles((theme) => ({
   },
   input: {
     width: '100%',
-    lineHeight: 'normal',
     outline: 'none',
     border: 'none',
-    fontSize: '15px',
+    fontSize: '1rem',
+    height: '19px',
   },
   invalid: {
     color: theme.palette.error.dark,
@@ -40,7 +40,7 @@ export default function InputIcon({type, name, icon, invalid, validMessage, valu
           type={type || 'text'}
           name={name}
           onChange={onChange}
-          defaultValue={value || ''}
+          value={value || ''}
         />
         <span className={classes.icon}>{icon}</span>
       </div>

@@ -33,7 +33,7 @@ export default function LoginPage() {
     if(response === undefined) {
       setLoginData({
         username: '',
-        password: '',
+        password: ''
       });
       return;
     }

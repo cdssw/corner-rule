@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PlaceSearch({place, onPlace, onSearch}) {
+export default function PlaceSearch({place, onPlace, onSearch, search}) {
   const classes = useStyles();
 
   return (
@@ -47,7 +47,7 @@ export default function PlaceSearch({place, onPlace, onSearch}) {
           </FormControl>
         </div>
         <div className={classes.searchWrap}>
-          <InputIcon icon={<SearchIcon />} onChange={onSearch} />
+          <InputIcon icon={<SearchIcon />} name="search" onChange={onSearch} value={search} />
         </div>
       </div>
     </>

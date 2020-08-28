@@ -37,7 +37,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Header({userInfo, path}) {
   const classes = useStyles();
 
-  console.log("userInfo:" + userInfo);
   return (
     <div className={classes.root}>
       <img className={classes.logo} src={resources.logoHorizon} alt="logo" />
@@ -50,7 +49,7 @@ export default function Header({userInfo, path}) {
             alt={userInfo && userInfo.userNm}
             src={userInfo && process.env.REACT_APP_IMAGE + userInfo.avatarPath}
           >
-            {userInfo == null && <Person />}</Avatar>
+            {(userInfo == null || userInfo.avatarPath == null) && <Person />}</Avatar>
         </Link>
       </div>
     </div>
