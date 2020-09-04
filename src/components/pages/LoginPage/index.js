@@ -20,7 +20,6 @@ export default function LoginPage() {
     setSaveId(event.target.checked);
   };
 
-
   const handleInput = (event) => {
     setLoginData({
       ...loginData,

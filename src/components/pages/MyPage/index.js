@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoginUserInfo, setLogin } from "../../../modules/userInfo";
@@ -8,12 +8,16 @@ export default function MyPage(props) {
   const history = useHistory();
   const dispatch = useDispatch();
   const { login } = useSelector(state => state.userInfo, []);
-
+  
   const handleLogout = e => {
-    localStorage.setItem("token", null); // token 삭제
+    localStorage.removeItem('token');
     dispatch(setLoginUserInfo(null));
     dispatch(setLogin(false));
     history.push("/");
+  }
+
+  const handlePlaceClick = e => {
+    history.push("/mypage/hope_place");
   }
 
   if(!login) return <Redirect to='/' />
@@ -22,7 +26,7 @@ export default function MyPage(props) {
     <PageTemplate header={<TitleHeader {...props}>My Page</TitleHeader>}>
       <MyInfo onLogout={handleLogout} />
       <div style={{borderBottom: '1px solid #dfdfdf'}}></div><div style={{marginBottom: '10px'}}></div>
-      <PlaceSetting />
+      <PlaceSetting onClick={handlePlaceClick} />
       <div style={{borderBottom: '1px solid #dfdfdf'}}></div><div style={{marginBottom: '10px'}}></div>
       <MyTab />
     </PageTemplate>

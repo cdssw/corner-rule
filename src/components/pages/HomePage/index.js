@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setLoginUserInfo, setLogin } from "../../../modules/userInfo";
 import { PageTemplate, Header, CardList, PlaceSearch } from "components";
+import * as User from "../../../services/User";
 import * as Meet from "../../../services/Meet";
 
 export default function HomePage() {
   const { userInfo, login } = useSelector(state => state.userInfo, {});
+  const dispatch = useDispatch();
   const [items, setItems] = useState([]);
   const [place, setPlace] = useState(10);
   const [search, setSearch] = useState('');
@@ -20,8 +23,20 @@ export default function HomePage() {
   }
 
   useEffect(e => {
-    fetchMoreData(); // 최초에 한번만 로딩
+    const token = localStorage.getItem("token");
+    if(token) { // 로그인 되어 있으면 user정보 복구
+      loadUserInfo(JSON.parse(token));
+    } else {
+      fetchMoreData();
+    }
   }, []);
+
+  const loadUserInfo = async token => {
+    const userInfo = await User.getUserCall(token);
+    dispatch(setLoginUserInfo(userInfo.data)); // 가져온 user 정보를 redux에 저장
+    dispatch(setLogin(true)); // login 상태로 처리
+    fetchMoreData();
+  }
 
   const fetchMoreData = async event => {
     const response = await Meet.getMeetListByPage({page: page, size: size})

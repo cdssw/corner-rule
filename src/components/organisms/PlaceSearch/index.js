@@ -40,9 +40,8 @@ export default function PlaceSearch({place, onPlace, onSearch, search}) {
               fullWidth={true}
               classes={{outlined: classes.selectOutlined}}
             >
-              <MenuItem value={10}>역북동</MenuItem>
-              <MenuItem value={20}>동부동</MenuItem>
-              <MenuItem value={30}>김량장동</MenuItem>
+              <MenuItem value={10}>용인시 처인구</MenuItem>
+              <MenuItem value={20}>서울시 강남구</MenuItem>
             </Select>
           </FormControl>
         </div>

@@ -10,8 +10,6 @@ import VpnKeyOutlinedIcon from '@material-ui/icons/VpnKeyOutlined';
 import RadioButtonUncheckedOutlinedIcon from '@material-ui/icons/RadioButtonUncheckedOutlined';
 import RadioButtonCheckedRoundedIcon from '@material-ui/icons/RadioButtonCheckedRounded';
 import { Typography } from '@material-ui/core';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import InputAdornment from '@material-ui/core/InputAdornment';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,12 +35,6 @@ const useStyles = makeStyles((theme) => ({
   checkboxWrap: {
     marginRight: 0,
   },
-  inputWrap: {
-    backgroundColor: 'white',
-    '&:active': {
-      borderColor: 'white',
-    }
-  },
 }));
 
 export default function LoginForm({username, password, onInput, onLogin, saveId, onSaveId}) {
@@ -51,24 +43,10 @@ export default function LoginForm({username, password, onInput, onLogin, saveId,
   return (
     <div className={classes.root}>
       <div className={classes.emailWrap}>
-        <OutlinedInput className={classes.inputWrap} name="username" placeholder="이메일 ID" value={username} onChange={onInput} 
-          endAdornment={
-            <InputAdornment position="end">
-              <AccountCircleOutlinedIcon color="disabled" />
-            </InputAdornment>
-          }
-        />
-        {/* <InputIcon icon={<AccountCircleOutlinedIcon color="disabled" />} name="username" onChange={onInput} value={username} /> */}
+        <InputIcon icon={<AccountCircleOutlinedIcon color="disabled" />} name="username" onChange={onInput} value={username} />
       </div>
       <div className={classes.passwordWrap}>
-        <OutlinedInput className={classes.inputWrap} type="password" name="password" placeholder="비밀번호" value={password} onChange={onInput} 
-          endAdornment={
-            <InputAdornment position="end">
-              <VpnKeyOutlinedIcon color="disabled" />
-            </InputAdornment>
-          }
-        />
-        {/* <InputIcon type="password" icon={<VpnKeyOutlinedIcon color="disabled" />} name="password" onChange={onInput} value={password} /> */}
+        <InputIcon type="password" icon={<VpnKeyOutlinedIcon color="disabled" />} name="password" onChange={onInput} value={password} />
       </div>
       <div className={classes.saveIdWrap}>
         <FormControlLabel

@@ -34,11 +34,9 @@ export default function PlaceSetting(props) {
     <div className={classes.root}>
       <div className={classes.title}>희망지역</div>
       <div className={classes.placeWrap}>
-        <Button classes={{label: classes.buttonTextColor}} color='primary' variant="outlined">용인시 처인구</Button>
-        <Button classes={{label: classes.buttonTextColor}} color='primary' variant="outlined">서울시 강남구</Button>
-        <Button classes={{label: classes.buttonTextColor}} color='primary' variant="outlined">
-          <AddIcon />
-        </Button>
+        <Button classes={{label: classes.buttonTextColor}} color='primary' variant="outlined" id="place1" onClick={props.onClick}><AddIcon /></Button>
+        <Button classes={{label: classes.buttonTextColor}} color='primary' variant="outlined" id="place2" onClick={props.onClick}><AddIcon /></Button>
+        <Button classes={{label: classes.buttonTextColor}} color='primary' variant="outlined" id="place3" onClick={props.onClick}><AddIcon /></Button>
       </div>
     </div>
   );
