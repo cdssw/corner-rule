@@ -47,7 +47,7 @@ export default function Header({userInfo, path}) {
           <Avatar
             classes={{root: classes.avatarRoot, img: classes.avatarImg}}
             alt={userInfo && userInfo.userNm}
-            src={userInfo && process.env.REACT_APP_IMAGE + userInfo.avatarPath}
+            src={userInfo && userInfo.avatarPath && process.env.REACT_APP_IMAGE + userInfo.avatarPath}
           >
             {(userInfo == null || userInfo.avatarPath == null) && <Person />}</Avatar>
         </Link>

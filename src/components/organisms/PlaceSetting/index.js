@@ -24,19 +24,41 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonTextColor: {
     color: '#707070',
+    fontSize: '0.8rem',
+    lineHeight: '17px',
   }, 
 }));
 
-export default function PlaceSetting(props) {
+function Place(place) {
+  return place.split(' ').map(item => <>{item}<br /></>);
+}
+
+export default function PlaceSetting({userInfo, onClick}) {
   const classes = useStyles();
+  const { hopePlace } = userInfo;
 
   return (
     <div className={classes.root}>
       <div className={classes.title}>희망지역</div>
       <div className={classes.placeWrap}>
-        <Button classes={{label: classes.buttonTextColor}} color='primary' variant="outlined" id="place1" onClick={props.onClick}><AddIcon /></Button>
-        <Button classes={{label: classes.buttonTextColor}} color='primary' variant="outlined" id="place2" onClick={props.onClick}><AddIcon /></Button>
-        <Button classes={{label: classes.buttonTextColor}} color='primary' variant="outlined" id="place3" onClick={props.onClick}><AddIcon /></Button>
+        <Button classes={{label: classes.buttonTextColor}} color='primary' variant="outlined"
+          id="place1"
+          onClick={onClick}
+        >
+          {hopePlace ? hopePlace.place1 ? Place(userInfo.hopePlace.place1) : <AddIcon /> : <AddIcon />}
+        </Button>
+        <Button classes={{label: classes.buttonTextColor}} color='primary' variant="outlined"
+          id="place2"
+          onClick={onClick}
+        >
+          {hopePlace ? hopePlace.place2 ? Place(userInfo.hopePlace.place2) : <AddIcon /> : <AddIcon />}
+        </Button>
+        <Button classes={{label: classes.buttonTextColor}} color='primary' variant="outlined"
+          id="place3"
+          onClick={onClick}
+        >
+          {hopePlace ? hopePlace.place3 ? Place(userInfo.hopePlace.place3) : <AddIcon /> : <AddIcon />}
+        </Button>
       </div>
     </div>
   );

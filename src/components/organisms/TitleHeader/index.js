@@ -27,13 +27,17 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function TitleHeader({children, history}) {
+export default function TitleHeader({children, history, path}) {
   const classes = useStyles();
+
+  const handleBack = e => {
+    path ? history.push(path) : history.goBack(path);
+  }
 
   return (
     <div className={classes.root}>
       <div className={classes.arrowWrap}>
-        <ArrowBackIcon className={classes.arrow} onClick={() => history.goBack()} />
+        <ArrowBackIcon className={classes.arrow} onClick={handleBack} />
       </div>
       <div className={classes.title}>{children}</div>
       <div className={classes.space}></div>

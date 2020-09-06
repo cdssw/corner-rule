@@ -26,12 +26,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PlaceSearch({place, onPlace, onSearch, search}) {
+export default function PlaceSearch({userInfo, place, onPlace, onSearch, search}) {
   const classes = useStyles();
+  const { hopePlace } = userInfo;
 
   return (
     <> 
       <div className={classes.root}>
+        {hopePlace &&
         <div className={classes.placeWrap}>
           <FormControl variant="outlined" size="small" className={classes.place}>
             <Select
@@ -40,11 +42,13 @@ export default function PlaceSearch({place, onPlace, onSearch, search}) {
               fullWidth={true}
               classes={{outlined: classes.selectOutlined}}
             >
-              <MenuItem value={10}>용인시 처인구</MenuItem>
-              <MenuItem value={20}>서울시 강남구</MenuItem>
+              {hopePlace.place1 && <MenuItem value={hopePlace.place1}>{hopePlace.place1}</MenuItem>}
+              {hopePlace.place2 && <MenuItem value={hopePlace.place2}>{hopePlace.place2}</MenuItem>}
+              {hopePlace.place3 && <MenuItem value={hopePlace.place3}>{hopePlace.place3}</MenuItem>}
             </Select>
           </FormControl>
         </div>
+        }
         <div className={classes.searchWrap}>
           <InputIcon icon={<SearchIcon />} name="search" onChange={onSearch} value={search} />
         </div>

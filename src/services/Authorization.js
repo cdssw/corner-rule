@@ -1,8 +1,9 @@
 import axios from "axios";
 import querystring from "querystring";
 
+const url = process.env.REACT_APP_SERVICE_AUTHORIZATION;
+
 export async function loginCall(props) {
-  const url = process.env.REACT_APP_SERVICE_AUTHORIZATION;
   const data = {
     grant_type: 'password',
     client_id: 'auth_id',

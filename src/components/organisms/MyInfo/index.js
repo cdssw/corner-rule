@@ -77,9 +77,9 @@ export default function MyInfo(props) {
         </div>
       </div>
       <div className={classes.infoWrap}>
-        <div>파랑</div>
-        <div>홍길동</div>
-        <div>010-1111-1111</div>
+        <div>{props.userInfo.userNickNm}</div>
+        <div>{props.userInfo.userNm}</div>
+        <div>{props.userInfo.phone}</div>
       </div>
       <div className={classes.modifyWrap}>
         <div className={classes.logoutWrap}>

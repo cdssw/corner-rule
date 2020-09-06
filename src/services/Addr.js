@@ -1,18 +1,16 @@
 import axios from "axios";
 
+const url = process.env.REACT_APP_SERVICE_ADDR
+
 export async function getSidoList() {
-  const url = process.env.REACT_APP_SERVICE_ADDR + "/sido";
-  return axios.get(
-    url
-  ).catch(error => {
+  return axios.get(url + "/sido").catch(error => {
     console.log(error);
   });
 }
 
 export async function getSggList(sido) {
-  const url = process.env.REACT_APP_SERVICE_ADDR + "/sgg";
   return axios.get(
-    url, {params: { sido }}
+    url + "/sgg", {params: { sido }}
   ).catch(error => {
     console.log(error);
   });

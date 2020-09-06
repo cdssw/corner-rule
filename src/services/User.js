@@ -1,7 +1,8 @@
 import axios from "axios";
 
-export async function getUserCall(props) {
-  const url = process.env.REACT_APP_SERVICE_USER;
+const url = process.env.REACT_APP_SERVICE_USER;
+
+export async function getUser(props) {
   return axios.get(
     url, {headers: { Authorization: "Bearer " + props.access_token }}
   ).catch(error => {
@@ -10,28 +11,34 @@ export async function getUserCall(props) {
 }
 
 export async function getCheckUsername(props) {
-  const url = process.env.REACT_APP_SERVICE_USER + "/check/username";
   return axios.get(
-    url, {params: { username: props.username }}
+    url + "/check/username", {params: { username: props.username }}
   ).catch(error => {
     console.log(error);
   });
 }
 
 export async function getCheckNicknm(props) {
-  const url = process.env.REACT_APP_SERVICE_USER + "/check/nicknm";
   return axios.get(
-    url, {params: { nicknm: props.nicknm }}
+    url + "/check/nicknm", {params: { nicknm: props.nicknm }}
   ).catch(error => {
     console.log(error);
   });
 }
 
 export async function signup(body) {
-  const url = process.env.REACT_APP_SERVICE_USER + "/signup";
-
   return axios.post(
-    url, body
+    url + "/signup", body
+  ).catch(error => {
+    console.log(error.response);
+  });
+}
+
+export async function putEditUser(props) {
+  return axios.put(
+    url,
+    props.body,
+    {headers: { Authorization: "Bearer " + props.token.access_token }}
   ).catch(error => {
     console.log(error.response);
   });
