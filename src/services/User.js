@@ -44,3 +44,13 @@ export async function putEditUser(props) {
   });
 }
 
+export async function postPasswordChange(props) {
+  return axios.post(
+    url + "/change/password",
+    props.body,
+    {headers: { Authorization: "Bearer " + props.token.access_token }}
+  ).catch(error => {
+    alert(error.response.data.message);
+  });
+}
+

@@ -56,7 +56,7 @@ export default function PlaceSelect(props) {
             </Select>
           </FormControl>
         </div>
-        <Button classes={{label: classes.buttonTextColor}} color='primary' variant="outlined" onClick={props.onSelect}>선택</Button>
+        <Button color='primary' variant="outlined" onClick={props.onSelect}>선택</Button>
       </div>
     </>
   );

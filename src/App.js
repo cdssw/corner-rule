@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { Route, Switch } from "react-router-dom";
-import { LoginPage, HomePage, SignupPage, MyPage, HopePlacePage } from "components";
+import { LoginPage, HomePage, SignupPage, MyPage, HopePlacePage, PasswordChangePage } from "components";
 
 function App() {
   return (
@@ -12,6 +12,7 @@ function App() {
         <Route exact path="/signup" component={SignupPage}/>
         <Route exact path="/mypage" component={MyPage}/>
         <Route exact path="/mypage/hope_place" component={HopePlacePage}/>
+        <Route exact path="/mypage/pass_change" component={PasswordChangePage}/>
       </Switch>
     </div>
   );

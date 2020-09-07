@@ -86,7 +86,7 @@ export default function MyInfo(props) {
           <div><SettingsIcon /></div>
           <div onClick={props.onLogout}><PowerSettingsNewIcon /></div>
         </div>
-        <Button classes={{label: classes.buttonTextColor}} color='primary' variant="outlined" fullWidth={true}>비밀번호 변경</Button>
+        <Button classes={{label: classes.buttonTextColor}} color='primary' variant="outlined" fullWidth={true} onClick={props.onPasswordChange}>비밀번호 변경</Button>
       </div>
     </div>
   );
