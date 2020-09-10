@@ -1,0 +1,70 @@
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import AddIcon from '@material-ui/icons/Add';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+  },
+  img: {
+    position: 'relative',
+    '& img': {
+      borderRadius: '5px',
+      border: '1px solid #5a6482',
+      boxSizing: 'border-box',
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover',
+    },
+  },
+  imgWrap: {
+    '& > img': {
+      width: '20px',
+      height: '20px',
+      position: 'absolute',
+      zIndex: 1,
+      top: 0,
+    }
+  },
+  addWrap: {
+    position: 'relative',
+  },
+  add: {
+    position: 'absolute',
+    border: '1px solid #5a6482',
+    borderRadius: '5px',
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'lightgray',
+    boxSizing: 'border-box',
+    display: 'flex',
+    justifyContent: 'space-between',
+    '& > svg': {
+      padding: '5px 5px',
+      margin: 'auto',
+      flex: '1 1 0',
+      color: '#5a6482'
+    },
+  },
+}));
+
+export default function Image({file, width = '100', height = '100'}) {
+  const classes = useStyles();
+
+  return (
+    <div className={classes.root}>
+      {file
+        ?
+          <div className={classes.imgWrap}>
+            <img alt="remove" src={process.env.PUBLIC_URL + "/images/remove.svg"} style={{left: width - 4}} />
+            <div className={classes.img} style={{width: width + 'px', height: height + 'px'}}>
+              <img alt="img" src={process.env.PUBLIC_URL + file} />
+            </div>
+          </div>
+        :
+          <div className={classes.addWrap} style={{width: width + 'px', height: height + 'px'}}>
+            <div className={classes.add}><AddIcon fontSize="large" /></div>
+          </div>        
+      }
+    </div>
+  );
+}
