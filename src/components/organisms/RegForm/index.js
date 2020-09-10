@@ -30,13 +30,14 @@ const useStyles = makeStyles((theme) => ({
   label: {
     fontSize: '0.7rem',
   },
-  input: {
-    height: '1rem',
+  muiRoot: {
+    display: 'block',
   }
 }));
 
 export default function RegForm(props) {
   const classes = useStyles();
+  const isSafari = navigator.vendor.includes('Apple');
 
   return (
     <div className={classes.root}>
@@ -46,7 +47,7 @@ export default function RegForm(props) {
       <div className={classes.datetimeWrap}>
         <FormControl>
           <label className={classes.label}>시작일</label>
-          <OutlinedInput classes={{input: classes.input}} type="date" name="startDt" placeholder="시작일" />
+          <OutlinedInput classes={{root: isSafari && classes.muiRoot}} type="date" name="startDt" placeholder="시작일" />
         </FormControl>
         <FormControl>
           <label className={classes.label}>종료일</label>
@@ -116,7 +117,7 @@ export default function RegForm(props) {
       </div>
       <div className={classes.costWrap}>
         <FormControl>
-          <OutlinedInput classes={{input: classes.input}} type="number" name="cost" placeholder="금액" />
+          <OutlinedInput classes={{root: classes.input}} type="number" name="cost" placeholder="금액" />
         </FormControl>
         <FormControlLabel
           className={classes.checkboxWrap}
