@@ -7,7 +7,26 @@ import * as User from "../../../services/User";
 export default function RegPage(props) {
   const history = useHistory();
   const { login, userInfo } = useSelector(state => state.userInfo, []);
-  const [ imgList, setImgList ] = useState(["1"]);
+  const [ imgList, setImgList ] = useState([]);
+
+  const [state, setState] = useState({
+    title: '',
+    startDt: '',
+    endDt: '',
+    startTm: '',
+    endTm: '',
+    cost: '',
+    addr: '',
+    content: '',
+  });
+
+  const handleInputChange = e => {
+    setState({
+      ...state,
+      [e.target.name]: e.target.value
+    });
+  }
+
 
   // if(!login) return <Redirect to='/' />
 
@@ -16,7 +35,10 @@ export default function RegPage(props) {
       <ImageList imgList={imgList} />
       <div style={{borderBottom: '1px solid #dfdfdf'}} />
       <div style={{marginBottom: '20px'}}></div>
-      <RegForm />
+      <RegForm
+        state={state}
+        onInputChange={handleInputChange}
+      />
     </PageTemplate>
   );
 }

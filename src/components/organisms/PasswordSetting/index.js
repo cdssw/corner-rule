@@ -44,7 +44,7 @@ const reducer = (state, action) => {
 export default function PasswordSetting(props) {
   const classes = useStyles();
   const { currentPassword, password, passwordCheck } = props.state;
-  const [valid, dispatchValid] = useReducer(reducer, initialValid);
+  const [ valid, dispatchValid ] = useReducer(reducer, initialValid);
   const [ disabled, setDisabled ] = useState(true);
 
   const handleBlur = e => {
