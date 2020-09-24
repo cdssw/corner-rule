@@ -1,6 +1,8 @@
-import React, { useReducer, useState, useEffect } from 'react';
+import React, { useReducer, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { FormHelperText, FormControl, FormControlLabel, Checkbox, OutlinedInput, TextField, Button } from '@material-ui/core';
+import { FormControlLabel, Checkbox, TextField, Button } from '@material-ui/core';
+import TimePicker from "react-times";
+import 'react-times/css/classic/default.css';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -8,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: '20px',
     }
   },
-  datetimeWrap: {
+  labelWrap: {
     display: 'flex',
     flexDirection: 'column',
     '& label': {
@@ -30,6 +32,11 @@ const useStyles = makeStyles((theme) => ({
   label: {
     fontSize: '0.7rem',
   },
+  error: {
+    fontSize: '0.7rem',
+    color: 'red',
+    marginLeft: '15px',
+  },  
   muiRoot: {
     display: 'block',
   },
@@ -51,15 +58,15 @@ const initialValid = {
     error: false,
     required: true,
   },
-  startTm: {
+  address1: {
     error: false,
     required: true,
   },
-  endTm: {
+  address2: {
     error: false,
     required: true,
   },
-  addr: {
+  recruitment: {
     error: false,
     required: true,
   },
@@ -77,37 +84,62 @@ export default function RegForm(props) {
   const classes = useStyles();
   const isSafari = navigator.vendor.includes('Apple');
   const [valid, dispatchValid] = useReducer(reducer, initialValid);
-  const { title, startDt, endDt, startTm, endTm, addr, content } = props.state;
-  const [ disabled, setDisabled ] = useState(true);
+  const { title, term, recruitment, address, content } = props.state;
+  const [dayVisible, setDayVisible] = useState('none');
 
-  const handleBlur = e => {
+  const validatation = e => {
     let value = {};
     value.error = false;
-    switch(e.target.name) {
-      case 'title':
-        value = {...valid[e.target.name], error: valid[e.target.name].required && title === '' ? true : false}
-        break;
-      case 'startDt':
-        value = {...valid[e.target.name], error: valid[e.target.name].required && startDt === '' ? true : false}
-        break;
-      case 'endDt':
-        value = {...valid[e.target.name], error: valid[e.target.name].required && endDt === '' ? true : false}
-        break;
-      case 'startTm':
-        value = {...valid[e.target.name], error: valid[e.target.name].required && startTm === '' ? true : false}
-        break;
-      case 'endTm':
-        value = {...valid[e.target.name], error: valid[e.target.name].required && endTm === '' ? true : false}
-        break;
-      case 'addr':
-        value = {...valid[e.target.name], error: valid[e.target.name].required && addr === '' ? true : false}
-        break;
-      case 'content':
-        value = {...valid[e.target.name], error: valid[e.target.name].required && content === '' ? true : false}
-        break;
-        
+    value = {...valid['title'], error: valid['title'].required && title === '' ? true : false}
+    dispatchValid({type: 'title', value: value});
+    value = {...valid['startDt'], error: valid['startDt'].required && term.startDt === '' ? true : false}
+    dispatchValid({type: 'startDt', value: value});
+    value = {...valid['endDt'], error: valid['endDt'].required && term.endDt === '' ? true : false}
+    dispatchValid({type: 'endDt', value: value});
+    value = {...valid['recruitment'], error: valid['recruitment'].required && recruitment === 0 ? true : false}
+    dispatchValid({type: 'recruitment', value: value});    
+    value = {...valid['address1'], error: valid['address1'].required && address.address1 === '' ? true : false}
+    dispatchValid({type: 'address1', value: value});
+    value = {...valid['address2'], error: valid['address2'].required && address.address2 === '' ? true : false}
+    dispatchValid({type: 'address2', value: value});
+    value = {...valid['content'], error: valid['content'].required && content === '' ? true : false}
+    dispatchValid({type: 'content', value: value});
+
+    // detailDay check
+    if(term.detailDay === 0) {
+      value.error = true;
+      setDayVisible('block');
+    } else {
+      setDayVisible('none');
     }
-    dispatchValid({type: e.target.name, value: value});
+
+    return value.error;
+  }
+
+  const handleSave = e => {
+    const rst = validatation(e);
+    if(rst === false) props.onSaveClick();
+  }
+
+  const handleCheckBox = e => {
+    if(e.target.checked)
+      props.onInputChange({target:{ name: 'detailDay', value: term.detailDay + parseInt(e.target.id)}});
+    else if(!e.target.checked)
+      props.onInputChange({target:{ name: 'detailDay', value: term.detailDay - parseInt(e.target.id)}});
+  }
+
+  const handleCostCheckBox = e => {
+    e.target.checked
+     ? props.onInputChange({target:{ name: 'costOption', value: true}})
+     : props.onInputChange({target:{ name: 'costOption', value: false}});
+  }
+
+  const handleStartTimeChange = options => {
+    props.onInputChange({target:{ name: 'startTm', value: options.hour + ":" + options.minute}});
+  }
+
+  const handleEndTimeChange = options => {
+    props.onInputChange({target:{ name: 'endTm', value: options.hour + ":" + options.minute}});
   }
 
   return (
@@ -115,134 +147,137 @@ export default function RegForm(props) {
       <TextField 
         name="title" placeholder="제목" variant="outlined" fullWidth={true}
         error={valid.title.error}
-        onBlur={handleBlur}
         helperText={valid.title.error && "필수값 입니다."}
         onChange={props.onInputChange}
       />
-      <div className={classes.datetimeWrap}>
+      <div className={classes.labelWrap}>
         <label className={classes.label}>시작일</label>
         <TextField 
-          classes={{root: isSafari && classes.muiRoot}}
-          name="startDt" placeholder="시작일" variant="outlined" type="date"
+          name="startDt" classes={{root: isSafari && classes.muiRoot}}
+          placeholder="시작일" variant="outlined" type="date"
           error={valid.startDt.error}
-          onBlur={handleBlur}
           helperText={valid.startDt.error && "필수값 입니다."}
           onChange={props.onInputChange}
         />
         <label className={classes.label}>종료일</label>
         <TextField 
-          classes={{root: isSafari && classes.muiRoot}}
-          name="endDt" placeholder="시작일" variant="outlined" type="date"
+          name="endDt" classes={{root: isSafari && classes.muiRoot}}
+          placeholder="종료일" variant="outlined" type="date"
           error={valid.endDt.error}
-          onBlur={handleBlur}
           helperText={valid.endDt.error && "필수값 입니다."}
           onChange={props.onInputChange}
         />        
       </div>
-      <div className={classes.datetimeWrap}>
+      <div className={classes.labelWrap}>
         <label className={classes.label}>시작시간</label>
-        <TextField 
-          classes={{root: isSafari && classes.muiRoot}}
-          name="startTm" placeholder="시작시간" variant="outlined" type="time"
-          error={valid.startTm.error}
-          onBlur={handleBlur}
-          helperText={valid.startTm.error && "필수값 입니다."}
-          onChange={props.onInputChange}
-        />
+        <TimePicker theme="classic" onTimeChange={handleStartTimeChange} time={term.startTm} />
         <label className={classes.label}>종료시간</label>
-        <TextField 
-          classes={{root: isSafari && classes.muiRoot}}
-          name="endTm" placeholder="종료시간" variant="outlined" type="time"
-          error={valid.endTm.error}
-          onBlur={handleBlur}
-          helperText={valid.endTm.error && "필수값 입니다."}
-          onChange={props.onInputChange}
-        />
+        <TimePicker theme="classic" onTimeChange={handleEndTimeChange} time={term.endTm} />
       </div>      
+      {/* 요일체크 */}
+      <label className={classes.error} style={{display: dayVisible}}>요일을 선택하세요</label>
       <div>
         <FormControlLabel
           className={classes.checkboxWrap}
           control={
-            <Checkbox className={classes.checkbox} size="small" />
+            <Checkbox className={classes.checkbox} size="small" id="64" onChange={handleCheckBox} />
           }
           label='일'
         />
         <FormControlLabel
           className={classes.checkboxWrap}
           control={
-            <Checkbox className={classes.checkbox} size="small" />
+            <Checkbox className={classes.checkbox} size="small" id="32" onChange={handleCheckBox} />
           }
           label='월'
         />
         <FormControlLabel
           className={classes.checkboxWrap}
           control={
-            <Checkbox className={classes.checkbox} size="small" />
+            <Checkbox className={classes.checkbox} size="small" id="16" onChange={handleCheckBox} />
           }
           label='화'
         />
         <FormControlLabel
           className={classes.checkboxWrap}
           control={
-            <Checkbox className={classes.checkbox} size="small" />
+            <Checkbox className={classes.checkbox} size="small" id="8" onChange={handleCheckBox} />
           }
           label='수'
         />
         <FormControlLabel
           className={classes.checkboxWrap}
           control={
-            <Checkbox className={classes.checkbox} size="small" />
+            <Checkbox className={classes.checkbox} size="small" id="4" onChange={handleCheckBox} />
           }
           label='목'
         />
         <FormControlLabel
           className={classes.checkboxWrap}
           control={
-            <Checkbox className={classes.checkbox} size="small" />
+            <Checkbox className={classes.checkbox} size="small" id="2" onChange={handleCheckBox} />
           }
           label='금'
         />
         <FormControlLabel
           className={classes.checkboxWrap}
           control={
-            <Checkbox className={classes.checkbox} size="small" />
+            <Checkbox className={classes.checkbox} size="small" id="1" onChange={handleCheckBox} />
           }
           label='토'
         />
       </div>
       <div className={classes.costWrap}>
         <TextField 
-          classes={{root: isSafari && classes.muiRoot}}
-          name="cost" placeholder="금액" variant="outlined" type="number"
-          onBlur={handleBlur}
+          name="cost" classes={{root: isSafari && classes.muiRoot}}
+          placeholder="금액" variant="outlined" type="number"
           onChange={props.onInputChange}
         />
         <FormControlLabel
           className={classes.checkboxWrap}
           control={
-            <Checkbox className={classes.checkbox} size="small" />
+            <Checkbox className={classes.checkbox} size="small" onChange={handleCostCheckBox} />
           }
           label='협의'
         />
       </div>
+      <div className={classes.labelWrap}>
+        <label className={classes.label}>모집인원</label>
+        <TextField 
+          name="recruitment" classes={{root: isSafari && classes.muiRoot}}
+          placeholder="모집인원" variant="outlined" type="number"
+          error={valid.recruitment.error}
+          helperText={valid.recruitment.error && "최소 1명 이상입니다."}
+          onChange={props.onInputChange}
+        />
+      </div>
+      <div className={classes.labelWrap}>
+        <label className={classes.label}>주소</label>
+        <TextField 
+          name="address1" classes={{root: isSafari && classes.muiRoot}}
+          placeholder="주소" variant="outlined" fullWidth={true}
+          error={valid.address1.error}
+          helperText={valid.address1.error && "필수값 입니다."}
+          onChange={props.onInputChange}
+        />
+        <label className={classes.label}>상세주소</label>
+        <TextField 
+          name="address2" classes={{root: isSafari && classes.muiRoot}}
+          placeholder="상세주소" variant="outlined" fullWidth={true}
+          error={valid.address2.error}
+          helperText={valid.address2.error && "필수값 입니다."}
+          onChange={props.onInputChange}
+        />
+      </div>
       <TextField 
-        classes={{root: isSafari && classes.muiRoot}}
-        name="addr" placeholder="주소" variant="outlined" fullWidth={true}
-        error={valid.addr.error}
-        onBlur={handleBlur}
-        helperText={valid.addr.error && "필수값 입니다."}
-        onChange={props.onInputChange}
-      />
-      <TextField 
-        classes={{root: isSafari && classes.muiRoot}}
-        name="content" placeholder="내용" variant="outlined" fullWidth={true} multiline rows={4}
+        name="content" classes={{root: isSafari && classes.muiRoot}}
+        placeholder="내용" variant="outlined" fullWidth={true} multiline rows={4}
         error={valid.content.error}
-        onBlur={handleBlur}
         helperText={valid.content.error && "필수값 입니다."}
         onChange={props.onInputChange}
       />      
       <div className={classes.button}>
-        <Button disabled={disabled} color='primary' variant="outlined" fullWidth={true} onClick={props.onPasswordClick}>저장</Button>
+        <Button color='primary' variant="outlined" fullWidth={true} onClick={handleSave}>저장</Button>
       </div>      
     </div>
   );

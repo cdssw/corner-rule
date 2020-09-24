@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    position: 'relative',
   },
   img: {
     position: 'relative',
@@ -22,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
       height: '20px',
       position: 'absolute',
       zIndex: 1,
-      top: 0,
     }
   },
   addWrap: {
@@ -47,22 +47,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Image({file, width = '100', height = '100'}) {
+export default function Image({file, onRemoveClick, onFileChange, width = '100', height = '100'}) {
   const classes = useStyles();
+  const fileRef = useRef();
+
+  const handleClick = e => {
+    fileRef.current.click();
+  }
 
   return (
     <div className={classes.root}>
       {file
         ?
           <div className={classes.imgWrap}>
-            <img alt="remove" src={process.env.PUBLIC_URL + "/images/remove.svg"} style={{left: width - 4}} />
+            <img alt="remove" src={process.env.PUBLIC_URL + "/images/remove.svg"} style={{left: width - 14, top: height - height - 6}} onClick={onRemoveClick} />
             <div className={classes.img} style={{width: width + 'px', height: height + 'px'}}>
               <img alt="img" src={process.env.PUBLIC_URL + file} />
             </div>
           </div>
         :
           <div className={classes.addWrap} style={{width: width + 'px', height: height + 'px'}}>
-            <div className={classes.add}><AddIcon fontSize="large" /></div>
+            <div className={classes.add} onClick={handleClick}><AddIcon fontSize="large" /></div>
+            <input ref={fileRef} type="file" multiple name="file" onChange={onFileChange} style={{display: 'none'}} />
           </div>        
       }
     </div>

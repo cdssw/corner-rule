@@ -1,11 +1,27 @@
 import React, { useState, useEffect } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from "react-redux";
 import { setLoginUserInfo, setLogin } from "../../../modules/userInfo";
 import { PageTemplate, Header, CardList, PlaceSearch } from "components";
+import { Fab } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
 import * as User from "../../../services/User";
 import * as Meet from "../../../services/Meet";
+import { Link } from 'react-router-dom';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    position: 'relative',
+  },
+  fab: {
+    position: 'absolute',
+    bottom: theme.spacing(2),
+    right: theme.spacing(2),
+  },
+}));
 
 export default function HomePage() {
+  const classes = useStyles();
   const { userInfo, login } = useSelector(state => state.userInfo, {});
   const dispatch = useDispatch();
   const [items, setItems] = useState([]);
@@ -63,6 +79,13 @@ export default function HomePage() {
       }
       <div style={{marginBottom: '10px'}}></div>
       <CardList fetchMoreData={fetchMoreData} items={items} />
+      {login && 
+        <Link to="/reg">
+          <Fab color="primary" aria-label="add" className={classes.fab}>
+            <AddIcon />
+          </Fab>
+        </Link>
+      }
     </PageTemplate>
   );
 }

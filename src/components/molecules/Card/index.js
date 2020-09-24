@@ -157,7 +157,7 @@ export default function Card({item, image, index}) {
           </div>
         }
         <div className={classes.content} style={{left : !image && '10px'}}>
-          <div className="title">{item.meetNm}</div>
+          <div className="title">{item.title}</div>
           <div className="addressWrap">
             <div className="address">{item.address.address1}</div>
           </div>

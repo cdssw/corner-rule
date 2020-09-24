@@ -9,3 +9,13 @@ export async function getMeetListByPage(props) {
     console.log(error);
   });
 }
+
+export async function postMeet(props) {
+  return axios.post(
+    url + "/",
+    props.body,
+    {headers: { Authorization: "Bearer " + props.token.access_token }}
+  ).catch(error => {
+    alert(error.response.data.message);
+  });
+}
