@@ -74,14 +74,31 @@ export default function RegPage(props) {
     const token = JSON.parse(localStorage.getItem("token"));
     const files = Array.from(e.target.files);
     setTotal(files.length);
+
+    if(state.imgList.length + files.length > 5) {
+      alert("최대 5개까지 파일을 업로드 할수 있습니다.");
+      return;
+    }
+
+    const maxSize = 1024 * 1000 * 20;
+    for(const [index, file] of files.entries()) {
+      if(file.size > maxSize) {
+        alert("한 파일당 최대 20MB까지 업로드 가능합니다.");
+        return;
+      }
+    }
+
     setFileUploader(true);
     const results = [];
     for(const [index, file] of files.entries()) {
-      const param = { index, file, token, onProgress, onFailure };
-      setValue(0);
+      const param = { index, file, token, files: files.length, onProgress };
       setCurrent(index + 1);
-      const res = await File.postImage(param);
-      results.push(res.data);
+      try {
+        const res = await File.postImage(param);
+        results.push(res.data);
+      } catch(error) {
+        console.log(error.response);        
+      }
     }
     setFileUploader(false);
     setState({
@@ -90,13 +107,10 @@ export default function RegPage(props) {
     });
   }
 
-  const onProgress = percent => {
-    setValue(percent);
-  }
-
-  const onFailure = (index, e) => {
-    console.log(index, " failure");
-    console.log(e);
+  const onProgress = (index, files, percent) => {
+    const full = 100 / files;
+    const p = ((full / 100) * percent) + (full * index);
+    setValue(p);
   }
 
   const onRemoveClick = id => {
