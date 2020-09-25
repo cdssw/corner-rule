@@ -1,5 +1,5 @@
 /* eslint no-restricted-globals: ["off"] */
-import React, { useReducer } from 'react';
+import React, { useState, useReducer } from 'react';
 import { PageTemplate, TitleHeader, SignupForm } from "components";
 import * as User from "../../../services/User";
 import * as File from "../../../services/File";
@@ -74,9 +74,9 @@ function reducer(state, action) {
 }
 
 export default function SignupPage(props) {
-
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const { username, password, userNm, userNickNm, phone, mainTalent } = state.input;
   const { talent, interest } = state.array;
@@ -100,7 +100,6 @@ export default function SignupPage(props) {
   };
 
   const signUp = async e => {
-    
     const body = {
       username,
       password,
@@ -112,12 +111,18 @@ export default function SignupPage(props) {
       interest: interest.join(','),
       avatarPath: avatarPath
     }
-    // api 호출
-    const response = await User.signup(body);
-    // 결과에 따라 set
-    if(response) {
-      console.log(response);
-      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setLoading(true);
+    try {
+      const response = await User.signup(body);
+      // 결과에 따라 set
+      if(response) {
+        console.log(response);
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      }
+    } catch(error) {
+      alert(error);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -155,36 +160,40 @@ export default function SignupPage(props) {
   const onBooleanConfirm = async e => {
     const { value } = e.currentTarget;
 
-    if(value === "emailConfirm") {
-      // api 호출
-      const response = await User.getCheckUsername({username: username});
-      // 결과에 따라 set
-      if(response.data === 0) {
-        const check = confirm("이 아이디를 사용하시겠습니까?");
-        if(check) {
-          dispatch({
-            type: 'CONFIRM_BOOLEAN',
-            name: value
-          });
+    try {
+      if(value === "emailConfirm") {
+        // api 호출
+        const response = await User.getCheckUsername({username: username});
+        // 결과에 따라 set
+        if(response.data === 0) {
+          const check = confirm("이 아이디를 사용하시겠습니까?");
+          if(check) {
+            dispatch({
+              type: 'CONFIRM_BOOLEAN',
+              name: value
+            });
+          }
+        } else {
+          alert("이미 존재하는 아이디 입니다.");
         }
       } else {
-        alert("이미 존재하는 아이디 입니다.");
-      }
-    } else {
-      // api 호출
-      const response = await User.getCheckNicknm({nicknm: userNickNm});
-      // 결과에 따라 set
-      if(response.data === 0) {
-        const check = confirm("이 닉네임을 사용하시겠습니까?");
-        if(check) {
-          dispatch({
-            type: 'CONFIRM_BOOLEAN',
-            name: value
-          });
+        // api 호출
+        const response = await User.getCheckNicknm({nicknm: userNickNm});
+        // 결과에 따라 set
+        if(response.data === 0) {
+          const check = confirm("이 닉네임을 사용하시겠습니까?");
+          if(check) {
+            dispatch({
+              type: 'CONFIRM_BOOLEAN',
+              name: value
+            });
+          }
+        } else {
+          alert("이미 존재하는 닉네임 입니다.");
         }
-      } else {
-        alert("이미 존재하는 닉네임 입니다.");
       }
+    } catch(error) {
+      alert(error);
     }
   }
 
@@ -192,14 +201,20 @@ export default function SignupPage(props) {
     e.preventDefault();
     const file = e.target.files[0];
 
-    // api 호출
-    const response = await File.postAvatar(file);
-    // 결과에 따라 set
-    if(response) {
-      dispatch({
-        type: 'SET_AVATAR',
-        value: response.data.filePath
-      });
+    setLoading(true);
+    try {
+      const response = await File.postAvatar(file);
+      // 결과에 따라 set
+      if(response) {
+        dispatch({
+          type: 'SET_AVATAR',
+          value: response.data.filePath
+        });
+      }
+    } catch(error) {
+      alert(error);
+    } finally {
+      setLoading(false);
     }
   }
 

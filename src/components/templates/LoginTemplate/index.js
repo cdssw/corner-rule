@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import * as resources from "constants/resources";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { Link } from "react-router-dom";
+import { CircularProgress } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,6 +52,18 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'white',
     padding: '10px 0 30px 0',
   },
+  loading: {
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 1,
+  },
 }));
 
 export default function LoginTemplate(props) {
@@ -72,6 +85,11 @@ export default function LoginTemplate(props) {
       </div>
       <div className={classes.contentWrap}>
         <section className={classes.content}>
+          {props.loading &&
+            <div className={classes.loading}>
+              <CircularProgress size={30} />
+            </div>
+          }
           {props.children}
         </section>
       </div>

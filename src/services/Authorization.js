@@ -18,10 +18,5 @@ export async function loginCall(props) {
     method: 'post',
     auth: { username: 'auth_id', password: 'auth_secret'},
     data: querystring.stringify(data)
-  }).catch(error => {
-    console.log(error);    
-    if(error.response.data.error_description === 'Bad credentials') {
-      alert("아이디와 비밀번호를 확인하고 다시 로그인 하세요.");
-    }
   });
 }

@@ -4,11 +4,16 @@ import { useSelector } from "react-redux";
 import { PageTemplate, TitleHeader, ImageList, RegForm } from "components";
 import * as File from "../../../services/File";
 import * as Meet from "../../../services/Meet";
+import FileUploader from '../../organisms/FileUploader';
 
 export default function RegPage(props) {
   const history = useHistory();
   const { login, userInfo } = useSelector(state => state.userInfo, []);
-  console.log("login:", login);
+  const [loading, setLoading] = useState(false);
+  const [fileUploader, setFileUploader] = useState(false);
+  const [total, setTotal] = useState(0);
+  const [current, setCurrent] = useState(0);
+  const [value, setValue] = useState(0);
 
   const [state, setState] = useState({
     title: '',
@@ -68,13 +73,17 @@ export default function RegPage(props) {
   const handleFileChange = async e => {
     const token = JSON.parse(localStorage.getItem("token"));
     const files = Array.from(e.target.files);
-
+    setTotal(files.length);
+    setFileUploader(true);
     const results = [];
     for(const [index, file] of files.entries()) {
       const param = { index, file, token, onProgress, onFailure };
+      setValue(0);
+      setCurrent(index + 1);
       const res = await File.postImage(param);
       results.push(res.data);
     }
+    setFileUploader(false);
     setState({
       ...state,
       imgList: state.imgList.concat(results)
@@ -82,7 +91,7 @@ export default function RegPage(props) {
   }
 
   const onProgress = percent => {
-    console.log(percent);
+    setValue(percent);
   }
 
   const onFailure = (index, e) => {
@@ -103,18 +112,25 @@ export default function RegPage(props) {
       token: token,
       body: {...state, imgList: state.imgList.map(i => i.id)}
     }
-    console.log(param);
-    const res = await Meet.postMeet(param);
-    if(res !== undefined) {
-      history.push("/");
+    setLoading(true);
+    try {
+      const res = await Meet.postMeet(param);
+      if(res !== undefined) {
+        history.push("/");
+      }
+    } catch(error) {
+      alert(error)
+    } finally {
+      setLoading(false);
     }
   }
 
   if(!login) return <Redirect to='/' />
 
   return (
-    <PageTemplate header={<TitleHeader {...props}>등록</TitleHeader>}>
+    <PageTemplate header={<TitleHeader {...props}>등록</TitleHeader>} loading={loading}>
       <ImageList imgList={state.imgList} onFileChange={handleFileChange} onRemoveClick={onRemoveClick} />
+      {fileUploader && <FileUploader total={total} current={current} value={value} />}
       <div style={{borderBottom: '1px solid #dfdfdf'}} />
       <div style={{marginBottom: '20px'}}></div>
       <RegForm

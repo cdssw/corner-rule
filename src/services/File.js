@@ -10,9 +10,7 @@ export async function postAvatar(file) {
     url + '/avatar?group=avatar',
     formData,
     {headers: { 'content-type': 'multipart/form-data' }}
-  ).catch(error => {
-    console.log(error);
-  });
+  );
 }
 
 export async function postImage({index, file, token, onProgress, onFailure}) {

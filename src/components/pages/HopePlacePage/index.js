@@ -9,20 +9,28 @@ import * as User from "../../../services/User";
 export default function HopePlacePage(props) {
   const history = useHistory();
   const { login, userInfo } = useSelector(state => state.userInfo, []);
-  const [ sidoList, setSidoList ] = useState([]);
-  const [ sggList, setSggList ] = useState([]);
-  const [ sido, setSido ] = useState("서울특별시");
-  const [ sgg, setSgg ] = useState("");
+  const [sidoList, setSidoList] = useState([]);
+  const [sggList, setSggList] = useState([]);
+  const [sido, setSido] = useState("서울특별시");
+  const [sgg, setSgg] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(e => {
     getSidoList();
   }, []);
 
   const getSidoList = async event => {
-    const sidoRes = await Addr.getSidoList();
-    setSidoList(sidoRes.data);
-    const sggRes = await Addr.getSggList(sido);
-    setSggList(sggRes.data);
+    setLoading(true);
+    try {
+      const sidoRes = await Addr.getSidoList();
+      setSidoList(sidoRes.data);
+      const sggRes = await Addr.getSggList(sido);
+      setSggList(sggRes.data);
+    } catch(error) {
+      alert(error);
+    } finally {
+      setLoading(false);
+    }
   }
 
   const handleSidoChange = e => {
@@ -35,8 +43,15 @@ export default function HopePlacePage(props) {
   }
 
   const getSggList = async sido => {
-    const sggRes = await Addr.getSggList(sido);
-    setSggList(sggRes.data);
+    setLoading(true);
+    try {
+      const sggRes = await Addr.getSggList(sido);
+      setSggList(sggRes.data);
+    } catch(error) {
+      alert(error);
+    } finally {
+      setLoading(false);
+    }
   }
 
   const handleSelect = async e => {
@@ -64,14 +79,22 @@ export default function HopePlacePage(props) {
     }
     const token = JSON.parse(localStorage.getItem("token"));
     const param = { token, body };
-    await User.putEditUser(param);
+    setLoading(true);
+    try {
+      await User.putEditUser(param);
+    } catch(error) {
+      alert(error);
+    } finally {
+      setLoading(false);
+    }
+
     history.push("/mypage");
   }
 
   if(!login) return <Redirect to='/' />
 
   return (
-    <PageTemplate header={<TitleHeader {...props}>희망지역 선택</TitleHeader>}>
+    <PageTemplate header={<TitleHeader {...props}>희망지역 선택</TitleHeader>} loading={loading}>
       <PlaceSelect
         sidoList={sidoList}
         sggList={sggList}

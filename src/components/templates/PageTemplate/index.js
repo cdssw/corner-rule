@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { CircularProgress } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,7 +27,10 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     maxWidth: '600px',
     padding: '0 10px',
-  }
+  },
+  loading: {
+    margin: '30px auto',
+  },
 }));
 
 export default function PageTemplate(props) {
@@ -38,7 +42,14 @@ export default function PageTemplate(props) {
         {props.header}
       </header>
       <section className={classes.contentWrap}>
-        <div className={classes.content}>{props.children}</div>
+        <div className={classes.content}>
+          {props.loading &&
+            <div className={classes.loading}>
+              <CircularProgress size={30} />
+            </div>
+          }
+          {props.children}
+        </div>
       </section>
     </div>
   );

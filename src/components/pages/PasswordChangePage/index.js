@@ -7,6 +7,7 @@ import * as User from "../../../services/User";
 export default function PasswordChangePage(props) {
   const history = useHistory();
   const { login, userInfo } = useSelector(state => state.userInfo, []);
+  const [loading, setLoading] = useState(false);
   const [state, setState] = useState({
     currentPassword: '',
     password: '',
@@ -27,15 +28,22 @@ export default function PasswordChangePage(props) {
     }
     const token = JSON.parse(localStorage.getItem("token"));
     const param = { token, body };
-    const res = await User.postPasswordChange(param);
-    if(res !== undefined) {
-      history.push("/mypage");
-    } else {
-      setState({
-        currentPassword: '',
-        password: '',
-        passwordCheck: '',
-      });
+    setLoading(true);
+    try {
+      const res = await User.postPasswordChange(param);
+      if(res !== undefined) {
+        history.push("/mypage");
+      } else {
+        setState({
+          currentPassword: '',
+          password: '',
+          passwordCheck: '',
+        });
+      }
+    } catch(error) {
+      alert(error);
+    } finally {
+      setLoading(false);
     }
   }
 

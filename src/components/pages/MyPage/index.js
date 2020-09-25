@@ -1,5 +1,5 @@
 /*eslint no-restricted-globals: "off"*/
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoginUserInfo, setLogin } from "../../../modules/userInfo";
@@ -8,6 +8,7 @@ import * as User from "../../../services/User";
 
 export default function MyPage(props) {
   const history = useHistory();
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const { login, userInfo } = useSelector(state => state.userInfo, []);
 
@@ -19,8 +20,15 @@ export default function MyPage(props) {
   }, []);
 
   const loadUserInfo = async token => {
-    const res = await User.getUser(token);
-    dispatch(setLoginUserInfo(res.data)); // 가져온 user 정보를 redux에 저장
+    setLoading(true);
+    try {
+      const res = await User.getUser(token);
+      dispatch(setLoginUserInfo(res.data)); // 가져온 user 정보를 redux에 저장
+    } catch(error) {
+      alert(error);
+    } finally {
+      setLoading(false);
+    }
   }
   
   const handleLogout = e => {
@@ -44,8 +52,15 @@ export default function MyPage(props) {
         }
         const token = JSON.parse(localStorage.getItem("token"));
         const param = { token, body };
-        await User.putEditUser(param); // 지역삭제
-        loadUserInfo(token); // 사용자 정보 조회
+        setLoading(true);
+        try {
+          await User.putEditUser(param); // 지역삭제
+          loadUserInfo(token); // 사용자 정보 조회
+        } catch(error) {
+          alert(error);
+        } finally {
+          setLoading(false);
+        }
       }
     } else {
       history.push({
@@ -62,7 +77,7 @@ export default function MyPage(props) {
   if(!login) return <Redirect to='/' />
 
   return (
-    <PageTemplate header={<TitleHeader path="/" {...props}>My Page</TitleHeader>}>
+    <PageTemplate header={<TitleHeader path="/" {...props}>My Page</TitleHeader>} loading={loading}>
       <MyInfo userInfo={userInfo} onLogout={handleLogout} onPasswordChange={handlePasswordChange} />
       <div style={{borderBottom: '1px solid #dfdfdf'}}></div><div style={{marginBottom: '10px'}}></div>
       <PlaceSetting userInfo={userInfo} onClick={handlePlaceClick} />

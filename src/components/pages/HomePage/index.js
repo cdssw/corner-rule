@@ -14,10 +14,10 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
   },
   fab: {
-    position: 'absolute',
+    position: 'fixed',
     bottom: theme.spacing(2),
     right: theme.spacing(2),
-  },
+  }
 }));
 
 export default function HomePage() {
@@ -28,6 +28,7 @@ export default function HomePage() {
   const [place, setPlace] = useState("");
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(0);
+  const [loading, setLoading] = useState(false);
   const size = 10;
 
   const handlePlace = event => {
@@ -56,21 +57,35 @@ export default function HomePage() {
   }, [userInfo])
 
   const loadUserInfo = async token => {
-    const userInfo = await User.getUser(token);
-    dispatch(setLoginUserInfo(userInfo.data)); // 가져온 user 정보를 redux에 저장
-    dispatch(setLogin(true)); // login 상태로 처리
-    fetchMoreData();
+    setLoading(true);
+    try {
+      const userInfo = await User.getUser(token);
+      dispatch(setLoginUserInfo(userInfo.data)); // 가져온 user 정보를 redux에 저장
+      dispatch(setLogin(true)); // login 상태로 처리
+      fetchMoreData();
+    } catch(error) {
+      alert(error);
+    } finally {
+      setLoading(false);
+    }
   }
 
   const fetchMoreData = async event => {
-    const response = await Meet.getMeetListByPage({page: page, size: size})
-    setPage(page + 1); // infinite scroll시 다음페이지 조회
-    setItems(items.concat(response.data.content));
+    setLoading(true);
+    try {
+      const response = await Meet.getMeetListByPage({page: page, size: size})
+      setPage(page + 1); // infinite scroll시 다음페이지 조회
+      setItems(items.concat(response.data.content));
+    } catch(error) {
+      alert(error);
+    } finally {
+      setLoading(false);
+    }
   }
 
   const path = userInfo ? '/mypage' : '/login';
   return (
-    <PageTemplate header={<Header userInfo={userInfo} path={path} />}>
+    <PageTemplate header={<Header userInfo={userInfo} path={path} />} loading={loading}>
       {login && 
         <>
           <PlaceSearch userInfo={userInfo} place={place} onPlace={handlePlace} onSearch={handleSearch} search={search} login={login} />
