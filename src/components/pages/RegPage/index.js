@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { PageTemplate, TitleHeader, ImageList, RegForm } from "components";
+import { PageTemplate, TitleHeader, ImageList, RegForm, FileUploader } from "components";
 import * as File from "../../../services/File";
 import * as Meet from "../../../services/Meet";
-import FileUploader from '../../organisms/FileUploader';
 
 export default function RegPage(props) {
   const history = useHistory();
