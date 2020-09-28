@@ -8,6 +8,7 @@ import AddIcon from '@material-ui/icons/Add';
 import * as User from "../../../services/User";
 import * as Meet from "../../../services/Meet";
 import { Link } from 'react-router-dom';
+import Utils from "../../Utils";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,12 +63,13 @@ export default function HomePage() {
       const userInfo = await User.getUser(token);
       dispatch(setLoginUserInfo(userInfo.data)); // 가져온 user 정보를 redux에 저장
       dispatch(setLogin(true)); // login 상태로 처리
-      fetchMoreData();
     } catch(error) {
-      alert(error);
+      console.log(error);
+      localStorage.removeItem('token');
     } finally {
       setLoading(false);
     }
+    fetchMoreData();
   }
 
   const fetchMoreData = async event => {

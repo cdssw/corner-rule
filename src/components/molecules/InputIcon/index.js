@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     outline: 'none',
     border: 'none',
     fontSize: '1.1876em',
-    height: '19px',
+    height: '25px',
     padding: '0 5px',
   },
   invalid: {
