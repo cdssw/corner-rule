@@ -15,12 +15,27 @@ const useStyles = makeStyles((theme) => ({
     height: '50px',
     zIndex: '1000',
   },
+  imageWrap: {
+    display: 'flex',
+    justifyContent: 'center',
+    width: '100%',
+    height: '269px',
+  },
   contentWrap: {
     display: 'flex',
     justifyContent: 'center',
   },
   content: {
     marginTop: '50px',
+    flexGrow: 1,
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    maxWidth: '600px',
+    padding: '0 10px',
+  },
+  imageContent: {
+    marginTop: '20px',
     flexGrow: 1,
     display: 'flex',
     justifyContent: 'center',
@@ -42,16 +57,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PageTemplate(props) {
+export default function ContentTemplate(props) {
   const classes = useStyles();
+
+  const content = props.imageWrap ? classes.imageContent : classes.content;
 
   return (
     <div className={classes.root}>
-      <header className={classes.headerWrap}>
-        {props.header}
-      </header>
+      {props.imageWrap
+       ?
+        <header className={classes.imageWrap}>
+          {props.header}
+        </header>
+       :
+        <header className={classes.headerWrap}>
+          {props.header}
+        </header>
+      }
       <section className={classes.contentWrap}>
-        <div className={classes.content}>
+        <div className={content}>
           {props.loading &&
             <div className={classes.loading}>
               <CircularProgress size={30} />

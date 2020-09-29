@@ -5,7 +5,7 @@ const url = process.env.REACT_APP_SERVICE_FILE;
 
 export async function resizeFile(file) {
   return new Promise(resolve => {
-    resolve(imageCompression(file, {maxSizeMB: 0.3, maxWidthOrHeight: 1280}));
+    resolve(imageCompression(file, {maxSizeMB: 0.1, maxWidthOrHeight: 1280}));
   });
 }
 
