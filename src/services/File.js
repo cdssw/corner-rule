@@ -39,3 +39,10 @@ export async function postImage({index, file, token, files, onProgress}) {
     }
   });
 }
+
+export async function postImagesPath(imageList) {
+  return axios.post(
+    url + "/images/path",
+    imageList
+  );
+}

@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     maxWidth: '600px',
-    padding: '0 10px',
+    padding: '15px 10px 0 0',
     marginBottom: '15px',
   },  
   userName: {
@@ -58,32 +58,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ContentHeader({userInfo}) {
+export default function ContentHeader({userInfo, meet}) {
   const classes = useStyles();
-
   return (
     <div className={classes.root}>
-      <div>
-        <Avatar
-          classes={{root: classes.avatarRoot, img: classes.avatarImg}}
-          alt={userInfo && userInfo.userNm}
-          src={userInfo && userInfo.avatarPath && process.env.REACT_APP_IMAGE + userInfo.avatarPath}
-        >
-          {(userInfo == null || userInfo.avatarPath == null) && <Person />}
-        </Avatar>
-      </div>
-      <div className={classes.userName}>홍길동</div>
-      <div className={classes.costNgWrap}>
-        <div className={classes.space}></div>
-        <div className={classes.innerWrap}>
-          <div className={classes.costWrap}>
-            <div className="cost">{`￦` + Utils.numberWithCommas(10000)}</div>
-          </div>
-          <div className={classes.desc}>
-            협의가능
+    {meet && 
+      <>
+        <div>
+          <Avatar
+            classes={{root: classes.avatarRoot, img: classes.avatarImg}}
+            alt={userInfo && userInfo.userNm}
+            src={userInfo && userInfo.avatarPath && process.env.REACT_APP_IMAGE + userInfo.avatarPath}
+          >
+            {(userInfo == null || userInfo.avatarPath == null) && <Person />}
+          </Avatar>
+        </div>
+        <div className={classes.userName}>{meet.user.userNickNm}</div>
+        <div className={classes.costNgWrap}>
+          <div className={classes.space}></div>
+          <div className={classes.innerWrap}>
+            <div className={classes.costWrap}>
+              <div className="cost">{`￦` + Utils.numberWithCommas(meet.cost)}</div>
+            </div>
+            {meet.costOption && <div className={classes.desc}>협의가능</div>}
           </div>
         </div>
-      </div>
-    </div>
+      </>
+    }
+    </div>      
   );
 }

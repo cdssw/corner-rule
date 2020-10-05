@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ImageGallery from "react-image-gallery";
@@ -27,21 +27,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ImageHeader({children, history, path}) {
+export default function ImageHeader({imgPath, history, path}) {
   const classes = useStyles();
+  const [images, setImages] = useState([]);
 
-  const images = [
-    {
-      original: 'https://picsum.photos/id/1018/600/269/',
-      originalClass: {height: '100px'}
-    },
-    {
-      original: 'https://picsum.photos/id/1015/600/269/',
-    },
-    {
-      original: 'https://picsum.photos/id/1019/375/269/',
-    },
-  ];
+  useEffect(() => {
+    if(imgPath.data !== undefined) {
+      const imgList = Array.from(imgPath.data).map(img => {
+        return {original: process.env.REACT_APP_IMAGE + img.path + '/' + img.chgFileNm, originalClass: {height: '269px'}};
+      });
+      setImages(imgList);
+    }
+  }, [imgPath]);
 
   const handleBack = e => {
     path ? history.push(path) : history.goBack(path);

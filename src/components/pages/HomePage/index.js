@@ -75,7 +75,7 @@ export default function HomePage() {
   const fetchMoreData = async event => {
     setLoading(true);
     try {
-      const response = await Meet.getMeetListByPage({page: page, size: size})
+      const response = await Meet.getMeetListByPage({page: page, size: size, sort: 'modifyDt,desc'});
       setPage(page + 1); // infinite scroll시 다음페이지 조회
       setItems(items.concat(response.data.content));
     } catch(error) {

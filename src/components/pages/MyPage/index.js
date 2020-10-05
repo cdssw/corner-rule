@@ -76,6 +76,7 @@ export default function MyPage(props) {
 
   if(!login) return <Redirect to='/' />
 
+  console.log(userInfo);
   return (
     <PageTemplate header={<TitleHeader path="/" {...props}>My Page</TitleHeader>} loading={loading}>
       <MyInfo userInfo={userInfo} onLogout={handleLogout} onPasswordChange={handlePasswordChange} />

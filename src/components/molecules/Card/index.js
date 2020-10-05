@@ -122,35 +122,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Card({item, image, index}) {
+export default function Card({item, image, index, onContentClick}) {
   const classes = useStyles();
-
-  const detailDay = term => {
-    let str = term.startDt.substring(5, 10).replace('-', '.') + " ~ " + term.endDt.substring(5, 10).replace('-', '.');
-    switch(term.detailDay) {
-      case 128: str += '. 협의'; break;
-      case 127: str += '. 매일'; break;
-      case 65: str += '. 주말'; break;
-      case 62: str += '. 주중'; break;
-      default: {
-        let l = '';
-        l = term.detailDay & 64 ? ', 일' : '';
-        l += term.detailDay & 32 ? ', 월' : '';
-        l += term.detailDay & 16 ? ', 화' : '';
-        l += term.detailDay & 8 ? ', 수' : '';
-        l += term.detailDay & 4 ? ', 목' : '';
-        l += term.detailDay & 2 ? ', 금' : '';
-        l += term.detailDay & 1 ? ', 토' : '';
-        str += l;
-        break;
-      }
-    }
-    return str;
-  }
 
   return (
     <ThemeProvider theme={cardTheme}>
-      <div className={classes.root}>
+      <div className={classes.root} onClick={onContentClick}>
         {image &&
           <div className={classes.img}>
             <img alt="img" src={process.env.PUBLIC_URL + index % 9 === 0 ? "/images/food1.jpg" : "/images/back1.jpg"} />
@@ -163,7 +140,7 @@ export default function Card({item, image, index}) {
           </div>
           <div className="date">
             <div><CalendarTodayIcon fontSize="small" /></div>
-            <div>{detailDay(item.term)}</div>
+            <div>{Utils.parseDate(item.term.startDt)} ~ {Utils.parseDate(item.term.endDt)}{Utils.detailDay(item.term)}</div>
           </div>
           <div className="info">
             <div className="costWrap">

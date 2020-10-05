@@ -23,7 +23,7 @@ function App() {
         <Route exact path="/mypage/hope_place" component={HopePlacePage}/>
         <Route exact path="/mypage/pass_change" component={PasswordChangePage}/>
         <Route exact path="/reg" component={RegPage}/>
-        <Route exact path="/content" component={ContentPage}/>
+        <Route exact path="/content/:id" component={ContentPage}/>
       </Switch>
     </div>
   );
