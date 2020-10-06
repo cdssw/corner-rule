@@ -25,7 +25,8 @@ export default function MyPage(props) {
       const res = await User.getUser(token);
       dispatch(setLoginUserInfo(res.data)); // 가져온 user 정보를 redux에 저장
     } catch(error) {
-      alert(error);
+      alert(error.response.data.message);
+      console.log(error.response.data);
     } finally {
       setLoading(false);
     }
@@ -57,7 +58,8 @@ export default function MyPage(props) {
           await User.putEditUser(param); // 지역삭제
           loadUserInfo(token); // 사용자 정보 조회
         } catch(error) {
-          alert(error);
+          alert(error.response.data.message);
+          console.log(error.response.data);
         } finally {
           setLoading(false);
         }
@@ -76,7 +78,6 @@ export default function MyPage(props) {
 
   if(!login) return <Redirect to='/' />
 
-  console.log(userInfo);
   return (
     <PageTemplate header={<TitleHeader path="/" {...props}>My Page</TitleHeader>} loading={loading}>
       <MyInfo userInfo={userInfo} onLogout={handleLogout} onPasswordChange={handlePasswordChange} />

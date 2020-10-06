@@ -64,7 +64,8 @@ export default function HomePage() {
       dispatch(setLoginUserInfo(userInfo.data)); // 가져온 user 정보를 redux에 저장
       dispatch(setLogin(true)); // login 상태로 처리
     } catch(error) {
-      console.log(error);
+      alert(error.response.data.message);
+      console.log(error.response.data);
       localStorage.removeItem('token');
     } finally {
       setLoading(false);
@@ -79,7 +80,8 @@ export default function HomePage() {
       setPage(page + 1); // infinite scroll시 다음페이지 조회
       setItems(items.concat(response.data.content));
     } catch(error) {
-      alert(error);
+      alert(error.response.data.message);
+      console.log(error.response.data);
     } finally {
       setLoading(false);
     }

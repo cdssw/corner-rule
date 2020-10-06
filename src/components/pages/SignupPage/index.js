@@ -120,7 +120,8 @@ export default function SignupPage(props) {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
       }
     } catch(error) {
-      alert(error);
+      alert(error.response.data.message);
+      console.log(error.response.data);
     } finally {
       setLoading(false);
     }
@@ -193,7 +194,8 @@ export default function SignupPage(props) {
         }
       }
     } catch(error) {
-      alert(error);
+      alert(error.response.data.message);
+      console.log(error.response.data);
     }
   }
 
@@ -212,7 +214,8 @@ export default function SignupPage(props) {
         });
       }
     } catch(error) {
-      alert(error);
+      alert(error.response.data.message);
+      console.log(error.response.data);
     } finally {
       setLoading(false);
     }

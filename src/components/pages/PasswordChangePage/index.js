@@ -41,7 +41,8 @@ export default function PasswordChangePage(props) {
         });
       }
     } catch(error) {
-      alert(error);
+      alert(error.response.data.message);
+      console.log(error.response.data);
     } finally {
       setLoading(false);
     }

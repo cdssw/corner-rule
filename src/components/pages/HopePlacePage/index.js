@@ -27,7 +27,8 @@ export default function HopePlacePage(props) {
       const sggRes = await Addr.getSggList(sido);
       setSggList(sggRes.data);
     } catch(error) {
-      alert(error);
+      alert(error.response.data.message);
+      console.log(error.response.data);
     } finally {
       setLoading(false);
     }
@@ -48,7 +49,8 @@ export default function HopePlacePage(props) {
       const sggRes = await Addr.getSggList(sido);
       setSggList(sggRes.data);
     } catch(error) {
-      alert(error);
+      alert(error.response.data.message);
+      console.log(error.response.data);
     } finally {
       setLoading(false);
     }
@@ -83,7 +85,8 @@ export default function HopePlacePage(props) {
     try {
       await User.putEditUser(param);
     } catch(error) {
-      alert(error);
+      alert(error.response.data.message);
+      console.log(error.response.data);
     } finally {
       setLoading(false);
     }

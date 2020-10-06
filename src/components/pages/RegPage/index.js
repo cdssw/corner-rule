@@ -96,7 +96,8 @@ export default function RegPage(props) {
         const res = await File.postImage(param);
         results.push(res.data);
       } catch(error) {
-        console.log(error.response);        
+        alert(error.response.data.message);
+        console.log(error.response.data);
       }
     }
     setFileUploader(false);
@@ -132,7 +133,8 @@ export default function RegPage(props) {
         history.push("/");
       }
     } catch(error) {
-      alert(error)
+      alert(error.response.data.message);
+      console.log(error.response.data);
     } finally {
       setLoading(false);
     }

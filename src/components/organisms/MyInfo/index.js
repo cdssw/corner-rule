@@ -62,15 +62,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MyInfo(props) {
   const classes = useStyles();
-  const avatarPath = '';
 
   return (
     <div className={classes.root}>
       <div className={classes.avatarWrap}>
         <div className={classes.profile}>
           <Avatar classes={{root: classes.avatarRoot}}>
-            {avatarPath
-            ? <img src={process.env.REACT_APP_IMAGE + avatarPath} alt='' />
+            {props.userInfo.avatarPath
+            ? <img src={process.env.REACT_APP_IMAGE + props.userInfo.avatarPath} alt='' />
             : <Person classes={{fontSizeLarge: classes.fontSizeLarge}} fontSize='large' />
             }
           </Avatar>

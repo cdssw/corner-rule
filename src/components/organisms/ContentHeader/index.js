@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ContentHeader({userInfo, meet}) {
+export default function ContentHeader({userInfo, meet, avatar}) {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -67,10 +67,10 @@ export default function ContentHeader({userInfo, meet}) {
         <div>
           <Avatar
             classes={{root: classes.avatarRoot, img: classes.avatarImg}}
-            alt={userInfo && userInfo.userNm}
-            src={userInfo && userInfo.avatarPath && process.env.REACT_APP_IMAGE + userInfo.avatarPath}
+            alt={meet.user.userNickNm}
+            src={avatar !== "" && process.env.REACT_APP_IMAGE + avatar}
           >
-            {(userInfo == null || userInfo.avatarPath == null) && <Person />}
+            {avatar === "" && <Person />}
           </Avatar>
         </div>
         <div className={classes.userName}>{meet.user.userNickNm}</div>

@@ -6,12 +6,14 @@ import { PageTemplate, ImageHeader, TitleHeader, Content } from "components";
 import ContentHeader from '../../organisms/ContentHeader';
 import * as Meet from "../../../services/Meet";
 import * as File from "../../../services/File";
+import * as User from "../../../services/User";
 
 export default function ContentPage(props) {
   const [loading, setLoading] = useState(false);
   const { login, userInfo } = useSelector(state => state.userInfo, []);
   const [meet, setMeet] = useState({});
   const [imgPath, setImgPath] = useState(null);
+  const [avatar, setAvatar] = useState("");
 
   useEffect(e => {
     const token = localStorage.getItem("token");
@@ -27,8 +29,12 @@ export default function ContentPage(props) {
         const imageList = await File.postImagesPath({fileList: meet.data.imgList});
         setImgPath(imageList);
       }
+
+      const avatarPath = await User.getUserAvatar({username: meet.data.user.username, token: token.access_token});
+      setAvatar(avatarPath.data);
     } catch(error) {
-      console.log(error);
+      alert(error.response.data.message);
+      console.log(error.response.data);
     } finally {
       setLoading(false);
     }
@@ -42,7 +48,7 @@ export default function ContentPage(props) {
         ? <ImageHeader path="/" imgPath={imgPath} {...props} />
         : <TitleHeader path="/" {...props}>상세보기</TitleHeader>
       } loading={loading}>
-      <ContentHeader userInfo={userInfo} meet={meet.data} />
+      <ContentHeader userInfo={userInfo} meet={meet.data} avatar={avatar} />
       <div style={{borderBottom: '1px solid #dfdfdf'}}></div><div style={{marginBottom: '20px'}}></div>
       <Content userInfo={userInfo} meet={meet.data} />
     </PageTemplate>

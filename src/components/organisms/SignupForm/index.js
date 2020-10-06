@@ -248,7 +248,10 @@ function getStepContent(step, props, classes, valid, dispatchValid) {
               <div>
                 <OutlinedInput onBlur={handleBlur} className={classes.checkInput} name="userNickNm" placeholder="닉네임" value={userNickNm} disabled={userNickNmConfirm} onChange={props.onInputChange}  />
                 <Button variant='contained' color='primary' value='userNickNmConfirm' disabled={userNickNmConfirm}
-                  onClick={props.onBooleanConfirm}>확인</Button>
+                  onClick={(e) => {
+                    if(userNickNm === "") return;
+                    props.onBooleanConfirm(e);
+                  }}>확인</Button>
               </div>
               {valid.userNickNm.required && <FormHelperText>필수값 입니다.</FormHelperText>}
             </FormControl>                  

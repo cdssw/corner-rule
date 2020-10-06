@@ -34,3 +34,8 @@ export async function postPasswordChange(props) {
   );
 }
 
+export async function getUserAvatar(props) {
+  return axios.get(url + "/avatar", {params: { username: props.username }, headers: { Authorization: "Bearer " + props.token }});
+}
+
+

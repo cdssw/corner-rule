@@ -35,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
     padding: '0 10px',
   },
   imageContent: {
-    marginTop: '20px',
     flexGrow: 1,
     display: 'flex',
     justifyContent: 'center',

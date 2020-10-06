@@ -46,6 +46,9 @@ export default function LoginPage() {
     } catch(error) {
       if(error.response.data.error_description === 'Bad credentials') {
         alert("아이디와 비밀번호를 확인하고 다시 로그인 하세요.");
+      } else {
+        alert(error.response.data.message);
+        console.log(error.response.data);
       }
     } finally {
       setLoading(false);
