@@ -1,9 +1,8 @@
 import React from 'react';
 import { makeStyles, ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-import ForumIcon from '@material-ui/icons/Forum';
-import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import Utils from "../../Utils";
+import * as resources from "constants/resources";
 
 const cardTheme = createMuiTheme({
   overrides: {
@@ -147,9 +146,9 @@ export default function Card({item, image, index, onContentClick}) {
               <div className="cost">{item.cost === 0 ? 'Free' : `￦` + Utils.numberWithCommas(item.cost)}</div>
             </div>
             <div className="commWrap">
-              <div className="ico"><ForumIcon fontSize="small" /></div>
+              <div className="ico"><img src={resources.chat} alt="chat" /></div>
               <div>5</div>
-              <div className="ico"><PermIdentityIcon fontSize="small" /></div>
+              <div className="ico"><img src={resources.man} alt="man" /></div>
               <div>{item.recruitment}</div>
             </div>
           </div>

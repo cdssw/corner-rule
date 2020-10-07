@@ -60,10 +60,10 @@ export default function MyTab(props) {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <CardList items={[{"id":1,"meetNm":"지고메고 백패킹","meetDesc":"자연속에서 LNT를 실천하고 트레킹과 비박을 통해 힐링하는, 특별한 즐거움","recruitment":3,"application":2,"cost":1000,"address":{"address1":"강남구 대치동","address2":"Startbucks"},"term":{"startDt":"2020-08-20T16:08:56","endDt":"2020-08-20T16:08:56","detailDay":128},"inputDt":"2020-08-20 16:08:56","modifyDt":"2020-08-20 16:08:56","user":{"inputDt":"2020-08-20 16:08:55","modifyDt":"2020-08-20 16:08:55","id":1,"userNm":"Andrew","phone":"010-1111-1111","hibernateLazyInitializer":{}}}]} />
+        <CardList items={[{"id":1,"title":"지고메고 백패킹","content":"자연속에서 LNT를 실천하고 트레킹과 비박을 통해 힐링하는, 특별한 즐거움","recruitment":3,"application":2,"cost":1000,"address":{"address1":"강남구 대치동","address2":"Startbucks"},"term":{"startDt":"2020-08-20 16:08:56","endDt":"2020-08-20 16:08:56","startTm":"16:08","endTm":"16:08","detailDay":128}, "imgList": [], "inputDt":"2020-08-20 16:08:56","modifyDt":"2020-08-20 16:08:56","user":{"inputDt":"2020-08-20 16:08:55","modifyDt":"2020-08-20 16:08:55","id":1,"userNm":"Andrew","phone":"010-1111-1111","hibernateLazyInitializer":{}}}]} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-      <CardList items={[{"id":1,"meetNm":"어린이집","meetDesc":"자연속에서 LNT를 실천하고 트레킹과 비박을 통해 힐링하는, 특별한 즐거움","recruitment":3,"application":2,"cost":1000,"address":{"address1":"강남구 대치동","address2":"Startbucks"},"term":{"startDt":"2020-08-20T16:08:56","endDt":"2020-08-20T16:08:56","detailDay":128},"inputDt":"2020-08-20 16:08:56","modifyDt":"2020-08-20 16:08:56","user":{"inputDt":"2020-08-20 16:08:55","modifyDt":"2020-08-20 16:08:55","id":1,"userNm":"Andrew","phone":"010-1111-1111","hibernateLazyInitializer":{}}}]} />
+      <CardList items={[{"id":1,"title":"어린이집","content":"자연속에서 LNT를 실천하고 트레킹과 비박을 통해 힐링하는, 특별한 즐거움","recruitment":3,"application":2,"cost":1000,"address":{"address1":"강남구 대치동","address2":"Startbucks"},"term":{"startDt":"2020-08-20 16:08:56","endDt":"2020-08-20 16:08:56","startTm":"16:08","endTm":"16:08","detailDay":128},"imgList": [], "inputDt":"2020-08-20 16:08:56","modifyDt":"2020-08-20 16:08:56","user":{"inputDt":"2020-08-20 16:08:55","modifyDt":"2020-08-20 16:08:55","id":1,"userNm":"Andrew","phone":"010-1111-1111","hibernateLazyInitializer":{}}}]} />
       </TabPanel>
     </div>
   );

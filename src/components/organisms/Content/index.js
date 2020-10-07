@@ -1,12 +1,11 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import ForumIcon from '@material-ui/icons/Forum';
-import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import Person from "@material-ui/icons/Person";
 import { Button, Badge, Avatar } from '@material-ui/core';
 import Utils from "../../Utils";
+import * as resources from "constants/resources";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     width: '100%',
     alignItems: 'center',
-    marginBottom: '15px',
+    marginBottom: '8px',
   },
   buttonWrap: {
     display: 'flex',
@@ -32,7 +31,8 @@ const useStyles = makeStyles((theme) => ({
   date: {
     display: 'flex',    
     alignItems: 'center',
-    color: '#23c9bd'
+    color: '#23c9bd',
+    paddingLeft: '3px',
   },
   location: {
     display: 'flex',    
@@ -83,6 +83,9 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     height: 'auto',
   },
+  iconSize: {
+    fontSize: '1.2rem',
+  },
 }));
 
 export default function Content({userInfo, meet}) {
@@ -99,9 +102,9 @@ export default function Content({userInfo, meet}) {
               <div className={classes.regDate}>{Utils.parseDate(meet.modifyDt, '.')} {meet.modifyDt.split(' ')[1].substring(0, 5)}</div>
               <div className={classes.space}></div>
               <div className={classes.commWrap}>
-                <div className="ico"><ForumIcon fontSize="small" /></div>
-                <div>5</div>
-                <div className="ico"><PermIdentityIcon fontSize="small" /></div>
+                <div className="ico"><img src={resources.chat} alt="chat" /></div>
+                <div style={{paddingRight: '5px'}}>5</div>
+                <div className="ico"><img src={resources.man} alt="man" /></div>
                 <div>{meet.application}/{meet.recruitment}</div>
               </div>
             </div>
@@ -109,7 +112,7 @@ export default function Content({userInfo, meet}) {
         </div>
         <div className={classes.wrap}>
           <div className={classes.date}>
-            <CalendarTodayIcon />
+            <CalendarTodayIcon classes={{root: classes.iconSize}} />
             <div className={classes.detail}>
               {Utils.parseDate(meet.term.startDt)} - {Utils.parseDate(meet.term.endDt)}{Utils.detailDay(meet.term)} 
               ({meet.term.startTm} - {meet.term.endTm})
@@ -122,9 +125,9 @@ export default function Content({userInfo, meet}) {
             <div className={classes.detail}>{meet.address.address1}</div>
           </div>
         </div>
-        <div style={{borderBottom: '1px solid #dfdfdf', width: '100%'}}></div><div style={{marginBottom: '20px'}}></div>
+        <div style={{borderBottom: '1px solid #dfdfdf', width: '100%'}}></div><div style={{marginBottom: '10px'}}></div>
         <div className={classes.wrap}>
-          <div>{meet.content}</div>
+          <div>{meet.content.split('\n').map((line, i) => <span key={i}>{line}<br/></span>)}</div>
         </div>
         <div style={{borderBottom: '1px solid #dfdfdf', width: '100%'}}></div><div style={{marginBottom: '20px'}}></div>
         {userInfo.username !== meet.user.username

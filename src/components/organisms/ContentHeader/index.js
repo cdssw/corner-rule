@@ -50,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
       color: '#FF3096',
       fontWeight: 'bold',
       fontSize: '15px',
+      margin: '0 auto',
     },
   },
   desc: {
@@ -68,7 +69,7 @@ export default function ContentHeader({userInfo, meet, avatar}) {
           <Avatar
             classes={{root: classes.avatarRoot, img: classes.avatarImg}}
             alt={meet.user.userNickNm}
-            src={avatar !== "" && process.env.REACT_APP_IMAGE + avatar}
+            src={avatar !== "" ? process.env.REACT_APP_IMAGE + avatar : ""}
           >
             {avatar === "" && <Person />}
           </Avatar>
@@ -78,7 +79,7 @@ export default function ContentHeader({userInfo, meet, avatar}) {
           <div className={classes.space}></div>
           <div className={classes.innerWrap}>
             <div className={classes.costWrap}>
-              <div className="cost">{`￦` + Utils.numberWithCommas(meet.cost)}</div>
+              <div className="cost">{meet.cost === 0 ? 'Free' : `￦` + Utils.numberWithCommas(meet.cost)}</div>
             </div>
             {meet.costOption && <div className={classes.desc}>협의가능</div>}
           </div>

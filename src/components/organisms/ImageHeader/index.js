@@ -34,7 +34,7 @@ export default function ImageHeader({imgPath, history, path}) {
   useEffect(() => {
     if(imgPath.data !== undefined) {
       const imgList = Array.from(imgPath.data).map(img => {
-        return {original: process.env.REACT_APP_IMAGE + img.path + '/' + img.chgFileNm, originalClass: {height: '269px'}};
+        return {original: process.env.REACT_APP_IMAGE + img.path + '/' + img.chgFileNm};
       });
       setImages(imgList);
     }
