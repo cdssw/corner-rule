@@ -5,6 +5,7 @@ import { setLoginUserInfo, setLogin } from "../../../modules/userInfo";
 import { useSelector, useDispatch } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { LoginTemplate, LoginForm, Footer } from "components";
+import Utils from "../../Utils";
 
 export default function LoginPage() {
   const { login } = useSelector(state => state.userInfo, []);
@@ -47,8 +48,7 @@ export default function LoginPage() {
       if(error.response.data.error_description === 'Bad credentials') {
         alert("아이디와 비밀번호를 확인하고 다시 로그인 하세요.");
       } else {
-        alert(error.response.data.message);
-        console.log(error.response.data);
+        Utils.alertError(error);
       }
     } finally {
       setLoading(false);

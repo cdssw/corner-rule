@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { PageTemplate, TitleHeader, ImageList, RegForm, FileUploader } from "components";
 import * as File from "../../../services/File";
 import * as Meet from "../../../services/Meet";
+import Utils from "../../Utils";
 
 export default function RegPage(props) {
   const history = useHistory();
@@ -96,8 +97,7 @@ export default function RegPage(props) {
         const res = await File.postImage(param);
         results.push(res.data);
       } catch(error) {
-        alert(error.response.data.message);
-        console.log(error.response.data);
+        Utils.alertError(error);
       }
     }
     setFileUploader(false);
@@ -133,8 +133,7 @@ export default function RegPage(props) {
         history.push("/");
       }
     } catch(error) {
-      alert(error.response.data.message);
-      console.log(error.response.data);
+      Utils.alertError(error);
     } finally {
       setLoading(false);
     }

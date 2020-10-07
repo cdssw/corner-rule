@@ -103,7 +103,7 @@ export default function Content({userInfo, meet}) {
               <div className={classes.space}></div>
               <div className={classes.commWrap}>
                 <div className="ico"><img src={resources.chat} alt="chat" /></div>
-                <div style={{paddingRight: '5px'}}>5</div>
+                <div style={{paddingRight: '5px'}}>0</div>
                 <div className="ico"><img src={resources.man} alt="man" /></div>
                 <div>{meet.application}/{meet.recruitment}</div>
               </div>

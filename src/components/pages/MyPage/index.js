@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setLoginUserInfo, setLogin } from "../../../modules/userInfo";
 import { PageTemplate, TitleHeader, MyInfo, PlaceSetting, MyTab } from "components";
 import * as User from "../../../services/User";
+import Utils from "../../Utils";
 
 export default function MyPage(props) {
   const history = useHistory();
@@ -25,8 +26,7 @@ export default function MyPage(props) {
       const res = await User.getUser(token);
       dispatch(setLoginUserInfo(res.data)); // 가져온 user 정보를 redux에 저장
     } catch(error) {
-      alert(error.response.data.message);
-      console.log(error.response.data);
+      Utils.alertError(error);
     } finally {
       setLoading(false);
     }
@@ -58,8 +58,7 @@ export default function MyPage(props) {
           await User.putEditUser(param); // 지역삭제
           loadUserInfo(token); // 사용자 정보 조회
         } catch(error) {
-          alert(error.response.data.message);
-          console.log(error.response.data);
+          Utils.alertError(error);
         } finally {
           setLoading(false);
         }

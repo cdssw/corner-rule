@@ -32,4 +32,18 @@ export default class Utils {
     return str;
   }
 
+  static alertError = e => {
+    if(e.response) {
+      if(e.response.data && e.response.data.message) {
+        alert(e.response.data.message);
+      } else if(e.response.data) {
+        alert(e.response.data);
+      } else {
+        alert(e.response);
+      }
+    } else {
+      alert(e);
+    }
+    console.log(e);
+  }
 }

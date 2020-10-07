@@ -3,6 +3,7 @@ import React, { useState, useReducer } from 'react';
 import { PageTemplate, TitleHeader, SignupForm } from "components";
 import * as User from "../../../services/User";
 import * as File from "../../../services/File";
+import Utils from "../../Utils";
 
 const initialState = {
     input: {
@@ -120,8 +121,7 @@ export default function SignupPage(props) {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
       }
     } catch(error) {
-      alert(error.response.data.message);
-      console.log(error.response.data);
+      Utils.alertError(error);
     } finally {
       setLoading(false);
     }
@@ -194,8 +194,7 @@ export default function SignupPage(props) {
         }
       }
     } catch(error) {
-      alert(error.response.data.message);
-      console.log(error.response.data);
+      Utils.alertError(error);
     }
   }
 
@@ -214,8 +213,7 @@ export default function SignupPage(props) {
         });
       }
     } catch(error) {
-      alert(error.response.data.message);
-      console.log(error.response.data);
+      Utils.alertError(error);
     } finally {
       setLoading(false);
     }

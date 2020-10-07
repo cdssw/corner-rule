@@ -147,9 +147,9 @@ export default function Card({item, image, index, onContentClick}) {
             </div>
             <div className="commWrap">
               <div className="ico"><img src={resources.chat} alt="chat" /></div>
-              <div>5</div>
+              <div>0</div>
               <div className="ico"><img src={resources.man} alt="man" /></div>
-              <div>{item.recruitment}</div>
+              <div>{item.application}/{item.recruitment}</div>
             </div>
           </div>
         </div>

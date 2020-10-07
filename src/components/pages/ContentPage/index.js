@@ -7,6 +7,7 @@ import ContentHeader from '../../organisms/ContentHeader';
 import * as Meet from "../../../services/Meet";
 import * as File from "../../../services/File";
 import * as User from "../../../services/User";
+import Utils from "../../Utils";
 
 export default function ContentPage(props) {
   const [loading, setLoading] = useState(false);
@@ -33,8 +34,7 @@ export default function ContentPage(props) {
       const avatarPath = await User.getUserAvatar({username: meet.data.user.username, token: token.access_token});
       setAvatar(avatarPath.data);
     } catch(error) {
-      alert(error.response.data.message);
-      console.log(error.response.data);
+      Utils.alertError(error);
     } finally {
       setLoading(false);
     }

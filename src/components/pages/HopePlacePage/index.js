@@ -5,6 +5,7 @@ import { PageTemplate, TitleHeader } from "components";
 import PlaceSelect from '../../organisms/PlaceSelect';
 import * as Addr from "../../../services/Addr";
 import * as User from "../../../services/User";
+import Utils from "../../Utils";
 
 export default function HopePlacePage(props) {
   const history = useHistory();
@@ -27,8 +28,7 @@ export default function HopePlacePage(props) {
       const sggRes = await Addr.getSggList(sido);
       setSggList(sggRes.data);
     } catch(error) {
-      alert(error.response.data.message);
-      console.log(error.response.data);
+      Utils.alertError(error);
     } finally {
       setLoading(false);
     }
@@ -49,8 +49,7 @@ export default function HopePlacePage(props) {
       const sggRes = await Addr.getSggList(sido);
       setSggList(sggRes.data);
     } catch(error) {
-      alert(error.response.data.message);
-      console.log(error.response.data);
+      Utils.alertError(error);
     } finally {
       setLoading(false);
     }
@@ -85,8 +84,7 @@ export default function HopePlacePage(props) {
     try {
       await User.putEditUser(param);
     } catch(error) {
-      alert(error.response.data.message);
-      console.log(error.response.data);
+      Utils.alertError(error);
     } finally {
       setLoading(false);
     }

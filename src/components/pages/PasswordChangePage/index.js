@@ -3,6 +3,7 @@ import { useHistory, Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { PageTemplate, TitleHeader, PasswordSetting } from "components";
 import * as User from "../../../services/User";
+import Utils from "../../Utils";
 
 export default function PasswordChangePage(props) {
   const history = useHistory();
@@ -41,8 +42,7 @@ export default function PasswordChangePage(props) {
         });
       }
     } catch(error) {
-      alert(error.response.data.message);
-      console.log(error.response.data);
+      Utils.alertError(error);
     } finally {
       setLoading(false);
     }
