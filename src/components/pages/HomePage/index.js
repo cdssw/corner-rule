@@ -7,6 +7,7 @@ import { Fab } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import * as User from "../../../services/User";
 import * as Meet from "../../../services/Meet";
+import * as File from "../../../services/File";
 import { Link } from 'react-router-dom';
 import Utils from "../../Utils";
 
@@ -77,14 +78,23 @@ export default function HomePage() {
     setLoading(true);
     try {
       const response = await Meet.getMeetListByPage({page: page, size: size, sort: 'modifyDt,desc'});
+      const data = await getImagePath(response.data.content);
       setPage(page + 1); // infinite scroll시 다음페이지 조회
-      setItems(items.concat(response.data.content));
+      setItems(items.concat(data));
     } catch(error) {
       alert(error.response.data.message);
       console.log(error.response.data);
     } finally {
       setLoading(false);
     }
+  }
+
+  const getImagePath = async arr => {
+    for (const m of arr) {
+      const data = await File.postImagesPath({fileList: m.imgList});
+      m.imgList = data.data;
+    }
+    return arr;
   }
 
   const path = userInfo ? '/mypage' : '/login';

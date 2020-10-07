@@ -22,7 +22,7 @@ export default function CardList(props) {
           hasMore={true}
         >
           {props.items.map((item, index) => (
-            <Card key={index} index={index} image={index % 3 === 0 && true} item={item}
+            <Card key={index} index={index} image={item.imgList.length > 0 && true} item={item}
              onContentClick={() => history.push('/content/' + item.id)} />
           ))}
         </InfiniteScroll>

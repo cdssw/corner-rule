@@ -130,7 +130,7 @@ export default function Card({item, image, index, onContentClick}) {
       <div className={classes.root} onClick={onContentClick}>
         {image &&
           <div className={classes.img}>
-            <img alt="img" src={process.env.PUBLIC_URL + index % 9 === 0 ? "/images/food1.jpg" : "/images/back1.jpg"} />
+            <img alt="img" src={process.env.REACT_APP_IMAGE + item.imgList[0].path + '/' + item.imgList[0].chgFileNm} />
           </div>
         }
         <div className={classes.content} style={{left : !image && '10px'}}>
