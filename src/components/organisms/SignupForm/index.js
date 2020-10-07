@@ -123,10 +123,6 @@ const initialValid = {
     error: null,
     required: false,
   },
-  userNickNm: {
-    error: false,
-    required: false,
-  },
   phone: {
     error: null,
     required: false,
@@ -147,59 +143,11 @@ function getSteps() {
   return ['기본정보', '회원정보', '부가정보'];
 }
 
-function getStepContent(step, props, classes, valid, dispatchValid) {
+function getStepContent(step, props, classes, valid, handleBlur) {
   const { username, password, passwordCheck, userNm, userNickNm, phone, mainTalent } = props.state.input;
   const { talent, interest } = props.state.array;
   const { emailConfirm, userNickNmConfirm } = props.state.boolean;
   const { avatarPath } = props.state.file;
-
-  const handleBlur = e => {
-    let value = {};
-    switch(e.target.name) {
-      case 'username': {
-        value.error = false;
-        value.required = username === '' ? true : false;
-        if(value.required === true) {
-          value.error = true;
-          break;
-        }
-        value.valid = isEmail(username) === false ? true: false;
-        if(value.valid === true) value.error = true;
-        break;
-      }
-      case 'password':
-        value.required = password === '' ? true : false;
-        if(value.required === true) value.error = true;
-        if(valid.passwordCheck.error !== null) {
-          handleBlur({target: {name:'passwordCheck'}});
-        }
-        break;
-      case 'passwordCheck':
-        value.required = passwordCheck === '' ? true : false;
-        if(value.required === true) {
-          value.error = true;
-          break;
-        }
-        value.valid = password === passwordCheck ? false: true;
-        value.error = value.valid === true ? true : false;
-        break;
-      case 'userNm':
-        value.required = userNm === '' ? true : false;
-        if(value.required === true) value.error = true;
-        value.error = value.required === true ? true : false;
-        break;        
-      case 'userNickNm':
-        value.required = userNickNm === '' ? true : false;
-        if(value.required === true) value.error = true;
-        break;        
-      case 'phone':
-        value.required = phone === '' ? true : false;
-        if(value.required === true) value.error = true;
-        value.error = value.required === true ? true : false;
-        break;        
-    }
-    dispatchValid({type: e.target.name, value: value});
-  }
 
   switch (step) {
     case 0:
@@ -208,14 +156,14 @@ function getStepContent(step, props, classes, valid, dispatchValid) {
           <div className={classes.inputWrap}>
             <FormControl error={valid.username.error}>
               <div>
-                <OutlinedInput onBlur={handleBlur} type='email' className={classes.checkInput} name="username" placeholder="이메일 ID" value={username} disabled={emailConfirm} onChange={props.onInputChange} />
+                <OutlinedInput onBlur={handleBlur} type='email' className={classes.checkInput} name="username" placeholder="이메일 ID"
+                 value={username} disabled={emailConfirm} onChange={props.onInputChange} />
                 <Button variant='contained' color='primary' value='emailConfirm' disabled={emailConfirm}
                   onClick={(e) => {
                     if(valid.username.error) return;
                     props.onBooleanConfirm(e);
                   }}>확인</Button>
               </div>
-              {valid.username.required && <FormHelperText>필수값 입니다.</FormHelperText>}
               {valid.username.valid && <FormHelperText>이메일 형식이 아닙니다.</FormHelperText>}
             </FormControl>
           </div>
@@ -244,17 +192,14 @@ function getStepContent(step, props, classes, valid, dispatchValid) {
             </FormControl>
           </div>
           <div className={classes.inputWrap}>
-            <FormControl error={valid.userNickNm.error}>
-              <div>
-                <OutlinedInput onBlur={handleBlur} className={classes.checkInput} name="userNickNm" placeholder="닉네임" value={userNickNm} disabled={userNickNmConfirm} onChange={props.onInputChange}  />
-                <Button variant='contained' color='primary' value='userNickNmConfirm' disabled={userNickNmConfirm}
-                  onClick={(e) => {
-                    if(userNickNm === "") return;
-                    props.onBooleanConfirm(e);
-                  }}>확인</Button>
-              </div>
-              {valid.userNickNm.required && <FormHelperText>필수값 입니다.</FormHelperText>}
-            </FormControl>                  
+            <div>
+              <OutlinedInput className={classes.checkInput} name="userNickNm" placeholder="닉네임" value={userNickNm} disabled={userNickNmConfirm} onChange={props.onInputChange}  />
+              <Button variant='contained' color='primary' value='userNickNmConfirm' disabled={userNickNmConfirm}
+                onClick={(e) => {
+                  if(userNickNm === "") return;
+                  props.onBooleanConfirm(e);
+                }}>확인</Button>
+            </div>
           </div>
           <div className={classes.inputWrap}>
             <FormControl error={valid.phone.error}>
@@ -309,27 +254,75 @@ export default function SignupForm(props) {
   const classes = useStyles();
   const steps = getSteps();
   const [valid, dispatchValid] = useReducer(reducer, initialValid);
-  const [active, setActive] = useState(true);
-  const { emailConfirm, userNickNmConfirm } = props.state.boolean;
+
+  const { username, password, passwordCheck, userNm, phone } = props.state.input;
 
   useEffect(e => {
-    if(props.activeStep === 0) {
-      if(emailConfirm === true && valid.passwordCheck.error === false) {
-        setActive(false);
-      } else {
-        setActive(true);
-      }
+    if(props.activeStep === 2) {
+      props.handleNext(e);
     }
-    if(props.activeStep === 1) {
-      if(userNickNmConfirm === true
-         && valid.userNm.error === false
-         && valid.phone.error === false) {
-        setActive(false);
-      } else {
-        setActive(true);
-      }
+  }, [valid]);
+
+  const handleValid = e => {
+    console.log(props.activeStep);
+    if(props.activeStep === 2) {
+      validationAll();
+    } else {
+      props.handleNext(e);
     }
-  });
+    console.log("complete");
+  }
+
+  const validationAll = () => {
+    handleBlur({target: {name:'password'}});
+    handleBlur({target: {name:'passwordCheck'}});
+    handleBlur({target: {name:'userNm'}});
+    handleBlur({target: {name:'phone'}});
+  }
+
+  const handleBlur = e => {
+    let value = {};
+    switch(e.target.name) {
+      case 'username': {
+        value.error = false;
+        value.required = username === '' ? true : false;
+        if(value.required === true) {
+          value.error = true;
+          break;
+        }
+        value.valid = isEmail(username) === false ? true: false;
+        if(value.valid === true) value.error = true;
+        break;
+      }
+      case 'password':
+        value.required = password === '' ? true : false;
+        if(value.required === true) value.error = true;
+        if(valid.passwordCheck.error !== null) {
+          handleBlur({target: {name:'passwordCheck'}});
+        }
+        break;
+      case 'passwordCheck':
+        value.required = passwordCheck === '' ? true : false;
+        if(value.required === true) {
+          value.error = true;
+          break;
+        }
+        value.valid = password === passwordCheck ? false: true;
+        value.error = value.valid === true ? true : false;
+        break;
+      case 'userNm':
+        value.required = userNm === '' ? true : false;
+        if(value.required === true) value.error = true;
+        value.error = value.required === true ? true : false;
+        break;        
+      case 'phone':
+        value.required = phone === '' ? true : false;
+        if(value.required === true) value.error = true;
+        value.error = value.required === true ? true : false;
+        break;        
+    }
+    dispatchValid({type: e.target.name, value: value});
+  }
 
   return (
     <div className={classes.root}>
@@ -344,7 +337,7 @@ export default function SignupForm(props) {
           <Step key={label}>
             <StepLabel>{label}</StepLabel>
             <StepContent classes={{root: classes.stepContentRoot}}>
-              <Typography component="span">{getStepContent(index, props, classes, valid, dispatchValid)}</Typography>
+              <Typography component="span">{getStepContent(index, props, classes, valid, handleBlur)}</Typography>
               <div className={classes.actionsContainer}>
                 <div>
                   <Button
@@ -357,9 +350,8 @@ export default function SignupForm(props) {
                   <Button
                     variant="contained"
                     color="primary"
-                    onClick={props.handleNext}
+                    onClick={handleValid}
                     className={classes.button}
-                    disabled={active}
                   >
                     {props.activeStep === steps.length - 1 ? '완료' : '다음'}
                   </Button>

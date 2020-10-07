@@ -18,7 +18,9 @@ export default function ContentPage(props) {
 
   useEffect(e => {
     const token = localStorage.getItem("token");
-    getMeet(JSON.parse(token));
+    if(login) {
+      getMeet(JSON.parse(token));
+    }
   }, []);
 
   const getMeet = async token => {
@@ -40,7 +42,7 @@ export default function ContentPage(props) {
     }
   }
 
-  if(!login) return <Redirect to='/' />
+  if(!login) return <Redirect to='/login' />
 
   return (
     <PageTemplate imageWrap={imgPath && imgPath.data.length > 0 && true}
