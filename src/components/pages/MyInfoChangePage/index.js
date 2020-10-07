@@ -1,15 +1,14 @@
 /* eslint no-restricted-globals: ["off"] */
-import React, { useState, useReducer } from 'react';
-import { PageTemplate, TitleHeader, SignupForm } from "components";
+import React, { useState, useReducer, useEffect } from 'react';
+import { Redirect } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { PageTemplate, TitleHeader, MyInfoForm } from "components";
 import * as User from "../../../services/User";
 import * as File from "../../../services/File";
 import Utils from "../../Utils";
 
 const initialState = {
     input: {
-      username: '',
-      password: '',
-      passwordCheck: '',
       userNm: '',
       userNickNm: '',
       phone: '',
@@ -18,10 +17,6 @@ const initialState = {
     array: {
       talent: [],
       interest: []
-    },
-    boolean: {
-      emailConfirm: false,
-      userNickNmConfirm: false,
     },
     file: {
       avatarPath: '',
@@ -54,14 +49,6 @@ function reducer(state, action) {
           [action.name]: state.array[action.name].filter(value => value !== action.value)
         }
       };
-    case 'CONFIRM_BOOLEAN':
-      return {
-        ...state,
-        boolean: {
-          ...state.boolean,
-          [action.name]: true
-        }
-      };
     case 'SET_AVATAR':
       return {
         ...state,
@@ -74,47 +61,51 @@ function reducer(state, action) {
   } 
 }
 
-export default function SignupPage(props) {
+export default function MyInfoChangePage(props) {
+  const { login, userInfo } = useSelector(state => state.userInfo, []);
   const [state, dispatch] = useReducer(reducer, initialState);
   const [activeStep, setActiveStep] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  const { username, password, userNm, userNickNm, phone, mainTalent } = state.input;
+  const { phone, mainTalent } = state.input;
   const { talent, interest } = state.array;
   const { avatarPath } = state.file;
-  const { emailConfirm, userNickNmConfirm } = state.boolean;
+
+  useEffect(e => {
+    if(userInfo) {
+      onInputChange({target: {name: 'userNm', value: userInfo.userNm}});
+      onInputChange({target: {name: 'userNickNm', value: userInfo.userNickNm}});
+      onInputChange({target: {name: 'phone', value: userInfo.phone}});
+      if(userInfo.avatarPath) {
+        dispatch({type: 'SET_AVATAR', value: userInfo.avatarPath});
+      }
+      onInputChange({target: {name: 'mainTalent', value: userInfo.mainTalent}});
+      userInfo.talent.split(',').map(m => onArrayAdd({name: 'talent', value: m}));
+      userInfo.interest.split(',').map(m => onArrayAdd({name: 'interest', value: m}));
+    }
+  }, [userInfo]);
 
   const handleNext = () => {
-    if (activeStep === 0 && !emailConfirm) {
-      alert('이메일ID 중복확인을 하세요.');
-      return;
-    }
-    if (activeStep === 1 && !userNickNmConfirm) {
-      alert('닉네임 중복확인을 하세요.');
-      return;
-    }
-    if (activeStep === 2) {
-      signUp();
+    if (activeStep === 1) {
+      editUser();
     } else {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }
   };
 
-  const signUp = async e => {
+  const editUser = async e => {
     const body = {
-      username,
-      password,
-      userNm,
-      userNickNm,
       phone,
       mainTalent,
       talent: talent.join(','),
       interest: interest.join(','),
       avatarPath: avatarPath
     }
+    const token = JSON.parse(localStorage.getItem("token"));
+    const param = { token, body };
     setLoading(true);
     try {
-      const response = await User.signup(body);
+      const response = await User.putEditUser(param);
       // 결과에 따라 set
       if(response) {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -157,46 +148,6 @@ export default function SignupPage(props) {
     });
   }
 
-  const onBooleanConfirm = async e => {
-    const { value } = e.currentTarget;
-
-    try {
-      if(value === "emailConfirm") {
-        // api 호출
-        const response = await User.getCheckUsername({username: username});
-        // 결과에 따라 set
-        if(response.data === 0) {
-          const check = confirm("이 아이디를 사용하시겠습니까?");
-          if(check) {
-            dispatch({
-              type: 'CONFIRM_BOOLEAN',
-              name: value
-            });
-          }
-        } else {
-          alert("이미 존재하는 아이디 입니다.");
-        }
-      } else {
-        // api 호출
-        const response = await User.getCheckNicknm({nicknm: userNickNm});
-        // 결과에 따라 set
-        if(response.data === 0) {
-          const check = confirm("이 닉네임을 사용하시겠습니까?");
-          if(check) {
-            dispatch({
-              type: 'CONFIRM_BOOLEAN',
-              name: value
-            });
-          }
-        } else {
-          alert("이미 존재하는 닉네임 입니다.");
-        }
-      }
-    } catch(error) {
-      Utils.alertError(error);
-    }
-  }
-
   const onSetAvatar = async e => {
     e.preventDefault();
     const file = e.target.files[0];
@@ -218,14 +169,15 @@ export default function SignupPage(props) {
     }
   }
 
+  if(!login) return <Redirect to='/login' />
+
   return (
-    <PageTemplate header={<TitleHeader {...props}>회원가입</TitleHeader>}>
-      <SignupForm
+    <PageTemplate header={<TitleHeader {...props}>정보수정</TitleHeader>}>
+      <MyInfoForm
         state={state}
         onInputChange={onInputChange}
         onArrayAdd={onArrayAdd}
         onArrayDelete={onArrayDelete}
-        onBooleanConfirm={onBooleanConfirm}
         onSetAvatar={onSetAvatar}
         activeStep={activeStep}
         handleNext={handleNext}

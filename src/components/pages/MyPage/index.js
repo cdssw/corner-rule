@@ -75,11 +75,15 @@ export default function MyPage(props) {
     history.push("/mypage/pass_change");
   }
 
-  if(!login) return <Redirect to='/' />
+  const handleMyInfoChange = e => {
+    history.push("/mypage/info_change");
+  }
+
+  if(!login) return <Redirect to='/login' />
 
   return (
     <PageTemplate header={<TitleHeader path="/" {...props}>My Page</TitleHeader>} loading={loading}>
-      <MyInfo userInfo={userInfo} onLogout={handleLogout} onPasswordChange={handlePasswordChange} />
+      <MyInfo userInfo={userInfo} onLogout={handleLogout} onMyInfoChange={handleMyInfoChange} onPasswordChange={handlePasswordChange} />
       <div style={{borderBottom: '1px solid #dfdfdf'}}></div><div style={{marginBottom: '10px'}}></div>
       <PlaceSetting userInfo={userInfo} onClick={handlePlaceClick} />
       <div style={{borderBottom: '1px solid #dfdfdf'}}></div><div style={{marginBottom: '10px'}}></div>

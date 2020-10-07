@@ -8,6 +8,7 @@ import {
   MyPage, 
   HopePlacePage, 
   PasswordChangePage, 
+  MyInfoChangePage,
   RegPage, 
   ContentPage
 } from "components";
@@ -22,6 +23,7 @@ function App() {
         <Route exact path="/mypage" component={MyPage}/>
         <Route exact path="/mypage/hope_place" component={HopePlacePage}/>
         <Route exact path="/mypage/pass_change" component={PasswordChangePage}/>
+        <Route exact path="/mypage/info_change" component={MyInfoChangePage}/>
         <Route exact path="/reg" component={RegPage}/>
         <Route exact path="/content/:id" component={ContentPage}/>
       </Switch>

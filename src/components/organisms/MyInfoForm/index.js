@@ -105,24 +105,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const initialValid = {
-  username: {
-    error: false,
-    required: false,
-    valid: false,
-  },
-  password: {
-    error: false,
-    required: false,
-  },
-  passwordCheck: {
-    error: null,
-    required: false,
-    valid: false,
-  },
-  userNm: {
-    error: null,
-    required: false,
-  },
   phone: {
     error: null,
     required: false,
@@ -133,20 +115,13 @@ const reducer = (state, action) => {
     return { ...state, [action.type]: { error: action.value.error, required: action.value.required, valid: action.value.valid } }
 }
 
-const isEmail = email => {
-  const emailRegex = /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
-
-  return emailRegex.test(email);
-};
-
 function getSteps() {
-  return ['기본정보', '회원정보', '부가정보'];
+  return ['회원정보', '부가정보'];
 }
 
 function getStepContent(step, props, classes, valid, handleBlur) {
-  const { username, password, passwordCheck, userNm, userNickNm, phone, mainTalent } = props.state.input;
+  const { userNm, userNickNm, phone, mainTalent } = props.state.input;
   const { talent, interest } = props.state.array;
-  const { emailConfirm, userNickNmConfirm } = props.state.boolean;
   const { avatarPath } = props.state.file;
 
   switch (step) {
@@ -154,64 +129,20 @@ function getStepContent(step, props, classes, valid, handleBlur) {
       return (
         <>
           <div className={classes.inputWrap}>
-            <FormControl error={valid.username.error}>
-              <div>
-                <OutlinedInput onBlur={handleBlur} type='email' className={classes.checkInput} name="username" placeholder="이메일 ID"
-                 value={username} disabled={emailConfirm} onChange={props.onInputChange} />
-                <Button variant='contained' color='primary' value='emailConfirm' disabled={emailConfirm}
-                  onClick={(e) => {
-                    if(username === "") return;
-                    if(valid.username.error) return;
-                    props.onBooleanConfirm(e);
-                  }}>확인</Button>
-              </div>
-              {valid.username.required && <FormHelperText>필수값 입니다.</FormHelperText>}
-              {valid.username.valid && <FormHelperText>이메일 형식이 아닙니다.</FormHelperText>}
-            </FormControl>
+            <OutlinedInput onBlur={handleBlur} name="userNm" placeholder="이름" value={userNm} disabled={true} />
           </div>
           <div className={classes.inputWrap}>
-            <FormControl error={valid.password.error}>
-              <OutlinedInput onBlur={handleBlur} type='password' name="password" placeholder="비밀번호" value={password} onChange={props.onInputChange} />
-              {valid.password.required && <FormHelperText>필수값 입니다.</FormHelperText>}
-            </FormControl>
-          </div>
-          <div className={classes.inputWrap}>
-            <FormControl error={valid.passwordCheck.error}>
-              <OutlinedInput onBlur={handleBlur} type='password' name="passwordCheck" placeholder="비밀번호 확인" value={passwordCheck} onChange={props.onInputChange}  />
-              {valid.passwordCheck.required && <FormHelperText>필수값 입니다.</FormHelperText>}
-              {valid.passwordCheck.valid && <FormHelperText>비밀번호가 일치하지 않습니다.</FormHelperText>}
-            </FormControl>
-          </div>
-        </>
-      );
-    case 1:
-      return (
-        <>
-          <div className={classes.inputWrap}>
-            <FormControl error={valid.userNm.error}>
-              <OutlinedInput onBlur={handleBlur} name="userNm" placeholder="이름" value={userNm} onChange={props.onInputChange}  />
-              {valid.userNm.required && <FormHelperText>필수값 입니다.</FormHelperText>}
-            </FormControl>
-          </div>
-          <div className={classes.inputWrap}>
-            <div>
-              <OutlinedInput className={classes.checkInput} name="userNickNm" placeholder="닉네임" value={userNickNm} disabled={userNickNmConfirm} onChange={props.onInputChange}  />
-              <Button variant='contained' color='primary' value='userNickNmConfirm' disabled={userNickNmConfirm}
-                onClick={(e) => {
-                  if(userNickNm === "") return;
-                  props.onBooleanConfirm(e);
-                }}>확인</Button>
-            </div>
+            <OutlinedInput className={classes.checkInput} name="userNickNm" placeholder="닉네임" value={userNickNm} disabled={true} />
           </div>
           <div className={classes.inputWrap}>
             <FormControl error={valid.phone.error}>
-              <OutlinedInput onBlur={handleBlur} name="phone" placeholder="전화번호" value={phone} onChange={props.onInputChange}  />
+              <OutlinedInput onBlur={handleBlur} name="phone" placeholder="전화번호" value={phone} onChange={props.onInputChange} />
               {valid.phone.required && <FormHelperText>필수값 입니다.</FormHelperText>}
             </FormControl>
           </div>
         </>
       );
-    case 2:
+    case 1:
       return (
         <>
           <label htmlFor="upload-avatar">
@@ -252,21 +183,21 @@ function getStepContent(step, props, classes, valid, handleBlur) {
   }
 }
 
-export default function SignupForm(props) {
+export default function MyInfoForm(props) {
   const classes = useStyles();
   const steps = getSteps();
   const [valid, dispatchValid] = useReducer(reducer, initialValid);
 
-  const { username, password, passwordCheck, userNm, phone } = props.state.input;
+  const { phone } = props.state.input;
 
   useEffect(e => {
-    if(props.activeStep === 2) {
+    if(props.activeStep === 1) {
       props.handleNext(e);
     }
   }, [valid]);
 
   const handleValid = e => {
-    if(props.activeStep === 2) {
+    if(props.activeStep === 1) {
       validationAll();
     } else {
       props.handleNext(e);
@@ -274,47 +205,12 @@ export default function SignupForm(props) {
   }
 
   const validationAll = () => {
-    handleBlur({target: {name:'password'}});
-    handleBlur({target: {name:'passwordCheck'}});
-    handleBlur({target: {name:'userNm'}});
     handleBlur({target: {name:'phone'}});
   }
 
   const handleBlur = e => {
     let value = {};
     switch(e.target.name) {
-      case 'username': {
-        value.error = false;
-        value.required = username === '' ? true : false;
-        if(value.required === true) {
-          value.error = true;
-          break;
-        }
-        value.valid = isEmail(username) === false ? true: false;
-        if(value.valid === true) value.error = true;
-        break;
-      }
-      case 'password':
-        value.required = password === '' ? true : false;
-        if(value.required === true) value.error = true;
-        if(valid.passwordCheck.error !== null) {
-          handleBlur({target: {name:'passwordCheck'}});
-        }
-        break;
-      case 'passwordCheck':
-        value.required = passwordCheck === '' ? true : false;
-        if(value.required === true) {
-          value.error = true;
-          break;
-        }
-        value.valid = password === passwordCheck ? false: true;
-        value.error = value.valid === true ? true : false;
-        break;
-      case 'userNm':
-        value.required = userNm === '' ? true : false;
-        if(value.required === true) value.error = true;
-        value.error = value.required === true ? true : false;
-        break;        
       case 'phone':
         value.required = phone === '' ? true : false;
         if(value.required === true) value.error = true;
@@ -363,9 +259,9 @@ export default function SignupForm(props) {
       </Stepper>
       {props.activeStep === steps.length && (
         <Paper className={classes.resetContainer}>
-          <Typography>회원가입이 완료되었습니다.</Typography>
-          <Link to="/">
-            <Button  variant='contained' color='primary'>HOME</Button>
+          <Typography>정보수정이 완료되었습니다.</Typography>
+          <Link to="/mypage">
+            <Button  variant='contained' color='primary'>My Page</Button>
           </Link>
         </Paper>
       )}
