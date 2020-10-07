@@ -80,8 +80,8 @@ export default function MyInfoChangePage(props) {
         dispatch({type: 'SET_AVATAR', value: userInfo.avatarPath});
       }
       onInputChange({target: {name: 'mainTalent', value: userInfo.mainTalent}});
-      userInfo.talent.split(',').map(m => onArrayAdd({name: 'talent', value: m}));
-      userInfo.interest.split(',').map(m => onArrayAdd({name: 'interest', value: m}));
+      if(userInfo.talent !== "") userInfo.talent.split(',').map(m => onArrayAdd({name: 'talent', value: m}));
+      if(userInfo.interest !== "") userInfo.interest.split(',').map(m => onArrayAdd({name: 'interest', value: m}));
     }
   }, [userInfo]);
 
