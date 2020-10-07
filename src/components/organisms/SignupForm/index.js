@@ -160,10 +160,12 @@ function getStepContent(step, props, classes, valid, handleBlur) {
                  value={username} disabled={emailConfirm} onChange={props.onInputChange} />
                 <Button variant='contained' color='primary' value='emailConfirm' disabled={emailConfirm}
                   onClick={(e) => {
+                    if(username === "") return;
                     if(valid.username.error) return;
                     props.onBooleanConfirm(e);
                   }}>확인</Button>
               </div>
+              {valid.username.required && <FormHelperText>필수값 입니다.</FormHelperText>}
               {valid.username.valid && <FormHelperText>이메일 형식이 아닙니다.</FormHelperText>}
             </FormControl>
           </div>
