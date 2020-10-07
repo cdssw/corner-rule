@@ -49,7 +49,7 @@ export default function Header({userInfo, path}) {
             alt={userInfo && userInfo.userNm}
             src={userInfo && userInfo.avatarPath && process.env.REACT_APP_IMAGE + userInfo.avatarPath}
           >
-            {(userInfo == null || userInfo.avatarPath == null) && <Person />}</Avatar>
+            {(userInfo === null || userInfo.avatarPath === null || userInfo.avatarPath === '') && <Person />}</Avatar>
         </Link>
       </div>
     </div>
