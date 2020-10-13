@@ -101,8 +101,8 @@ export default function MyInfoChangePage(props) {
       interest: interest.join(','),
       avatarPath: avatarPath
     }
-    const token = JSON.parse(localStorage.getItem("token"));
-    const param = { token, body };
+    const token = localStorage.getItem("token");
+    const param = { token: JSON.parse(token).access_token, body };
     setLoading(true);
     try {
       const response = await User.putEditUser(param);

@@ -31,7 +31,7 @@ export async function postImage({index, file, token, files, onProgress}) {
     url: '/image?group=image',
     method: 'post',
     data: formData,
-    headers: { 'content-type': 'multipart/form-data', 'Authorization': "Bearer " + token.access_token},
+    headers: { 'content-type': 'multipart/form-data', 'Authorization': "Bearer " + token},
     onUploadProgress: progress => {
       const { loaded, total } = progress;
       const percent = Math.floor((loaded / total) * 100);

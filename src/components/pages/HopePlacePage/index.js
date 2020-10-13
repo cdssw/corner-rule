@@ -78,11 +78,11 @@ export default function HopePlacePage(props) {
         [props.location.placeNo]: sido + " " + sgg
       }
     }
-    const token = JSON.parse(localStorage.getItem("token"));
+    const token = JSON.parse(localStorage.getItem("token")).access_token;
     const param = { token, body };
     setLoading(true);
     try {
-      await User.putEditUser(param);
+      await User.putEditHopePlace(param);
     } catch(error) {
       Utils.alertError(error);
     } finally {

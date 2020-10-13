@@ -25,7 +25,8 @@ const useStyles = makeStyles((theme) => ({
   },
   avatarImg: {
     width: '100%',
-    height: 'auto',
+    height: '100%',
+    objectFit: 'cover',
   },
   costNgWrap: {
     flexGrow: 1,

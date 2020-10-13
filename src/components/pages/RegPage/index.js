@@ -71,7 +71,7 @@ export default function RegPage(props) {
   }
 
   const handleFileChange = async e => {
-    const token = JSON.parse(localStorage.getItem("token"));
+    const token = JSON.parse(localStorage.getItem("token")).access_token;
     const files = Array.from(e.target.files);
     setTotal(files.length);
 
@@ -121,9 +121,9 @@ export default function RegPage(props) {
   }
 
   const onSaveClick = async e => {
-    const token = JSON.parse(localStorage.getItem("token"));
+    const token = localStorage.getItem("token");
     const param = {
-      token: token,
+      token: JSON.parse(token).access_token,
       body: {...state, imgList: state.imgList.map(i => i.id)}
     }
     setLoading(true);

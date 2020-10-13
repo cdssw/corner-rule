@@ -44,7 +44,7 @@ export default function HomePage() {
   useEffect(e => {
     const token = localStorage.getItem("token");
     if(token) { // 로그인 되어 있으면 user정보 복구
-      loadUserInfo(JSON.parse(token));
+      loadUserInfo(JSON.parse(token).access_token);
     } else {
       fetchMoreData();
     }
@@ -65,7 +65,6 @@ export default function HomePage() {
       dispatch(setLoginUserInfo(userInfo.data)); // 가져온 user 정보를 redux에 저장
       dispatch(setLogin(true)); // login 상태로 처리
     } catch(error) {
-      Utils.alertError(error);
       localStorage.removeItem('token');
     } finally {
       setLoading(false);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import { Button } from '@material-ui/core';
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Place(place) {
-  return place.split(' ').map(item => <>{item}<br /></>);
+  return place.split(' ').map((item, i) => <Fragment key={i}>{item}<br /></Fragment>);
 }
 
 export default function PlaceSetting({userInfo, onClick}) {

@@ -2,8 +2,8 @@ import axios from "axios";
 
 const url = process.env.REACT_APP_SERVICE_USER;
 
-export async function getUser(props) {
-  return axios.get(url, {headers: { Authorization: "Bearer " + props.access_token }});
+export async function getUser(token) {
+  return axios.get(url, {headers: { Authorization: "Bearer " + token }});
 }
 
 export async function getCheckUsername(props) {
@@ -22,15 +22,24 @@ export async function putEditUser(props) {
   return axios.put(
     url,
     props.body,
-    {headers: { Authorization: "Bearer " + props.token.access_token }}
+    {headers: { Authorization: "Bearer " + props.token }}
   );
 }
+
+export async function putEditHopePlace(props) {
+  return axios.put(
+    url + "/hopeplace",
+    props.body,
+    {headers: { Authorization: "Bearer " + props.token }}
+  );
+}
+
 
 export async function postPasswordChange(props) {
   return axios.post(
     url + "/change/password",
     props.body,
-    {headers: { Authorization: "Bearer " + props.token.access_token }}
+    {headers: { Authorization: "Bearer " + props.token }}
   );
 }
 

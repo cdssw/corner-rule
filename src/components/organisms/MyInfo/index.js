@@ -27,7 +27,9 @@ const useStyles = makeStyles((theme) => ({
     width: '86px',
     height: '86px',
     '& img': {
-      maxWidth: '100%',
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover',
     },
   },
   infoWrap: {

@@ -23,7 +23,10 @@ export default function CardList(props) {
         >
           {props.items.map((item, index) => (
             <Card key={index} index={index} image={item.imgList.length > 0 && true} item={item}
-             onContentClick={() => history.push('/content/' + item.id)} />
+             onContentClick={() => history.push({
+               pathname: '/content/' + item.id,
+               state: {path: props.path}
+             })} />
           ))}
         </InfiniteScroll>
       </div>

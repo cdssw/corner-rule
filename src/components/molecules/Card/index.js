@@ -77,11 +77,43 @@ const useStyles = makeStyles((theme) => ({
       top: '53px',
       color: '#707070',
       display: 'flex',
+      width: '100%',
       '& div': {
         paddingRight: '3px',
       },
       '& div:nth-child(2)': {
         fontSize: '13px',
+      },
+      '& .space': {
+        flexGrow: 1,
+      },
+      '& .approval': {
+        padding: '2px 10px 0',
+        borderRadius: '12px',
+        backgroundColor: '#8cfb97',
+        fontWeight: 'bold',
+        color: '#137e13',
+        textAlign: 'center',
+      },
+      '& .chat': {
+        padding: '1px 0',
+        width: '22px',
+        height: '22px',
+        border: 'solid 1px #ffffff',
+        backgroundColor: '#4a71dc',
+        color: 'white',
+        borderRadius: '90px',
+        textAlign: 'center',
+      },
+      '& .application': {
+        padding: '1px 0',
+        width: '22px',
+        height: '22px',
+        border: 'solid 1px #ffffff',
+        backgroundColor: '#e63232',
+        color: 'white',
+        borderRadius: '50%',
+        textAlign: 'center',
       }
     },
     '& .info': {
@@ -140,6 +172,11 @@ export default function Card({item, image, index, onContentClick}) {
           <div className="date">
             <div><CalendarTodayIcon fontSize="small" /></div>
             <div>{Utils.parseDate(item.term.startDt)} ~ {Utils.parseDate(item.term.endDt)}{Utils.detailDay(item.term)}</div>
+            <div className="space"></div>
+            {item.chatCnt ? item.chatCnt > 0 && <div className="chat">0</div> : ''}
+            {item.toApprovalCnt ? item.toApprovalCnt > 0 && <div className="application">{item.toApprovalCnt}</div> : ''}
+            {item.approval ? item.approval.approvalYn && <div className="approval">승인완료</div> : ''}
+            <div>&nbsp;&nbsp;</div>
           </div>
           <div className="info">
             <div className="costWrap">

@@ -27,8 +27,8 @@ export default function PasswordChangePage(props) {
       currentPassword : state.currentPassword,
       password: state.password
     }
-    const token = JSON.parse(localStorage.getItem("token"));
-    const param = { token, body };
+    const token = localStorage.getItem("token");
+    const param = { token: JSON.parse(token).access_token, body };
     setLoading(true);
     try {
       const res = await User.postPasswordChange(param);

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setLoginUserInfo, setLogin } from "../../../modules/userInfo";
 import { PageTemplate, TitleHeader, MyInfo, PlaceSetting, MyTab } from "components";
 import * as User from "../../../services/User";
+import * as Meet from "../../../services/Meet";
 import Utils from "../../Utils";
 
 export default function MyPage(props) {
@@ -12,11 +13,15 @@ export default function MyPage(props) {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const { login, userInfo } = useSelector(state => state.userInfo, []);
+  const [myOpened, setMyOpened] = useState([]);
+  const [myApplication, setMyApplication] = useState([]);
 
   useEffect(e => {
     const token = localStorage.getItem("token");
     if(token) {
-      loadUserInfo(JSON.parse(token));
+      loadUserInfo(JSON.parse(token).access_token);
+      loadMyOpened(JSON.parse(token).access_token);
+      loadMyApplication(JSON.parse(token).access_token);
     }
   }, []);
 
@@ -30,6 +35,34 @@ export default function MyPage(props) {
     } finally {
       setLoading(false);
     }
+  }
+
+  const loadMyOpened = async token => {
+    setLoading(true);
+    try {
+      const body = {
+        toApproval: false
+      };
+      const res = await Meet.postMyPageOpened({token: token, body: body})
+      setMyOpened(res.data.content);
+    } catch(error) {
+      Utils.alertError(error);
+    } finally {
+      setLoading(false);
+    }    
+  }
+
+  const loadMyApplication = async token => {
+    setLoading(true);
+    try {
+      const body = {};
+      const res = await Meet.postMyPageApplication({token: token, body: body})
+      setMyApplication(res.data.content);
+    } catch(error) {
+      Utils.alertError(error);
+    } finally {
+      setLoading(false);
+    }    
   }
   
   const handleLogout = e => {
@@ -51,11 +84,11 @@ export default function MyPage(props) {
             [e.currentTarget.id]: null
           }
         }
-        const token = JSON.parse(localStorage.getItem("token"));
+        const token = JSON.parse(localStorage.getItem("token")).access_token;
         const param = { token, body };
         setLoading(true);
         try {
-          await User.putEditUser(param); // 지역삭제
+          await User.putEditHopePlace(param); // 지역삭제
           loadUserInfo(token); // 사용자 정보 조회
         } catch(error) {
           Utils.alertError(error);
@@ -87,7 +120,7 @@ export default function MyPage(props) {
       <div style={{borderBottom: '1px solid #dfdfdf'}}></div><div style={{marginBottom: '10px'}}></div>
       <PlaceSetting userInfo={userInfo} onClick={handlePlaceClick} />
       <div style={{borderBottom: '1px solid #dfdfdf'}}></div><div style={{marginBottom: '10px'}}></div>
-      <MyTab />
+      <MyTab myOpened={myOpened} myApplication={myApplication} />
     </PageTemplate>
   );
 }

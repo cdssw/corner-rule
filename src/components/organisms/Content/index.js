@@ -1,3 +1,4 @@
+/*eslint no-restricted-globals: "off"*/
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
@@ -81,15 +82,34 @@ const useStyles = makeStyles((theme) => ({
   },
   avatarImg: {
     width: '100%',
-    height: 'auto',
+    height: '100%',
+    objectFit: 'cover',
   },
   iconSize: {
     fontSize: '1.2rem',
   },
+  approval: {
+    padding: '10px 10px',
+    borderRadius: '12px',
+    backgroundColor: '#8cfb97',
+    fontWeight: 'bold',
+    color: '#137e13',
+    textAlign: 'center',
+  },
 }));
 
-export default function Content({userInfo, meet}) {
+export default function Content({userInfo, meet, applicationMeet, onApplication, onApproval}) {
   const classes = useStyles();
+
+  const handleApplication = e => {
+    const check = confirm("지원하시겠습니까?");
+    if(check) onApplication(e);
+  }
+
+  const handleApproval = (userId) => {
+    const check = confirm("확정하시겠습니까?");
+    if(check) onApproval(userId);
+  }
 
   return (
     <div className={classes.root}>
@@ -133,37 +153,47 @@ export default function Content({userInfo, meet}) {
         {userInfo.username !== meet.user.username
          ?
           <div className={classes.buttonWrap}>
-            <Badge classes={{badge: classes.badge}} badgeContent={4} color="secondary">
+            {/* <Badge classes={{badge: classes.badge}} badgeContent={4} color="secondary">
               <Button variant="contained" color='primary'>채팅문의</Button>
             </Badge>
-            <div style={{width: '13px'}}></div>
-            <Button variant="contained" color='secondary'>지원하기</Button>
+            <div style={{width: '13px'}}></div> */}
+            {meet.approvalYn
+            ? meet.approvalDt != null
+              ? <div className={classes.approval}>승인완료</div>
+              : <Button variant="contained" color='secondary' disabled={true}>승인요청중</Button>
+            : <Button variant="contained" color='secondary' onClick={handleApplication} disabled={meet.approvalYn}>{meet.approvalYn ? '승인요청중' : '지원하기'}</Button>
+            }
+            
           </div>
           :
           <>
             <div className={classes.wrap}>지원자 및 문의</div>
-            <div className={classes.wrap}>
-              <div>
-                <Avatar
-                  classes={{root: classes.avatarRoot, img: classes.avatarImg}}
-                  alt={userInfo && userInfo.userNm}
-                  src={userInfo && userInfo.avatarPath && process.env.REACT_APP_IMAGE + userInfo.avatarPath}
-                >
-                  {(userInfo == null || userInfo.avatarPath == null) && <Person />}
-                </Avatar>
-              </div>
-              <div className={classes.userName}>홍길동</div>        
-              <div className={classes.space}></div>
-              <Button variant="contained" color='secondary'>확정</Button>
-              <div style={{width: '4px'}}></div>
-              <Badge classes={{badge: classes.badge}} badgeContent={2} color="secondary">
-                <Button variant="contained" color='primary'>채팅</Button>
-              </Badge>
-            </div>
+            {applicationMeet.map((m, index) => {
+              return (
+                <div key={index} className={classes.wrap}>
+                  <div>
+                    <Avatar
+                      classes={{root: classes.avatarRoot, img: classes.avatarImg}}
+                      alt={m.userNickNm}
+                      src={m.avatarPath && process.env.REACT_APP_IMAGE + m.avatarPath}
+                    >
+                      {(m.avatarPath == null) && <Person />}
+                    </Avatar>
+                  </div>
+                  <div className={classes.userName}>{m.userNickNm}</div>        
+                  <div className={classes.space}></div>
+                  <Button variant="contained" color='secondary' onClick={(e) => handleApproval(m.id)} disabled={m.approvalYn}>{m.approvalYn ? m.approvalDt : '확정'}</Button>
+                  <div style={{width: '4px'}}></div>
+                  {/* <Badge classes={{badge: classes.badge}} badgeContent={2} color="secondary">
+                    <Button variant="contained" color='primary'>채팅</Button>
+                  </Badge> */}
+                </div>
+              );
+            })}
           </>
         }
-      </>
-    }
+        </>
+      }
     </div>
   );
 }
