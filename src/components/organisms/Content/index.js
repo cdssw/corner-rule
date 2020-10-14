@@ -142,7 +142,17 @@ export default function Content({userInfo, meet, applicationMeet, onApplication,
         <div className={classes.wrap}>
           <div className={classes.location}>
             <LocationOnIcon />
-            <div className={classes.detail}>{meet.address.address1}</div>
+            <div className={classes.detail}>
+              {meet.address.address1}&nbsp;
+              {userInfo.username !== meet.user.username
+                && meet.approvalYn
+                && meet.approvalDt != null
+                && meet.address.address2
+              }
+              {userInfo.username === meet.user.username
+                && meet.address.address2
+              }
+            </div>
           </div>
         </div>
         <div style={{borderBottom: '1px solid #dfdfdf', width: '100%'}}></div><div style={{marginBottom: '10px'}}></div>

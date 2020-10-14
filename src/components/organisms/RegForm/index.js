@@ -143,7 +143,6 @@ export default function RegForm(props) {
     props.onInputChange({target:{ name: 'endTm', value: options.hour + ":" + options.minute}});
   }
 
-  console.log(props.state);
   return (
     <div className={classes.root}>
       <TextField 

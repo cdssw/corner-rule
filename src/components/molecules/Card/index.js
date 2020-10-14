@@ -167,7 +167,7 @@ export default function Card({item, image, index, onContentClick}) {
         <div className={classes.content} style={{left : !image && '10px'}}>
           <div className="title">{item.title}</div>
           <div className="addressWrap">
-            <div className="address">{item.address.address1}</div>
+            <div className="address">{item.address.sgg}</div>
           </div>
           <div className="date">
             <div><CalendarTodayIcon fontSize="small" /></div>
