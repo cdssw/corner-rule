@@ -2,8 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { PageTemplate, ImageHeader, TitleHeader, Content } from "components";
-import ContentHeader from '../../organisms/ContentHeader';
+import { PageTemplate, ImageHeader, TitleHeader, Content, ContentHeader } from "components";
 import * as Meet from "../../../services/Meet";
 import * as File from "../../../services/File";
 import * as User from "../../../services/User";

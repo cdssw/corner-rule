@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function InputIcon({type, name, icon, invalid, validMessage, value, onChange}) {
+export default function InputIcon({type, name, icon, invalid, validMessage, value, onChange, onKeyPress}) {
   const classes = useStyles();
 
   return (
@@ -42,6 +42,7 @@ export default function InputIcon({type, name, icon, invalid, validMessage, valu
           name={name}
           onChange={onChange}
           value={value || ''}
+          onKeyPress={onKeyPress}
         />
         <span className={classes.icon}>{icon}</span>
       </div>

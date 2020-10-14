@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { FormControlLabel, Checkbox, TextField, Button } from '@material-ui/core';
 import TimePicker from "react-times";
 import 'react-times/css/classic/default.css';
+import Utils from '../../Utils';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -84,7 +85,7 @@ export default function RegForm(props) {
   const classes = useStyles();
   const isSafari = navigator.vendor.includes('Apple');
   const [valid, dispatchValid] = useReducer(reducer, initialValid);
-  const { title, term, recruitment, address, content } = props.state;
+  const { title, term, recruitment, cost, costOption, address, content } = props.state;
   const [dayVisible, setDayVisible] = useState('none');
 
   const validatation = e => {
@@ -142,12 +143,14 @@ export default function RegForm(props) {
     props.onInputChange({target:{ name: 'endTm', value: options.hour + ":" + options.minute}});
   }
 
+  console.log(props.state);
   return (
     <div className={classes.root}>
       <TextField 
         name="title" placeholder="제목" variant="outlined" fullWidth={true}
         error={valid.title.error}
         helperText={valid.title.error && "필수값 입니다."}
+        value={title}
         onChange={props.onInputChange}
       />
       <div className={classes.labelWrap}>
@@ -157,6 +160,7 @@ export default function RegForm(props) {
           placeholder="시작일" variant="outlined" type="date"
           error={valid.startDt.error}
           helperText={valid.startDt.error && "필수값 입니다."}
+          value={term.startDt}
           onChange={props.onInputChange}
         />
         <label className={classes.label}>종료일</label>
@@ -165,6 +169,7 @@ export default function RegForm(props) {
           placeholder="종료일" variant="outlined" type="date"
           error={valid.endDt.error}
           helperText={valid.endDt.error && "필수값 입니다."}
+          value={term.endDt}
           onChange={props.onInputChange}
         />        
       </div>
@@ -180,49 +185,49 @@ export default function RegForm(props) {
         <FormControlLabel
           className={classes.checkboxWrap}
           control={
-            <Checkbox className={classes.checkbox} size="small" id="64" onChange={handleCheckBox} />
+            <Checkbox checked={Utils.detailDayChecker(term, 64)} className={classes.checkbox} size="small" id="64" onChange={handleCheckBox} />
           }
           label='일'
         />
         <FormControlLabel
           className={classes.checkboxWrap}
           control={
-            <Checkbox className={classes.checkbox} size="small" id="32" onChange={handleCheckBox} />
+            <Checkbox checked={Utils.detailDayChecker(term, 32)} className={classes.checkbox} size="small" id="32" onChange={handleCheckBox} />
           }
           label='월'
         />
         <FormControlLabel
           className={classes.checkboxWrap}
           control={
-            <Checkbox className={classes.checkbox} size="small" id="16" onChange={handleCheckBox} />
+            <Checkbox checked={Utils.detailDayChecker(term, 16)} className={classes.checkbox} size="small" id="16" onChange={handleCheckBox} />
           }
           label='화'
         />
         <FormControlLabel
           className={classes.checkboxWrap}
           control={
-            <Checkbox className={classes.checkbox} size="small" id="8" onChange={handleCheckBox} />
+            <Checkbox checked={Utils.detailDayChecker(term, 8)} className={classes.checkbox} size="small" id="8" onChange={handleCheckBox} />
           }
           label='수'
         />
         <FormControlLabel
           className={classes.checkboxWrap}
           control={
-            <Checkbox className={classes.checkbox} size="small" id="4" onChange={handleCheckBox} />
+            <Checkbox checked={Utils.detailDayChecker(term, 4)} className={classes.checkbox} size="small" id="4" onChange={handleCheckBox} />
           }
           label='목'
         />
         <FormControlLabel
           className={classes.checkboxWrap}
           control={
-            <Checkbox className={classes.checkbox} size="small" id="2" onChange={handleCheckBox} />
+            <Checkbox checked={Utils.detailDayChecker(term, 2)} className={classes.checkbox} size="small" id="2" onChange={handleCheckBox} />
           }
           label='금'
         />
         <FormControlLabel
           className={classes.checkboxWrap}
           control={
-            <Checkbox className={classes.checkbox} size="small" id="1" onChange={handleCheckBox} />
+            <Checkbox checked={Utils.detailDayChecker(term, 1)} className={classes.checkbox} size="small" id="1" onChange={handleCheckBox} />
           }
           label='토'
         />
@@ -231,12 +236,13 @@ export default function RegForm(props) {
         <TextField 
           name="cost" classes={{root: isSafari && classes.muiRoot}}
           placeholder="금액" variant="outlined" type="number"
+          value={cost}
           onChange={props.onInputChange}
         />
         <FormControlLabel
           className={classes.checkboxWrap}
           control={
-            <Checkbox className={classes.checkbox} size="small" onChange={handleCostCheckBox} />
+            <Checkbox checked={costOption} className={classes.checkbox} size="small" onChange={handleCostCheckBox} />
           }
           label='협의'
         />
@@ -248,6 +254,7 @@ export default function RegForm(props) {
           placeholder="모집인원" variant="outlined" type="number"
           error={valid.recruitment.error}
           helperText={valid.recruitment.error && "최소 1명 이상입니다."}
+          value={recruitment}
           onChange={props.onInputChange}
         />
       </div>
@@ -258,7 +265,8 @@ export default function RegForm(props) {
           placeholder="주소" variant="outlined" fullWidth={true}
           error={valid.address1.error}
           helperText={valid.address1.error && "필수값 입니다."}
-          onChange={props.onInputChange}
+          value={address.address1}
+          onClick={props.onAddress}
         />
         <label className={classes.label}>상세주소</label>
         <TextField 
@@ -266,6 +274,7 @@ export default function RegForm(props) {
           placeholder="상세주소" variant="outlined" fullWidth={true}
           error={valid.address2.error}
           helperText={valid.address2.error && "필수값 입니다."}
+          value={address.address2}
           onChange={props.onInputChange}
         />
       </div>
@@ -274,6 +283,7 @@ export default function RegForm(props) {
         placeholder="내용" variant="outlined" fullWidth={true} multiline rows={4}
         error={valid.content.error}
         helperText={valid.content.error && "필수값 입니다."}
+        value={content}
         onChange={props.onInputChange}
       />      
       <div className={classes.button}>

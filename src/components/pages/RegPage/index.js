@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useHistory, Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { PageTemplate, TitleHeader, ImageList, RegForm, FileUploader } from "components";
@@ -10,6 +10,7 @@ export default function RegPage(props) {
   const history = useHistory();
   const { login, userInfo } = useSelector(state => state.userInfo, []);
   const [loading, setLoading] = useState(false);
+
   const [fileUploader, setFileUploader] = useState(false);
   const [total, setTotal] = useState(0);
   const [current, setCurrent] = useState(0);
@@ -24,6 +25,7 @@ export default function RegPage(props) {
     address: {
       address1: '',
       address2: '',
+      sgg: '',
     },
     term: {
       startDt: '',
@@ -34,6 +36,13 @@ export default function RegPage(props) {
     },
     imgList: [],
   });
+
+  useEffect(e => {
+    if(props.location.state === undefined) return;
+    const current = props.location.state;
+    setState(current);
+    window.scrollTo(0, document.body.scrollHeight); // 맨아래로 스크롤
+  }, [props.location.state]);
 
   const handleInputChange = e => {
     switch(e.target.name) {
@@ -51,7 +60,6 @@ export default function RegPage(props) {
         });
         break;
       }
-      case 'address1':
       case 'address2':
         setState({
           ...state,
@@ -113,14 +121,14 @@ export default function RegPage(props) {
     setValue(p);
   }
 
-  const onRemoveClick = id => {
+  const handleRemoveClick = id => {
     setState({
       ...state,
       imgList: state.imgList.filter(img => img.id !== id)
     });
   }
 
-  const onSaveClick = async e => {
+  const handleSaveClick = async e => {
     const token = localStorage.getItem("token");
     const param = {
       token: JSON.parse(token).access_token,
@@ -139,18 +147,26 @@ export default function RegPage(props) {
     }
   }
 
+  const handleAddress = e => {
+    history.push({
+      pathname: '/address',
+      state: state
+    });
+  }
+
   if(!login) return <Redirect to='/' />
 
   return (
     <PageTemplate header={<TitleHeader {...props}>등록</TitleHeader>} loading={loading}>
-      <ImageList imgList={state.imgList} onFileChange={handleFileChange} onRemoveClick={onRemoveClick} />
+      <ImageList imgList={state.imgList} onFileChange={handleFileChange} onRemoveClick={handleRemoveClick} />
       {fileUploader && <FileUploader total={total} current={current} value={value} />}
       <div style={{borderBottom: '1px solid #dfdfdf'}} />
       <div style={{marginBottom: '20px'}}></div>
       <RegForm
         state={state}
         onInputChange={handleInputChange}
-        onSaveClick={onSaveClick}
+        onSaveClick={handleSaveClick}
+        onAddress={handleAddress}
       />
     </PageTemplate>
   );

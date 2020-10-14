@@ -32,6 +32,10 @@ export default class Utils {
     return str;
   }
 
+  static detailDayChecker = (term, value) => {
+    return term.detailDay & value ? true : false;
+  }
+
   static alertError = e => {
     if(e.response) {
       if(e.response.data && e.response.data.message) {
