@@ -139,7 +139,10 @@ export default function RegPage(props) {
     try {
       const res = await Meet.postMeet(param);
       if(res !== undefined) {
-        history.push("/");
+        history.push({
+          pathname: '/content/' + res.data,
+          state: {path: null}
+        })
       }
     } catch(error) {
       Utils.alertError(error);

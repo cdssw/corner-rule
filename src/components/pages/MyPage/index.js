@@ -6,6 +6,7 @@ import { setLoginUserInfo, setLogin } from "../../../modules/userInfo";
 import { PageTemplate, TitleHeader, MyInfo, PlaceSetting, MyTab } from "components";
 import * as User from "../../../services/User";
 import * as Meet from "../../../services/Meet";
+import * as File from "../../../services/File";
 import Utils from "../../Utils";
 
 export default function MyPage(props) {
