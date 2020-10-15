@@ -44,7 +44,8 @@ export default function MyPage(props) {
         toApproval: false
       };
       const res = await Meet.postMyPageOpened({token: token, body: body})
-      setMyOpened(res.data.content);
+      const data = await getImagePath(res.data.content);
+      setMyOpened(myOpened.concat(data));
     } catch(error) {
       Utils.alertError(error);
     } finally {
@@ -57,12 +58,21 @@ export default function MyPage(props) {
     try {
       const body = {};
       const res = await Meet.postMyPageApplication({token: token, body: body})
-      setMyApplication(res.data.content);
+      const data = await getImagePath(res.data.content);
+      setMyApplication(myApplication.concat(data));
     } catch(error) {
       Utils.alertError(error);
     } finally {
       setLoading(false);
     }    
+  }
+
+  const getImagePath = async arr => {
+    for (const m of arr) {
+      const data = await File.postImagesPath({fileList: m.imgList});
+      m.imgList = data.data;
+    }
+    return arr;
   }
   
   const handleLogout = e => {

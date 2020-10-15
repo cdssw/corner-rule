@@ -45,7 +45,6 @@ export default function HomePage() {
 
   useEffect(e => {
     if(place !== '') {
-      console.log('place', place);
       setParam({
         ...param,
         sido: place.split(' ')[0],
@@ -56,7 +55,6 @@ export default function HomePage() {
 
   useEffect(e => {
     if(Object.keys(param).length > 0) {
-      console.log('param', param);
       fetchMoreData(0);
     }
   }, [param]);

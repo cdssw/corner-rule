@@ -25,6 +25,7 @@ export default function RegPage(props) {
     address: {
       address1: '',
       address2: '',
+      sido: '',
       sgg: '',
     },
     term: {

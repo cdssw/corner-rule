@@ -84,6 +84,7 @@ export default function AddressPage(props) {
       address1: items[index].roadAddrPart1,
       address2: '',
       sgg: items[index].sggNm,
+      sido: items[index].siNm,
     };
     const state = props.location.state;
     state.address = address;
