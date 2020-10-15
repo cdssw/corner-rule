@@ -73,22 +73,14 @@ export default function MyPage(props) {
   }
 
   const handlePlaceClick = async e => {
-    const hopePlace = userInfo.hopePlace;
-    if(hopePlace && userInfo.hopePlace[e.currentTarget.id]) {
+    if(e.currentTarget.id) {
       const check = confirm("희망지역을 삭제하시겠습니까?");
       if(check) {
-        // place 저장
-        const body = {
-          hopePlace : {
-            ...hopePlace,
-            [e.currentTarget.id]: null
-          }
-        }
         const token = JSON.parse(localStorage.getItem("token")).access_token;
-        const param = { token, body };
+        const param = { token, id: e.currentTarget.id };
         setLoading(true);
         try {
-          await User.putEditHopePlace(param); // 지역삭제
+          await User.deleteHopePlace(param); // 지역삭제
           loadUserInfo(token); // 사용자 정보 조회
         } catch(error) {
           Utils.alertError(error);

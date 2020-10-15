@@ -6,6 +6,23 @@ export async function getMeetListByPage(props) {
   return axios.get(url + "/", {params: props});
 }
 
+export async function getMeetSearch(props) {
+  const params = new URLSearchParams();
+  params.append('page', props.page);
+  params.append('size', props.size);
+  params.append('sort', props.sort);
+  return axios({
+    url: url + "/search",
+    method: 'POST',
+    params: {
+      page: props.page,
+      size: props.size,
+      sort: props.sort,
+    },
+    data: props.body
+  });
+}
+
 export async function getMeet(props) {
   return axios.get(url + "/" + props.id, {headers: { Authorization: "Bearer " + props.token }});
 }

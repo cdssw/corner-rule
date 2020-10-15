@@ -26,14 +26,20 @@ export async function putEditUser(props) {
   );
 }
 
-export async function putEditHopePlace(props) {
-  return axios.put(
+export async function postHopePlace(props) {
+  return axios.post(
     url + "/hopeplace",
     props.body,
     {headers: { Authorization: "Bearer " + props.token }}
   );
 }
 
+export async function deleteHopePlace(props) {
+  return axios.delete(
+    url + "/hopeplace/" + props.id,
+    {headers: { Authorization: "Bearer " + props.token }}
+  );
+}
 
 export async function postPasswordChange(props) {
   return axios.post(

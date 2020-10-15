@@ -27,19 +27,12 @@ export default function HomePage() {
   const { userInfo, login } = useSelector(state => state.userInfo, {});
   const dispatch = useDispatch();
   const [items, setItems] = useState([]);
-  const [place, setPlace] = useState("");
+  const [place, setPlace] = useState('');
   const [search, setSearch] = useState('');
+  const [param, setParam] = useState({});
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
   const size = 10;
-
-  const handlePlace = event => {
-    setPlace(event.target.value);
-  };
-
-  const handleSearch = event => {
-    setSearch(event.target.value);
-  }
 
   useEffect(e => {
     const token = localStorage.getItem("token");
@@ -51,12 +44,38 @@ export default function HomePage() {
   }, []);
 
   useEffect(e => {
-    if(userInfo && userInfo.hopePlace) {
-      if(userInfo.hopePlace.place1 !== null) setPlace(userInfo.hopePlace.place1);
-      else if(userInfo.hopePlace.place2 !== null) setPlace(userInfo.hopePlace.place2);
-      else if(userInfo.hopePlace.place3 !== null) setPlace(userInfo.hopePlace.place3);
+    if(place !== '') {
+      console.log('place', place);
+      setParam({
+        ...param,
+        sido: place.split(' ')[0],
+        sgg: place.substring(place.indexOf(' ') + 1)
+      });
     }
-  }, [userInfo])
+  }, [place]);
+
+  useEffect(e => {
+    if(Object.keys(param).length > 0) {
+      console.log('param', param);
+      fetchMoreData(0);
+    }
+  }, [param]);
+
+  const handlePlace = event => {
+    setPlace(event.target.value);
+  };
+
+  const handleSearch = event => {
+    setSearch(event.target.value);
+  }
+
+  const handleKeyPressSearch = e => {
+    if(e.key !== 'Enter') return;
+    setParam({
+      ...param,
+      title: search
+    });
+  }
 
   const loadUserInfo = async token => {
     setLoading(true);
@@ -64,21 +83,27 @@ export default function HomePage() {
       const userInfo = await User.getUser(token);
       dispatch(setLoginUserInfo(userInfo.data)); // 가져온 user 정보를 redux에 저장
       dispatch(setLogin(true)); // login 상태로 처리
+      if(userInfo.data.hopePlaceList.length > 0) {
+        setPlace(userInfo.data.hopePlaceList[0].sido + ' ' + userInfo.data.hopePlaceList[0].sgg);
+      } else {
+        fetchMoreData();
+      }
     } catch(error) {
+      console.log(error);
       localStorage.removeItem('token');
     } finally {
       setLoading(false);
     }
-    fetchMoreData();
   }
 
-  const fetchMoreData = async event => {
+  const fetchMoreData = async init => {
     setLoading(true);
     try {
-      const response = await Meet.getMeetListByPage({page: page, size: size, sort: 'modifyDt,desc'});
+      const p = init === 0 ? init : page;
+      const response = await Meet.getMeetSearch({body: param, page: p, size: size, sort: 'modifyDt,desc'});
       const data = await getImagePath(response.data.content);
-      setPage(page + 1); // infinite scroll시 다음페이지 조회
-      setItems(items.concat(data));
+      setPage(p + 1); // infinite scroll시 다음페이지 조회
+      setItems(init === 0 ? data : items.concat(data));
     } catch(error) {
       Utils.alertError(error);
     } finally {
@@ -99,7 +124,7 @@ export default function HomePage() {
     <PageTemplate header={<Header userInfo={userInfo} path={path} />} loading={loading}>
       {login && 
         <>
-          <PlaceSearch userInfo={userInfo} place={place} onPlace={handlePlace} onSearch={handleSearch} search={search} login={login} />
+          <PlaceSearch userInfo={userInfo} place={place} onPlace={handlePlace} onSearch={handleSearch} search={search} login={login} onKeyPress={handleKeyPressSearch} />
           <div style={{borderBottom: '1px solid #dfdfdf'}} />
         </>
       }

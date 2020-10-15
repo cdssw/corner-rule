@@ -26,31 +26,31 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PlaceSearch({userInfo, place, onPlace, onSearch, search}) {
+export default function PlaceSearch({userInfo, place, onPlace, onSearch, search, onKeyPress}) {
   const classes = useStyles();
-  const { hopePlace } = userInfo;
+  const { hopePlaceList } = userInfo;
 
   return (
     <> 
       <div className={classes.root}>
-        {hopePlace &&
-        <div className={classes.placeWrap}>
-          <FormControl variant="outlined" size="small" className={classes.place}>
-            <Select
-              value={place}
-              onChange={onPlace}
-              fullWidth={true}
-              classes={{outlined: classes.selectOutlined}}
-            >
-              {hopePlace.place1 && <MenuItem value={hopePlace.place1}>{hopePlace.place1}</MenuItem>}
-              {hopePlace.place2 && <MenuItem value={hopePlace.place2}>{hopePlace.place2}</MenuItem>}
-              {hopePlace.place3 && <MenuItem value={hopePlace.place3}>{hopePlace.place3}</MenuItem>}
-            </Select>
-          </FormControl>
-        </div>
+        {hopePlaceList.length > 0 &&
+          <div className={classes.placeWrap}>
+            <FormControl variant="outlined" size="small" className={classes.place}>
+              <Select
+                value={place}
+                onChange={onPlace}
+                fullWidth={true}
+                classes={{outlined: classes.selectOutlined}}
+              >
+                {hopePlaceList.map((v, i) => {
+                  return <MenuItem key={i} value={v.sido + ' ' + v.sgg}>{v.sido + ' ' + v.sgg}</MenuItem>
+                })}
+              </Select>
+            </FormControl>
+          </div>
         }
         <div className={classes.searchWrap}>
-          <InputIcon icon={<SearchIcon />} name="search" onChange={onSearch} value={search} />
+          <InputIcon icon={<SearchIcon />} name="search" onChange={onSearch} value={search} onKeyPress={onKeyPress} />
         </div>
       </div>
     </>

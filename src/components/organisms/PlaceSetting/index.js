@@ -29,36 +29,28 @@ const useStyles = makeStyles((theme) => ({
   }, 
 }));
 
-function Place(place) {
-  return place.split(' ').map((item, i) => <Fragment key={i}>{item}<br /></Fragment>);
-}
-
 export default function PlaceSetting({userInfo, onClick}) {
   const classes = useStyles();
-  const { hopePlace } = userInfo;
+  const { hopePlaceList } = userInfo;
 
   return (
     <div className={classes.root}>
       <div className={classes.title}>희망지역</div>
       <div className={classes.placeWrap}>
-        <Button classes={{label: classes.buttonTextColor}} color='primary' variant="outlined"
-          id="place1"
-          onClick={onClick}
-        >
-          {hopePlace ? hopePlace.place1 ? Place(userInfo.hopePlace.place1) : <AddIcon /> : <AddIcon />}
-        </Button>
-        <Button classes={{label: classes.buttonTextColor}} color='primary' variant="outlined"
-          id="place2"
-          onClick={onClick}
-        >
-          {hopePlace ? hopePlace.place2 ? Place(userInfo.hopePlace.place2) : <AddIcon /> : <AddIcon />}
-        </Button>
-        <Button classes={{label: classes.buttonTextColor}} color='primary' variant="outlined"
-          id="place3"
-          onClick={onClick}
-        >
-          {hopePlace ? hopePlace.place3 ? Place(userInfo.hopePlace.place3) : <AddIcon /> : <AddIcon />}
-        </Button>
+        {hopePlaceList && hopePlaceList.map((v, i) => {
+          return (
+            <Button key={i} id={v.id} classes={{label: classes.buttonTextColor}} color='primary' variant="outlined" onClick={onClick}>
+              {v.sido + ' ' + v.sgg}
+            </Button>  
+          );
+        })}
+        {Array.from(Array(3 - hopePlaceList.length)).map((_, i) => {
+          return (
+            <Button key={i} classes={{label: classes.buttonTextColor}} color='primary' variant="outlined" onClick={onClick}>
+              <AddIcon />
+            </Button>
+          )
+        })}
       </div>
     </div>
   );

@@ -61,28 +61,21 @@ export default function HopePlacePage(props) {
       return;
     }
 
-    const place = sido + " " + sgg;
-    if(userInfo.hopePlace) {
-      if(userInfo.hopePlace.place1 === place ||
-        userInfo.hopePlace.place2 === place ||
-        userInfo.hopePlace.place3 === place) {
-        alert("이미 등록되어 있습니다.");
-        return;
-      }
+    if(userInfo.hopePlaceList.filter(v => v.sido === sido && v.sgg === sgg).length > 0) {
+      alert("이미 등록되어 있습니다.");
+      return;
     }
 
     // place 저장
     const body = {
-      hopePlace : {
-        ...userInfo.hopePlace,
-        [props.location.placeNo]: sido + " " + sgg
-      }
+      sido: sido,
+      sgg: sgg,
     }
     const token = JSON.parse(localStorage.getItem("token")).access_token;
     const param = { token, body };
     setLoading(true);
     try {
-      await User.putEditHopePlace(param);
+      await User.postHopePlace(param);
     } catch(error) {
       Utils.alertError(error);
     } finally {
