@@ -45,6 +45,7 @@ export default function HomePage() {
 
   useEffect(e => {
     if(place !== '') {
+      localStorage.setItem('place', place);
       setParam({
         ...param,
         sido: place.split(' ')[0],
@@ -81,14 +82,19 @@ export default function HomePage() {
       const userInfo = await User.getUser(token);
       dispatch(setLoginUserInfo(userInfo.data)); // 가져온 user 정보를 redux에 저장
       dispatch(setLogin(true)); // login 상태로 처리
-      if(userInfo.data.hopePlaceList.length > 0) {
-        setPlace(userInfo.data.hopePlaceList[0].sido + ' ' + userInfo.data.hopePlaceList[0].sgg);
+
+      const place = localStorage.getItem('place');
+      if(place !== null && place !== '') {
+        setPlace(place);
       } else {
-        fetchMoreData();
+        if(userInfo.data.hopePlaceList.length > 0) {
+          setPlace(userInfo.data.hopePlaceList[0].sido + ' ' + userInfo.data.hopePlaceList[0].sgg);
+        }
       }
     } catch(error) {
       console.log(error);
       localStorage.removeItem('token');
+      fetchMoreData();
     } finally {
       setLoading(false);
     }

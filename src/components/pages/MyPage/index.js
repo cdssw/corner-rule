@@ -78,6 +78,7 @@ export default function MyPage(props) {
   
   const handleLogout = e => {
     localStorage.removeItem('token');
+    localStorage.removeItem('place');
     dispatch(setLoginUserInfo(null));
     dispatch(setLogin(false));
     history.push("/");
@@ -87,6 +88,9 @@ export default function MyPage(props) {
     if(e.currentTarget.id) {
       const check = confirm("희망지역을 삭제하시겠습니까?");
       if(check) {
+        if(localStorage.getItem('place') === e.currentTarget.innerText)
+          localStorage.setItem("place", "");
+
         const token = JSON.parse(localStorage.getItem("token")).access_token;
         const param = { token, id: e.currentTarget.id };
         setLoading(true);

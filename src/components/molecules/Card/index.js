@@ -153,7 +153,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Card({item, image, index, onContentClick}) {
+export default function Card({item, image, onContentClick}) {
   const classes = useStyles();
 
   return (

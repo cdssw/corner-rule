@@ -18,13 +18,17 @@ export default function RegPage(props) {
 
   const [state, setState] = useState({
     title: '',
+    titleValid: null,
     content: '',
-    recruitment: 0,
-    cost: 0,
+    contentValid: null,
+    recruitment: null,
+    recruitmentValid: null,
+    cost: null,
     costOption: false,
     address: {
       address1: '',
       address2: '',
+      address2Valid: null,
       sido: '',
       sgg: '',
     },
@@ -33,13 +37,26 @@ export default function RegPage(props) {
       endDt: '',
       startTm: '09:00',
       endTm: '18:00',
-      detailDay: 0      
+      detailDay: 0,
+      detailDayValid: null
     },
     imgList: [],
   });
 
   useEffect(e => {
+    const today = new Date();
+    setState({
+      ...state,
+      term: {
+        ...state.term,
+        startDt: today.toISOString().substring(0, 10)
+      }
+    });
+  }, []);
+
+  useEffect(e => {
     if(props.location.state === undefined) return;
+    // 주소검색 페이지에서 돌아올때 위치 조정
     const current = props.location.state;
     setState(current);
     window.scrollTo(0, document.body.scrollHeight); // 맨아래로 스크롤
@@ -51,31 +68,99 @@ export default function RegPage(props) {
       case 'endDt':
       case 'startTm':
       case 'endTm':
+        if(e.target.value !== null) {
+          setState({
+            ...state,
+            term: {
+              ...state.term,
+              [e.target.name]: e.target.value,
+              [e.target.name + 'Valid']: true
+            }
+          });
+        } else {
+          setState({
+            ...state,
+            term: {
+              ...state.term,
+              [e.target.name]: e.target.value,
+              [e.target.name + 'Valid']: true
+            }
+          });
+        }
+        break;
+      case 'recruitment':
+        if(e.target.value > 0) {
+          setState({
+            ...state,
+            [e.target.name]: e.target.value,
+            [e.target.name + 'Valid']: true
+          });
+        } else {
+          setState({
+            ...state,
+            [e.target.name]: e.target.value,
+            [e.target.name + 'Valid']: false
+          });
+        }
+        break;
       case 'detailDay': {
-        setState({
-          ...state,
-          term: {
-            ...state.term,
-            [e.target.name]: e.target.value
-          }
-        });
+        if(e.target.value > 0) {
+          setState({
+            ...state,
+            term: {
+              ...state.term,
+              [e.target.name]: e.target.value,
+              [e.target.name + 'Valid']: true
+            }
+          });
+        } else {
+          setState({
+            ...state,
+            term: {
+              ...state.term,
+              [e.target.name]: e.target.value,
+              [e.target.name + 'Valid']: false
+            }
+          });
+        }
         break;
       }
       case 'address2':
-        setState({
-          ...state,
-          address: {
-            ...state.address,
-            [e.target.name]: e.target.value
-          }
-        });
+        if(e.target.value.length > 0) {
+          setState({
+            ...state,
+            address: {
+              ...state.address,
+              [e.target.name]: e.target.value,
+              [e.target.name + 'Valid']: true
+            }
+          });
+        } else {
+          setState({
+            ...state,
+            address: {
+              ...state.address,
+              [e.target.name]: e.target.value,
+              [e.target.name + 'Valid']: false
+            }
+          });
+        }
         break;
       default:
-        setState({
-          ...state,
-          [e.target.name]: e.target.value
-        });
-        break;   
+        if(e.target.value.length > 1) {
+          setState({
+            ...state,
+            [e.target.name]: e.target.value,
+            [e.target.name + 'Valid']: true
+          });
+        } else {
+          setState({
+            ...state,
+            [e.target.name]: e.target.value,
+            [e.target.name + 'Valid']: false
+          });
+        }
+        break;
     }
   }
 
