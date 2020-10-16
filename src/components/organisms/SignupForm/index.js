@@ -275,9 +275,6 @@ export default function SignupForm(props) {
   }, [valid]);
 
   useEffect(e => {
-    if(talentInput === "") {
-      alert("["+talentInput+"]");
-    }
   }, [talentInput])
 
   const handleValid = e => {
