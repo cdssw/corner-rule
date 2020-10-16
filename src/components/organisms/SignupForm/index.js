@@ -244,8 +244,9 @@ function getStepContent(step, props, classes, valid, handleBlur, talentInput, se
               value={interest}
               inputValue={talentInput}
               onAdd={(value, e) => {
-                props.onArrayAdd({name: 'interest', value});
+                setTalentInput(' ');
                 setTalentInput('');
+                props.onArrayAdd({name: 'interest', value});
               }}
               onDelete={(value, index) => props.onArrayDelete({name: 'interest', value, index})}              
               onUpdateInput={e => {
@@ -273,9 +274,6 @@ export default function SignupForm(props) {
       props.handleNext(e);
     }
   }, [valid]);
-
-  useEffect(e => {
-  }, [talentInput])
 
   const handleValid = e => {
     if(props.activeStep === 2) {
