@@ -13,6 +13,7 @@ import AddIcon from '@material-ui/icons/Add';
 import Person from "@material-ui/icons/Person";
 import { Avatar } from '@material-ui/core';
 import { Link } from "react-router-dom";
+import Chips from "react-chips";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -232,21 +233,17 @@ function getStepContent(step, props, classes, valid, handleBlur, talentInput, se
             <OutlinedInput name="mainTalent" placeholder="주특기" value={mainTalent} onChange={props.onInputChange}  />
           </div>
           <div className={classes.inputWrap}>
-            {/* <ChipInput className={classes.chip} placeholder="특기" variant="outlined" fullWidth={true}
+            <ChipInput className={classes.chip} placeholder="특기" variant="outlined" fullWidth={true}
               value={talent}
               onAdd={(value) => props.onArrayAdd({name: 'talent', value})}
               clearInputValueOnChange={true}
               onDelete={(value, index) => props.onArrayDelete({name: 'talent', value, index})}
-            /> */}
+            />
           </div>
           <div className={classes.inputWrap}>
             <ChipInput className={classes.chip} placeholder="관심사" variant="outlined" fullWidth={true}
               value={interest}
               inputValue={talentInput}
-              onBeforeAdd={e => {
-                setTalentInput(talentInput  + ' ');
-                return true;
-              }}
               onAdd={(value, e) => {                
                 props.onArrayAdd({name: 'interest', value});
               }}
