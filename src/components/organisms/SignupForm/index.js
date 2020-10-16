@@ -143,7 +143,7 @@ function getSteps() {
   return ['기본정보', '회원정보', '부가정보'];
 }
 
-function getStepContent(step, props, classes, valid, handleBlur) {
+function getStepContent(step, props, classes, valid, handleBlur, talentInput, setTalentInput) {
   const { username, password, passwordCheck, userNm, userNickNm, phone, mainTalent } = props.state.input;
   const { talent, interest } = props.state.array;
   const { emailConfirm, userNickNmConfirm } = props.state.boolean;
@@ -232,18 +232,25 @@ function getStepContent(step, props, classes, valid, handleBlur) {
             <OutlinedInput name="mainTalent" placeholder="주특기" value={mainTalent} onChange={props.onInputChange}  />
           </div>
           <div className={classes.inputWrap}>
-            <ChipInput className={classes.chip} placeholder="특기" variant="outlined" fullWidth={true}
+            {/* <ChipInput className={classes.chip} placeholder="특기" variant="outlined" fullWidth={true}
               value={talent}
               onAdd={(value) => props.onArrayAdd({name: 'talent', value})}
               clearInputValueOnChange={true}
               onDelete={(value, index) => props.onArrayDelete({name: 'talent', value, index})}
-            />
+            /> */}
           </div>
           <div className={classes.inputWrap}>
             <ChipInput className={classes.chip} placeholder="관심사" variant="outlined" fullWidth={true}
               value={interest}
-              onAdd={(value) => props.onArrayAdd({name: 'interest', value})}
-              onDelete={(value, index) => props.onArrayDelete({name: 'interest', value, index})}
+              inputValue={talentInput}
+              onAdd={(value, e) => {
+                props.onArrayAdd({name: 'interest', value});
+                setTalentInput('');
+              }}
+              onDelete={(value, index) => props.onArrayDelete({name: 'interest', value, index})}              
+              onUpdateInput={e => {
+                setTalentInput(e.currentTarget.value);
+              }}
             />
           </div>
         </>
@@ -257,6 +264,7 @@ export default function SignupForm(props) {
   const classes = useStyles();
   const steps = getSteps();
   const [valid, dispatchValid] = useReducer(reducer, initialValid);
+  const [talentInput, setTalentInput] = useState([]);
 
   const { username, password, passwordCheck, userNm, phone } = props.state.input;
 
@@ -338,7 +346,7 @@ export default function SignupForm(props) {
           <Step key={label}>
             <StepLabel>{label}</StepLabel>
             <StepContent classes={{root: classes.stepContentRoot}}>
-              <Typography component="span">{getStepContent(index, props, classes, valid, handleBlur)}</Typography>
+              <Typography component="span">{getStepContent(index, props, classes, valid, handleBlur, talentInput, setTalentInput)}</Typography>
               <div className={classes.actionsContainer}>
                 <div>
                   <Button
