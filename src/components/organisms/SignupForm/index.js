@@ -243,9 +243,11 @@ function getStepContent(step, props, classes, valid, handleBlur, talentInput, se
             <ChipInput className={classes.chip} placeholder="관심사" variant="outlined" fullWidth={true}
               value={interest}
               inputValue={talentInput}
-              onAdd={(value, e) => {
-                setTalentInput(' ');
+              onBeforeAdd={e => {
                 setTalentInput('');
+                return true;
+              }}
+              onAdd={(value, e) => {                
                 props.onArrayAdd({name: 'interest', value});
               }}
               onDelete={(value, index) => props.onArrayDelete({name: 'interest', value, index})}              
