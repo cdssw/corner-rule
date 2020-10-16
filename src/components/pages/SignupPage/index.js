@@ -85,14 +85,14 @@ export default function SignupPage(props) {
   const { emailConfirm, userNickNmConfirm } = state.boolean;
 
   const handleNext = () => {
-    if (activeStep === 0 && !emailConfirm) {
-      alert('이메일ID 중복확인을 하세요.');
-      return;
-    }
-    if (activeStep === 1 && !userNickNmConfirm) {
-      alert('닉네임 중복확인을 하세요.');
-      return;
-    }
+    // if (activeStep === 0 && !emailConfirm) {
+    //   alert('이메일ID 중복확인을 하세요.');
+    //   return;
+    // }
+    // if (activeStep === 1 && !userNickNmConfirm) {
+    //   alert('닉네임 중복확인을 하세요.');
+    //   return;
+    // }
     if (activeStep === 2) {
       signUp();
     } else {
@@ -130,7 +130,7 @@ export default function SignupPage(props) {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const onInputChange = e => {
+  const handleInputChange = e => {
     const { name, value } = e.target;
     dispatch({
       type: 'CHANGE_INPUT',
@@ -139,7 +139,7 @@ export default function SignupPage(props) {
     });
   }
 
-  const onArrayAdd = e => {
+  const handleArrayAdd = e => {
     const { name, value } = e;
     dispatch({
       type: 'ADD_ARRAY',
@@ -148,7 +148,7 @@ export default function SignupPage(props) {
     });
   }
 
-  const onArrayDelete = e => {
+  const handleArrayDelete = e => {
     const { name, value } = e;
     dispatch({
       type: 'DELETE_ARRAY',
@@ -157,7 +157,7 @@ export default function SignupPage(props) {
     });
   }
 
-  const onBooleanConfirm = async e => {
+  const handleBooleanConfirm = async e => {
     const { value } = e.currentTarget;
 
     try {
@@ -197,7 +197,7 @@ export default function SignupPage(props) {
     }
   }
 
-  const onSetAvatar = async e => {
+  const handleSetAvatar = async e => {
     e.preventDefault();
     const file = e.target.files[0];
 
@@ -222,11 +222,11 @@ export default function SignupPage(props) {
     <PageTemplate header={<TitleHeader {...props}>회원가입</TitleHeader>}>
       <SignupForm
         state={state}
-        onInputChange={onInputChange}
-        onArrayAdd={onArrayAdd}
-        onArrayDelete={onArrayDelete}
-        onBooleanConfirm={onBooleanConfirm}
-        onSetAvatar={onSetAvatar}
+        onInputChange={handleInputChange}
+        onArrayAdd={handleArrayAdd}
+        onArrayDelete={handleArrayDelete}
+        onBooleanConfirm={handleBooleanConfirm}
+        onSetAvatar={handleSetAvatar}
         activeStep={activeStep}
         handleNext={handleNext}
         handleBack={handleBack}
