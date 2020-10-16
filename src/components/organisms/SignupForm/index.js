@@ -244,7 +244,7 @@ function getStepContent(step, props, classes, valid, handleBlur, talentInput, se
               value={interest}
               inputValue={talentInput}
               onBeforeAdd={e => {
-                setTalentInput('');
+                setTalentInput(talentInput  + ' ');
                 return true;
               }}
               onAdd={(value, e) => {                
