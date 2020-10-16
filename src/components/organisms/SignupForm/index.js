@@ -274,6 +274,12 @@ export default function SignupForm(props) {
     }
   }, [valid]);
 
+  useEffect(e => {
+    if(talentInput === "") {
+      alert("["+talentInput+"]");
+    }
+  }, [talentInput])
+
   const handleValid = e => {
     if(props.activeStep === 2) {
       validationAll();
