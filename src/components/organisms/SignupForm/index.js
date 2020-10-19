@@ -13,7 +13,6 @@ import AddIcon from '@material-ui/icons/Add';
 import Person from "@material-ui/icons/Person";
 import { Avatar } from '@material-ui/core';
 import { Link } from "react-router-dom";
-import Chips from "react-chips";
 
 const useStyles = makeStyles((theme) => ({
   root: {

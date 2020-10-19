@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     color: theme.colorWhite,
+    fontFamily: 'AppleSDGothicNeoL00',
     fontSize: '1rem',
   },
   space: {

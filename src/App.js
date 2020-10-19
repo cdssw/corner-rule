@@ -5,6 +5,7 @@ import {
   LoginPage, 
   HomePage, 
   SignupPage, 
+  SignupIntroPage,
   MyPage, 
   HopePlacePage, 
   PasswordChangePage, 
@@ -21,6 +22,7 @@ function App() {
         <Route exact path="/" component={HomePage}/>
         <Route exact path="/login" component={LoginPage}/>
         <Route exact path="/signup" component={SignupPage}/>
+        <Route exact path="/signup_intro" component={SignupIntroPage}/>
         <Route exact path="/mypage" component={MyPage}/>
         <Route exact path="/mypage/hope_place" component={HopePlacePage}/>
         <Route exact path="/mypage/pass_change" component={PasswordChangePage}/>
