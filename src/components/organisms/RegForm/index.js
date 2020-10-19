@@ -44,7 +44,6 @@ const useStyles = makeStyles((theme) => ({
 export default function RegForm(props) {
   const classes = useStyles();
   const isSafari = navigator.vendor.includes('Apple');
-  const [dayVisible, setDayVisible] = useState('none');
 
   const renderSaveBtn = () => {
     if (validatation()) {
@@ -65,7 +64,6 @@ export default function RegForm(props) {
     const { titleValid, contentValid, term, recruitment, address } = props.state;
     return titleValid
      && contentValid 
-     && term.startDtValid 
      && term.endDtValid
      && recruitment
      && address.address2Valid

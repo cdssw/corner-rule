@@ -1,13 +1,17 @@
-/* eslint no-restricted-globals: ["off"] */
-import React, { useState } from 'react';
-import { PageTemplate, TitleHeader } from "components";
-import SignupIntro from '../../organisms/SignupIntro';
+import React from 'react';
+import { PageTemplate, TitleHeader, SignupIntro } from "components";
+import { useHistory } from 'react-router-dom';
 
 export default function SignupIntroPage(props) {
+  const history = useHistory();
+  
+  const handleStart = e => {
+    history.push('/signup_policy');
+  }
 
   return (
     <PageTemplate header={<TitleHeader {...props}>회원가입</TitleHeader>}>
-      <SignupIntro />
+      <SignupIntro onStartClick={handleStart} />
     </PageTemplate>
   );
 }

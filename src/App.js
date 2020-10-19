@@ -6,6 +6,10 @@ import {
   HomePage, 
   SignupPage, 
   SignupIntroPage,
+  SignupPolicyPage,
+  SignupStep1Page,
+  SignupStep2Page,
+  SignupStep3Page,
   MyPage, 
   HopePlacePage, 
   PasswordChangePage, 
@@ -23,6 +27,10 @@ function App() {
         <Route exact path="/login" component={LoginPage}/>
         <Route exact path="/signup" component={SignupPage}/>
         <Route exact path="/signup_intro" component={SignupIntroPage}/>
+        <Route exact path="/signup_policy" component={SignupPolicyPage}/>
+        <Route exact path="/signup_step1" component={SignupStep1Page}/>
+        <Route exact path="/signup_step2" component={SignupStep2Page}/>
+        <Route exact path="/signup_step3" component={SignupStep3Page}/>
         <Route exact path="/mypage" component={MyPage}/>
         <Route exact path="/mypage/hope_place" component={HopePlacePage}/>
         <Route exact path="/mypage/pass_change" component={PasswordChangePage}/>

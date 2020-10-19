@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     maxWidth: '600px',
     height: '100%',
-    marginTop: '83px',
+    margin: '83px 10px',
   },
   intro: {
     height: '27px',
@@ -30,13 +30,12 @@ const useStyles = makeStyles((theme) => ({
   },
   btnStart: {
     width: '90%',
-    margin: '0 10px',
     padding: '15px 0',
     fontFamily: 'AppleSDGothicNeoM00',
   }
 }));
 
-export default function SignupIntro() {
+export default function SignupIntro(props) {
   const classes = useStyles();
 
   return (
@@ -49,7 +48,10 @@ export default function SignupIntro() {
         계정을 생성하여 모든 서비스를<br />
         무료로 이용할수 있습니다.
       </div>
-      <Button className={classes.btnStart} color='primary' variant="contained" fullWidth={true}>
+      <Button
+        className={classes.btnStart} color='primary' variant="contained" fullWidth={true}
+        onClick={props.onStartClick}
+      >
         회원가입 시작
       </Button>
     </div>
