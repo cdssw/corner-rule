@@ -38,9 +38,8 @@ export default function HomePage() {
     const token = localStorage.getItem("token");
     if(token) { // 로그인 되어 있으면 user정보 복구
       loadUserInfo(JSON.parse(token).access_token);
-    } else {
-      fetchMoreData();
     }
+    fetchMoreData();
   }, []);
 
   useEffect(e => {
@@ -94,7 +93,6 @@ export default function HomePage() {
     } catch(error) {
       console.log(error);
       localStorage.removeItem('token');
-      fetchMoreData();
     } finally {
       setLoading(false);
     }

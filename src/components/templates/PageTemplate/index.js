@@ -56,22 +56,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ContentTemplate(props) {
+export default function PageTemplate(props) {
   const classes = useStyles();
 
   const content = props.imageWrap ? classes.imageContent : classes.content;
 
   return (
     <div className={classes.root}>
-      {props.imageWrap
-       ?
-        <header className={classes.imageWrap}>
-          {props.header}
-        </header>
-       :
-        <header className={classes.headerWrap}>
-          {props.header}
-        </header>
+      {props.header ? 
+        props.imageWrap
+          ?
+          <header className={classes.imageWrap}>
+            {props.header}
+          </header>
+          :
+          <header className={classes.headerWrap}>
+            {props.header}
+          </header>
+        : <></>
       }
       <section className={classes.contentWrap}>
         <div className={content}>

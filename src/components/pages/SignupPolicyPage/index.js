@@ -1,22 +1,35 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PageTemplate, TitleHeader, SignupPolicy } from "components";
 import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { setPolicy } from '../../../modules/policy';
 
 export default function SignupPolicyPage(props) {
   const history = useHistory();
-  
-  const handleAgree = e => {
-    history.push('/signup_step1');
-  }
+  const dispatch = useDispatch();
 
   const [state, setState] = useState({
     all: false,
     service: false,
-    serviceValid: null,
     private: false,
-    privateValid: null,
     profile: false,    
+    serviceValid: null,
+    privateValid: null,
   });
+  
+  useEffect(e => {
+    if(props.location.policy === undefined) return;
+    const current = props.location.policy;
+    setState(current);
+  }, [props.location.policy]);
+
+  const handleAgree = e => {
+    dispatch(setPolicy(true)); // policy 동의상태로 처리
+    history.push({
+      pathname: '/signup_step1',
+      policy: state
+    });
+  }
 
   const handleInputChange = e => {
     switch(e.target.name) {
@@ -42,7 +55,7 @@ export default function SignupPolicyPage(props) {
   }  
 
   return (
-    <PageTemplate header={<TitleHeader {...props}>회원가입</TitleHeader>}>
+    <PageTemplate header={<TitleHeader path="/signup_intro" {...props}>회원가입</TitleHeader>}>
       <SignupPolicy
         state={state}
         onInputChange={handleInputChange}

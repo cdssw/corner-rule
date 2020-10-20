@@ -25,8 +25,9 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '81px',
   },
   btnNext: {
-    padding: '15px 0',
+    padding: '10px 0',
     fontFamily: 'AppleSDGothicNeoM00',
+    fontSize: '1rem',
   },
   checkboxWrap: {
     margin: 0,
@@ -67,7 +68,7 @@ export default function SignupPolicy(props) {
     if(e.target.checked)
       props.onInputChange({target:{ name: e.target.name, value: true}});
     else if(!e.target.checked)
-    props.onInputChange({target:{ name: e.target.name, value: false}});
+      props.onInputChange({target:{ name: e.target.name, value: false}});
   }
   
   const validatation = () => {
@@ -132,7 +133,6 @@ export default function SignupPolicy(props) {
           control={
             <Checkbox name="private" checked={props.state.private} className={classes.checkbox} onChange={handleCheckBox} />
           }
-          onChage={handleCheckBox}
           label='[필수] 개인정보 수집 및 이용 동의'
         />
         <img alt="right_arrow" src={process.env.PUBLIC_URL + "/images/right_arrow.svg"} />

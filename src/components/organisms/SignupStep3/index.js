@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Avatar, Button, TextField } from '@material-ui/core';
+import { Avatar, Button, Chip, TextField } from '@material-ui/core';
 import Person from "@material-ui/icons/Person";
 import AddIcon from '@material-ui/icons/Add';
 
@@ -25,8 +25,9 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: 'AppleSDGothicNeoM00',
   },  
   btnNext: {
-    padding: '15px 0',
+    padding: '10px 0',
     fontFamily: 'AppleSDGothicNeoM00',
+    fontSize: '1rem',
   },
   label: {
     fontFamily: 'AppleSDGothicNeoR00',
@@ -73,15 +74,60 @@ const useStyles = makeStyles((theme) => ({
     color: '#707070',
   },
   area: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    alignItems: 'center',
     border: 'solid 1px #b5b5b5',
     borderRadius: '5px',
     minHeight: '36px',
+    padding: '5px',
     backgroundColor: 'rgba(90, 100, 130, 0.05)',
+  },
+  chipDeleteIcon: {
+    color: 'rgba(255, 255, 255, 0.9)'
+  },
+  chipTalent: {
+    height: '26px',
+    margin: '2px 2px 2px 0',
+  },
+  chipInterest: {
+    height: '26px',
+    backgroundColor: '#8e9cc4',
+    color: 'white',
+    margin: '2px 4px 2px 0',
   },
 }));
 
-export default function SignupStep3() {
+export default function SignupStep3(props) {
   const classes = useStyles();
+  const [talent, setTalent] = useState('');
+  const [interest, setInterest] = useState('');
+
+  const handleChangeTalent = e => {
+    setTalent(e.target.value);
+  }
+
+  const handleChangeInterest = e => {
+    setInterest(e.target.value);
+  }
+
+  const handleKeyPressTalent = e => {
+    if(e.key === 'Enter') {
+      if(props.state.talent.length >= 5) return;
+      if(props.state.talent.filter(chip => chip === talent).length > 0) return;
+      props.onInputChange({target: {name: 'talent', value: talent}});
+      setTalent('');
+    }
+  }
+
+  const handleKeyPressInterest = e => {
+    if(e.key === 'Enter') {
+      if(props.state.interest.length >= 3) return;
+      if(props.state.interest.filter(chip => chip === interest).length > 0) return;
+      props.onInputChange({target: {name: 'interest', value: interest}});
+      setInterest('');
+    }
+  }
 
   return (
     <div className={classes.root}>
@@ -96,38 +142,66 @@ export default function SignupStep3() {
         <div className={classes.profileWrap}>
           <div className={classes.profile}>
             <Avatar classes={{root: classes.avatarRoot}}>
-              <Person classes={{fontSizeLarge: classes.fontSizeLarge}} fontSize='large' />
-              {/* {avatarPath
-              ? <img src={process.env.REACT_APP_IMAGE + avatarPath} alt='' />
+              {props.state.avatarPath
+              ? <img src={process.env.REACT_APP_IMAGE + props.state.avatarPath} alt='' />
               : <Person classes={{fontSizeLarge: classes.fontSizeLarge}} fontSize='large' />
-              } */}
+              }
             </Avatar>
           </div>
           <div className={classes.profileAdd}><AddIcon /></div>
-          <input id="upload-avatar" type="file" style={{display: 'none'}} />
+          <input id="upload-avatar" type="file" onChange={props.onSetAvatar} style={{display: 'none'}} />
         </div>
       </label>
       <div style={{height: '20px'}}></div>
       <div className={classes.label}>전문분야</div>
       <TextField 
-        name="title" placeholder="제일 잘할 수 있는 일을 입력합니다." variant="outlined" fullWidth={true}
+        name="mainTalent" placeholder="제일 잘할 수 있는 일을 입력합니다." variant="outlined" fullWidth={true}
+        value={props.state.mainTalent}
+        onChange={props.onInputChange}
       />
       <div style={{height: '20px'}}></div>
       <div className={classes.label}>특기 (최대 5개)</div>
-      <div className={classes.area}></div>
+      <div className={classes.area}>
+        {props.state.talent.map((m, i) => {
+          return (
+            <Chip key={i} classes={{root: classes.chipTalent}} color="secondary"
+              label={m}
+              onDelete={() => props.onChipDelete({name:'talent', value:m})}
+            />
+          );
+        })}
+      </div>
       <div style={{height: '4px'}}></div>
       <TextField
-        name="title" placeholder="잘하는 특기 입력 후 엔터를 누르세요." variant="outlined" fullWidth={true}
+        name="talent" placeholder="잘하는 특기 입력 후 엔터를 누르세요." variant="outlined" fullWidth={true}
+        value={talent}
+        onChange={handleChangeTalent}
+        onKeyPress={handleKeyPressTalent}
       />
       <div style={{height: '20px'}}></div>
       <div className={classes.label}>관심사 (최대 3개)</div>
-      <div className={classes.area}></div>
+      <div className={classes.area}>
+        {props.state.interest.map((m, i) => {
+          return (
+            <Chip key={i} classes={{root: classes.chipInterest, deleteIcon: classes.chipDeleteIcon}}
+              label={m}
+              onDelete={() => props.onChipDelete({name:'interest', value:m})}
+            />
+          );
+        })}
+      </div>
       <div style={{height: '4px'}}></div>
       <TextField
-        name="title" placeholder="관심사 입력 후 엔터를 누르세요." variant="outlined" fullWidth={true}
+        name="interest" placeholder="관심사 입력 후 엔터를 누르세요." variant="outlined" fullWidth={true}
+        value={interest}
+        onChange={handleChangeInterest}
+        onKeyPress={handleKeyPressInterest}
       />
       <div style={{height: '45px'}}></div>
-      <Button className={classes.btnNext} color='primary' variant="contained" fullWidth={true}>
+      <Button
+        className={classes.btnNext} color='primary' variant="contained" fullWidth={true}
+        onClick={props.onSignup}
+      >
         회원가입 완료
       </Button>
     </div>

@@ -69,7 +69,7 @@ export default function LoginForm({username, password, onInput, onLogin, saveId,
       </div>
       <div className={classes.signup}>
         <div>아이디가 없으신가요?</div>
-        <div className={classes.signup}><Link to="/signup"><div>회원가입</div></Link></div>
+        <div className={classes.signup}><Link to="/signup_intro"><div>회원가입</div></Link></div>
       </div>
     </div>
   );

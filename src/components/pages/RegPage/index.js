@@ -68,98 +68,49 @@ export default function RegPage(props) {
       case 'endDt':
       case 'startTm':
       case 'endTm':
-        if(e.target.value !== null) {
-          setState({
-            ...state,
-            term: {
-              ...state.term,
-              [e.target.name]: e.target.value,
-              [e.target.name + 'Valid']: true
-            }
-          });
-        } else {
-          setState({
-            ...state,
-            term: {
-              ...state.term,
-              [e.target.name]: e.target.value,
-              [e.target.name + 'Valid']: true
-            }
-          });
-        }
+        setState({
+          ...state,
+          term: {
+            ...state.term,
+            [e.target.name]: e.target.value,
+            [e.target.name + 'Valid']: e.target.value !== null
+          }
+        });
         break;
       case 'recruitment':
-        if(e.target.value > 0) {
-          setState({
-            ...state,
-            [e.target.name]: e.target.value,
-            [e.target.name + 'Valid']: true
-          });
-        } else {
-          setState({
-            ...state,
-            [e.target.name]: e.target.value,
-            [e.target.name + 'Valid']: false
-          });
-        }
+        setState({
+          ...state,
+          [e.target.name]: e.target.value,
+          [e.target.name + 'Valid']: e.target.value > 0
+        });
         break;
       case 'detailDay': {
-        if(e.target.value > 0) {
-          setState({
-            ...state,
-            term: {
-              ...state.term,
-              [e.target.name]: e.target.value,
-              [e.target.name + 'Valid']: true
-            }
-          });
-        } else {
-          setState({
-            ...state,
-            term: {
-              ...state.term,
-              [e.target.name]: e.target.value,
-              [e.target.name + 'Valid']: false
-            }
-          });
-        }
+        setState({
+          ...state,
+          term: {
+            ...state.term,
+            [e.target.name]: e.target.value,
+            [e.target.name + 'Valid']: e.target.value > 0
+          }
+        });
         break;
       }
       case 'address2':
-        if(e.target.value.length > 0) {
-          setState({
-            ...state,
-            address: {
-              ...state.address,
-              [e.target.name]: e.target.value,
-              [e.target.name + 'Valid']: true
-            }
-          });
-        } else {
-          setState({
-            ...state,
-            address: {
-              ...state.address,
-              [e.target.name]: e.target.value,
-              [e.target.name + 'Valid']: false
-            }
-          });
-        }
+        setState({
+          ...state,
+          address: {
+            ...state.address,
+            [e.target.name]: e.target.value,
+            [e.target.name + 'Valid']: e.target.value.length > 0
+          }
+        });
         break;
       default:
-        if(e.target.value.length > 1) {
-          setState({
-            ...state,
-            [e.target.name]: e.target.value,
-            [e.target.name + 'Valid']: true
-          });
-        } else {
-          setState({
-            ...state,
-            [e.target.name]: e.target.value,
-            [e.target.name + 'Valid']: false
-          });
-        }
+        setState({
+          ...state,
+          [e.target.name]: e.target.value,
+          [e.target.name + 'Valid']: e.target.value.length > 1
+        });
         break;
     }
   }

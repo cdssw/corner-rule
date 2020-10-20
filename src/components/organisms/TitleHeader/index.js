@@ -28,11 +28,15 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function TitleHeader({children, history, path}) {
+export default function TitleHeader({children, history, path, onBack}) {
   const classes = useStyles();
 
   const handleBack = e => {
-    path ? history.push(path) : history.goBack(path);
+    if(onBack === undefined) {
+      path ? history.push(path) : history.goBack(path);
+    } else {
+      onBack();
+    }
   }
 
   return (

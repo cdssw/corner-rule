@@ -23,8 +23,9 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: 'AppleSDGothicNeoM00',
   },  
   btnNext: {
-    padding: '15px 0',
+    padding: '10px 0',
     fontFamily: 'AppleSDGothicNeoM00',
+    fontSize: '1rem',
   },
   label: {
     fontFamily: 'AppleSDGothicNeoR00',
@@ -34,8 +35,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignupStep2() {
+export default function SignupStep2(props) {
   const classes = useStyles();
+
+  const validatation = () => {
+    const { userNickNmValid, userNmValid, phoneValid, userNickNmConfirm } = props.state;
+    return userNickNmValid && userNmValid && phoneValid && userNickNmConfirm;
+  }
+
+  const renderNextBtn = () => {
+    if (validatation()) {
+      return (
+        <Button className={classes.btnNext} color='primary' variant="contained" fullWidth={true}
+          onClick={props.onNext}
+        >
+          다음
+        </Button>
+      )
+    }
+    return (
+      <Button disabled className={classes.btnNext} color='primary' variant="contained" fullWidth={true}>
+        다음
+      </Button>
+    )
+  }  
 
   return (
     <div className={classes.root}>
@@ -48,26 +71,44 @@ export default function SignupStep2() {
       <div style={{height: '31px'}}></div>
       <div className={classes.label}>닉네임</div>
       <TextField 
-        name="title" placeholder="닉네임을 입력합니다." variant="outlined" fullWidth={true}
+        name="userNickNm" placeholder="닉네임을 입력합니다." variant="outlined" fullWidth={true}
+        error={props.state.userNickNmValid !== null && !props.state.userNickNmValid}
+        helperText={props.state.userNickNmValid !== null && !props.state.userNickNmValid && "최소 1글자 이상입니다."}
+        value={props.state.userNickNm}
+        onChange={props.onInputChange}
+        disabled={props.state.userNickNmConfirm}        
       />
       <div style={{height: '10px'}}></div>
-      <Button className={classes.btn} color='primary' variant="outlined" fullWidth={true}>
+      <Button className={classes.btn} color='primary' variant="outlined" fullWidth={true}
+        disabled={props.state.userNickNmConfirm}
+        onClick={(e) => {
+          if(props.state.userNickNm === "") return;
+          if(props.state.userNickNmValid === null || !props.state.userNickNmValid) return;
+          props.onConfirm();
+        }}      
+      >
         중복확인
       </Button>
       <div style={{height: '20px'}}></div>
       <div className={classes.label}>이름</div>
       <TextField
-        name="title" placeholder="이름을 입력합니다." variant="outlined" fullWidth={true}
+        name="userNm" placeholder="이름을 입력합니다." variant="outlined" fullWidth={true}
+        error={props.state.userNmValid !== null && !props.state.userNmValid}
+        helperText={props.state.userNmValid !== null && !props.state.userNmValid && "최소 1글자 이상입니다."}
+        value={props.state.userNm}
+        onChange={props.onInputChange}
       />
       <div style={{height: '20px'}}></div>
       <div className={classes.label}>휴대폰 번호</div>
       <TextField
-        name="title" placeholder="휴대폰 번호를 입력합니다. (- 제외 입력)" variant="outlined" fullWidth={true}
+        name="phone" placeholder="휴대폰 번호를 입력합니다. (- 제외 입력)" variant="outlined" fullWidth={true}
+        error={props.state.phoneValid !== null && !props.state.phoneValid}
+        helperText={props.state.phoneValid !== null && !props.state.phoneValid && "최소 10자리 이상입니다."}
+        value={props.state.phone}
+        onChange={props.onInputChange}
       />
       <div style={{height: '45px'}}></div>
-      <Button className={classes.btnNext} color='primary' variant="contained" fullWidth={true}>
-        다음
-      </Button>
+      {renderNextBtn()}
     </div>
   );
 }
