@@ -81,7 +81,7 @@ export default function RegPage(props) {
         setState({
           ...state,
           [e.target.name]: e.target.value,
-          [e.target.name + 'Valid']: e.target.value > 0
+          [e.target.name + 'Valid']: e.target.value
         });
         break;
       case 'detailDay': {
@@ -90,7 +90,7 @@ export default function RegPage(props) {
           term: {
             ...state.term,
             [e.target.name]: e.target.value,
-            [e.target.name + 'Valid']: e.target.value > 0
+            [e.target.name + 'Valid']: e.target.value
           }
         });
         break;
@@ -101,7 +101,7 @@ export default function RegPage(props) {
           address: {
             ...state.address,
             [e.target.name]: e.target.value,
-            [e.target.name + 'Valid']: e.target.value.length > 0
+            [e.target.name + 'Valid']: e.target.value
           }
         });
         break;
@@ -109,7 +109,7 @@ export default function RegPage(props) {
         setState({
           ...state,
           [e.target.name]: e.target.value,
-          [e.target.name + 'Valid']: e.target.value.length > 1
+          [e.target.name + 'Valid']: e.target.value
         });
         break;
     }
@@ -194,10 +194,10 @@ export default function RegPage(props) {
     });
   }
 
-  // if(!login) return <Redirect to='/' />
+  if(!login) return <Redirect to='/' />
 
   return (
-    <PageTemplate header={<TitleHeader {...props}>글쓰기</TitleHeader>} loading={loading}>
+    <PageTemplate header={<TitleHeader path='/' {...props}>글쓰기</TitleHeader>} loading={loading}>
       <ImageList imgList={state.imgList} onFileChange={handleFileChange} onRemoveClick={handleRemoveClick} />
       {fileUploader && <FileUploader total={total} current={current} value={value} />}
       <div style={{borderBottom: '1px solid #dfdfdf'}} />

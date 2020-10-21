@@ -83,6 +83,7 @@ export default function AddressPage(props) {
     const address = {
       address1: items[index].roadAddrPart1,
       address2: '',
+      address2Valid: null,
       sgg: items[index].sggNm,
       sido: items[index].siNm,
     };

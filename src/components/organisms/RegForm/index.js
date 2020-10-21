@@ -16,9 +16,6 @@ const useStyles = makeStyles((theme) => ({
   labelWrap: {
     display: 'flex',
     flexDirection: 'column',
-    '& label': {
-      paddingTop: '5px',
-    }
   },
   days: {
     display: 'flex',
@@ -231,6 +228,7 @@ export default function RegForm(props) {
           value={props.state.address.address1}
           onClick={props.onAddress}
         />
+        <div style={{height: '5px'}} />
         <label className={classes.label}>상세주소</label>
         <TextField 
           name="address2" classes={{root: isSafari && classes.muiRoot}}
