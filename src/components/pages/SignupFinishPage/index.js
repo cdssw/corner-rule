@@ -19,9 +19,6 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: '1.32',
     color: '#707070',
   },
-  space: {
-    height: '14px',
-  },
   desc: {
     fontFamily: 'AppleSDGothicNeoUL00',
     lineHeight: '1.47',
@@ -63,7 +60,7 @@ function SignupFinish(props) {
         축하합니다.<br />
         회원가입이 완료되었습니다!
       </div>
-      <div className={classes.space}></div>
+      <div style={{height: '14px'}}></div>
       <div className={classes.desc}>
         이제 로그인하여 모든 서비스를<br />
         무료로 이용할수 있습니다.

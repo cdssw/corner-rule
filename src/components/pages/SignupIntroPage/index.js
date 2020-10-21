@@ -19,9 +19,6 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: '1.32',
     color: '#707070',
   },
-  space: {
-    height: '14px',
-  },
   desc: {
     fontFamily: 'AppleSDGothicNeoUL00',
     lineHeight: '1.47',
@@ -59,7 +56,7 @@ function SignupIntro(props) {
       <div className={classes.intro}>
         회원가입을 시작합니다!
       </div>
-      <div className={classes.space}></div>
+      <div style={{height: '14px'}}></div>
       <div className={classes.desc}>
         계정을 생성하여 모든 서비스를<br />
         무료로 이용할수 있습니다.

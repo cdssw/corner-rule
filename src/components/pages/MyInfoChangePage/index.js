@@ -158,7 +158,7 @@ export default function MyInfoChangePage(props) {
         state={confirmOpen}
         onCancel={handleConfirmCancel}
         onOk={handleConfirmOk}
-        title={'수정완료 완료하시겠습니까?'}
+        title={'정보수정 완료하시겠습니까?'}
         content='모든 정보는 즉시 반영됩니다.'
       />
     </PageTemplate>
