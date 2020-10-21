@@ -1,53 +1,42 @@
-import React, { useReducer, useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Typography, FormHelperText, FormControl } from '@material-ui/core';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import StepContent from '@material-ui/core/StepContent';
-import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import ChipInput from 'material-ui-chip-input';
-import AddIcon from '@material-ui/icons/Add';
+import { Avatar, Button, Chip, TextField } from '@material-ui/core';
 import Person from "@material-ui/icons/Person";
-import { Avatar } from '@material-ui/core';
-import { Link } from "react-router-dom";
+import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-  },
-  button: {
-    marginTop: theme.spacing(1),
-    marginRight: theme.spacing(1),
-  },
-  actionsContainer: {
-    marginBottom: theme.spacing(2),
-  },
-  resetContainer: {
-    padding: theme.spacing(3),
     display: 'flex',
-    alignItems: 'center',
+    flexDirection: 'column',
+    maxWidth: '600px',
+    height: '100%',
+    margin: '50px 10px',
+  },
+  titleWrap: {
+    display: 'flex',
     justifyContent: 'space-between',
   },
-  inputWrap: {
-    marginBottom: '10px',
-    '& div': {
-      display: 'flex',
-    },
+  title: {
+    fontFamily: 'AppleSDGothicNeoL00',
+    fontSize: '20px',
+    color: '#707070',
   },
-  stepperRoot: {
-    padding: '24px 10px',
+  btn: {
+    fontFamily: 'AppleSDGothicNeoM00',
+  },  
+  btnNext: {
+    padding: '10px 0',
+    fontFamily: 'AppleSDGothicNeoM00',
+    fontSize: '1rem',
   },
-  stepContentRoot: {
-    paddingRight: 0,
-  },
-  checkInput: {
-    flexGrow: 1,
-    marginRight: '5px',
+  label: {
+    fontFamily: 'AppleSDGothicNeoR00',
+    lineHeight: 1.47,
+    color: '#707070',
+    marginBottom: '4px',
   },
   profileWrap: {
-    margin: '0 auto 20px auto',
+    margin: '0 auto',
     width: '100px',
     height: '100px',
     position: 'relative',
@@ -84,187 +73,166 @@ const useStyles = makeStyles((theme) => ({
     bottom: 0,
     color: '#707070',
   },
-  chip: {
-    '& > div': {
-      '& > div': {
-        paddingTop: '0 !important',
-        paddingLeft: '10px',
-        '& > input': {
-          height: '19px',
-          margin: 0,
-          paddingTop: 0,
-          paddingBottom: 0,
-        },
-        '& > .MuiChip-root': {
-          margin: '3px 5px 3px 0',
-          backgroundColor: 'antiquewhite',
-        },
-      },
-    },
+  area: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    border: 'solid 1px #b5b5b5',
+    borderRadius: '5px',
+    minHeight: '36px',
+    padding: '5px',
+    backgroundColor: 'rgba(90, 100, 130, 0.05)',
+  },
+  chipDeleteIcon: {
+    color: 'rgba(255, 255, 255, 0.9)'
+  },
+  chipTalent: {
+    height: '26px',
+    margin: '2px 2px 2px 0',
+  },
+  chipInterest: {
+    height: '26px',
+    backgroundColor: '#8e9cc4',
+    color: 'white',
+    margin: '2px 4px 2px 0',
   },
 }));
 
-const initialValid = {
-  phone: {
-    error: null,
-    required: false,
-  }
-}
-
-const reducer = (state, action) => {
-    return { ...state, [action.type]: { error: action.value.error, required: action.value.required, valid: action.value.valid } }
-}
-
-function getSteps() {
-  return ['회원정보', '부가정보'];
-}
-
-function getStepContent(step, props, classes, valid, handleBlur) {
-  const { userNm, userNickNm, phone, mainTalent } = props.state.input;
-  const { talent, interest } = props.state.array;
-  const { avatarPath } = props.state.file;
-
-  switch (step) {
-    case 0:
-      return (
-        <>
-          <div className={classes.inputWrap}>
-            <OutlinedInput onBlur={handleBlur} name="userNm" placeholder="이름" value={userNm} disabled={true} />
-          </div>
-          <div className={classes.inputWrap}>
-            <OutlinedInput className={classes.checkInput} name="userNickNm" placeholder="닉네임" value={userNickNm} disabled={true} />
-          </div>
-          <div className={classes.inputWrap}>
-            <FormControl error={valid.phone.error}>
-              <OutlinedInput onBlur={handleBlur} name="phone" placeholder="전화번호" value={phone} onChange={props.onInputChange} />
-              {valid.phone.required && <FormHelperText>필수값 입니다.</FormHelperText>}
-            </FormControl>
-          </div>
-        </>
-      );
-    case 1:
-      return (
-        <>
-          <label htmlFor="upload-avatar">
-            <div className={classes.profileWrap}>
-              <div className={classes.profile}>
-                <Avatar classes={{root: classes.avatarRoot}}>
-                  {avatarPath
-                  ? <img src={process.env.REACT_APP_IMAGE + avatarPath} alt='' />
-                  : <Person classes={{fontSizeLarge: classes.fontSizeLarge}} fontSize='large' />
-                  }
-                </Avatar>
-              </div>
-              <div className={classes.profileAdd}><AddIcon /></div>
-              <input id="upload-avatar" type="file" onChange={props.onSetAvatar} style={{display: 'none'}} />
-            </div>
-          </label>
-          <div className={classes.inputWrap}>
-            <OutlinedInput name="mainTalent" placeholder="주특기" value={mainTalent} onChange={props.onInputChange}  />
-          </div>
-          <div className={classes.inputWrap}>
-            <ChipInput className={classes.chip} placeholder="특기" variant="outlined" fullWidth={true}
-              value={talent}
-              onAdd={(value) => props.onArrayAdd({name: 'talent', value})}
-              onDelete={(value, index) => props.onArrayDelete({name: 'talent', value, index})}
-            />
-          </div>        
-          <div className={classes.inputWrap}>
-            <ChipInput className={classes.chip} placeholder="관심사" variant="outlined" fullWidth={true}
-              value={interest}
-              onAdd={(value) => props.onArrayAdd({name: 'interest', value})}
-              onDelete={(value, index) => props.onArrayDelete({name: 'interest', value, index})}
-            />
-          </div>
-        </>
-      );
-    default:
-      return 'Unknown step';
-  }
-}
-
 export default function MyInfoForm(props) {
   const classes = useStyles();
-  const steps = getSteps();
-  const [valid, dispatchValid] = useReducer(reducer, initialValid);
+  const [talent, setTalent] = useState('');
+  const [interest, setInterest] = useState('');
 
-  const { phone } = props.state.input;
+  const validatation = () => {
+    const { phoneValid } = props.state;
+    return phoneValid;
+  }
 
-  useEffect(e => {
-    if(props.activeStep === 1) {
-      props.handleNext(e);
+  const renderBtn = () => {
+    if (validatation()) {
+      return (
+        <Button
+          className={classes.btnNext} color='primary' variant="contained" fullWidth={true}
+          onClick={props.onEditUser}
+        >
+          수정완료
+        </Button>
+      )
     }
-  }, [valid]);
+    return (
+      <Button
+        className={classes.btnNext} color='primary' variant="contained" fullWidth={true}
+        disabled
+      >
+        수정완료
+      </Button>
+    )
+  }  
+  
+  const handleChangeTalent = e => {
+    setTalent(e.target.value);
+  }
 
-  const handleValid = e => {
-    if(props.activeStep === 1) {
-      validationAll();
-    } else {
-      props.handleNext(e);
+  const handleChangeInterest = e => {
+    setInterest(e.target.value);
+  }
+
+  const handleKeyPressTalent = e => {
+    if(e.key === 'Enter') {
+      if(props.state.talent.length >= 5) return;
+      if(props.state.talent.filter(chip => chip === talent).length > 0) return;
+      props.onInputChange({target: {name: 'talent', value: talent}});
+      setTalent('');
     }
   }
 
-  const validationAll = () => {
-    handleBlur({target: {name:'phone'}});
-  }
-
-  const handleBlur = e => {
-    let value = {};
-    switch(e.target.name) {
-      case 'phone':
-        value.required = phone === '' ? true : false;
-        if(value.required === true) value.error = true;
-        value.error = value.required === true ? true : false;
-        break;        
+  const handleKeyPressInterest = e => {
+    if(e.key === 'Enter') {
+      if(props.state.interest.length >= 3) return;
+      if(props.state.interest.filter(chip => chip === interest).length > 0) return;
+      props.onInputChange({target: {name: 'interest', value: interest}});
+      setInterest('');
     }
-    dispatchValid({type: e.target.name, value: value});
   }
 
   return (
     <div className={classes.root}>
-      <Stepper
-        activeStep={props.activeStep}
-        orientation="vertical"
-        classes={{
-          root: classes.stepperRoot,
-        }}
-      >
-        {steps.map((label, index) => (
-          <Step key={label}>
-            <StepLabel>{label}</StepLabel>
-            <StepContent classes={{root: classes.stepContentRoot}}>
-              <Typography component="span">{getStepContent(index, props, classes, valid, handleBlur)}</Typography>
-              <div className={classes.actionsContainer}>
-                <div>
-                  <Button
-                    disabled={props.activeStep === 0}
-                    onClick={props.handleBack}
-                    className={classes.button}
-                  >
-                    이전
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleValid}
-                    className={classes.button}
-                  >
-                    {props.activeStep === steps.length - 1 ? '완료' : '다음'}
-                  </Button>
-                </div>
-              </div>
-            </StepContent>
-          </Step>
-        ))}
-      </Stepper>
-      {props.activeStep === steps.length && (
-        <Paper className={classes.resetContainer}>
-          <Typography>정보수정이 완료되었습니다.</Typography>
-          <Link to="/mypage">
-            <Button  variant='contained' color='primary'>My Page</Button>
-          </Link>
-        </Paper>
-      )}
+      <div className={classes.titleWrap}>
+        <div className={classes.title}>
+          사용자 정보를 수정합니다.
+        </div>
+      </div>
+      <div style={{height: '26px'}}></div>
+      <label htmlFor="upload-avatar">
+        <div className={classes.profileWrap}>
+          <div className={classes.profile}>
+            <Avatar classes={{root: classes.avatarRoot}}>
+              {props.state.avatarPath
+              ? <img src={process.env.REACT_APP_IMAGE + props.state.avatarPath} alt='' />
+              : <Person classes={{fontSizeLarge: classes.fontSizeLarge}} fontSize='large' />
+              }
+            </Avatar>
+          </div>
+          <div className={classes.profileAdd}><AddIcon /></div>
+          <input id="upload-avatar" type="file" onChange={props.onSetAvatar} style={{display: 'none'}} />
+        </div>
+      </label>
+      <div style={{height: '20px'}}></div>
+      <div className={classes.label}>휴대폰 번호</div>
+      <TextField
+        name="phone" placeholder="휴대폰 번호를 입력하세요. (- 제외 입력)" variant="outlined" fullWidth={true}
+        error={props.state.phoneValid !== null && !props.state.phoneValid}
+        helperText={props.state.phoneValid !== null && !props.state.phoneValid && "최소 10자리 이상입니다."}
+        value={props.state.phone}
+        onChange={props.onInputChange}
+      />
+      <div style={{height: '20px'}}></div>
+      <div className={classes.label}>전문분야</div>
+      <TextField 
+        name="mainTalent" placeholder="제일 잘할 수 있는 일을 입력하세요." variant="outlined" fullWidth={true}
+        value={props.state.mainTalent}
+        onChange={props.onInputChange}
+      />
+      <div style={{height: '20px'}}></div>
+      <div className={classes.label}>특기 (최대 5개)</div>
+      <div className={classes.area}>
+        {props.state.talent.map((m, i) => {
+          return (
+            <Chip key={i} classes={{root: classes.chipTalent}} color="secondary"
+              label={m}
+              onDelete={() => props.onChipDelete({name:'talent', value:m})}
+            />
+          );
+        })}
+      </div>
+      <div style={{height: '4px'}}></div>
+      <TextField
+        name="talent" placeholder="잘하는 특기 입력 후 엔터를 누르세요." variant="outlined" fullWidth={true}
+        value={talent}
+        onChange={handleChangeTalent}
+        onKeyPress={handleKeyPressTalent}
+      />
+      <div style={{height: '20px'}}></div>
+      <div className={classes.label}>관심사 (최대 3개)</div>
+      <div className={classes.area}>
+        {props.state.interest.map((m, i) => {
+          return (
+            <Chip key={i} classes={{root: classes.chipInterest, deleteIcon: classes.chipDeleteIcon}}
+              label={m}
+              onDelete={() => props.onChipDelete({name:'interest', value:m})}
+            />
+          );
+        })}
+      </div>
+      <div style={{height: '4px'}}></div>
+      <TextField
+        name="interest" placeholder="관심사 입력 후 엔터를 누르세요." variant="outlined" fullWidth={true}
+        value={interest}
+        onChange={handleChangeInterest}
+        onKeyPress={handleKeyPressInterest}
+      />
+      <div style={{height: '45px'}}></div>
+      {renderBtn()}
     </div>
   );
 }

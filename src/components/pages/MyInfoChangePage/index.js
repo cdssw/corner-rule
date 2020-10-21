@@ -1,154 +1,104 @@
-/* eslint no-restricted-globals: ["off"] */
-import React, { useState, useReducer, useEffect } from 'react';
-import { Redirect } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { PageTemplate, TitleHeader, MyInfoForm } from "components";
-import * as User from "../../../services/User";
+import React, { useEffect, useState } from 'react';
+import { PageTemplate, TitleHeader, MyInfoForm, Confirm } from "components";
+import { Redirect, useHistory } from 'react-router-dom';
 import * as File from "../../../services/File";
+import * as User from "../../../services/User";
 import Utils from "../../Utils";
-
-const initialState = {
-    input: {
-      userNm: '',
-      userNickNm: '',
-      phone: '',
-      mainTalent: '',
-    },
-    array: {
-      talent: [],
-      interest: []
-    },
-    file: {
-      avatarPath: '',
-    }
-};
-
-function reducer(state, action) {
-  switch (action.type) {
-    case 'CHANGE_INPUT':
-      return {
-        ...state,
-        input: {
-          ...state.input,
-          [action.name]: action.value
-        }
-      };
-    case 'ADD_ARRAY':
-      return {
-        ...state,
-        array: {
-          ...state.array,
-          [action.name]: state.array[action.name].concat(action.value)
-        }
-      };
-    case 'DELETE_ARRAY':
-      return {
-        ...state,
-        array: {
-          ...state.array,
-          [action.name]: state.array[action.name].filter(value => value !== action.value)
-        }
-      };
-    case 'SET_AVATAR':
-      return {
-        ...state,
-        file: {
-          avatarPath: action.value
-        }
-      }
-    default:
-      return state;
-  } 
-}
+import { useSelector } from 'react-redux';
 
 export default function MyInfoChangePage(props) {
+  const history = useHistory();
   const { login, userInfo } = useSelector(state => state.userInfo, []);
-  const [state, dispatch] = useReducer(reducer, initialState);
-  const [activeStep, setActiveStep] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  const { phone, mainTalent } = state.input;
-  const { talent, interest } = state.array;
-  const { avatarPath } = state.file;
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [state, setState] = useState({
+    phone: '',
+    mainTalent: '',
+    talent: [],
+    interest: [],
+    avatarPath: '',
+    phoneValid: null,
+  });
 
   useEffect(e => {
     if(userInfo) {
-      onInputChange({target: {name: 'userNm', value: userInfo.userNm}});
-      onInputChange({target: {name: 'userNickNm', value: userInfo.userNickNm}});
-      onInputChange({target: {name: 'phone', value: userInfo.phone}});
-      if(userInfo.avatarPath) {
-        dispatch({type: 'SET_AVATAR', value: userInfo.avatarPath});
-      }
-      onInputChange({target: {name: 'mainTalent', value: userInfo.mainTalent}});
-      if(userInfo.talent !== "") userInfo.talent.split(',').map(m => onArrayAdd({name: 'talent', value: m}));
-      if(userInfo.interest !== "") userInfo.interest.split(',').map(m => onArrayAdd({name: 'interest', value: m}));
+      setState({
+        phone: userInfo.phone,
+        mainTalent: userInfo.mainTalent,
+        talent: userInfo.talent === '' ? [] : userInfo.talent.split(','),
+        interest: userInfo.interest === '' ? [] : userInfo.interest.split(','),
+        avatarPath: userInfo.avatarPath,
+      });
     }
   }, [userInfo]);
-
-  const handleNext = () => {
-    if (activeStep === 1) {
-      editUser();
-    } else {
-      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    
+  useEffect(() => {
+    if(state.phone.replace(/-/g, '').length === 10) {
+      setState({
+        ...state,
+        phone: state.phone.replace(/-/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3'),
+        phoneValid: true,
+      });
     }
+    if(state.phone.replace(/-/g, '').length === 11) {
+      setState({
+        ...state,
+        phone: state.phone.replace(/-/g, '').replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'),
+        phoneValid: true,
+      });
+    }
+  }, [state.phone]);  
+
+  const handleConfirmOpen = () => {
+    setConfirmOpen(true);
   };
 
-  const editUser = async e => {
-    const body = {
-      phone,
-      mainTalent,
-      talent: talent.join(','),
-      interest: interest.join(','),
-      avatarPath: avatarPath
-    }
-    const token = localStorage.getItem("token");
-    const param = { token: JSON.parse(token).access_token, body };
-    setLoading(true);
-    try {
-      const response = await User.putEditUser(param);
-      // 결과에 따라 set
-      if(response) {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-      }
-    } catch(error) {
-      Utils.alertError(error);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  const handleConfirmCancel = () => {
+    setConfirmOpen(false);
   };
 
-  const onInputChange = e => {
-    const { name, value } = e.target;
-    dispatch({
-      type: 'CHANGE_INPUT',
-      name,
-      value
+  const handleConfirmOk = () => {
+    setConfirmOpen(false);
+    handleEditUser();
+  };
+
+  const handleInputChange = e => {
+    switch(e.target.name) {
+      case 'phone':
+        const regex = /^[0-9\b -]{0,13}$/;
+        if (regex.test(e.target.value)) {
+          setState({
+            ...state,
+            [e.target.name]: e.target.value,
+            [e.target.name + 'Valid']: e.target.value.replaceAll('-', '').length >= 10,
+          });
+        }
+        break;      
+      case 'talent':
+      case 'interest':
+        setState({
+          ...state,
+          [e.target.name]: state[e.target.name].concat(e.target.value)
+        });
+        break;
+      default:
+        setState({
+          ...state,
+          [e.target.name]: e.target.value,
+        });
+        break;
+    }
+  }  
+
+  const handleChipDelete = e => {
+    setState({
+      ...state,
+      [e.name]: state[e.name].filter(chip => chip !== e.value)
     });
   }
 
-  const onArrayAdd = e => {
-    const { name, value } = e;
-    dispatch({
-      type: 'ADD_ARRAY',
-      name,
-      value
-    });
-  }
-
-  const onArrayDelete = e => {
-    const { name, value } = e;
-    dispatch({
-      type: 'DELETE_ARRAY',
-      name,
-      value
-    });
-  }
-
-  const onSetAvatar = async e => {
+  const handleSetAvatar = async e => {
     e.preventDefault();
     const file = e.target.files[0];
 
@@ -157,9 +107,9 @@ export default function MyInfoChangePage(props) {
       const response = await File.postAvatar(file);
       // 결과에 따라 set
       if(response) {
-        dispatch({
-          type: 'SET_AVATAR',
-          value: response.data.filePath
+        setState({
+          ...state,
+          avatarPath: response.data.filePath
         });
       }
     } catch(error) {
@@ -167,21 +117,49 @@ export default function MyInfoChangePage(props) {
     } finally {
       setLoading(false);
     }
+  }  
+
+  const handleEditUser = async e => {
+    const body = {
+      phone: state.phone,
+      mainTalent: state.mainTalent,
+      talent: state.talent.join(','),
+      interest: state.interest.join(','),
+      avatarPath: state.avatarPath
+    }
+    const token = localStorage.getItem("token");
+    const param = { token: JSON.parse(token).access_token, body };
+    setLoading(true);
+    try {
+      const response = await User.putEditUser(param);
+      // 결과에 따라 set
+      if(response) {
+        history.push('/mypage');
+      }
+    } catch(error) {
+      Utils.alertError(error);
+    } finally {
+      setLoading(false);
+    }    
   }
 
   if(!login) return <Redirect to='/login' />
 
   return (
-    <PageTemplate header={<TitleHeader {...props}>정보수정</TitleHeader>}>
+    <PageTemplate loading={loading} header={<TitleHeader {...props}>정보수정</TitleHeader>}>
       <MyInfoForm
         state={state}
-        onInputChange={onInputChange}
-        onArrayAdd={onArrayAdd}
-        onArrayDelete={onArrayDelete}
-        onSetAvatar={onSetAvatar}
-        activeStep={activeStep}
-        handleNext={handleNext}
-        handleBack={handleBack}
+        onInputChange={handleInputChange}
+        onSetAvatar={handleSetAvatar}
+        onChipDelete={handleChipDelete}
+        onEditUser={handleConfirmOpen}
+      />
+      <Confirm
+        state={confirmOpen}
+        onCancel={handleConfirmCancel}
+        onOk={handleConfirmOk}
+        title={'수정완료 완료하시겠습니까?'}
+        content='모든 정보는 즉시 반영됩니다.'
       />
     </PageTemplate>
   );
