@@ -16,6 +16,10 @@ export default function SignupPolicyPage(props) {
     serviceValid: null,
     privateValid: null,
   });
+
+  useEffect(e => {
+    window.scrollTo(0, 0);
+  }, []);
   
   useEffect(e => {
     if(props.location.policy === undefined) return;

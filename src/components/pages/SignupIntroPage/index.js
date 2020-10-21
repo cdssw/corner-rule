@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { PageTemplate, TitleHeader } from "components";
 import { useHistory } from 'react-router-dom';
 import { Button, makeStyles } from '@material-ui/core';
@@ -37,6 +37,10 @@ const useStyles = makeStyles((theme) => ({
 export default function SignupIntroPage(props) {
   const history = useHistory();
   
+  useEffect(e => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleStart = e => {
     history.push('/signup_policy');
   }

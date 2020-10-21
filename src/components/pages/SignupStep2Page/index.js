@@ -28,6 +28,10 @@ export default function SignupStep2Page(props) {
   });
 
   useEffect(e => {
+    window.scrollTo(0, 0);
+  }, []);
+  
+  useEffect(e => {
     if(props.location.policy !== undefined) {
       setPolicy(props.location.policy);
     }

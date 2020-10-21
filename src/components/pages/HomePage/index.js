@@ -40,6 +40,7 @@ export default function HomePage() {
       loadUserInfo(JSON.parse(token).access_token);
     }
     fetchMoreData();
+    window.scrollTo(0, 0);
   }, []);
 
   useEffect(e => {
