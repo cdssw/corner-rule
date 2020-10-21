@@ -126,7 +126,7 @@ const useStyles = makeStyles((theme) => ({
         position: 'absolute',
         borderRadius: '12px',
         backgroundColor: '#FFC7E3',
-        height: '23px',
+        height: '22px',
         display: 'flex',
         alignItems: 'center',
         '& .cost': {
@@ -155,6 +155,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Card({item, image, onContentClick}) {
   const classes = useStyles();
+  const isSafari = navigator.vendor.includes('Apple');
 
   return (
     <ThemeProvider theme={cardTheme}>
@@ -179,7 +180,7 @@ export default function Card({item, image, onContentClick}) {
             <div>&nbsp;&nbsp;</div>
           </div>
           <div className="info">
-            <div className="costWrap">
+            <div style={{padding: isSafari && '0 10px 2px'}} className="costWrap">
               <div className="cost">{item.cost === 0 ? 'Free' : `￦ ` + Utils.numberWithCommas(item.cost)}</div>
             </div>
             <div className="commWrap">

@@ -20,7 +20,7 @@ export default function LoginPage() {
 
   useEffect(e => {
     const username = localStorage.getItem('username');
-    if(username !== '') {
+    if(username) {
       setLoginData({username: username, password: ''});
       setSaveId(true);
     }

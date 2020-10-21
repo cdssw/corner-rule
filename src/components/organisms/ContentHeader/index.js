@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '0 10px',
     borderRadius: '12px',
     backgroundColor: '#FFC7E3',
-    height: '23px',
+    height: '22px',
     display: 'flex',
     alignItems: 'center',
     '& .cost': {
@@ -62,6 +62,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ContentHeader({meet, avatar}) {
   const classes = useStyles();
+  const isSafari = navigator.vendor.includes('Apple');
+  
   return (
     <div className={classes.root}>
     {meet && 
@@ -79,7 +81,7 @@ export default function ContentHeader({meet, avatar}) {
         <div className={classes.costNgWrap}>
           <div className={classes.space}></div>
           <div className={classes.innerWrap}>
-            <div className={classes.costWrap}>
+            <div style={{padding: isSafari && '0 10px 2px'}} className={classes.costWrap}>
               <div className="cost">{meet.cost === 0 ? 'Free' : `￦ ` + Utils.numberWithCommas(meet.cost)}</div>
             </div>
             {meet.costOption && <div className={classes.desc}>협의가능</div>}
