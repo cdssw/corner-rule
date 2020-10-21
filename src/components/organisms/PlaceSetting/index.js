@@ -35,7 +35,7 @@ export default function PlaceSetting({userInfo, onAddClick, onPlaceClick}) {
 
   return (
     <div className={classes.root}>
-      <div className={classes.title}>희망지역</div>
+      <div className={classes.title}>관심지역</div>
       <div className={classes.placeWrap}>
         {hopePlaceList && hopePlaceList.map((v, i) => {
           return (

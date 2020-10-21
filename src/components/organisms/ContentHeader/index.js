@@ -80,7 +80,7 @@ export default function ContentHeader({userInfo, meet, avatar}) {
           <div className={classes.space}></div>
           <div className={classes.innerWrap}>
             <div className={classes.costWrap}>
-              <div className="cost">{meet.cost === 0 ? 'Free' : `￦` + Utils.numberWithCommas(meet.cost)}</div>
+              <div className="cost">{meet.cost === 0 ? 'Free' : `￦ ` + Utils.numberWithCommas(meet.cost)}</div>
             </div>
             {meet.costOption && <div className={classes.desc}>협의가능</div>}
           </div>
