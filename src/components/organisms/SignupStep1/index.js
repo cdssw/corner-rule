@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField, InputAdornment } from '@material-ui/core';
+import ClearIcon from '@material-ui/icons/Clear';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -78,6 +79,13 @@ export default function SignupStep1(props) {
         value={props.state.username}
         onChange={props.onInputChange}
         disabled={props.state.usernameConfirm}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              {props.state.username !== '' && <ClearIcon color="action" onClick={() => props.onInputChange({target:{name: 'username', value: ''}})} />}
+            </InputAdornment>
+          ),
+        }}         
       />
       <div style={{height: '10px'}}></div>
       <Button className={classes.btn} color='primary' variant="outlined" fullWidth={true}
@@ -99,6 +107,13 @@ export default function SignupStep1(props) {
         helperText={props.state.passwordValid !== null && !props.state.passwordValid && "최소 1글자 이상입니다."}
         value={props.state.password}
         onChange={props.onInputChange}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              {props.state.password !== '' && <ClearIcon color="action" onClick={() => props.onInputChange({target:{name: 'password', value: ''}})} />}
+            </InputAdornment>
+          ),
+        }}
       />
       <div style={{height: '5px'}}></div>
       <TextField 
@@ -108,6 +123,13 @@ export default function SignupStep1(props) {
         helperText={props.state.passwordCheckValid !== null && !props.state.passwordCheckValid && "비밀번호가 일치하지 않습니다."}
         value={props.state.passwordCheck}
         onChange={props.onInputChange}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              {props.state.passwordCheck !== '' && <ClearIcon color="action" onClick={() => props.onInputChange({target:{name: 'passwordCheck', value: ''}})} />}
+            </InputAdornment>
+          ),
+        }}
       />
       <div style={{height: '45px'}}></div>
       {renderNextBtn()}

@@ -126,7 +126,7 @@ const useStyles = makeStyles((theme) => ({
         position: 'absolute',
         borderRadius: '12px',
         backgroundColor: '#FFC7E3',
-        height: '22px',
+        height: '23px',
         display: 'flex',
         alignItems: 'center',
         '& .cost': {

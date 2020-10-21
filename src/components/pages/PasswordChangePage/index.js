@@ -92,7 +92,7 @@ export default function PasswordChangePage(props) {
     }
   }
 
-  // if(!login) return <Redirect to='/' />
+  if(!login) return <Redirect to='/' />
 
   return (
     <PageTemplate loading={loading} header={<TitleHeader {...props}>비밀번호 변경</TitleHeader>}>

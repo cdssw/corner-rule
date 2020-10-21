@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { FormControlLabel, Checkbox, TextField, Button } from '@material-ui/core';
+import { FormControlLabel, Checkbox, TextField, Button, InputAdornment } from '@material-ui/core';
+import ClearIcon from '@material-ui/icons/Clear';
 import TimePicker from "react-times";
 import 'react-times/css/classic/default.css';
 import Utils from '../../Utils';
@@ -117,6 +118,13 @@ export default function RegForm(props) {
         helperText={props.state.titleValid !== null && !props.state.titleValid && "최소 1글자 이상입니다."}
         value={props.state.title}
         onChange={props.onInputChange}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              {props.state.title !== '' && <ClearIcon color="action" onClick={() => props.onInputChange({target:{name: 'title', value: ''}})} />}
+            </InputAdornment>
+          ),
+        }}
       />
       <div className={classes.labelWrap}>
         <div className={classes.label}>시작일</div>
@@ -126,6 +134,7 @@ export default function RegForm(props) {
           value={props.state.term.startDt}
           onChange={props.onInputChange}
         />
+        <div style={{height: '5px'}} />
         <label className={classes.label}>종료일</label>
         <TextField 
           name="endDt" classes={{root: isSafari && classes.muiRoot}}
@@ -137,6 +146,7 @@ export default function RegForm(props) {
       <div className={classes.labelWrap}>
         <label className={classes.label}>시작시간</label>
         <TimePicker theme="classic" onTimeChange={handleStartTimeChange} time={props.state.term.startTm} />
+        <div style={{height: '5px'}} />
         <label className={classes.label}>종료시간</label>
         <TimePicker theme="classic" onTimeChange={handleEndTimeChange} time={props.state.term.endTm} />
       </div>      
@@ -196,9 +206,16 @@ export default function RegForm(props) {
       <div className={classes.costWrap}>
         <TextField 
           name="cost" classes={{root: isSafari && classes.muiRoot}}
-          placeholder="비용을 입력하세요." variant="outlined" type="number"
+          placeholder="비용을 입력하세요." variant="outlined"
           value={props.state.cost}
           onChange={props.onInputChange}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                {props.state.cost !== '' && <ClearIcon color="action" onClick={() => props.onInputChange({target:{name: 'cost', value: ''}})} />}
+              </InputAdornment>
+            ),
+          }}
         />
         <div style={{width: '5px'}} />
         <FormControlLabel
@@ -213,11 +230,18 @@ export default function RegForm(props) {
         <label className={classes.label}>모집인원</label>
         <TextField 
           name="recruitment" classes={{root: isSafari && classes.muiRoot}}
-          placeholder="모집인원을 입력하세요." variant="outlined" type="number"
+          placeholder="모집인원을 입력하세요." variant="outlined"
           error={props.state.recruitmentValid !== null && !props.state.recruitmentValid}
           helperText={props.state.recruitmentValid !== null && !props.state.recruitmentValid && "최소 1명 이상입니다."}
           value={props.state.recruitment}
           onChange={props.onInputChange}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                {props.state.recruitment !== '' && <ClearIcon color="action" onClick={() => props.onInputChange({target:{name: 'recruitment', value: ''}})} />}
+              </InputAdornment>
+            ),
+          }}          
         />
       </div>
       <div className={classes.labelWrap}>
@@ -237,6 +261,13 @@ export default function RegForm(props) {
           helperText={props.state.address.address2Valid !== null && !props.state.address.address2Valid && "필수값 입니다."}
           value={props.state.address.address2}
           onChange={props.onInputChange}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                {props.state.address.address2 !== '' && <ClearIcon color="action" onClick={() => props.onInputChange({target:{name: 'address2', value: ''}})} />}
+              </InputAdornment>
+            ),
+          }}
         />
       </div>
       <label className={classes.label}>상세내용</label>

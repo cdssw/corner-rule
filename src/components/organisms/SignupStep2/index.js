@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField, InputAdornment } from '@material-ui/core';
+import ClearIcon from '@material-ui/icons/Clear';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -77,6 +78,13 @@ export default function SignupStep2(props) {
         value={props.state.userNickNm}
         onChange={props.onInputChange}
         disabled={props.state.userNickNmConfirm}        
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              {props.state.userNickNm !== '' && <ClearIcon color="action" onClick={() => props.onInputChange({target:{name: 'userNickNm', value: ''}})} />}
+            </InputAdornment>
+          ),
+        }}
       />
       <div style={{height: '10px'}}></div>
       <Button className={classes.btn} color='primary' variant="outlined" fullWidth={true}
@@ -97,6 +105,13 @@ export default function SignupStep2(props) {
         helperText={props.state.userNmValid !== null && !props.state.userNmValid && "최소 1글자 이상입니다."}
         value={props.state.userNm}
         onChange={props.onInputChange}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              {props.state.userNm !== '' && <ClearIcon color="action" onClick={() => props.onInputChange({target:{name: 'userNm', value: ''}})} />}
+            </InputAdornment>
+          ),
+        }}
       />
       <div style={{height: '20px'}}></div>
       <div className={classes.label}>휴대폰 번호</div>
@@ -106,6 +121,13 @@ export default function SignupStep2(props) {
         helperText={props.state.phoneValid !== null && !props.state.phoneValid && "최소 10자리 이상입니다."}
         value={props.state.phone}
         onChange={props.onInputChange}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              {props.state.phone !== '' && <ClearIcon color="action" onClick={() => props.onInputChange({target:{name: 'phone', value: ''}})} />}
+            </InputAdornment>
+          ),
+        }}
       />
       <div style={{height: '45px'}}></div>
       {renderNextBtn()}

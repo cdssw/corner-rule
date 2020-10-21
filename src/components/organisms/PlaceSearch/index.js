@@ -1,9 +1,9 @@
 import React from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
+import ClearIcon from '@material-ui/icons/Clear';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import { InputIcon } from "components";
 import FormControl from '@material-ui/core/FormControl';
 import { InputAdornment, TextField } from "@material-ui/core";
 
@@ -54,6 +54,7 @@ export default function PlaceSearch({userInfo, place, onPlace, onSearch, search,
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
+                {search !== '' && <ClearIcon color="action" onClick={() => onSearch({target:{name: 'search', value: ''}})} />}
                 <SearchIcon color="disabled" />
               </InputAdornment>
             ),

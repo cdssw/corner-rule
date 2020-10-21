@@ -10,8 +10,8 @@ export default function LoginPage() {
   const { login } = useSelector(state => state.userInfo, []);
   const dispatch = useDispatch();
   const [loginData, setLoginData] = useState({
-    username: null,
-    password: null
+    username: '',
+    password: ''
   });
   const [saveId, setSaveId] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -21,7 +21,7 @@ export default function LoginPage() {
   useEffect(e => {
     const username = localStorage.getItem('username');
     if(username !== '') {
-      setLoginData({username: username, password: null});
+      setLoginData({username: username, password: ''});
       setSaveId(true);
     }
   }, []);

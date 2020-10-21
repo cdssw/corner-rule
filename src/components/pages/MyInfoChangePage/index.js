@@ -143,7 +143,7 @@ export default function MyInfoChangePage(props) {
     }    
   }
 
-  if(!login) return <Redirect to='/login' />
+  // if(!login) return <Redirect to='/login' />
 
   return (
     <PageTemplate loading={loading} header={<TitleHeader {...props}>정보수정</TitleHeader>}>

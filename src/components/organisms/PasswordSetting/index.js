@@ -1,6 +1,7 @@
 import React from "react";
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField, InputAdornment } from '@material-ui/core';
+import ClearIcon from '@material-ui/icons/Clear';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -76,6 +77,13 @@ export default function PasswordSetting(props) {
         helperText={props.state.currentPasswordValid !== null && !props.state.currentPasswordValid && "최소 1글자 이상입니다."}
         value={props.state.currentPassword}
         onChange={props.onInputChange}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              {props.state.currentPassword !== '' && <ClearIcon color="action" onClick={() => props.onInputChange({target:{name: 'currentPassword', value: ''}})} />}
+            </InputAdornment>
+          ),
+        }}
       />
       <div style={{height: '20px'}}></div>
       <div className={classes.label}>새로운 비밀번호</div>
@@ -88,6 +96,13 @@ export default function PasswordSetting(props) {
         helperText={props.state.password2Valid !== null && !props.state.password2Valid && "현재 비밀번호와 동일합니다."}
         value={props.state.password}
         onChange={props.onInputChange}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              {props.state.password !== '' && <ClearIcon color="action" onClick={() => props.onInputChange({target:{name: 'password', value: ''}})} />}
+            </InputAdornment>
+          ),
+        }}        
       />
       <div style={{height: '5px'}}></div>
       <TextField 
@@ -97,6 +112,13 @@ export default function PasswordSetting(props) {
         helperText={props.state.passwordCheckValid !== null && !props.state.passwordCheckValid && "비밀번호가 일치하지 않습니다."}
         value={props.state.passwordCheck}
         onChange={props.onInputChange}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              {props.state.passwordCheck !== '' && <ClearIcon color="action" onClick={() => props.onInputChange({target:{name: 'passwordCheck', value: ''}})} />}
+            </InputAdornment>
+          ),
+        }}                
       />
       <div style={{height: '45px'}}></div>
       {renderBtn()}

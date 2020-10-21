@@ -71,7 +71,7 @@ export default function SignupStep2Page(props) {
           setState({
             ...state,
             [e.target.name]: e.target.value,
-            [e.target.name + 'Valid']: e.target.value.replaceAll('-', '').length >= 10,
+            [e.target.name + 'Valid']: e.target.value.replace(/-/g, '').length >= 10,
           });
         }
         break;

@@ -90,6 +90,10 @@ export default function HomePage() {
       } else {
         if(userInfo.data.hopePlaceList.length > 0) {
           setPlace(userInfo.data.hopePlaceList[0].sido + ' ' + userInfo.data.hopePlaceList[0].sgg);
+        } else {
+          setParam({
+            ...param,
+          });
         }
       }
     } catch(error) {

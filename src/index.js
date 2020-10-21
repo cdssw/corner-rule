@@ -22,7 +22,6 @@ const theme = createMuiTheme({
     MuiOutlinedInput: {
       root: {
         width: '100%',
-        height: '40px',
         '&$focused $notchedOutline': {
           borderColor: '#707070',
           borderWidth: 1,
@@ -38,6 +37,7 @@ const theme = createMuiTheme({
     },
     MuiSelect: {
       selectMenu: {
+        height: '21px',
         fontFamily: 'AppleSDGothicNeoL00'
       }
     },

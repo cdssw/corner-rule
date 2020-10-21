@@ -1,6 +1,7 @@
 import React from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
+import ClearIcon from '@material-ui/icons/Clear';
 import { InputAdornment, TextField } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -33,6 +34,7 @@ export default function AddressSearch({onSearch, search, onKeyPress}) {
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
+                {search !== '' && <ClearIcon color="action" onClick={() => onSearch({target:{name: 'search', value: ''}})} />}
                 <SearchIcon color="disabled" />
               </InputAdornment>
             ),

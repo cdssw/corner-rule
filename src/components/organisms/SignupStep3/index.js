@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Avatar, Button, Chip, TextField } from '@material-ui/core';
+import { Avatar, Button, Chip, TextField, InputAdornment } from '@material-ui/core';
 import Person from "@material-ui/icons/Person";
 import AddIcon from '@material-ui/icons/Add';
+import ClearIcon from '@material-ui/icons/Clear';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -129,6 +130,40 @@ export default function SignupStep3(props) {
     }
   }
 
+  const renderTalent = () => {
+    if(props.state.talent.length > 0) {
+      return (
+        <div className={classes.area}>
+          {props.state.talent.map((m, i) => {
+            return (
+              <Chip key={i} classes={{root: classes.chipTalent}} color="secondary"
+                label={m}
+                onDelete={() => props.onChipDelete({name:'talent', value:m})}
+              />
+            );
+          })}
+        </div>
+      )
+    }
+  }  
+
+  const renderInterest = () => {
+    if(props.state.interest.length > 0) {
+      return (
+        <div className={classes.area}>
+          {props.state.interest.map((m, i) => {
+            return (
+              <Chip key={i} classes={{root: classes.chipInterest, deleteIcon: classes.chipDeleteIcon}}
+                label={m}
+                onDelete={() => props.onChipDelete({name:'interest', value:m})}
+              />
+            );
+          })}
+        </div>
+      )
+    }
+  }   
+
   return (
     <div className={classes.root}>
       <div className={classes.titleWrap}>
@@ -158,44 +193,47 @@ export default function SignupStep3(props) {
         name="mainTalent" placeholder="제일 잘할 수 있는 일을 입력하세요." variant="outlined" fullWidth={true}
         value={props.state.mainTalent}
         onChange={props.onInputChange}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              {props.state.mainTalent !== '' && <ClearIcon color="action" onClick={() => props.onInputChange({target:{name: 'mainTalent', value: ''}})} />}
+            </InputAdornment>
+          ),
+        }}
       />
       <div style={{height: '20px'}}></div>
       <div className={classes.label}>특기 (최대 5개)</div>
-      <div className={classes.area}>
-        {props.state.talent.map((m, i) => {
-          return (
-            <Chip key={i} classes={{root: classes.chipTalent}} color="secondary"
-              label={m}
-              onDelete={() => props.onChipDelete({name:'talent', value:m})}
-            />
-          );
-        })}
-      </div>
+      {renderTalent()}
       <div style={{height: '4px'}}></div>
       <TextField
         name="talent" placeholder="잘하는 특기 입력 후 엔터를 누르세요." variant="outlined" fullWidth={true}
         value={talent}
         onChange={handleChangeTalent}
         onKeyPress={handleKeyPressTalent}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              {talent !== '' && <ClearIcon color="action" onClick={() => setTalent('')} />}
+            </InputAdornment>
+          ),
+        }}
       />
       <div style={{height: '20px'}}></div>
       <div className={classes.label}>관심사 (최대 3개)</div>
-      <div className={classes.area}>
-        {props.state.interest.map((m, i) => {
-          return (
-            <Chip key={i} classes={{root: classes.chipInterest, deleteIcon: classes.chipDeleteIcon}}
-              label={m}
-              onDelete={() => props.onChipDelete({name:'interest', value:m})}
-            />
-          );
-        })}
-      </div>
+      {renderInterest()}
       <div style={{height: '4px'}}></div>
       <TextField
         name="interest" placeholder="관심사 입력 후 엔터를 누르세요." variant="outlined" fullWidth={true}
         value={interest}
         onChange={handleChangeInterest}
         onKeyPress={handleKeyPressInterest}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              {interest !== '' && <ClearIcon color="action" onClick={() => setInterest('')} />}
+            </InputAdornment>
+          ),
+        }}
       />
       <div style={{height: '45px'}}></div>
       <Button

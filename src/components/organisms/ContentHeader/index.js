@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '0 10px',
     borderRadius: '12px',
     backgroundColor: '#FFC7E3',
-    height: '22px',
+    height: '23px',
     display: 'flex',
     alignItems: 'center',
     '& .cost': {

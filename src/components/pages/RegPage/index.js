@@ -21,9 +21,9 @@ export default function RegPage(props) {
     titleValid: null,
     content: '',
     contentValid: null,
-    recruitment: null,
+    recruitment: '',
     recruitmentValid: null,
-    cost: null,
+    cost: '',
     costOption: false,
     address: {
       address1: '',
@@ -45,11 +45,14 @@ export default function RegPage(props) {
 
   useEffect(e => {
     const today = new Date();
+    const nextWeek = new Date();
+    nextWeek.setDate(nextWeek.getDate() + 7);
     setState({
       ...state,
       term: {
         ...state.term,
-        startDt: today.toISOString().substring(0, 10)
+        startDt: today.toISOString().substring(0, 10),
+        endDt: nextWeek.toISOString().substring(0, 10),
       }
     });
   }, []);
@@ -61,6 +64,22 @@ export default function RegPage(props) {
     setState(current);
     window.scrollTo(0, document.body.scrollHeight); // 맨아래로 스크롤
   }, [props.location.state]);
+
+  useEffect(() => {
+    if(state.cost === '') return;
+    setState({
+      ...state,
+      cost: state.cost.replace(/,/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+    });
+  }, [state.cost]);  
+
+  useEffect(() => {
+    if(state.recruitment === '') return;
+    setState({
+      ...state,
+      recruitment: state.recruitment.replace(/,/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+    });
+  }, [state.recruitment]);   
 
   const handleInputChange = e => {
     switch(e.target.name) {
@@ -75,13 +94,6 @@ export default function RegPage(props) {
             [e.target.name]: e.target.value,
             [e.target.name + 'Valid']: e.target.value !== null
           }
-        });
-        break;
-      case 'recruitment':
-        setState({
-          ...state,
-          [e.target.name]: e.target.value,
-          [e.target.name + 'Valid']: e.target.value
         });
         break;
       case 'detailDay': {
@@ -105,6 +117,27 @@ export default function RegPage(props) {
           }
         });
         break;
+      case 'cost': {
+        const regex = /^[1-9]+[0-9]*$/;
+        if (e.target.value === '' || regex.test(e.target.value.replace(/,/g, ''))) {
+          setState({
+            ...state,
+            [e.target.name]: e.target.value,
+          });
+        }
+        break;
+      }
+      case 'recruitment': {
+        const regex = /^[1-9]+[0-9]*$/;
+        if (e.target.value === '' || regex.test(e.target.value.replace(/,/g, ''))) {
+          setState({
+            ...state,
+            [e.target.name]: e.target.value,
+            [e.target.name + 'Valid']: e.target.value !== ''
+          });
+        }
+        break;
+      }
       default:
         setState({
           ...state,
@@ -169,7 +202,11 @@ export default function RegPage(props) {
     const token = localStorage.getItem("token");
     const param = {
       token: JSON.parse(token).access_token,
-      body: {...state, imgList: state.imgList.map(i => i.id)}
+      body: {
+        ...state,
+        cost: state.cost.replace(/,/g, ''),
+        imgList: state.imgList.map(i => i.id)
+      }
     }
     setLoading(true);
     try {

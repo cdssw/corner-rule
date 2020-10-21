@@ -8,6 +8,7 @@ import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined'
 import VpnKeyOutlinedIcon from '@material-ui/icons/VpnKeyOutlined';
 import RadioButtonUncheckedOutlinedIcon from '@material-ui/icons/RadioButtonUncheckedOutlined';
 import RadioButtonCheckedRoundedIcon from '@material-ui/icons/RadioButtonCheckedRounded';
+import ClearIcon from '@material-ui/icons/Clear';
 import { InputAdornment, TextField } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -43,6 +44,9 @@ const useStyles = makeStyles((theme) => ({
 export default function LoginForm({username, password, onInput, onLogin, saveId, onSaveId}) {
   const classes = useStyles();
 
+  const handleKeyPress = e => {
+    if(e.key === 'Enter') onLogin();
+  }
   return (
     <div className={classes.root}>
       <div className={classes.emailWrap}>
@@ -52,6 +56,7 @@ export default function LoginForm({username, password, onInput, onLogin, saveId,
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
+                {username !== '' && <ClearIcon color="action" onClick={() => onInput({target:{name: 'username', value: ''}})} />}
                 <AccountCircleOutlinedIcon color="disabled" />
               </InputAdornment>
             ),
@@ -70,6 +75,7 @@ export default function LoginForm({username, password, onInput, onLogin, saveId,
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
+                {password !== '' && <ClearIcon color="action" onClick={() => onInput({target:{name: 'password', value: ''}})} />}
                 <VpnKeyOutlinedIcon color="disabled" />
               </InputAdornment>
             ),
@@ -79,6 +85,7 @@ export default function LoginForm({username, password, onInput, onLogin, saveId,
           placeholder="비밀번호를 입력하세요."
           name="password"
           onChange={onInput} value={password}
+          onKeyPress={handleKeyPress}
         />        
       </div>
       <div className={classes.saveIdWrap}>
