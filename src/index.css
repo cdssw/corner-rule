@@ -2,8 +2,14 @@ html, body, #root, .App {
   height: 100vh;
   background-color: white;
 }
+
+@font-face {
+  font-family: 'AppleSDGothicNeoL00';
+  src: url('./styles/fonts/AppleSDGothicNeoL.ttf') format('truetype');
+}
+
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'AppleSDGothicNeoL00', 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: -apple-system, BlinkMacSystemFont, 'AppleSDGothicNeoL00', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;

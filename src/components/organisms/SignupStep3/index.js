@@ -155,7 +155,7 @@ export default function SignupStep3(props) {
       <div style={{height: '20px'}}></div>
       <div className={classes.label}>전문분야</div>
       <TextField 
-        name="mainTalent" placeholder="제일 잘할 수 있는 일을 입력합니다." variant="outlined" fullWidth={true}
+        name="mainTalent" placeholder="제일 잘할 수 있는 일을 입력하세요." variant="outlined" fullWidth={true}
         value={props.state.mainTalent}
         onChange={props.onInputChange}
       />

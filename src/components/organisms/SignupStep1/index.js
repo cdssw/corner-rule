@@ -72,7 +72,7 @@ export default function SignupStep1(props) {
       <div className={classes.label}>이메일 ID</div>
       <TextField 
         type='email'
-        name="username" placeholder="이메일을 입력합니다." variant="outlined" fullWidth={true}
+        name="username" placeholder="이메일을 입력하세요." variant="outlined" fullWidth={true}
         error={props.state.usernameValid !== null && !props.state.usernameValid}
         helperText={props.state.usernameValid !== null && !props.state.usernameValid && "최소 1글자 이상입니다."}
         value={props.state.username}
@@ -94,7 +94,7 @@ export default function SignupStep1(props) {
       <div className={classes.label}>비밀번호</div>
       <TextField
         type='password'
-        name="password" placeholder="비밀번호를 입력합니다." variant="outlined" fullWidth={true}
+        name="password" placeholder="비밀번호를 입력하세요." variant="outlined" fullWidth={true}
         error={props.state.passwordValid !== null && !props.state.passwordValid}
         helperText={props.state.passwordValid !== null && !props.state.passwordValid && "최소 1글자 이상입니다."}
         value={props.state.password}
@@ -103,7 +103,7 @@ export default function SignupStep1(props) {
       <div style={{height: '5px'}}></div>
       <TextField 
         type='password'
-        name="passwordCheck" placeholder="비밀번호를 한번 더 입력합니다." variant="outlined" fullWidth={true}
+        name="passwordCheck" placeholder="비밀번호를 한번 더 입력하세요." variant="outlined" fullWidth={true}
         error={props.state.passwordCheckValid !== null && !props.state.passwordCheckValid}
         helperText={props.state.passwordCheckValid !== null && !props.state.passwordCheckValid && "비밀번호가 일치하지 않습니다."}
         value={props.state.passwordCheck}
