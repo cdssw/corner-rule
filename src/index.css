@@ -1,11 +1,16 @@
-html, body, #root, .App {
-  height: 100vh;
-  background-color: white;
-}
-
 @font-face {
   font-family: 'AppleSDGothicNeoL00';
   src: url('./styles/fonts/AppleSDGothicNeoL.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'AppleSDGothicNeoR00';
+  src: url('./styles/fonts/AppleSDGothicNeoR.ttf') format('truetype');
+}
+
+html, body, #root, .App {
+  height: 100vh;
+  background-color: white;
 }
 
 body {
@@ -19,4 +24,10 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+* {
+  font-family: -apple-system, BlinkMacSystemFont, 'AppleSDGothicNeoL00', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
 }

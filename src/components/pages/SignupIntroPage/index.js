@@ -45,7 +45,7 @@ export default function SignupIntroPage(props) {
   }
 
   return (
-    <PageTemplate header={<TitleHeader {...props}>회원가입</TitleHeader>}>
+    <PageTemplate header={<TitleHeader path='/login' {...props}>회원가입</TitleHeader>}>
       <SignupIntro onStartClick={handleStart} />
     </PageTemplate>
   );

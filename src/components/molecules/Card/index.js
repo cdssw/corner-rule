@@ -180,7 +180,7 @@ export default function Card({item, image, onContentClick}) {
           </div>
           <div className="info">
             <div className="costWrap">
-              <div className="cost">{item.cost === 0 ? 'Free' : `￦` + Utils.numberWithCommas(item.cost)}</div>
+              <div className="cost">{item.cost === 0 ? 'Free' : `￦ ` + Utils.numberWithCommas(item.cost)}</div>
             </div>
             <div className="commWrap">
               <div className="ico"><img src={resources.chat} alt="chat" /></div>

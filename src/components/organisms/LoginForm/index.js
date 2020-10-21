@@ -4,12 +4,11 @@ import Button from '@material-ui/core/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { Link } from "react-router-dom";
-import { InputIcon } from "components";
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import VpnKeyOutlinedIcon from '@material-ui/icons/VpnKeyOutlined';
 import RadioButtonUncheckedOutlinedIcon from '@material-ui/icons/RadioButtonUncheckedOutlined';
 import RadioButtonCheckedRoundedIcon from '@material-ui/icons/RadioButtonCheckedRounded';
-import { Typography } from '@material-ui/core';
+import { InputAdornment, TextField } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,6 +34,10 @@ const useStyles = makeStyles((theme) => ({
   checkboxWrap: {
     marginRight: 0,
   },
+  inputRoot: {
+    backgroundColor: 'white',
+    borderRadius: '5px',
+  }
 }));
 
 export default function LoginForm({username, password, onInput, onLogin, saveId, onSaveId}) {
@@ -43,10 +46,38 @@ export default function LoginForm({username, password, onInput, onLogin, saveId,
   return (
     <div className={classes.root}>
       <div className={classes.emailWrap}>
-        <InputIcon icon={<AccountCircleOutlinedIcon color="disabled" />} name="username" onChange={onInput} value={username} />
+        <TextField
+          type="email"
+          classes={{root: classes.inputRoot}}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <AccountCircleOutlinedIcon color="disabled" />
+              </InputAdornment>
+            ),
+          }}
+          fullWidth={true}
+          variant="outlined"
+          name="username"
+          onChange={onInput} value={username}
+        />
       </div>
       <div className={classes.passwordWrap}>
-        <InputIcon type="password" icon={<VpnKeyOutlinedIcon color="disabled" />} name="password" onChange={onInput} value={password} />
+        <TextField
+          type="password"
+          classes={{root: classes.inputRoot}}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <VpnKeyOutlinedIcon color="disabled" />
+              </InputAdornment>
+            ),
+          }}
+          fullWidth={true}
+          variant="outlined"
+          name="password"
+          onChange={onInput} value={password}
+        />        
       </div>
       <div className={classes.saveIdWrap}>
         <FormControlLabel
@@ -57,11 +88,11 @@ export default function LoginForm({username, password, onInput, onLogin, saveId,
               checkedIcon={<RadioButtonCheckedRoundedIcon />} 
               checked={saveId} 
               onChange={onSaveId}
-              style={{color: 'white', padding: 0}}
+              style={{color: 'white', padding: '0 0 2px 0'}}
               size="small"
             />
           }
-          label={<Typography component="span" variant="body1" style={{color: 'white', paddingLeft: '5px'}}>아이디 저장</Typography>}
+          label={<span style={{color: 'white', paddingLeft: '5px'}}>아이디 저장</span>}
         />
       </div>
       <div>

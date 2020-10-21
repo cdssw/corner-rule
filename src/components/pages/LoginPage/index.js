@@ -4,19 +4,19 @@ import * as User from "../../../services/User";
 import { setLoginUserInfo, setLogin } from "../../../modules/userInfo";
 import { useSelector, useDispatch } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { LoginTemplate, LoginForm, Footer } from "components";
-import Utils from "../../Utils";
+import { LoginTemplate, LoginForm, Footer, Alert } from "components";
 
 export default function LoginPage() {
   const { login } = useSelector(state => state.userInfo, []);
-  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
-
   const [loginData, setLoginData] = useState({
     username: null,
     password: null
   });
   const [saveId, setSaveId] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [alertContent, setAlertContent] = useState('');
 
   const handleSaveId = (event) => {
     setSaveId(event.target.checked);
@@ -44,12 +44,15 @@ export default function LoginPage() {
       const userInfo = await User.getUser(response.data.access_token);
       dispatch(setLoginUserInfo(userInfo.data)); // 가져온 user 정보를 redux에 저장
       dispatch(setLogin(true)); // login 상태로 처리
-    } catch(error) {
-      if(error.response.data.error_description === 'Bad credentials') {
-        alert("아이디와 비밀번호를 확인하고 다시 로그인 하세요.");
+    } catch(e) {
+      let msg = null;
+      if(e.response.data.error_description === 'Bad credentials') {
+        msg = '아이디와 비밀번호를 확인하고 다시 로그인 하세요.';
       } else {
-        Utils.alertError(error);
+        msg = e.response.data.message;
       }
+      setAlertContent(msg);
+      setAlertOpen(true);
     } finally {
       setLoading(false);
     }
@@ -66,6 +69,14 @@ export default function LoginPage() {
         onSaveId={handleSaveId}
         username={loginData.username}
         password={loginData.password}
+      />
+      <Alert
+        state={alertOpen}
+        onClose={() => {
+          setAlertContent('');
+          setAlertOpen(false);
+        }}
+        content={alertContent}
       />
     </LoginTemplate>
   );

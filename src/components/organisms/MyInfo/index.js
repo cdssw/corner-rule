@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'flex-end',
     '& > div': {
-      paddingLeft: '10px',
+      marginLeft: '10px',
     },
   },
   buttonTextColor: {

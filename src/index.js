@@ -19,16 +19,6 @@ const theme = createMuiTheme({
     },
   }, 
   overrides: {
-    MuiCssBaseline: {
-      '@global': {
-        '*': {
-          boxSizing: 'border-box'
-        },
-        body: {
-          margin: 0,
-        },
-      },
-    },
     MuiOutlinedInput: {
       root: {
         width: '100%',
@@ -45,6 +35,16 @@ const theme = createMuiTheme({
         paddingBottom: '9px',
       },
     },
+    MuiSelect: {
+      selectMenu: {
+        fontFamily: 'AppleSDGothicNeoL00'
+      }
+    },
+    MuiMenuItem: {
+      root: {
+        fontFamily: 'AppleSDGothicNeoL00'
+      }
+    }
   },
   colorA: "#5a6482",
   colorWhite: 'white',

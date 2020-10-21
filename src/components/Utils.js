@@ -37,17 +37,17 @@ export default class Utils {
   }
 
   static alertError = e => {
+    console.log(e);
+    let rst = null;
     if(e.response) {
-      if(e.response.data && e.response.data.message) {
-        alert(e.response.data.message);
-      } else if(e.response.data) {
-        alert(e.response.data);
+      if(e.response.data) {
+        rst = e.response.data;
       } else {
-        alert(e.response);
+        rst = e.response;
       }
     } else {
-      alert(e);
+      rst = e;
     }
-    console.log(e);
+    return rst;
   }
 }
