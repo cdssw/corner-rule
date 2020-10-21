@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',    
     padding: '13px 0',
-    overflowX: 'auto',    
+    overflowX: 'auto', 
   },
 }));
 

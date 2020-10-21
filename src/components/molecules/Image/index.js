@@ -30,11 +30,10 @@ const useStyles = makeStyles((theme) => ({
   },
   add: {
     position: 'absolute',
-    border: '1px solid #5a6482',
+    border: '1px solid #949494',
     borderRadius: '5px',
     width: '100%',
     height: '100%',
-    backgroundColor: 'lightgray',
     boxSizing: 'border-box',
     display: 'flex',
     justifyContent: 'space-between',

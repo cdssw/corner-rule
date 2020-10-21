@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { PageTemplate, ImageHeader, TitleHeader, Content, ContentHeader } from "components";
+import { PageTemplate, ImageHeader, TitleHeader, Content, ContentHeader, Confirm } from "components";
 import * as Meet from "../../../services/Meet";
 import * as File from "../../../services/File";
 import * as User from "../../../services/User";
@@ -15,6 +15,9 @@ export default function ContentPage(props) {
   const [imgPath, setImgPath] = useState(null);
   const [avatar, setAvatar] = useState("");
   const [applicationMeet, setApplicationMeet] = useState([]);
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [id, setId] = useState(undefined); // 선택한 사용자 ID
+  const [title, setTitle] = useState(''); // 지원/확정에 따른 질문
 
   useEffect(e => {
     const token = localStorage.getItem("token");
@@ -62,10 +65,10 @@ export default function ContentPage(props) {
     }
   }
 
-  const handleApproval = async userId => {
+  const handleApproval = async e => {
     const body = {
       meetId: meet.data.id,
-      userId: userId
+      userId: id
     }
     const token = JSON.parse(localStorage.getItem("token")).access_token;
     const param = { token, body };
@@ -79,6 +82,26 @@ export default function ContentPage(props) {
       setLoading(false);
     }
   }
+
+  const handleConfirmOpen = id => {
+    if(id !== undefined) {
+      setId(id);
+      setTitle('확정 하시겠습니까?');
+    } else {
+      setId(undefined);
+      setTitle('지원 하시겠습니까?');
+    }
+    setConfirmOpen(true);
+  };
+
+  const handleConfirmCancel = () => {
+    setConfirmOpen(false);
+  };
+
+  const handleConfirmOk = () => {
+    setConfirmOpen(false);
+    id === undefined ? handleApplication() : handleApproval();
+  };
 
   if(!login) return <Redirect to='/login' />
 
@@ -94,8 +117,14 @@ export default function ContentPage(props) {
         userInfo={userInfo}
         meet={meet.data}
         applicationMeet={applicationMeet}
-        onApplication={handleApplication}
-        onApproval={handleApproval}
+        onApplication={handleConfirmOpen}
+        onApproval={handleConfirmOpen}
+      />
+      <Confirm
+        state={confirmOpen}
+        onCancel={handleConfirmCancel}
+        onOk={handleConfirmOk}
+        title={title}
       />
     </PageTemplate>
   );

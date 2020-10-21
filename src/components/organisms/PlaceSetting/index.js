@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   }, 
 }));
 
-export default function PlaceSetting({userInfo, onClick}) {
+export default function PlaceSetting({userInfo, onAddClick, onPlaceClick}) {
   const classes = useStyles();
   const { hopePlaceList } = userInfo;
 
@@ -39,14 +39,14 @@ export default function PlaceSetting({userInfo, onClick}) {
       <div className={classes.placeWrap}>
         {hopePlaceList && hopePlaceList.map((v, i) => {
           return (
-            <Button key={i} id={v.id} classes={{label: classes.buttonTextColor}} color='primary' variant="outlined" onClick={onClick}>
+            <Button key={i} id={v.id} classes={{label: classes.buttonTextColor}} color='primary' variant="outlined" onClick={onPlaceClick}>
               {v.sido + ' ' + v.sgg}
             </Button>  
           );
         })}
         {Array.from(Array(3 - hopePlaceList.length)).map((_, i) => {
           return (
-            <Button key={i} classes={{label: classes.buttonTextColor}} color='primary' variant="outlined" onClick={onClick}>
+            <Button key={i} classes={{label: classes.buttonTextColor}} color='primary' variant="outlined" onClick={onAddClick}>
               <AddIcon />
             </Button>
           )

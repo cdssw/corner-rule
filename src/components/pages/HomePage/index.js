@@ -38,8 +38,9 @@ export default function HomePage() {
     const token = localStorage.getItem("token");
     if(token) { // 로그인 되어 있으면 user정보 복구
       loadUserInfo(JSON.parse(token).access_token);
+    } else {
+      fetchMoreData();
     }
-    fetchMoreData();
     window.scrollTo(0, 0);
   }, []);
 
@@ -55,7 +56,7 @@ export default function HomePage() {
   }, [place]);
 
   useEffect(e => {
-    if(Object.keys(param).length > 0) {
+    if(userInfo && userInfo.hopePlaceList.length === 0 || Object.keys(param).length > 0) {
       fetchMoreData(0);
     }
   }, [param]);

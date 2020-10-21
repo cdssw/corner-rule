@@ -101,16 +101,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Content({userInfo, meet, applicationMeet, onApplication, onApproval}) {
   const classes = useStyles();
 
-  const handleApplication = e => {
-    const check = confirm("지원하시겠습니까?");
-    if(check) onApplication(e);
-  }
-
-  const handleApproval = (userId) => {
-    const check = confirm("확정하시겠습니까?");
-    if(check) onApproval(userId);
-  }
-
   return (
     <div className={classes.root}>
     {meet && 
@@ -171,7 +161,7 @@ export default function Content({userInfo, meet, applicationMeet, onApplication,
             ? meet.approvalDt != null
               ? <div className={classes.approval}>승인완료</div>
               : <Button variant="contained" color='secondary' disabled={true}>승인요청중</Button>
-            : <Button variant="contained" color='secondary' onClick={handleApplication} disabled={meet.approvalYn}>{meet.approvalYn ? '승인요청중' : '지원하기'}</Button>
+            : <Button variant="contained" color='secondary' onClick={() => onApplication()} disabled={meet.approvalYn}>{meet.approvalYn ? '승인요청중' : '지원하기'}</Button>
             }
             
           </div>
@@ -192,7 +182,7 @@ export default function Content({userInfo, meet, applicationMeet, onApplication,
                   </div>
                   <div className={classes.userName}>{m.userNickNm}</div>        
                   <div className={classes.space}></div>
-                  <Button variant="contained" color='secondary' onClick={(e) => handleApproval(m.id)} disabled={m.approvalYn}>{m.approvalYn ? m.approvalDt : '확정'}</Button>
+                  <Button variant="contained" color='secondary' onClick={(e) => onApproval(m.id)} disabled={m.approvalYn}>{m.approvalYn ? m.approvalDt : '확정'}</Button>
                   <div style={{width: '4px'}}></div>
                   {/* <Badge classes={{badge: classes.badge}} badgeContent={2} color="secondary">
                     <Button variant="contained" color='primary'>채팅</Button>

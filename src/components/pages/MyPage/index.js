@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoginUserInfo, setLogin } from "../../../modules/userInfo";
-import { PageTemplate, TitleHeader, MyInfo, PlaceSetting, MyTab } from "components";
+import { PageTemplate, TitleHeader, MyInfo, PlaceSetting, MyTab, Confirm } from "components";
 import * as User from "../../../services/User";
 import * as Meet from "../../../services/Meet";
 import * as File from "../../../services/File";
@@ -16,6 +16,8 @@ export default function MyPage(props) {
   const { login, userInfo } = useSelector(state => state.userInfo, []);
   const [myOpened, setMyOpened] = useState([]);
   const [myApplication, setMyApplication] = useState([]);
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [selectPlace, setSelectPlace] = useState({}); // 선택한 관심지역
 
   useEffect(e => {
     const token = localStorage.getItem("token");
@@ -84,30 +86,27 @@ export default function MyPage(props) {
     history.push("/");
   }
 
-  const handlePlaceClick = async e => {
-    if(e.currentTarget.id) {
-      const check = confirm("희망지역을 삭제하시겠습니까?");
-      if(check) {
-        if(localStorage.getItem('place') === e.currentTarget.innerText)
-          localStorage.setItem("place", "");
+  const handleAddClick = e => {
+    history.push({
+      pathname: "/mypage/hope_place",
+      placeNo: e.currentTarget.id
+    });
+  }
 
-        const token = JSON.parse(localStorage.getItem("token")).access_token;
-        const param = { token, id: e.currentTarget.id };
-        setLoading(true);
-        try {
-          await User.deleteHopePlace(param); // 지역삭제
-          loadUserInfo(token); // 사용자 정보 조회
-        } catch(error) {
-          Utils.alertError(error);
-        } finally {
-          setLoading(false);
-        }
-      }
-    } else {
-      history.push({
-        pathname: "/mypage/hope_place",
-        placeNo: e.currentTarget.id
-      });
+  const handlePlaceClick = async e => {
+    if(localStorage.getItem('place') === selectPlace.place)
+      localStorage.setItem("place", "");
+
+    const token = JSON.parse(localStorage.getItem("token")).access_token;
+    const param = { token, id: selectPlace.id };
+    setLoading(true);
+    try {
+      await User.deleteHopePlace(param); // 지역삭제
+      loadUserInfo(token); // 사용자 정보 조회
+    } catch(error) {
+      Utils.alertError(error);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -119,15 +118,35 @@ export default function MyPage(props) {
     history.push("/mypage/info_change");
   }
 
+  const handleConfirmOpen = e => {
+    setSelectPlace({id: e.currentTarget.id, place: e.currentTarget.innerText});
+    setConfirmOpen(true);
+  };
+
+  const handleConfirmCancel = () => {
+    setConfirmOpen(false);
+  };
+
+  const handleConfirmOk = () => {
+    setConfirmOpen(false);
+    handlePlaceClick();
+  };
+
   if(!login) return <Redirect to='/login' />
 
   return (
     <PageTemplate header={<TitleHeader path="/" {...props}>My Page</TitleHeader>} loading={loading}>
       <MyInfo userInfo={userInfo} onLogout={handleLogout} onMyInfoChange={handleMyInfoChange} onPasswordChange={handlePasswordChange} />
       <div style={{borderBottom: '1px solid #dfdfdf'}}></div><div style={{marginBottom: '10px'}}></div>
-      <PlaceSetting userInfo={userInfo} onClick={handlePlaceClick} />
+      <PlaceSetting userInfo={userInfo} onAddClick={handleAddClick} onPlaceClick={handleConfirmOpen} />
       <div style={{borderBottom: '1px solid #dfdfdf'}}></div><div style={{marginBottom: '10px'}}></div>
       <MyTab myOpened={myOpened} myApplication={myApplication} />
+      <Confirm
+        state={confirmOpen}
+        onCancel={handleConfirmCancel}
+        onOk={handleConfirmOk}
+        title={'관심지역을 삭제하시겠습니까?'}
+      />
     </PageTemplate>
   );
 }

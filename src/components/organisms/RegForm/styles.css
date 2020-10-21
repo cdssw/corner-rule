@@ -1,0 +1,19 @@
+.react_times_button, .modal_container, .time_picker_preview:not(.disabled).active {
+  border-radius: 5px;
+  border: 1px solid #C4C4C4;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+
+.outside_container, .preview_container {
+  font-size: 1rem;
+}
+
+.outside_container.active .modal_container.classic_theme_container {
+  font-size: 1rem;
+  transform: scale(1) translateY(5px);
+  -ms-transform: scale(1) translateY(5px);
+  -moz-transform: scale(1) translateY(5px);
+  -o-transform: scale(1) translateY(5px);
+  -webkit-transform: scale(1) translateY(5px);
+}
