@@ -134,12 +134,12 @@ export default function Content({userInfo, meet, applicationMeet, onApplication,
             <LocationOnIcon />
             <div className={classes.detail}>
               {meet.address.address1}&nbsp;
-              {userInfo.username !== meet.user.username
+              {userInfo && userInfo.username !== meet.user.username
                 && meet.approvalYn
                 && meet.approvalDt != null
                 && meet.address.address2
               }
-              {userInfo.username === meet.user.username
+              {userInfo && userInfo.username === meet.user.username
                 && meet.address.address2
               }
             </div>
@@ -150,8 +150,7 @@ export default function Content({userInfo, meet, applicationMeet, onApplication,
           <div>{meet.content.split('\n').map((line, i) => <span key={i}>{line}<br/></span>)}</div>
         </div>
         <div style={{borderBottom: '1px solid #dfdfdf', width: '100%'}}></div><div style={{marginBottom: '20px'}}></div>
-        {userInfo.username !== meet.user.username
-         ?
+        {userInfo && userInfo.username !== meet.user.username &&
           <div className={classes.buttonWrap}>
             {/* <Badge classes={{badge: classes.badge}} badgeContent={4} color="secondary">
               <Button variant="contained" color='primary'>채팅문의</Button>
@@ -163,9 +162,9 @@ export default function Content({userInfo, meet, applicationMeet, onApplication,
               : <Button variant="contained" color='secondary' disabled={true}>승인요청중</Button>
             : <Button variant="contained" color='secondary' onClick={() => onApplication()} disabled={meet.approvalYn}>{meet.approvalYn ? '승인요청중' : '지원하기'}</Button>
             }
-            
           </div>
-          :
+        }
+        {userInfo && userInfo.username === meet.user.username &&
           <>
             <div className={classes.wrap}>지원자 및 문의</div>
             {applicationMeet.map((m, index) => {

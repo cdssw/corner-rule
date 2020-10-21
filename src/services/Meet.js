@@ -24,7 +24,10 @@ export async function getMeetSearch(props) {
 }
 
 export async function getMeet(props) {
-  return axios.get(url + "/" + props.id, {headers: { Authorization: "Bearer " + props.token }});
+  if(props.token === null)
+    return axios.get(url + "/" + props.id);
+  else
+    return axios.get(url + "/" + props.id, {headers: { Authorization: "Bearer " + props.token }});
 }
 
 export async function postMeet(props) {

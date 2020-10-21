@@ -58,6 +58,7 @@ export default function LoginForm({username, password, onInput, onLogin, saveId,
           }}
           fullWidth={true}
           variant="outlined"
+          placeholder="아이디를 입력하세요."
           name="username"
           onChange={onInput} value={username}
         />
@@ -75,6 +76,7 @@ export default function LoginForm({username, password, onInput, onLogin, saveId,
           }}
           fullWidth={true}
           variant="outlined"
+          placeholder="비밀번호를 입력하세요."
           name="password"
           onChange={onInput} value={password}
         />        

@@ -10,7 +10,7 @@ import Utils from "../../Utils";
 
 export default function ContentPage(props) {
   const [loading, setLoading] = useState(false);
-  const { login, userInfo } = useSelector(state => state.userInfo, []);
+  const { userInfo } = useSelector(state => state.userInfo, []);
   const [meet, setMeet] = useState({});
   const [imgPath, setImgPath] = useState(null);
   const [avatar, setAvatar] = useState("");
@@ -21,9 +21,7 @@ export default function ContentPage(props) {
 
   useEffect(e => {
     const token = localStorage.getItem("token");
-    if(login) {
-      getMeet(JSON.parse(token).access_token);
-    }
+    token ? getMeet(JSON.parse(token).access_token) : getMeet(null);
   }, []);
 
   const getMeet = async token => {
@@ -39,8 +37,10 @@ export default function ContentPage(props) {
       const avatarPath = await User.getUserAvatar({username: meet.data.user.username, token: token});
       setAvatar(avatarPath.data);
 
-      const applicationMeetUser = await Meet.getUserApplicationMeet({id: meet.data.id, token: token});
-      setApplicationMeet(applicationMeetUser.data);
+      if(token !== null) {
+        const applicationMeetUser = await Meet.getUserApplicationMeet({id: meet.data.id, token: token});
+        setApplicationMeet(applicationMeetUser.data);
+      }
     } catch(error) {
       Utils.alertError(error);
     } finally {
@@ -103,15 +103,13 @@ export default function ContentPage(props) {
     id === undefined ? handleApplication() : handleApproval();
   };
 
-  if(!login) return <Redirect to='/login' />
-
   return (
     <PageTemplate imageWrap={imgPath && imgPath.data.length > 0 && true}
       header={imgPath && imgPath.data.length > 0
         ? <ImageHeader path={props.location.state.path ? props.location.state.path : "/"} imgPath={imgPath} {...props} />
         : <TitleHeader path={props.location.state.path ? props.location.state.path : "/"} {...props}>상세보기</TitleHeader>
       } loading={loading}>
-      <ContentHeader userInfo={userInfo} meet={meet.data} avatar={avatar} />
+      <ContentHeader meet={meet.data} avatar={avatar} />
       <div style={{borderBottom: '1px solid #dfdfdf'}}></div><div style={{marginBottom: '20px'}}></div>
       <Content
         userInfo={userInfo}

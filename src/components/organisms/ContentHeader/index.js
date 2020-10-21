@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '0 10px',
     borderRadius: '12px',
     backgroundColor: '#FFC7E3',
-    height: '21px',
+    height: '22px',
     display: 'flex',
     alignItems: 'center',
     '& .cost': {
@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ContentHeader({userInfo, meet, avatar}) {
+export default function ContentHeader({meet, avatar}) {
   const classes = useStyles();
   return (
     <div className={classes.root}>

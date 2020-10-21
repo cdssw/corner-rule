@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as Authorization from "../../../services/Authorization";
 import * as User from "../../../services/User";
 import { setLoginUserInfo, setLogin } from "../../../modules/userInfo";
@@ -18,6 +18,14 @@ export default function LoginPage() {
   const [alertOpen, setAlertOpen] = useState(false);
   const [alertContent, setAlertContent] = useState('');
 
+  useEffect(e => {
+    const username = localStorage.getItem('username');
+    if(username !== '') {
+      setLoginData({username: username, password: null});
+      setSaveId(true);
+    }
+  }, []);
+
   const handleSaveId = (event) => {
     setSaveId(event.target.checked);
   };
@@ -30,12 +38,18 @@ export default function LoginPage() {
   };
 
   const handleLogin = async event => {
+    if(loginData.username === '' || loginData.password === '') {
+      setAlertContent('아이디와 비밀번호를 입력하세요.');
+      setAlertOpen(true);
+      return;
+    }
+
     setLoading(true);
     try {
       const response = await Authorization.loginCall(loginData);
       if(response === undefined) {
         setLoginData({
-          username: '',
+          username: localStorage.getItem('username'),
           password: ''
         });
         return;
@@ -44,7 +58,13 @@ export default function LoginPage() {
       const userInfo = await User.getUser(response.data.access_token);
       dispatch(setLoginUserInfo(userInfo.data)); // 가져온 user 정보를 redux에 저장
       dispatch(setLogin(true)); // login 상태로 처리
+
+      saveId ? localStorage.setItem('username', loginData.username) : localStorage.setItem('username', '');
     } catch(e) {
+      setLoginData({
+        username: localStorage.getItem('username'),
+        password: ''
+      });
       let msg = null;
       if(e.response.data.error_description === 'Bad credentials') {
         msg = '아이디와 비밀번호를 확인하고 다시 로그인 하세요.';
