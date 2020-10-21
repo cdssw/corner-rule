@@ -5,6 +5,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { InputIcon } from "components";
 import FormControl from '@material-ui/core/FormControl';
+import { InputAdornment, TextField } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,7 +50,22 @@ export default function PlaceSearch({userInfo, place, onPlace, onSearch, search,
         </div>
       }
       <div className={classes.searchWrap}>
-        <InputIcon icon={<SearchIcon />} name="search" onChange={onSearch} value={search} onKeyPress={onKeyPress} />
+        <TextField
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <SearchIcon color="disabled" />
+              </InputAdornment>
+            ),
+          }}
+          fullWidth={true}
+          variant="outlined"
+          placeholder="검색어를 입력하세요."
+          name="search"
+          value={search}
+          onChange={onSearch}
+          onKeyPress={onKeyPress}
+        />
       </div>
     </div>
   );
