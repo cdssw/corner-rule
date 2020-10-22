@@ -10,9 +10,9 @@ export default function SignupPolicyPage(props) {
 
   const [state, setState] = useState({
     all: false,
-    service: false,
-    private: false,
-    profile: false,    
+    serviceYn: false,
+    privateYn: false,
+    profileYn: false,    
     serviceValid: null,
     privateValid: null,
   });
@@ -41,11 +41,11 @@ export default function SignupPolicyPage(props) {
         setState({
           ...state,
           all: e.target.value,
-          service: e.target.value,
+          serviceYn: e.target.value,
           serviceValid: e.target.value,
-          private: e.target.value,
+          privateYn: e.target.value,
           privateValid: e.target.value,
-          profile: e.target.value,
+          profileYn: e.target.value,
         });
         break;
       default:

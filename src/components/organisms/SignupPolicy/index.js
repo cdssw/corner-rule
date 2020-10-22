@@ -120,7 +120,7 @@ export default function SignupPolicy(props) {
           className={classes.checkboxWrap}
           classes={{label: classes.label}}
           control={
-            <Checkbox name="service" checked={props.state.service} className={classes.checkbox} onChange={handleCheckBox} />
+            <Checkbox name="service" checked={props.state.serviceYn} className={classes.checkbox} onChange={handleCheckBox} />
           }
           label='[필수] 서비스 약관'
         />
@@ -131,7 +131,7 @@ export default function SignupPolicy(props) {
           className={classes.checkboxWrap}
           classes={{label: classes.label}}
           control={
-            <Checkbox name="private" checked={props.state.private} className={classes.checkbox} onChange={handleCheckBox} />
+            <Checkbox name="private" checked={props.state.privateYn} className={classes.checkbox} onChange={handleCheckBox} />
           }
           label='[필수] 개인정보 수집 및 이용 동의'
         />
@@ -142,7 +142,7 @@ export default function SignupPolicy(props) {
           className={classes.checkboxWrap}
           classes={{label: classes.label}}
           control={
-            <Checkbox name="profile" checked={props.state.profile} className={classes.checkbox} onChange={handleCheckBox} />
+            <Checkbox name="profile" checked={props.state.profileYn} className={classes.checkbox} onChange={handleCheckBox} />
           }
           label='[선택] 프로필 정보 추가 수집 동의'
         />

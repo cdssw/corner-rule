@@ -122,7 +122,8 @@ export default function SignupStep3Page(props) {
       mainTalent: state.mainTalent,
       talent: state.talent.join(','),
       interest: state.interest.join(','),
-      avatarPath: state.avatarPath
+      avatarPath: state.avatarPath,
+      policy: policy
     }
     setLoading(true);
     try {
