@@ -117,7 +117,6 @@ export default function ChatPage(props) {
           }}
           onDisconnect={() => console.log('disconnect')}
           headers={{'Authorization': token}}
-          autoReconnect={false}
         />
       }
     </PageTemplate>
