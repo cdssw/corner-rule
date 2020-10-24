@@ -8,9 +8,9 @@ const useStyles = makeStyles((theme) => ({
   },
   headerWrap: {
     backgroundColor: theme.colorA,
-    display: 'absolute',
+    display: 'flex',
     justifyContent: 'center',
-    position: 'fixed',
+    position: 'absolute',
     transform: 'translate3d(0,0,0)',
     top: 0,
     width: '100%',
