@@ -81,8 +81,8 @@ export default function ChatTemplate(props) {
 
   return (
     <div className={classes.root}>
-      {props.header && <header className={headerClass}>{props.header}</header>}
-      <section className={contentClass}>
+      {props.header && <header className={classes.headerWrap}>{props.header}</header>}
+      <section className={classes.contentWrap}>
         <div className={content}>
           {props.loading &&
             <div className={classes.loading}>
@@ -92,7 +92,7 @@ export default function ChatTemplate(props) {
           {props.children}
         </div>
       </section>
-      {props.footer && <footer className={footerClass}>{props.footer}</footer>}
+      {props.footer && <footer className={classes.footerWrap}>{props.footer}</footer>}
     </div>
   );
 }
