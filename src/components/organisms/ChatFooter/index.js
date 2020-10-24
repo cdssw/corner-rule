@@ -43,6 +43,7 @@ function Footer(props) {
     <div className={classes.root}>
       <div className={classes.wrap}>
         <OutlinedInput 
+          inputRef={props.inputRef}
           className={classes.message}
           classes={{root: classes.messageRoot, input: classes.messageInput}}
           name="message" placeholder="메시지를 입력하세요." variant="outlined"

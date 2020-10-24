@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { PageTemplate, TitleHeader, ChatContent } from "components";
-import { useHistory } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Avatar } from '@material-ui/core';
 import Person from "@material-ui/icons/Person";
@@ -39,6 +39,7 @@ export default function ChatPage(props) {
   const [chat, setChat] = useState([]);
 
   const clientRef = useRef();
+  const inputRef = useRef();
   
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -69,6 +70,7 @@ export default function ChatPage(props) {
       }
 
       clientRef.current.sendMessage("/app/message", JSON.stringify(msgData));
+      inputRef.current.focus();
       return true;
     } catch(e) {
       console.log(e);
@@ -79,11 +81,11 @@ export default function ChatPage(props) {
   const handleBack = e => {
     history.push({
       pathname: "/content/" + props.match.params.id,
-      state: {path: props.path}
+      state: {path: null}
     });
   }
 
-  if(!login) return <Redirect to='/login' />
+  if(!login) return <Redirect to='/' />
   
   return (
     <PageTemplate
@@ -95,6 +97,7 @@ export default function ChatPage(props) {
           onMessageChange={handleMessageChange}
           onHeightChange={handleFooterHeightChange}
           onMessageSend={handleMessageSend}
+          inputRef={inputRef}
         />
       }
     >

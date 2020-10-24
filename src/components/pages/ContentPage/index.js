@@ -112,7 +112,7 @@ export default function ContentPage(props) {
       }
     } else {
       chatInfo = {
-        avatarPath: avatar, // 글 작성자 정보
+        avatarPath: applicationMeet.find(v => { return v.id === userId }).avatarPath,
         userNickNm: applicationMeet.find(v => { return v.id === userId }).userNickNm,
       }
     }
