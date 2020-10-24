@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { withResizeDetector } from "react-resize-detector";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,15 +56,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ChatContent(props) {
+function Content(props) {
   const classes = useStyles();
 
   useEffect(e => {
     window.scrollTo(0, document.body.scrollHeight);
   }, [props.bottom, props.chat]);
 
+  useEffect(() => {
+    props.onHeightChange(props.height);
+  }, [props.height]);
+
   return (
-    <div className={classes.root} style={{marginBottom: props.bottom}}>
+    <div className={classes.root} style={{marginBottom: props.bottom}} ref={props.contentRef}>
       <div className={classes.date}>2020년 10월 22일 목요일</div>
       {props.chat.map((m, i) => {
         if(m.sender === props.userInfo.username) {
@@ -101,5 +106,13 @@ export default function ChatContent(props) {
         }
       })}
     </div>
+  );
+}
+
+const AdaptiveWithDetector = withResizeDetector(Content);
+
+export default function ChatFooter(props) {
+  return (
+    <AdaptiveWithDetector {...props} />
   );
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { OutlinedInput  } from '@material-ui/core';
 import { withResizeDetector } from "react-resize-detector";
@@ -51,7 +51,7 @@ function Footer(props) {
           value={props.message}
           onChange={props.onMessageChange}
           onFocus={() => {
-            console.log('onfocus');
+            console.log('on focus');
           }}
         />
         <div style={{width: '14px'}}></div>

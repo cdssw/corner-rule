@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { PageTemplate, TitleHeader, ChatContent } from "components";
+import { ChatTemplate, TitleHeader, ChatContent } from "components";
 import { Redirect, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Avatar } from '@material-ui/core';
@@ -34,6 +34,7 @@ export default function ChatPage(props) {
   const history = useHistory();
   const { login, userInfo } = useSelector(state => state.userInfo, []);
   const [bottom, setBottom] = useState(50);
+  const [contentHeight, setContentHeight] = useState(0);
   const [message, setMessage] = useState('');
   const [token, setToken] = useState('');
   const [chat, setChat] = useState([]);
@@ -48,6 +49,10 @@ export default function ChatPage(props) {
 
   const handleFooterHeightChange = e => {
     setBottom(e);
+  }
+
+  const handleContentHeightChange = e => {
+    setContentHeight(e);
   }
 
   const handleMessageChange = e => {
@@ -88,7 +93,7 @@ export default function ChatPage(props) {
   if(!login) return <Redirect to='/' />
   
   return (
-    <PageTemplate
+    <ChatTemplate
       header={<TitleHeader onBack={handleBack} {...props}><ChatHeader {...props} /></TitleHeader>}
       footer={
         <ChatFooter
@@ -105,6 +110,7 @@ export default function ChatPage(props) {
         bottom={bottom}
         userInfo={userInfo}
         chat={chat}
+        onHeightChange={handleContentHeightChange}
       />
 
       {token &&
@@ -122,7 +128,7 @@ export default function ChatPage(props) {
           headers={{'Authorization': token}}
         />
       }
-    </PageTemplate>
+    </ChatTemplate>
   );
 }
 
