@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     position: 'fixed',
-    position: 'fixed',
+    transform: 'translate3d(0,0,0)',
     top: 0,
     width: '100%',
     height: '50px',
@@ -54,6 +54,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'fixed',
     bottom: 0,
     width: '100%',
+    transform: 'translate3d(0,0,0)',
   },
 }));
 
