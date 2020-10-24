@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { CircularProgress } from '@material-ui/core';
+import classNames from "classnames";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
   contentWrap: {
     display: 'flex',
     justifyContent: 'center',
+    width: '100%',
   },
   content: {
     marginTop: '50px',
@@ -49,11 +51,23 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     zIndex: 1,
   },
-  footer: {
+  footerWrap: {
     position: 'fixed',
     bottom: 0,
     width: '100%',
   },
+  safariHeader: {
+    position: 'absolute',
+    top: '200px',
+  },
+  safariContent: {
+    position: 'absolute',
+    top: '200px',
+  },
+  safariFooter: {
+    position: 'absolute',
+    bottom: '200px',
+  }
 }));
 
 export default function ChatTemplate(props) {
@@ -61,10 +75,14 @@ export default function ChatTemplate(props) {
 
   const content = props.imageWrap ? classes.imageContent : classes.content;
 
+  const headerClass = classNames(classes.headerWrap, props.safari && classes.safariHeader);
+  const contentClass = classNames(classes.contentWrap, props.safari && classes.safariContent);
+  const footerClass = classNames(classes.footerWrap, props.safari && classes.safariFooter);
+
   return (
     <div className={classes.root}>
-      {props.header && <header className={classes.headerWrap}>{props.header}</header>}
-      <section className={classes.contentWrap}>
+      {props.header && <header className={headerClass}>{props.header}</header>}
+      <section className={contentClass}>
         <div className={content}>
           {props.loading &&
             <div className={classes.loading}>
@@ -74,7 +92,7 @@ export default function ChatTemplate(props) {
           {props.children}
         </div>
       </section>
-      {props.footer && <footer className={classes.footer}>{props.footer}</footer>}
+      {props.footer && <footer className={footerClass}>{props.footer}</footer>}
     </div>
   );
 }

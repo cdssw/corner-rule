@@ -38,6 +38,7 @@ export default function ChatPage(props) {
   const [message, setMessage] = useState('');
   const [token, setToken] = useState('');
   const [chat, setChat] = useState([]);
+  const [safari, setSafari] = useState(false);
 
   const clientRef = useRef();
   const inputRef = useRef();
@@ -67,7 +68,7 @@ export default function ChatPage(props) {
   const handleMessageSend = e => {
     try {
       const msgData = {
-        'meetId': 1,
+        'meetId': props.match.params.id,
         'leaderName': 'cdssw@naver.com',
         'username': 'loh002@naver.com',
         'sender': userInfo.username,
@@ -90,6 +91,10 @@ export default function ChatPage(props) {
     });
   }
 
+  const handleSafari = e => {
+    setSafari(e);
+  }
+
   if(!login) return <Redirect to='/' />
   
   return (
@@ -102,9 +107,11 @@ export default function ChatPage(props) {
           onMessageChange={handleMessageChange}
           onHeightChange={handleFooterHeightChange}
           onMessageSend={handleMessageSend}
+          onSafari={handleSafari}
           inputRef={inputRef}
         />
       }
+      safari={safari}
     >
       <ChatContent
         bottom={bottom}
