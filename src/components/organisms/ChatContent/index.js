@@ -63,7 +63,7 @@ export default function ChatContent(props) {
   }, [props.bottom, props.chat]);
 
   return (
-    <div className={classes.root} style={{marginBottom: props.bottom ? props.bottom + 20 : 20}}>
+    <div className={classes.root} style={{marginBottom: props.bottom}}>
       <div className={classes.date}>2020년 10월 22일 목요일</div>
       {props.chat.map((m, i) => {
         if(m.sender === props.userInfo.username) {
