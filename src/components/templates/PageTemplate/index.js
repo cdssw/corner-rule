@@ -54,6 +54,11 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     zIndex: 1,
   },
+  footer: {
+    position: 'fixed',
+    bottom: 0,
+    width: '100%',
+  },
 }));
 
 export default function PageTemplate(props) {
@@ -85,6 +90,7 @@ export default function PageTemplate(props) {
           {props.children}
         </div>
       </section>
+      {props.footer && <footer className={classes.footer}>{props.footer}</footer>}
     </div>
   );
 }

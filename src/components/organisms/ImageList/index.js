@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Image from '../../molecules/Image';
+import { Image } from "components";
 
 const useStyles = makeStyles((theme) => ({
   root: {

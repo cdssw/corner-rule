@@ -1,14 +1,14 @@
-/*eslint no-restricted-globals: "off"*/
 import React, { useState, useEffect } from 'react';
-import { Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { PageTemplate, ImageHeader, TitleHeader, Content, ContentHeader, Confirm } from "components";
 import * as Meet from "../../../services/Meet";
 import * as File from "../../../services/File";
 import * as User from "../../../services/User";
 import Utils from "../../Utils";
+import { useHistory } from 'react-router-dom';
 
 export default function ContentPage(props) {
+  const history = useHistory();
   const [loading, setLoading] = useState(false);
   const { userInfo } = useSelector(state => state.userInfo, []);
   const [meet, setMeet] = useState({});
@@ -103,6 +103,25 @@ export default function ContentPage(props) {
     id === undefined ? handleApplication() : handleApproval();
   };
 
+  const handleChatClick = (userId) => {
+    let chatInfo = {};
+    if(userInfo.username !== meet.data.user.username) {
+      chatInfo = {
+        avatarPath: avatar, // 글 작성자 정보
+        userNickNm: meet.data.user.userNickNm,
+      }
+    } else {
+      chatInfo = {
+        avatarPath: avatar, // 글 작성자 정보
+        userNickNm: applicationMeet.find(v => { return v.id === userId }).userNickNm,
+      }
+    }
+    history.push({
+      pathname: '/chat/' + meet.data.id,
+      chatInfo: chatInfo
+    });
+  };
+
   return (
     <PageTemplate imageWrap={imgPath && imgPath.data.length > 0 && true}
       header={imgPath && imgPath.data.length > 0
@@ -117,6 +136,7 @@ export default function ContentPage(props) {
         applicationMeet={applicationMeet}
         onApplication={handleConfirmOpen}
         onApproval={handleConfirmOpen}
+        onChatClick={handleChatClick}
       />
       <Confirm
         state={confirmOpen}

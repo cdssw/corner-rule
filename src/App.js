@@ -17,7 +17,8 @@ import {
   MyInfoChangePage,
   RegPage, 
   ContentPage,
-  AddressPage
+  AddressPage,
+  ChatPage,
 } from "components";
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
         <Route exact path="/reg" component={RegPage}/>
         <Route exact path="/content/:id" component={ContentPage}/>
         <Route exact path="/address" component={AddressPage}/>
+        <Route exact path="/chat/:id" component={ChatPage}/>
       </Switch>
     </div>
   );
