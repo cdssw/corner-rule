@@ -10,8 +10,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.colorA,
     display: 'flex',
     justifyContent: 'center',
-    position: 'absolute',
-    transform: 'translate3d(0,0,0)',
+    position: 'fixed',
     top: 0,
     width: '100%',
     height: '50px',
@@ -51,10 +50,9 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 1,
   },
   footer: {
-    position: 'absolute',
+    position: 'fixed',
     bottom: 0,
     width: '100%',
-    transform: 'translate3d(0,0,0)',
   },
 }));
 
