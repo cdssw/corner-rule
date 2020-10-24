@@ -60,7 +60,7 @@ export default function ChatContent(props) {
 
   useEffect(e => {
     window.scrollTo(0, document.body.scrollHeight);
-  }, [props.bottom]);
+  }, [props.bottom, props.chat]);
 
   return (
     <div className={classes.root} style={{marginBottom: props.bottom ? props.bottom + 20 : 20}}>
