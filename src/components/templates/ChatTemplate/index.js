@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
   },
   headerWrap: {
     backgroundColor: theme.colorA,
-    display: 'flex',
+    display: 'absolute',
     justifyContent: 'center',
     position: 'fixed',
     transform: 'translate3d(0,0,0)',
@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 1,
   },
   footer: {
-    position: 'fixed',
+    position: 'absolute',
     bottom: 0,
     width: '100%',
     transform: 'translate3d(0,0,0)',
