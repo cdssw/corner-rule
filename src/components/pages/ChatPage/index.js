@@ -5,9 +5,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Avatar } from '@material-ui/core';
 import Person from "@material-ui/icons/Person";
 import ChatFooter from '../../organisms/ChatFooter';
-
 import SockJsClient from "react-stomp";
 import { useSelector } from 'react-redux';
+import * as Chat from "../../../services/Chat";
+import Utils from "../../Utils";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,6 +41,9 @@ export default function ChatPage(props) {
   const [chat, setChat] = useState([]);
   const [safari, setSafari] = useState(false);
   const [topic, setTopic] = useState('');
+  const [page, setPage] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const size = 10;
 
   const clientRef = useRef();
   const inputRef = useRef();
@@ -47,11 +51,27 @@ export default function ChatPage(props) {
   useEffect(() => {
     const token = localStorage.getItem("token");
     setToken(JSON.parse(token).access_token); // header에 전송시 필요    
-  }, [])
+    fetchMoreData();
+  }, []);
 
   useEffect(() => {
     setTopic(`/topic/${props.match.params.id}/${props.location.chatInfo.leaderName}-${props.location.chatInfo.chatName}`)
   }, [props.location.chatInfo])
+
+  const fetchMoreData = async e => {
+    setLoading(true);
+    try {
+      const token = localStorage.getItem("token");
+      const response = await Chat.getChatListByPage({token: JSON.parse(token).access_token, page: page, size: size, sort: 'id,desc'});
+      console.log(response);
+      setPage(page + 1); // infinite scroll시 다음페이지 조회
+      setChat(chat.concat(response.data.content));
+    } catch(error) {
+      Utils.alertError(error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   const handleFooterHeightChange = e => {
     setBottom(e);
@@ -104,6 +124,7 @@ export default function ChatPage(props) {
   
   return (
     <ChatTemplate
+      loading={loading}
       header={<TitleHeader onBack={handleBack} {...props}><ChatHeader {...props} /></TitleHeader>}
       footer={
         <ChatFooter

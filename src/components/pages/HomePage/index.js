@@ -108,7 +108,7 @@ export default function HomePage() {
     setLoading(true);
     try {
       const p = init === 0 ? init : page;
-      const response = await Meet.getMeetSearch({body: param, page: p, size: size, sort: 'modifyDt,desc'});
+      const response = await Meet.getMeetSearch({body: param, page: p, size: size, sort: 'id,desc'});
       const data = await getImagePath(response.data.content);
       setPage(p + 1); // infinite scroll시 다음페이지 조회
       setItems(init === 0 ? data : items.concat(data));

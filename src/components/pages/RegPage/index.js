@@ -235,7 +235,7 @@ export default function RegPage(props) {
 
   return (
     <PageTemplate header={<TitleHeader path='/' {...props}>글쓰기</TitleHeader>} loading={loading}>
-      {/* <ImageList imgList={state.imgList} onFileChange={handleFileChange} onRemoveClick={handleRemoveClick} /> */}
+      <ImageList imgList={state.imgList} onFileChange={handleFileChange} onRemoveClick={handleRemoveClick} />
       {fileUploader && <FileUploader total={total} current={current} value={value} />}
       <div style={{borderBottom: '1px solid #dfdfdf'}} />
       <div style={{marginBottom: '20px'}}></div>
