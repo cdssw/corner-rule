@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { CircularProgress } from '@material-ui/core';
-import classNames from "classnames";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     width: '100%',
-    marginBottom: '55px',
   },
   content: {
     marginTop: '50px',
@@ -53,30 +51,16 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 1,
   },
   footerWrap: {
-    position: 'fixed',
+    position: 'absolute',
     bottom: 0,
     width: '100%',
   },
-  safariFooter: {
-    position: 'absolute',
-  }
 }));
 
 export default function ChatTemplate(props) {
   const classes = useStyles();
-  const [footerClass, setFooterClass] = useState(classes.footerWrap);
 
   const content = props.imageWrap ? classes.imageContent : classes.content;
-
-  useEffect(() => {
-    if(props.safari) {
-      const safariFooter = {
-        position: 'absoulte',
-        top: window.innerHeight + window.pageYOffset - 55,
-      }
-      setFooterClass(safariFooter);
-    }
-  }, [props.safari]);
 
   return (
     <div className={classes.root}>
@@ -91,7 +75,7 @@ export default function ChatTemplate(props) {
           {props.children}
         </div>
       </section>
-      {props.footer && <footer className={footerClass}>{props.footer}</footer>}
+      {props.footer && <footer className={classes.footerWrap}>{props.footer}</footer>}
     </div>
   );
 }

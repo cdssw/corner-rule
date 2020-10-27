@@ -72,7 +72,7 @@ function Content(props) {
   }, [props.height]);
 
   return (
-    <div className={classes.root} style={{marginBottom: props.bottom}} ref={props.contentRef}>
+    <div className={classes.root} ref={props.contentRef}>
       <div className={classes.date}>2020년 10월 22일 목요일</div>
       {props.chat.map((m, i) => {
         if(m.sender === props.userInfo.username) {
