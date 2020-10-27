@@ -120,7 +120,7 @@ export default function ChatPage(props) {
     setSafari(e);
   }
 
-  if(!login) return <Redirect to='/' />
+  // if(!login) return <Redirect to='/' />
   
   return (
     <ChatTemplate

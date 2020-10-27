@@ -99,6 +99,7 @@ export default function HomePage() {
     } catch(error) {
       console.log(error);
       localStorage.removeItem('token');
+      fetchMoreData();
     } finally {
       setLoading(false);
     }

@@ -51,8 +51,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 1,
   },
   footerWrap: {
-    position: 'fixed',
-    bottom: 0,
+    position: 'absolute',
     width: '100%',
   },
 }));
