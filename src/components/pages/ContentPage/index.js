@@ -104,16 +104,23 @@ export default function ContentPage(props) {
   };
 
   const handleChatClick = (userId) => {
-    let chatInfo = {};
+    let chatInfo = {};    
     if(userInfo.username !== meet.data.user.username) {
+      // 작성자가 아닌경우
       chatInfo = {
-        avatarPath: avatar, // 글 작성자 정보
+        avatarPath: avatar,
         userNickNm: meet.data.user.userNickNm,
+        leaderName: meet.data.user.username,
+        chatName: userInfo.username,
       }
     } else {
+      // 작성자 인경우
+      const user = applicationMeet.find(v => { return v.id === userId });
       chatInfo = {
-        avatarPath: applicationMeet.find(v => { return v.id === userId }).avatarPath,
-        userNickNm: applicationMeet.find(v => { return v.id === userId }).userNickNm,
+        avatarPath: user.avatarPath,
+        userNickNm: user.userNickNm,
+        leaderName: userInfo.username,
+        chatName: user.username,
       }
     }
     history.push({

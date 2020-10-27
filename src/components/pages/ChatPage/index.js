@@ -39,14 +39,19 @@ export default function ChatPage(props) {
   const [token, setToken] = useState('');
   const [chat, setChat] = useState([]);
   const [safari, setSafari] = useState(false);
+  const [topic, setTopic] = useState('');
 
   const clientRef = useRef();
   const inputRef = useRef();
   
   useEffect(() => {
     const token = localStorage.getItem("token");
-    setToken(JSON.parse(token).access_token); // header에 전송시 필요
+    setToken(JSON.parse(token).access_token); // header에 전송시 필요    
   }, [])
+
+  useEffect(() => {
+    setTopic(`/topic/${props.match.params.id}/${props.location.chatInfo.leaderName}-${props.location.chatInfo.chatName}`)
+  }, [props.location.chatInfo])
 
   const handleFooterHeightChange = e => {
     setBottom(e);
@@ -69,8 +74,8 @@ export default function ChatPage(props) {
     try {
       const msgData = {
         'meetId': props.match.params.id,
-        'leaderName': 'cdssw@naver.com',
-        'username': 'loh002@naver.com',
+        'leaderName': props.location.chatInfo.leaderName,
+        'username': props.location.chatInfo.chatName,
         'sender': userInfo.username,
         'message': message,
       }
@@ -121,7 +126,7 @@ export default function ChatPage(props) {
       />
 
       {token &&
-        <SockJsClient url={process.env.REACT_APP_WS_CHAT} topics={['/topic/1/cdssw@naver.com-loh002@naver.com']}
+        <SockJsClient url={process.env.REACT_APP_WS_CHAT} topics={[topic]}
           ref={clientRef}  
           onMessage={handleMessageReceive}
           onConnect={() => console.log('connect')}
@@ -149,7 +154,7 @@ function ChatHeader(props) {
         alt={props.location.chatInfo.userNickNm}
         src={props.location.chatInfo.avatarPath && process.env.REACT_APP_IMAGE + props.location.chatInfo.avatarPath}
       >
-        {props.location.chatInfo.avatarPath === '' && <Person />}
+        {(props.location.chatInfo.avatarPath === null || props.location.chatInfo.avatarPath === '') && <Person />}
       </Avatar>
       <div style={{width: '5px'}} />
       <div className={classes.userName}>{props.location.chatInfo.userNickNm}</div>
