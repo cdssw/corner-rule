@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '6px 14px',
   },
   messageInput: {
-    fontSize: '0.875rem',
+    fontSize: '1rem',
     fontFamily: 'AppleSDGothicNeoL00',
   },
 }));
