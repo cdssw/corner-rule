@@ -10,7 +10,7 @@
 
 html, body, #root, .App {
   -webkit-overflow-scrolling : touch !important;
-  height: 100vh;
+  height: 100%;
   background-color: white;
 }
 

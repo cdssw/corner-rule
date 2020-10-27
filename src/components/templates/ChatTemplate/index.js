@@ -5,7 +5,7 @@ import classNames from "classnames";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: '100vh',
+    // height: '100vh',
   },
   headerWrap: {
     backgroundColor: theme.colorA,
@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     width: '100%',
+    marginBottom: '55px',
   },
   content: {
     marginTop: '50px',
