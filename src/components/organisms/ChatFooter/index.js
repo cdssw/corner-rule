@@ -50,8 +50,7 @@ function Footer(props) {
           multiline={true}
           value={props.message}
           onChange={props.onMessageChange}
-          onTouchStart={() => { props.onSafari(false); }}
-          onScroll={() => { props.onSafari(true); }}
+          onTouchMove={(e) => e.preventDefault()}
         />
         <div style={{width: '14px'}}></div>
         <img alt="message_send" src={process.env.PUBLIC_URL + props.message ? "/images/ico_send_active.svg" : "/images/ico_send.svg"}
