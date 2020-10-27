@@ -8,6 +8,10 @@
   src: url('./styles/fonts/AppleSDGothicNeoR.ttf') format('truetype');
 }
 
+html {
+  height: -webkit-fill-available;
+}
+
 html, body, #root, .App {
   background-color: white;
 }
@@ -18,6 +22,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
 }
 
 code {
