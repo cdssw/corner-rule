@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '6px 14px',
   },
   messageInput: {
-    fontSize: '1rem',
+    fontSize: '16px',
     fontFamily: 'AppleSDGothicNeoL00',
   },
 }));
@@ -50,7 +50,6 @@ function Footer(props) {
           multiline={true}
           value={props.message}
           onChange={props.onMessageChange}
-          onTouchMove={(e) => e.preventDefault()}
         />
         <div style={{width: '14px'}}></div>
         <img alt="message_send" src={process.env.PUBLIC_URL + props.message ? "/images/ico_send_active.svg" : "/images/ico_send.svg"}
