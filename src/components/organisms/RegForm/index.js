@@ -111,7 +111,7 @@ export default function RegForm(props) {
 
   return (
     <div className={classes.root}>
-      <label className={classes.label}>제목</label>
+      {/* <label className={classes.label}>제목</label> */}
       <TextField 
         name="title" placeholder="제목을 입력하세요." variant="outlined" fullWidth={true}
         error={props.state.titleValid !== null && !props.state.titleValid}
