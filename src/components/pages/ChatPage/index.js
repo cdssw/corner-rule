@@ -81,12 +81,13 @@ export default function ChatPage(props) {
     setContentHeight(e);
   }
 
-  const handleMessageChange = msg => {
-    setMessage(msg);
+  const handleMessageChange = e => {
+    setMessage(e.target.value);
   }
 
   const handleMessageReceive = msg => {
     setChat(chat.concat(msg));
+    inputRef.current.focus();
   }
 
   const handleMessageSend = e => {
@@ -100,7 +101,7 @@ export default function ChatPage(props) {
       }
 
       clientRef.current.sendMessage("/app/message", JSON.stringify(msgData));      
-      inputRef.current.focus();
+      setMessage('');
       return true;
     } catch(e) {
       console.log(e);
@@ -127,6 +128,7 @@ export default function ChatPage(props) {
           onMessageChange={handleMessageChange}
           onHeightChange={handleFooterHeightChange}
           onMessageSend={handleMessageSend}
+          message={message}
           inputRef={inputRef}
         />
       }

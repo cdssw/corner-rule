@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { OutlinedInput, TextField  } from '@material-ui/core';
+import { OutlinedInput  } from '@material-ui/core';
 import { withResizeDetector } from "react-resize-detector";
 
 const useStyles = makeStyles((theme) => ({
@@ -34,38 +34,27 @@ const useStyles = makeStyles((theme) => ({
 
 function Footer(props) {
   const classes = useStyles();
-  const [message, setMessage] = useState('');
 
   useEffect(() => {
     props.onHeightChange(props.height);
   }, [props.height]);
 
-  const handleMessage = e => {
-    setMessage(e.target.value);
-    props.onMessageChange(e.target.value);
-  }
-
-  const handleMessageSend = e => {
-    setMessage('');
-    props.onMessageSend();
-  }
-
-  console.log('message, ', message);
+  console.log('message, ', props.message);
   return (
     <div className={classes.root}>
       <div className={classes.wrap}>
-        <TextField 
+        <OutlinedInput 
           inputRef={props.inputRef}
           className={classes.message}
           classes={{root: classes.messageRoot, input: classes.messageInput}}
           name="message" placeholder="메시지를 입력하세요." variant="outlined"
           multiline={true}
-          value={message}
-          onChange={handleMessage}
+          value={props.message}
+          onChange={props.onMessageChange}
         />
         <div style={{width: '14px'}}></div>
         <img alt="message_send" src={process.env.PUBLIC_URL + props.message ? "/images/ico_send_active.svg" : "/images/ico_send.svg"}
-          onClick={message ? handleMessageSend : null}
+          onClick={props.message ? props.onMessageSend : null}
         />
       </div>
     </div>
