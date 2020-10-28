@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { OutlinedInput  } from '@material-ui/core';
-import { withResizeDetector } from "react-resize-detector";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Footer(props) {
+export default function ChatFooter(props) {
   const classes = useStyles();
 
   useEffect(() => {
@@ -50,6 +49,7 @@ function Footer(props) {
           multiline={true}
           value={props.message}
           onChange={props.onMessageChange}
+          onFocus={() => window.scrollTo(0, document.body.scrollHeight) }
         />
         <div style={{width: '14px'}}></div>
         <img alt="message_send" src={process.env.PUBLIC_URL + props.message ? "/images/ico_send_active.svg" : "/images/ico_send.svg"}
@@ -58,12 +58,4 @@ function Footer(props) {
       </div>
     </div>
   )
-}
-
-const AdaptiveWithDetector = withResizeDetector(Footer);
-
-export default function ChatFooter(props) {
-  return (
-    <AdaptiveWithDetector {...props} />
-  );
 }
