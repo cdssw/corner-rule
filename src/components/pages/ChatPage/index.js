@@ -100,8 +100,6 @@ export default function ChatPage(props) {
       }
 
       await clientRef.current.sendMessage("/app/message", JSON.stringify(msgData));
-      setMessage('');
-      inputRef.current.focus();
       return true;
     } catch(e) {
       console.log(e);

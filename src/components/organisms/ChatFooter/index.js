@@ -57,7 +57,13 @@ function Footer(props) {
           multiline={true}
           value={props.message}
           onChange={props.onMessageChange}
-          onFocus={() => props.onMessageChange({target: {value: ''}})}
+          onKeyUp={e => {
+            if(e.key === 'Enter') {
+              props.onMessageSend();
+              props.onMessageChange({target: {value: ''}})
+            }
+          }}
+
         />
         <div style={{width: '14px'}}></div>
         <Button classes={{root: classes.muiButtonRoot, text: classes.muiButtonText}}
