@@ -59,17 +59,17 @@ const useStyles = makeStyles((theme) => ({
 function Content(props) {
   const classes = useStyles();
 
-  useEffect(e => {
-    window.scrollTo(0, 0);
-  }, []);
+  // useEffect(e => {
+  //   window.scrollTo(0, 0);
+  // }, []);
 
-  useEffect(e => {
-    window.scrollTo(0, document.body.scrollHeight);
-  }, [props.bottom, props.chat]);
+  // useEffect(e => {
+  //   window.scrollTo(0, document.body.scrollHeight);
+  // }, [props.bottom, props.chat]);
 
-  useEffect(() => {
-    props.onHeightChange(props.height);
-  }, [props.height]);
+  // useEffect(() => {
+  //   props.onHeightChange(props.height);
+  // }, [props.height]);
 
   return (
     <div className={classes.root} style={{marginBottom: props.bottom}} ref={props.contentRef}>

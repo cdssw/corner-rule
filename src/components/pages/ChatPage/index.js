@@ -80,7 +80,6 @@ export default function ChatPage(props) {
 
   const handleContentHeightChange = e => {
     setContentHeight(e);
-    inputRef.current.focus();
   }
 
   const handleMessageChange = e => {
@@ -103,6 +102,7 @@ export default function ChatPage(props) {
       }
 
       clientRef.current.sendMessage("/app/message", JSON.stringify(msgData));      
+      inputRef.current.focus();
       return true;
     } catch(e) {
       console.log(e);
