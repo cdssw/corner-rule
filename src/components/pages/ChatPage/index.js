@@ -87,7 +87,6 @@ export default function ChatPage(props) {
 
   const handleMessageReceive = msg => {
     setChat(chat.concat(msg));
-    inputRef.current.focus();
   }
 
   const handleMessageSend = e => {
@@ -102,6 +101,7 @@ export default function ChatPage(props) {
 
       clientRef.current.sendMessage("/app/message", JSON.stringify(msgData));      
       setMessage('');
+      inputRef.current.focus();
       return true;
     } catch(e) {
       console.log(e);
