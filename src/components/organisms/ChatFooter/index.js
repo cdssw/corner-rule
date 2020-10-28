@@ -58,12 +58,12 @@ function Footer(props) {
           value={props.message}
           onChange={props.onMessageChange}
           onKeyUp={e => {
-            if(e.key === 'Enter') {
-              props.onMessageSend();
-              props.onMessageChange({target: {value: ''}})
-            }
+            console.log(e);
+            // if(e.key === 'Enter') {
+            //   props.onMessageSend();
+            //   props.onMessageChange({target: {value: ''}})
+            // }
           }}
-
         />
         <div style={{width: '14px'}}></div>
         <Button classes={{root: classes.muiButtonRoot, text: classes.muiButtonText}}

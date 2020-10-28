@@ -89,7 +89,7 @@ export default function ChatPage(props) {
     setChat(chat.concat(msg));
   }
 
-  const handleMessageSend = async e => {
+  const handleMessageSend = e => {
     try {
       const msgData = {
         'meetId': props.match.params.id,
@@ -99,7 +99,15 @@ export default function ChatPage(props) {
         'message': message,
       }
 
-      await clientRef.current.sendMessage("/app/message", JSON.stringify(msgData));
+      clientRef.current.sendMessage("/app/message", JSON.stringify(msgData));
+      setMessage('');
+      inputRef.current.focus();
+
+      const keyup = document.createEvent('HTMLEvents');
+      keyup.initEvent('keyup', true, false);
+      keyup.key = 'Enter';
+      inputRef.current.dispatchEvent(keyup);
+
       return true;
     } catch(e) {
       console.log(e);
