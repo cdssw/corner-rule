@@ -90,8 +90,6 @@ export default function ChatPage(props) {
   }
 
   const handleMessageSend = e => {
-    e.preventDefault();
-    e.stopPropagation();
     try {
       const msgData = {
         'meetId': props.match.params.id,
@@ -102,8 +100,6 @@ export default function ChatPage(props) {
       }
 
       clientRef.current.sendMessage("/app/message", JSON.stringify(msgData));      
-      setMessage('');
-      inputRef.current.focus();
       return true;
     } catch(e) {
       console.log(e);
