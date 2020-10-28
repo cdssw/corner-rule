@@ -90,6 +90,7 @@ export default function ChatPage(props) {
   }
 
   const handleMessageSend = e => {
+    e.preventDefault();
     try {
       const msgData = {
         'meetId': props.match.params.id,

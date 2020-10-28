@@ -48,7 +48,7 @@ function Footer(props) {
           className={classes.message}
           classes={{root: classes.messageRoot, input: classes.messageInput}}
           name="message" placeholder="메시지를 입력하세요." variant="outlined"
-          // multiline={true}
+          multiline={true}
           value={props.message}
           onChange={props.onMessageChange}
         />
