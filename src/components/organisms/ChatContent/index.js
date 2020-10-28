@@ -66,7 +66,7 @@ function Content(props) {
 
   useEffect(e => {
     console.log(document.body.scrollHeight);
-    window.scrollTo({top: 56, left: 0, behavior: 'smooth'});
+    window.scrollTo({top: document.body.scrollHeight - 300, left: 0, behavior: 'smooth'});
   }, [props.bottom, props.chat]);
 
   // useEffect(() => {
