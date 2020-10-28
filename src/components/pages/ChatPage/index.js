@@ -45,6 +45,7 @@ export default function ChatPage(props) {
   const size = 10;
 
   const clientRef = useRef();
+  const messageRef = useRef();
   const inputRef = useRef();
   
   useEffect(() => {
@@ -99,9 +100,12 @@ export default function ChatPage(props) {
         'message': message,
       }
 
-      clientRef.current.sendMessage("/app/message", JSON.stringify(msgData));      
-      inputRef.current.focus();
-      setMessage(' ');
+      clientRef.current.sendMessage("/app/message", JSON.stringify(msgData));
+      setMessage('');
+      setTimeout(() => {
+        inputRef.current.focus();
+      }, 1000);
+      
       return true;
     } catch(e) {
       console.log(e);
@@ -130,6 +134,7 @@ export default function ChatPage(props) {
           onMessageSend={handleMessageSend}
           message={message}
           inputRef={inputRef}
+          messageRef={messageRef}
         />
       }
     >

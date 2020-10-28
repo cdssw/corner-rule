@@ -39,11 +39,11 @@ function Footer(props) {
     props.onHeightChange(props.height);
   }, [props.height]);
 
-  console.log('message, ', props.message);
   return (
     <div className={classes.root}>
       <div className={classes.wrap}>
-        <OutlinedInput 
+        <OutlinedInput
+          ref={props.messageRef}
           inputRef={props.inputRef}
           className={classes.message}
           classes={{root: classes.messageRoot, input: classes.messageInput}}
