@@ -65,11 +65,14 @@ function Content(props) {
   }, []);
 
   useEffect(e => {
-    window.scrollTo({top: document.body.scrollHeight - 293, left: 0, behavior: 'smooth'});
+    // window.scrollTo({top: document.body.scrollHeight - 293, left: 0, behavior: 'smooth'});
   }, [props.bottom, props.chat]);
 
   useEffect(() => {
     props.onHeightChange(props.height);
+    const buf = props.inputRef.current.getBoundingClientRect().y + 36.5
+    console.log(props.inputRef.current.getBoundingClientRect().y, buf);
+    window.scrollTo({top: document.body.scrollHeight - buf, left: 0, behavior: 'smooth'});
   }, [props.height]);
 
   return (

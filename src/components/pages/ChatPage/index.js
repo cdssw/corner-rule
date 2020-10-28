@@ -146,6 +146,7 @@ export default function ChatPage(props) {
         userInfo={userInfo}
         chat={chat}
         onHeightChange={handleContentHeightChange}
+        inputRef={inputRef}
       />
 
       {token &&
