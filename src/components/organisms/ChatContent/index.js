@@ -60,11 +60,13 @@ function Content(props) {
   const classes = useStyles();
 
   useEffect(e => {
+    console.log(document.body.scrollHeight);
     window.scrollTo(0, 0);
   }, []);
 
   useEffect(e => {
-    window.scrollTo(0, document.body.scrollHeight - 50);
+    console.log(document.body.scrollHeight);
+    window.scrollTo({top: 56, left: 0, behavior: 'smooth'});
   }, [props.bottom, props.chat]);
 
   // useEffect(() => {
