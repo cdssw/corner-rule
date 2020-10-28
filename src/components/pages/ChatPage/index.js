@@ -45,7 +45,6 @@ export default function ChatPage(props) {
   const size = 10;
 
   const clientRef = useRef();
-  const inputHiddenRef = useRef();
   const inputRef = useRef();
   
   useEffect(() => {
@@ -91,7 +90,6 @@ export default function ChatPage(props) {
   }
 
   const handleMessageSend = e => {
-    e.persist();
     try {
       const msgData = {
         'meetId': props.match.params.id,
@@ -103,7 +101,6 @@ export default function ChatPage(props) {
 
       clientRef.current.sendMessage("/app/message", JSON.stringify(msgData));
       setMessage('');
-      inputHiddenRef.current.focus();
       inputRef.current.focus();
       return true;
     } catch(e) {
@@ -133,7 +130,6 @@ export default function ChatPage(props) {
           onMessageSend={handleMessageSend}
           message={message}
           inputRef={inputRef}
-          inputHiddenRef={inputHiddenRef}
         />
       }
     >

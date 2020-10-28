@@ -50,12 +50,12 @@ function Footer(props) {
           multiline={true}
           value={props.message}
           onChange={props.onMessageChange}
+          onFocus={() => props.onMessageChange({target: {value: ''}})}
         />
         <div style={{width: '14px'}}></div>
         <img alt="message_send" src={process.env.PUBLIC_URL + props.message ? "/images/ico_send_active.svg" : "/images/ico_send.svg"}
-          onClick={props.message ? props.onMessageSend : null}
+          onClickCapture={props.message ? props.onMessageSend : null}
         />
-        <input ref={props.inputHiddenRef} type="hidden" />
       </div>
     </div>
   )
