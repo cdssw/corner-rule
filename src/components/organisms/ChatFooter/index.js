@@ -39,6 +39,10 @@ function Footer(props) {
     props.onHeightChange(props.height);
   }, [props.height]);
 
+  const handleBlur = e => {
+    props.onMessageChange({target: {value: props.message}});
+  }
+
   return (
     <div className={classes.root}>
       <div className={classes.wrap}>
@@ -51,6 +55,7 @@ function Footer(props) {
           multiline={true}
           value={props.message}
           onChange={props.onMessageChange}
+          onBlur={handleBlur}
         />
         <div style={{width: '14px'}}></div>
         <img alt="message_send" src={process.env.PUBLIC_URL + props.message ? "/images/ico_send_active.svg" : "/images/ico_send.svg"}

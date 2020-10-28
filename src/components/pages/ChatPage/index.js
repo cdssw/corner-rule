@@ -101,11 +101,8 @@ export default function ChatPage(props) {
       }
 
       clientRef.current.sendMessage("/app/message", JSON.stringify(msgData));
+      inputRef.current.focus();
       setMessage('');
-      setTimeout(() => {
-        inputRef.current.focus();
-      }, 1000);
-      
       return true;
     } catch(e) {
       console.log(e);
