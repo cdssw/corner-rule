@@ -39,6 +39,7 @@ function Footer(props) {
     props.onHeightChange(props.height);
   }, [props.height]);
 
+  console.log('message, ', props.message);
   return (
     <div className={classes.root}>
       <div className={classes.wrap}>
@@ -48,11 +49,12 @@ function Footer(props) {
           classes={{root: classes.messageRoot, input: classes.messageInput}}
           name="message" placeholder="메시지를 입력하세요." variant="outlined"
           multiline={true}
-          onKeyUp={props.onMessageKeyUp}
+          value={props.message}
+          onChange={props.onMessageChange}
         />
         <div style={{width: '14px'}}></div>
         <img alt="message_send" src={process.env.PUBLIC_URL + props.message ? "/images/ico_send_active.svg" : "/images/ico_send.svg"}
-          onClick={() => props.message ? props.onMessageSend() : null}
+          onClick={props.message ? props.onMessageSend : null}
         />
       </div>
     </div>
