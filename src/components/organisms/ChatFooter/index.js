@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { OutlinedInput  } from '@material-ui/core';
+import { Button, OutlinedInput  } from '@material-ui/core';
 import { withResizeDetector } from "react-resize-detector";
 
 const useStyles = makeStyles((theme) => ({
@@ -30,6 +30,13 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '0.875rem',
     fontFamily: 'AppleSDGothicNeoL00',
   },
+  muiButtonRoot: {
+    padding: 0,
+    minWidth: 0,
+  },
+  muiButtonText: {
+    padding: 0,
+  }
 }));
 
 function Footer(props) {
@@ -53,9 +60,11 @@ function Footer(props) {
           onFocus={() => props.onMessageChange({target: {value: ''}})}
         />
         <div style={{width: '14px'}}></div>
-        <img alt="message_send" src={process.env.PUBLIC_URL + props.message ? "/images/ico_send_active.svg" : "/images/ico_send.svg"}
-          onClickCapture={props.message ? props.onMessageSend : null}
-        />
+        <Button classes={{root: classes.muiButtonRoot, text: classes.muiButtonText}}
+          onClick={props.message ? props.onMessageSend : null}
+        >
+          <img alt="message_send" src={process.env.PUBLIC_URL + props.message ? "/images/ico_send_active.svg" : "/images/ico_send.svg"} />
+        </Button>
       </div>
     </div>
   )
