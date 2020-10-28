@@ -49,7 +49,6 @@ export default function ChatFooter(props) {
           multiline={true}
           value={props.message}
           onChange={props.onMessageChange}
-          onFocus={() => window.scrollTo(0, document.body.scrollHeight) }
         />
         <div style={{width: '14px'}}></div>
         <img alt="message_send" src={process.env.PUBLIC_URL + props.message ? "/images/ico_send_active.svg" : "/images/ico_send.svg"}

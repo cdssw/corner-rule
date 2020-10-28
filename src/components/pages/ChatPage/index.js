@@ -55,7 +55,9 @@ export default function ChatPage(props) {
   }, []);
 
   useEffect(() => {
-    setTopic(`/topic/${props.match.params.id}/${props.location.chatInfo.leaderName}-${props.location.chatInfo.chatName}`)
+    if(props.location.chatInfo !== undefined) {
+      setTopic(`/topic/${props.match.params.id}/${props.location.chatInfo.leaderName}-${props.location.chatInfo.chatName}`)
+    }
   }, [props.location.chatInfo])
 
   const fetchMoreData = async e => {
@@ -63,8 +65,7 @@ export default function ChatPage(props) {
     try {
       const token = localStorage.getItem("token");
       const response = await Chat.getChatListByPage({token: JSON.parse(token).access_token, page: page, size: size, sort: 'id,desc'});
-      console.log(response);
-      setPage(page + 1); // infinite scroll시 다음페이지 조회
+      setPage(page + 1);
       setChat(chat.concat(response.data.content));
     } catch(error) {
       Utils.alertError(error);
@@ -101,7 +102,7 @@ export default function ChatPage(props) {
       }
 
       clientRef.current.sendMessage("/app/message", JSON.stringify(msgData));
-      inputRef.current.focus();
+      // inputRef.current.focus();
       return true;
     } catch(e) {
       console.log(e);
