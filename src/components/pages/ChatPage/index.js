@@ -89,7 +89,7 @@ export default function ChatPage(props) {
     setChat(chat.concat(msg));
   }
 
-  const handleMessageSend = e => {
+  const handleMessageSend = async e => {
     try {
       const msgData = {
         'meetId': props.match.params.id,
@@ -99,7 +99,7 @@ export default function ChatPage(props) {
         'message': message,
       }
 
-      clientRef.current.sendMessage("/app/message", JSON.stringify(msgData));
+      await clientRef.current.sendMessage("/app/message", JSON.stringify(msgData));
       setMessage('');
       inputRef.current.focus();
       return true;
