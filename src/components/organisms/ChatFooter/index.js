@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { OutlinedInput  } from '@material-ui/core';
+import { OutlinedInput, TextField  } from '@material-ui/core';
 import { withResizeDetector } from "react-resize-detector";
 
 const useStyles = makeStyles((theme) => ({
@@ -53,7 +53,7 @@ function Footer(props) {
   return (
     <div className={classes.root}>
       <div className={classes.wrap}>
-        <OutlinedInput 
+        <TextField 
           inputRef={props.inputRef}
           className={classes.message}
           classes={{root: classes.messageRoot, input: classes.messageInput}}

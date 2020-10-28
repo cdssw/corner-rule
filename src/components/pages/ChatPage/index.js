@@ -39,7 +39,6 @@ export default function ChatPage(props) {
   const [message, setMessage] = useState('');
   const [token, setToken] = useState('');
   const [chat, setChat] = useState([]);
-  const [safari, setSafari] = useState(false);
   const [topic, setTopic] = useState('');
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -116,10 +115,6 @@ export default function ChatPage(props) {
     });
   }
 
-  const handleSafari = e => {
-    setSafari(e);
-  }
-
   if(!login) return <Redirect to='/' />
   
   return (
@@ -129,15 +124,12 @@ export default function ChatPage(props) {
       footer={
         <ChatFooter
           bottom={bottom}
-          message={message}
           onMessageChange={handleMessageChange}
           onHeightChange={handleFooterHeightChange}
           onMessageSend={handleMessageSend}
-          onSafari={handleSafari}
           inputRef={inputRef}
         />
       }
-      safari={safari}
     >
       <ChatContent
         bottom={bottom}
