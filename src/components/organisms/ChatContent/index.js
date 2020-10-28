@@ -60,18 +60,16 @@ function Content(props) {
   const classes = useStyles();
 
   useEffect(e => {
-    console.log(document.body.scrollHeight);
     window.scrollTo(0, 0);
   }, []);
 
   useEffect(e => {
-    console.log(document.body.scrollHeight);
     window.scrollTo({top: document.body.scrollHeight - 280, left: 0, behavior: 'smooth'});
   }, [props.bottom, props.chat]);
 
-  // useEffect(() => {
-  //   props.onHeightChange(props.height);
-  // }, [props.height]);
+  useEffect(() => {
+    props.onHeightChange(props.height);
+  }, [props.height]);
 
   return (
     <div className={classes.root} style={{marginBottom: props.bottom}} ref={props.contentRef}>
