@@ -51,7 +51,7 @@ function Footer(props) {
           value={props.message}
           onChange={props.onMessageChange}
           onFocus={() => {
-            console.log(props.inputRef.current.getBoundingClientRect());
+            console.log('onfocus', props.inputRef.current.getBoundingClientRect());
           }}
         />
         <div style={{width: '14px'}}></div>

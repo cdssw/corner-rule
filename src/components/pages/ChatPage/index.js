@@ -80,6 +80,7 @@ export default function ChatPage(props) {
 
   const handleContentHeightChange = e => {
     setContentHeight(e);
+    console.log('height change', inputRef.current.getBoundingClientRect());
   }
 
   const handleMessageChange = e => {

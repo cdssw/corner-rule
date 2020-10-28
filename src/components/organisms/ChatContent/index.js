@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
 function Content(props) {
   const classes = useStyles();
 
-  // 371.5(408) 256.5
+  // 371.5(408) 256.5 (293) ==> 36.5를 +
   useEffect(e => {
     window.scrollTo(0, 0);
   }, []);
