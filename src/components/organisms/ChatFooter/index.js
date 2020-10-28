@@ -43,7 +43,6 @@ function Footer(props) {
     <div className={classes.root}>
       <div className={classes.wrap}>
         <OutlinedInput
-          ref={props.messageRef}
           inputRef={props.inputRef}
           className={classes.message}
           classes={{root: classes.messageRoot, input: classes.messageInput}}
@@ -56,6 +55,7 @@ function Footer(props) {
         <img alt="message_send" src={process.env.PUBLIC_URL + props.message ? "/images/ico_send_active.svg" : "/images/ico_send.svg"}
           onClick={props.message ? props.onMessageSend : null}
         />
+        <input ref={props.inputHiddenRef} type="hidden" />
       </div>
     </div>
   )
