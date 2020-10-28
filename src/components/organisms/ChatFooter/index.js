@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { OutlinedInput  } from '@material-ui/core';
+import { withResizeDetector } from "react-resize-detector";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,12 +27,12 @@ const useStyles = makeStyles((theme) => ({
     padding: '6px 14px',
   },
   messageInput: {
-    fontSize: '16px',
+    fontSize: '0.875rem',
     fontFamily: 'AppleSDGothicNeoL00',
   },
 }));
 
-export default function ChatFooter(props) {
+function Footer(props) {
   const classes = useStyles();
 
   useEffect(() => {
@@ -57,4 +58,12 @@ export default function ChatFooter(props) {
       </div>
     </div>
   )
+}
+
+const AdaptiveWithDetector = withResizeDetector(Footer);
+
+export default function ChatFooter(props) {
+  return (
+    <AdaptiveWithDetector {...props} />
+  );
 }

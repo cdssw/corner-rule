@@ -115,7 +115,7 @@ function Content(props) {
 
 const AdaptiveWithDetector = withResizeDetector(Content);
 
-export default function ChatFooter(props) {
+export default function ChatContent(props) {
   return (
     <AdaptiveWithDetector {...props} />
   );
