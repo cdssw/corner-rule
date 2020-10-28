@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { OutlinedInput  } from '@material-ui/core';
 import { withResizeDetector } from "react-resize-detector";
@@ -34,10 +34,21 @@ const useStyles = makeStyles((theme) => ({
 
 function Footer(props) {
   const classes = useStyles();
+  const [msg, setMsg] = useState('');
 
   useEffect(() => {
     props.onHeightChange(props.height);
   }, [props.height]);
+
+  const handleMsgChange = e => {
+    setMsg(e.target.value);
+  }
+
+  const handleSend = e => {
+    props.onMessageChange({target: {value: msg}});
+    setMsg('');
+    props.inputRef.current.focus();
+  }
 
   console.log('message, ', props.message);
   return (
@@ -48,13 +59,18 @@ function Footer(props) {
           className={classes.message}
           classes={{root: classes.messageRoot, input: classes.messageInput}}
           name="message" placeholder="메시지를 입력하세요." variant="outlined"
-          multiline={true}
-          value={props.message}
-          onChange={props.onMessageChange}
+          // multiline={true}
+          value={msg}
+          onChange={handleMsgChange}
+          onKeyPress={e => {
+            if(e.key === 'Enter') {
+              handleSend();
+            }
+          }}
         />
         <div style={{width: '14px'}}></div>
-        <img alt="message_send" src={process.env.PUBLIC_URL + props.message ? "/images/ico_send_active.svg" : "/images/ico_send.svg"}
-          onClick={props.message ? props.onMessageSend : null}
+        <img alt="message_send" src={process.env.PUBLIC_URL + (msg !== '' ? "/images/ico_send_active.svg" : "/images/ico_send.svg")}
+          onClick={msg ? handleSend : null}
         />
       </div>
     </div>
