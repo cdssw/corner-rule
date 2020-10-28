@@ -100,11 +100,17 @@ export default function ChatPage(props) {
       }
 
       clientRef.current.sendMessage("/app/message", JSON.stringify(msgData));      
+      inputRef.current.value = '';
+      inputRef.current.focus();
       return true;
     } catch(e) {
       console.log(e);
       return false;
     }
+  }
+
+  const handleMessageKeyUp = e => {
+    setMessage(e.target.value);
   }
 
   const handleBack = e => {
@@ -126,6 +132,7 @@ export default function ChatPage(props) {
           onMessageChange={handleMessageChange}
           onHeightChange={handleFooterHeightChange}
           onMessageSend={handleMessageSend}
+          onMessageKeyUp={handleMessageKeyUp}
           message={message}
           inputRef={inputRef}
         />
