@@ -59,13 +59,13 @@ const useStyles = makeStyles((theme) => ({
 function Content(props) {
   const classes = useStyles();
 
-  // useEffect(e => {
-  //   window.scrollTo(0, 0);
-  // }, []);
+  useEffect(e => {
+    window.scrollTo(0, 0);
+  }, []);
 
-  // useEffect(e => {
-  //   window.scrollTo(0, document.body.scrollHeight);
-  // }, [props.bottom, props.chat]);
+  useEffect(e => {
+    window.scrollTo(0, document.body.scrollHeight - 50);
+  }, [props.bottom, props.chat]);
 
   // useEffect(() => {
   //   props.onHeightChange(props.height);
