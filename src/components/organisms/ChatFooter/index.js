@@ -50,6 +50,7 @@ function Footer(props) {
     props.onMessageSend();
   }
 
+  console.log('message, ', message);
   return (
     <div className={classes.root}>
       <div className={classes.wrap}>
