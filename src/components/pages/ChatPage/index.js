@@ -89,11 +89,11 @@ export default function ChatPage(props) {
     setChat(chat.concat(msg));
   }
 
-  const raiseEvent = e => {
-    const event = document.createEvent('HTMLEvents');
-    event.initEvent('compositionend', true, false);
-    inputRef.current.dispatchEvent(event);
-  }
+  // const raiseEvent = e => {
+  //   const event = document.createEvent('CompositionEvent');
+  //   event.initEvent('compositionend', true, false);
+  //   inputRef.current.dispatchEvent(event);
+  // }
 
   const handleMessageSend = e => {
     try {
@@ -108,8 +108,6 @@ export default function ChatPage(props) {
       clientRef.current.sendMessage("/app/message", JSON.stringify(msgData));
       setMessage('');
       inputRef.current.focus();
-      raiseEvent();
-
       return true;
     } catch(e) {
       console.log(e);

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, OutlinedInput  } from '@material-ui/core';
 import { withResizeDetector } from "react-resize-detector";
@@ -41,10 +41,44 @@ const useStyles = makeStyles((theme) => ({
 
 function Footer(props) {
   const classes = useStyles();
+  const [value, setValue] = useState('');
+
+  let isOnComposition = true;
+  let emittedInput = false;
 
   useEffect(() => {
     props.onHeightChange(props.height);
   }, [props.height]);
+
+  const handleInputChange = e => {
+    console.log(e);
+    const inputValue = e.target.value;
+    setValue(inputValue);
+    if(!isOnComposition) {
+      e.target.value = inputValue;
+      props.onMessageChange(e);
+    } else {
+      emittedInput = false
+    }
+  }
+
+  const handleComposition = e => {
+    console.log(e);
+    if(e.type === 'compositionstart') {
+      isOnComposition = true;
+      emittedInput = false;
+    } else if(e.type === 'compositionend') {
+      isOnComposition = false;
+      if(!emittedInput) {
+        handleInputChange(e);
+      }
+    }
+  }
+
+  const handleSend = e => {
+    setValue('');
+    props.onMessageSend();
+  }
 
   return (
     <div className={classes.root}>
@@ -55,15 +89,15 @@ function Footer(props) {
           classes={{root: classes.messageRoot, input: classes.messageInput}}
           name="message" placeholder="메시지를 입력하세요." variant="outlined"
           multiline={true}
-          value={props.message}
-          onChange={props.onMessageChange}
-          onCompositionEnd={() => {
-            console.log('compositionend');
-          }}
+          value={value}
+          onCompositionStart={handleComposition}
+          onCompositionEnd={handleComposition}
+          onChange={handleInputChange}
         />
         <div style={{width: '14px'}}></div>
         <Button classes={{root: classes.muiButtonRoot, text: classes.muiButtonText}}
-          onClick={props.message ? props.onMessageSend : null}
+          onClick={props.message ? handleSend : null}
+          disabled={!props.message}
         >
           <img alt="message_send" src={process.env.PUBLIC_URL + props.message ? "/images/ico_send_active.svg" : "/images/ico_send.svg"} />
         </Button>
