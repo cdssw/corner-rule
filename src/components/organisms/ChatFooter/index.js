@@ -58,16 +58,15 @@ function Footer(props) {
           value={props.message}
           onChange={props.onMessageChange}
           onKeyUp={e => {
-            console.log(e);
-            // if(e.key === 'Enter') {
-            //   props.onMessageSend();
-            //   props.onMessageChange({target: {value: ''}})
-            // }
+            if(e.key === 'Enter') {
+              props.onMessageSend();
+              props.onMessageChange({target: {value: ''}})
+            }
           }}
         />
         <div style={{width: '14px'}}></div>
         <Button classes={{root: classes.muiButtonRoot, text: classes.muiButtonText}}
-          onClick={props.message ? props.onMessageSend : null}
+          onClick={props.message ? props.onSend : null}
         >
           <img alt="message_send" src={process.env.PUBLIC_URL + props.message ? "/images/ico_send_active.svg" : "/images/ico_send.svg"} />
         </Button>
