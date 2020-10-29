@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '0.875rem',
     fontFamily: 'AppleSDGothicNeoL00',
     padding: 0,
+    height: 'auto',
   },
   muiButtonRoot: {
     padding: 0,
