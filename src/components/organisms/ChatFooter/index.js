@@ -57,16 +57,13 @@ function Footer(props) {
           multiline={true}
           value={props.message}
           onChange={props.onMessageChange}
-          onKeyUp={e => {
-            if(e.key === 'Enter') {
-              props.onMessageSend();
-              props.onMessageChange({target: {value: ''}})
-            }
+          onCompositionEnd={() => {
+            console.log('compositionend');
           }}
         />
         <div style={{width: '14px'}}></div>
         <Button classes={{root: classes.muiButtonRoot, text: classes.muiButtonText}}
-          onClick={props.message ? props.onSend : null}
+          onClick={props.message ? props.onMessageSend : null}
         >
           <img alt="message_send" src={process.env.PUBLIC_URL + props.message ? "/images/ico_send_active.svg" : "/images/ico_send.svg"} />
         </Button>

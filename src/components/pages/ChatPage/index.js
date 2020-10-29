@@ -89,11 +89,10 @@ export default function ChatPage(props) {
     setChat(chat.concat(msg));
   }
 
-  const handleSend = e => {
-    const keyup = document.createEvent('HTMLEvents');
-    keyup.initEvent('keyup', true, false);
-    keyup.key = 'Enter';
-    inputRef.current.dispatchEvent(keyup);
+  const raiseEvent = e => {
+    const event = document.createEvent('HTMLEvents');
+    event.initEvent('compositionend', true, false);
+    inputRef.current.dispatchEvent(event);
   }
 
   const handleMessageSend = e => {
@@ -109,6 +108,8 @@ export default function ChatPage(props) {
       clientRef.current.sendMessage("/app/message", JSON.stringify(msgData));
       setMessage('');
       inputRef.current.focus();
+      raiseEvent();
+
       return true;
     } catch(e) {
       console.log(e);
@@ -135,7 +136,6 @@ export default function ChatPage(props) {
           onMessageChange={handleMessageChange}
           onHeightChange={handleFooterHeightChange}
           onMessageSend={handleMessageSend}
-          onSend={handleSend}
           message={message}
           inputRef={inputRef}
         />
