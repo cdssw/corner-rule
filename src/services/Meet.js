@@ -7,10 +7,6 @@ export async function getMeetListByPage(props) {
 }
 
 export async function getMeetSearch(props) {
-  const params = new URLSearchParams();
-  params.append('page', props.page);
-  params.append('size', props.size);
-  params.append('sort', props.sort);
   return axios({
     url: url + "/search",
     method: 'POST',

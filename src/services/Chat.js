@@ -2,14 +2,10 @@ import axios from "axios";
 
 const url = process.env.REACT_APP_SERVICE_CHAT;
 
-export async function getChatListByPage(props) {
-  const params = new URLSearchParams();
-  params.append('page', props.page);
-  params.append('size', props.size);
-  params.append('sort', props.sort);
+export async function getHistory(props) {
   return axios({
     url: url + "/history",
-    method: 'GET',
+    method: 'POST',
     headers: {
       Authorization: "Bearer " + props.token
     },
@@ -17,6 +13,7 @@ export async function getChatListByPage(props) {
       page: props.page,
       size: props.size,
       sort: props.sort,
-    }
+    },
+    data: props.body
   });
 }

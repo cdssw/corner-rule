@@ -64,7 +64,12 @@ export default function ChatPage(props) {
     setLoading(true);
     try {
       const token = localStorage.getItem("token");
-      const response = await Chat.getChatListByPage({token: JSON.parse(token).access_token, page: page, size: size, sort: 'id,desc'});
+      const body = {
+        meetId: props.match.params.id,
+        leaderName: props.location.chatInfo.leaderName,
+        chatName: props.location.chatInfo.chatName
+      }
+      const response = await Chat.getHistory({token: JSON.parse(token).access_token, page: page, size: size, sort: 'id,desc', body});
       setPage(page + 1);
       setChat(chat.concat(response.data.content));
     } catch(error) {
