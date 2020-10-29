@@ -80,7 +80,11 @@ function Content(props) {
             <div key={i} className={classes.wrap}>
               <div className={classes.meWrap}>
                 <div style={{flexGrow: 1}}></div>
-                <div className={classes.me}>{m.message.replace('\n', '<br>')}</div>
+                <div className={classes.me}>
+                  {m.message.split('\n').map((v, n) => {
+                    return <div key={n}>{v}</div>
+                  })}
+                </div>
               </div>
               <div className={classes.meWrap}>
                 <div style={{flexGrow: 1}}></div>

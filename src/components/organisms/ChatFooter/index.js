@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { InputAdornment, OutlinedInput  } from '@material-ui/core';
+import { Button, OutlinedInput  } from '@material-ui/core';
 import { withResizeDetector } from "react-resize-detector";
 
 const useStyles = makeStyles((theme) => ({
@@ -42,11 +42,13 @@ const useStyles = makeStyles((theme) => ({
 
 function Footer(props) {
   const classes = useStyles();
+  const isSafari = navigator.vendor.includes('Apple');
 
   useEffect(() => {
     props.onHeightChange(props.height);
   }, [props.height]);
 
+  // safari 전용
   const handleSend = e => {
     props.onMessageSend();
     props.onMessageChange({target: {value: ''}})
@@ -59,20 +61,29 @@ function Footer(props) {
           inputRef={props.inputRef}
           className={classes.message}
           classes={{root: classes.messageRoot, input: classes.messageInput}}
-          name="message" placeholder="메시지를 입력하세요." variant="outlined"
+          name="message" placeholder={isSafari ? '메시지를 입력후 엔터를 누르세요' : '메시지를 입력하세요.'} variant="outlined"
           value={props.message}
+          multiline={!isSafari}
           onChange={props.onMessageChange}
           onKeyUp={e => {
-            if(e.key === 'Enter') {
-              handleSend();
+            if(isSafari) {
+              if(e.key === 'Enter') {
+                handleSend();
+              }
             }
           }}
-          endAdornment={(
-            <InputAdornment position="end">
-              <img alt="message_send" src={process.env.PUBLIC_URL + props.message ? "/images/ico_send_active.svg" : "/images/ico_send.svg"} />                
-            </InputAdornment>
-          )}
         />
+        {!isSafari &&
+          <>
+            <div style={{width: '14px'}}></div>
+            <Button classes={{root: classes.muiButtonRoot, text: classes.muiButtonText}}
+              onClick={props.message ? handleSend : null}
+              disabled={!props.message}
+            >
+              <img alt="message_send" src={process.env.PUBLIC_URL + props.message ? "/images/ico_send_active.svg" : "/images/ico_send.svg"} />
+            </Button>
+          </>
+        }
       </div>
     </div>
   )
