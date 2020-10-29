@@ -89,12 +89,6 @@ export default function ChatPage(props) {
     setChat(chat.concat(msg));
   }
 
-  // const raiseEvent = e => {
-  //   const event = document.createEvent('CompositionEvent');
-  //   event.initEvent('compositionend', true, false);
-  //   inputRef.current.dispatchEvent(event);
-  // }
-
   const handleMessageSend = e => {
     try {
       const msgData = {
