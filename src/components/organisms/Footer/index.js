@@ -13,13 +13,13 @@ const useStyles = makeStyles((theme) => ({
     padding: "0 0 0 4px",
   },
   address: {
-    fontFamily: "SegoeUI",
+    fontFamily: "AppleSDGothicNeoUL00",
     fontSize: "10px",
     lineHeight: "14px",
     color: "#cbcbcb",
   },
   copyright: {
-    fontFamily: "SegoeUI",
+    fontFamily: "AppleSDGothicNeoUL00",
     fontSize: "10px",
     lineHeight: "14px",
     color: "#cbcbcb",
