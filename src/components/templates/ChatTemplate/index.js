@@ -4,7 +4,6 @@ import { CircularProgress } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    // height: '100vh',
   },
   headerWrap: {
     backgroundColor: theme.colorA,
@@ -59,7 +58,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ChatTemplate(props) {
   const classes = useStyles();
-
   const content = props.imageWrap ? classes.imageContent : classes.content;
 
   return (

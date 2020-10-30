@@ -34,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
 export default function ChatPage(props) {
   const history = useHistory();
   const { login, userInfo } = useSelector(state => state.userInfo, []);
-  const [bottom, setBottom] = useState(50);
   const [contentHeight, setContentHeight] = useState(0);
   const [message, setMessage] = useState('');
   const [token, setToken] = useState('');
@@ -42,6 +41,8 @@ export default function ChatPage(props) {
   const [topic, setTopic] = useState('');
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [focus, setFocus] = useState(false);
+  const [more, setMore] = useState(false);
   const size = 10;
   const isSafari = navigator.vendor.includes('Apple');
 
@@ -70,17 +71,17 @@ export default function ChatPage(props) {
         username: props.location.chatInfo.chatName
       }
       const response = await Chat.getHistory({token: JSON.parse(token).access_token, page: page, size: size, sort: 'id,desc', body});
+      if(response.data.totalPages > page) {
+        setMore(true);
+      }
       setPage(page + 1);
-      setChat(chat.concat(response.data.content));
+      // 기존 데이터 앞에 추가
+      setChat(response.data.content.concat(chat));
     } catch(error) {
       Utils.alertError(error);
     } finally {
       setLoading(false);
     }
-  }
-
-  const handleFooterHeightChange = e => {
-    setBottom(e);
   }
 
   const handleContentHeightChange = e => {
@@ -93,6 +94,14 @@ export default function ChatPage(props) {
 
   const handleMessageReceive = msg => {
     setChat(chat.concat(msg));
+  }
+
+  const handleFocus = e => {
+    setFocus(true);
+  }
+
+  const handleBlur = e => {
+    setFocus(false);
   }
 
   const handleMessageSend = e => {
@@ -123,26 +132,28 @@ export default function ChatPage(props) {
   }
 
   if(!login) return <Redirect to='/' />
-  
+
   return (
     <ChatTemplate
       loading={loading}
       header={<TitleHeader onBack={handleBack} {...props}><ChatHeader {...props} /></TitleHeader>}
       footer={
         <ChatFooter
-          bottom={bottom}
           onMessageChange={handleMessageChange}
-          onHeightChange={handleFooterHeightChange}
           onMessageSend={handleMessageSend}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           message={message}
           inputRef={inputRef}
         />
       }
     >
       <ChatContent
-        bottom={bottom}
+        focus={focus}
         userInfo={userInfo}
         chat={chat}
+        more={more}
+        onMore={fetchMoreData}
         onHeightChange={handleContentHeightChange}
         inputRef={inputRef}
       />

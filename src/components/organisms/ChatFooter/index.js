@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, OutlinedInput  } from '@material-ui/core';
-import { withResizeDetector } from "react-resize-detector";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,13 +40,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Footer(props) {
+export default function ChatFooter(props) {
   const classes = useStyles();
   const isSafari = navigator.vendor.includes('Apple');
-
-  useEffect(() => {
-    props.onHeightChange(props.height);
-  }, [props.height]);
 
   // safari 전용
   const handleSend = e => {
@@ -73,6 +68,8 @@ function Footer(props) {
               }
             }
           }}
+          onFocus={props.onFocus}
+          onBlur={props.onBlur}
         />
         {!isSafari &&
           <>
@@ -88,12 +85,4 @@ function Footer(props) {
       </div>
     </div>
   )
-}
-
-const AdaptiveWithDetector = withResizeDetector(Footer);
-
-export default function ChatFooter(props) {
-  return (
-    <AdaptiveWithDetector {...props} />
-  );
 }
