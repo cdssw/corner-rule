@@ -8,13 +8,10 @@
   src: url('./styles/fonts/AppleSDGothicNeoR.ttf') format('truetype');
 }
 
-html {
-  height: -webkit-fill-available;
-}
-
 html, body, #root, .App {
   background-color: white;
   height: 100vh;
+  -webkit-overflow-scrolling: touch;
 }
 
 body {

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { createElement, useEffect, useRef, useState } from 'react';
 import { ChatTemplate, TitleHeader, ChatContent } from "components";
 import { Redirect, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
@@ -39,15 +39,16 @@ export default function ChatPage(props) {
   const [token, setToken] = useState('');
   const [chat, setChat] = useState([]);
   const [topic, setTopic] = useState('');
-  const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
   const [focus, setFocus] = useState(false);
-  const [more, setMore] = useState(false);
+  const [bottom, setBottom] = useState(50);
+
   const size = 10;
   const isSafari = navigator.vendor.includes('Apple');
 
   const clientRef = useRef();
   const inputRef = useRef();
+  const footerRef = useRef();
   
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -70,11 +71,8 @@ export default function ChatPage(props) {
         leaderName: props.location.chatInfo.leaderName,
         username: props.location.chatInfo.chatName
       }
-      const response = await Chat.getHistory({token: JSON.parse(token).access_token, page: page, size: size, sort: 'id,desc', body});
-      if(response.data.totalPages > page) {
-        setMore(true);
-      }
-      setPage(page + 1);
+      if(chat.length > 0) body.id = chat[0].id;
+      const response = await Chat.getHistory({token: JSON.parse(token).access_token, page: 0, size: size, sort: 'id,desc', body});
       // 기존 데이터 앞에 추가
       setChat(response.data.content.concat(chat));
     } catch(error) {
@@ -82,6 +80,10 @@ export default function ChatPage(props) {
     } finally {
       setLoading(false);
     }
+  }
+
+  const handleFooterHeightChange = e => {
+    setBottom(e);
   }
 
   const handleContentHeightChange = e => {
@@ -93,7 +95,11 @@ export default function ChatPage(props) {
   }
 
   const handleMessageReceive = msg => {
-    setChat(chat.concat(msg));
+    if(chat.length > 10) {
+      setChat(chat.splice(chat.length - 10, chat.length - 1).concat(msg));
+    } else {
+      setChat(chat.concat(msg));
+    }    
   }
 
   const handleFocus = e => {
@@ -116,7 +122,27 @@ export default function ChatPage(props) {
 
       clientRef.current.sendMessage("/app/message", JSON.stringify(msgData));
       setMessage('');
-      if(!isSafari) inputRef.current.focus();
+
+      // 임시로 input 태그를 생성
+      // 아래쪽으로 위치를 잡고
+      let tempInput = document.createElement('input');
+      tempInput.style.position = 'absolute';
+      tempInput.style.bottom = (inputRef.current.offsetTop + 7) + 'px';
+      tempInput.style.left = inputRef.current.offsetLeft + 'px';
+      tempInput.style.height = 0;
+      tempInput.style.opacity = 0;
+      document.body.appendChild(tempInput);
+      // focus를 준다
+      tempInput.focus();
+
+      // 0.1초 딜레이를 주고
+      // chatting창에 focus 및 click를 주고 임시로 만든 input을 삭제한다.
+      setTimeout(() => {
+        inputRef.current.focus();
+        inputRef.current.click();
+        document.body.removeChild(tempInput);
+      }, 100);
+
       return true;
     } catch(e) {
       console.log(e);
@@ -141,21 +167,24 @@ export default function ChatPage(props) {
         <ChatFooter
           onMessageChange={handleMessageChange}
           onMessageSend={handleMessageSend}
+          onHeightChange={handleFooterHeightChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
           message={message}
           inputRef={inputRef}
+          footerRef={footerRef}
         />
       }
     >
       <ChatContent
+        bottom={bottom}
         focus={focus}
         userInfo={userInfo}
         chat={chat}
-        more={more}
         onMore={fetchMoreData}
         onHeightChange={handleContentHeightChange}
         inputRef={inputRef}
+        footerRef={footerRef}
       />
 
       {token &&

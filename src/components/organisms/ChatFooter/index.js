@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, OutlinedInput  } from '@material-ui/core';
+import { withResizeDetector } from "react-resize-detector";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,49 +41,45 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function ChatFooter(props) {
+function Footer(props) {
   const classes = useStyles();
-  const isSafari = navigator.vendor.includes('Apple');
 
-  // safari 전용
-  const handleSend = e => {
-    props.onMessageSend();
-    props.onMessageChange({target: {value: ''}})
-  }
+  useEffect(() => {
+    props.onHeightChange(props.height);
+  }, [props.height]);
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} ref={props.footerRef}>
       <div className={classes.wrap}>
         <OutlinedInput
           inputRef={props.inputRef}
           className={classes.message}
           classes={{root: classes.messageRoot, input: classes.messageInput}}
-          name="message" placeholder={isSafari ? '메시지를 입력후 엔터를 누르세요' : '메시지를 입력하세요.'} variant="outlined"
+          name="message" placeholder='메시지를 입력하세요.' variant="outlined"
           value={props.message}
-          multiline={!isSafari}
+          multiline={true}
           onChange={props.onMessageChange}
-          onKeyUp={e => {
-            if(isSafari) {
-              if(e.key === 'Enter') {
-                handleSend();
-              }
-            }
-          }}
           onFocus={props.onFocus}
           onBlur={props.onBlur}
         />
-        {!isSafari &&
-          <>
-            <div style={{width: '14px'}}></div>
-            <Button classes={{root: classes.muiButtonRoot, text: classes.muiButtonText}}
-              onClick={props.message ? handleSend : null}
-              disabled={!props.message}
-            >
-              <img alt="message_send" src={process.env.PUBLIC_URL + props.message ? "/images/ico_send_active.svg" : "/images/ico_send.svg"} />
-            </Button>
-          </>
-        }
+        <>
+          <div style={{width: '14px'}}></div>
+          <Button classes={{root: classes.muiButtonRoot, text: classes.muiButtonText}}
+            onClick={props.message ? props.onMessageSend : null}
+            disabled={!props.message}
+          >
+            <img alt="message_send" src={process.env.PUBLIC_URL + props.message ? "/images/ico_send_active.svg" : "/images/ico_send.svg"} />
+          </Button>
+        </>
       </div>
     </div>
   )
+}
+
+const AdaptiveWithDetector = withResizeDetector(Footer);
+
+export default function ChatFooter(props) {
+  return (
+    <AdaptiveWithDetector {...props} />
+  );
 }
