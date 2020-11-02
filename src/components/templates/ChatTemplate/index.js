@@ -51,8 +51,8 @@ const useStyles = makeStyles((theme) => ({
   },
   footerWrap: {
     position: 'fixed',
-    bottom: 0,
-    width: '100%',
+    bottom: '0',
+    width: '100%'
   },
 }));
 

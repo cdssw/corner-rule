@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ChatPage(props) {
   const history = useHistory();
   const { login, userInfo } = useSelector(state => state.userInfo, []);
-  const [contentHeight, setContentHeight] = useState(0);
+  // const [contentHeight, setContentHeight] = useState(0);
   const [message, setMessage] = useState('');
   const [token, setToken] = useState('');
   const [chat, setChat] = useState([]);
@@ -42,6 +42,7 @@ export default function ChatPage(props) {
   const [loading, setLoading] = useState(false);
   const [focus, setFocus] = useState(false);
   const [bottom, setBottom] = useState(50);
+  const [page, setPage] = useState(0);
 
   const size = 10;
   const isSafari = navigator.vendor.includes('Apple');
@@ -72,7 +73,8 @@ export default function ChatPage(props) {
         username: props.location.chatInfo.chatName
       }
       if(chat.length > 0) body.id = chat[0].id;
-      const response = await Chat.getHistory({token: JSON.parse(token).access_token, page: 0, size: size, sort: 'id,desc', body});
+      const response = await Chat.getHistory({token: JSON.parse(token).access_token, page: page, size: size, sort: 'id,desc', body});
+      setPage(page + 1);
       // 기존 데이터 앞에 추가
       setChat(response.data.content.concat(chat));
     } catch(error) {
@@ -86,20 +88,17 @@ export default function ChatPage(props) {
     setBottom(e);
   }
 
-  const handleContentHeightChange = e => {
-    setContentHeight(e);
-  }
-
   const handleMessageChange = e => {
     setMessage(e.target.value);
   }
 
   const handleMessageReceive = msg => {
-    if(chat.length > 10) {
-      setChat(chat.splice(chat.length - 10, chat.length - 1).concat(msg));
-    } else {
-      setChat(chat.concat(msg));
-    }    
+    // if(chat.length > 10) {
+    //   setChat(chat.splice(chat.length - 10, chat.length - 1).concat(msg));
+    // } else {
+    //   setChat(chat.concat(msg));
+    // }
+    setChat(chat.concat(msg));
   }
 
   const handleFocus = e => {
@@ -109,6 +108,29 @@ export default function ChatPage(props) {
   const handleBlur = e => {
     setFocus(false);
   }
+
+  // const reFocus = e => {
+  //     // 임시로 input 태그를 생성
+  //     // 아래쪽으로 위치를 잡고
+  //     let tempInput = document.createElement('input');
+  //     tempInput.style.position = 'absolute';
+  //     tempInput.style.bottom = (inputRef.current.offsetTop + 7) + 'px';
+  //     tempInput.style.left = inputRef.current.offsetLeft + 'px';
+  //     tempInput.style.height = 0;
+  //     tempInput.style.opacity = 0;
+  //     tempInput.style['font-size'] = '16px';
+  //     document.body.appendChild(tempInput);
+  //     // focus를 준다
+  //     tempInput.focus();
+
+  //     // 0.1초 딜레이를 주고
+  //     // chatting창에 focus 및 click를 주고 임시로 만든 input을 삭제한다.
+  //     setTimeout(() => {
+  //       inputRef.current.focus();
+  //       inputRef.current.click();
+  //       document.body.removeChild(tempInput);
+  //     }, 500);
+  // }
 
   const handleMessageSend = e => {
     try {
@@ -121,28 +143,8 @@ export default function ChatPage(props) {
       }
 
       clientRef.current.sendMessage("/app/message", JSON.stringify(msgData));
-      setMessage('');
-
-      // 임시로 input 태그를 생성
-      // 아래쪽으로 위치를 잡고
-      let tempInput = document.createElement('input');
-      tempInput.style.position = 'absolute';
-      tempInput.style.bottom = (inputRef.current.offsetTop + 7) + 'px';
-      tempInput.style.left = inputRef.current.offsetLeft + 'px';
-      tempInput.style.height = 0;
-      tempInput.style.opacity = 0;
-      document.body.appendChild(tempInput);
-      // focus를 준다
-      tempInput.focus();
-
-      // 0.1초 딜레이를 주고
-      // chatting창에 focus 및 click를 주고 임시로 만든 input을 삭제한다.
-      setTimeout(() => {
-        inputRef.current.focus();
-        inputRef.current.click();
-        document.body.removeChild(tempInput);
-      }, 100);
-
+      setMessage('');      
+      if(!isSafari) inputRef.current.focus();
       return true;
     } catch(e) {
       console.log(e);
@@ -182,7 +184,6 @@ export default function ChatPage(props) {
         userInfo={userInfo}
         chat={chat}
         onMore={fetchMoreData}
-        onHeightChange={handleContentHeightChange}
         inputRef={inputRef}
         footerRef={footerRef}
       />

@@ -79,7 +79,6 @@ export default function AddressPage(props) {
   }
 
   const handleAddrClick = index => {
-    console.log(items[index]);
     const address = {
       address1: items[index].roadAddrPart1,
       address2: '',

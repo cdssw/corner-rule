@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { withResizeDetector } from "react-resize-detector";
 import classnames from "classnames";
-import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,25 +54,14 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '11px',
     color: '#d4d4d4',
   },
-  move: {
-    position: 'relative',
-    top: '200px',
-  }
 }));
 
 function Content(props) {
   const classes = useStyles();
   const week = ['일', '월', '화', '수', '목', '금', '토'];
   const isSafari = navigator.vendor.includes('Apple');
-  const [root, setRoot] = useState(classnames(classes.root));
   const [load, setLoad] = useState(false);
   const [prev, setPrev] = useState(0);
-
-  useEffect(e => {
-    window.scrollTo(0, document.body.scrollHeight);
-    window.addEventListener('scroll', handleScroll);
-    return () => { window.removeEventListener('scroll', handleScroll)}
-  }, []);
 
   useEffect(e => {
     if(load) {
@@ -81,57 +69,69 @@ function Content(props) {
     }
   }, [load]);
 
+  // 메시지를 보내면 이전 scrollTop 위치는 초기화
   useEffect(() => {
-    props.onHeightChange(props.height);
-    if(isSafari) {
-      if(props.height > document.body.offsetHeight - 105) {
-        setRoot(classnames(classes.root));
-      } else {
-        if(props.focus && props.height < document.body.offsetHeight / 2) {
-          setRoot(classnames(classes.root, classes.move));
-        } else {
-          setRoot(classnames(classes.root));
-        }
-      }
-    } else {
-      setRoot(classnames(classes.root));
-    }
-    if(!load) {
-      // 아이폰의 경우 footer의 상대 위치를 구한다.
-      const position = props.footerRef.current.getBoundingClientRect();
-      // body 스크롤바에서 footer의 아래 position을 빼준다.
-      let top = document.body.scrollHeight - position.bottom;
-      // console.log(position, document.body.scrollHeight);
-      if(props.focus) { // 입력할려고 focus를 잡으면
-        // console.log('prev init ', top);
-        setPrev(top); // 현재 위치값을 저장
-      }
+    setPrev(0);
+  }, [props.chat])
 
-      if(prev !== 0) { // focus가 잡힌적이 있으면
-        // console.log('prev ', prev, 'top ', top);
-        if(top < prev) { // 현재 위치가 이전 위치보다 작으면 (줄을 줄였으면)
-          top = prev - 19; // 아이폰의 1줄 height가 19로 나옴, 그만큼을 scrollbar 이동
-          // console.log('set prev ', top);
-          setPrev(top); // 다시 현재 값을 저장
-        }
+  useEffect(() => {
+    // 아이폰의 경우
+    if(isSafari) {
+      // 입력창에 focus가 갈 경우
+      if(props.focus && !load) {
+        // 현재 스크롤 위치가 이전보다 크면 (내용이 추가되었으면)
+        // 이전 스크롤 위치를 현재 위치로 설정, 아니면 이전 스크롤 위치 그대로 사용
+        const p = document.documentElement.scrollTop > prev ? document.documentElement.scrollTop : prev;
+        setPrev(p);
+        window.scrollTo({top: p, left: 0});  
       }
-      // console.log('top ', top);
-      // const top = position.top + window.pageYOffset - position.y;
-      // console.log(top, position, position.top + window.pageYOffset, position.top + window.pageYOffset - position.y);
-      window.scrollTo({top: top, left: 0, behavior: 'smooth'});  
+      if(!props.focus && !load) {
+        // 글을 입력하면 스크롤을 맨 아래로 이동
+        window.scrollTo(0, props.height);
+      }
+    } else { // 아이폰이 아니면
+      // 입력창에 focus가 가고 history가 로딩이 아니면
+      if(props.focus || !load) {
+        setTimeout(() => {
+          // 0.5초 후에 스크롤을 맨 아래로 내림, 안드로이드 가상키보드가 올라올 시간을 주기 위함
+          window.scrollTo({top: document.body.scrollHeight, left: 0, behavior: 'smooth'});  
+        }, 500);
+      } else if(!load) {
+        // height 또는 bottom(두줄)이 바뀐 경우라 history가 아닌 경우 무조건 맨아래로
+        window.scrollTo({top: document.body.scrollHeight, left: 0, behavior: 'smooth'});
+      }      
     }
   }, [props.height, props.focus, props.bottom]);
 
+  useEffect(e => {
+    window.addEventListener('scroll', handleScroll);
+    return () => { window.removeEventListener('scroll', handleScroll)}
+  }, []);
+
   const handleScroll = e => {
-    if(window.pageYOffset === 0) {
-      setLoad(true);
+    // 스크롤이 맨위를 넘어가면 추가로 히스토리를 로딩한다.
+    // 아이폰이 아닌 경우 inputbox에서 focus를 해제 한다.
+    if(!isSafari) {
+      if(window.pageYOffset <= 0) { // top 0도 포함하여 계산
+        props.inputRef.current.blur();
+        setLoad(true);
+      } else {
+        setLoad(false);
+      }
     } else {
-      setLoad(false);
+      // 아이폰의 경우 top이 0 미만으로 떨어질 경우만 로딩
+      if(window.pageYOffset < 0) {
+        setLoad(true);
+      } else {
+        setLoad(false);
+      }
     }
   };
 
   return (
-    <div className={root} style={{marginBottom: props.bottom}}>
+    <div className={classes.root}
+      style={{marginBottom: props.bottom}}
+    >
       {props.chat.map((m, i) => {        
         const index = i !== 0 ? i - 1 : 0;
         const prev = props.chat[index].timeStamp.split('T')[0].substring(0, 10);
