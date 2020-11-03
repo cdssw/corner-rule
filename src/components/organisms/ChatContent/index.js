@@ -1,7 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { withResizeDetector } from "react-resize-detector";
-import classnames from "classnames";
 
 const useStyles = makeStyles((theme) => ({
   root: {

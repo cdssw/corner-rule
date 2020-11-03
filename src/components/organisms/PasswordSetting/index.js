@@ -90,10 +90,8 @@ export default function PasswordSetting(props) {
       <TextField
         type='password'
         name="password" placeholder="새로운 비밀번호를 입력하세요." variant="outlined" fullWidth={true}
-        error={props.state.passwordValid !== null && !props.state.passwordValid}
-        error={props.state.password2Valid !== null && !props.state.password2Valid}
-        helperText={props.state.passwordValid !== null && !props.state.passwordValid && "최소 1글자 이상입니다."}
-        helperText={props.state.password2Valid !== null && !props.state.password2Valid && "현재 비밀번호와 동일합니다."}
+        error={(props.state.passwordValid !== null && !props.state.passwordValid) || (props.state.password2Valid !== null && !props.state.password2Valid)}
+        helperText={(props.state.passwordValid !== null && !props.state.passwordValid && "최소 1글자 이상입니다.") || (props.state.password2Valid !== null && !props.state.password2Valid && "현재 비밀번호와 동일합니다.")}
         value={props.state.password}
         onChange={props.onInputChange}
         InputProps={{

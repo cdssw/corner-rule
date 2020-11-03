@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useHistory, Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { PageTemplate, TitleHeader, AddressSearch, AddressResult } from "components";
@@ -9,21 +9,21 @@ function checkSearchedWord(value){
   if(value.length === 0) return;
 	if(value.length > 0){
 		//특수문자 제거
-		var expText = /[%=><]/ ;
-		if(expText.test(value) == true){
+		const expText = /[%=><]/ ;
+		if(expText.test(value) === true){
 			alert("특수문자를 입력 할수 없습니다.") ;
 			value = value.split(expText).join(""); 
 			return false;
 		}
 		
 		//특정문자열(sql예약어의 앞뒤공백포함) 제거
-		var sqlArray = new Array(
+		const sqlArray = new Array(
 			//sql 예약어
 			"OR", "SELECT", "INSERT", "DELETE", "UPDATE", "CREATE", "DROP", "EXEC",
-             		 "UNION",  "FETCH", "DECLARE", "TRUNCATE" 
+      "UNION",  "FETCH", "DECLARE", "TRUNCATE" 
 		);
 		
-		var regex;
+		let regex;
 		for(var i=0; i<sqlArray.length; i++){
 			regex = new RegExp( sqlArray[i] ,"gi") ;
 			
@@ -39,7 +39,7 @@ function checkSearchedWord(value){
 
 export default function AddressPage(props) {
   const history = useHistory();
-  const { login, userInfo } = useSelector(state => state.userInfo, []);
+  const { login } = useSelector(state => state.userInfo, []);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(0);

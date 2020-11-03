@@ -59,7 +59,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '15px',
     color: '#95989A',
     right: '10px',
-    display: 'flex',
     '& div': {
       paddingLeft: '2px',
     },

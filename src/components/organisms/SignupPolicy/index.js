@@ -1,7 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Checkbox, FormControlLabel } from '@material-ui/core';
-import Utils from '../../Utils';
 
 const useStyles = makeStyles((theme) => ({
   root: {

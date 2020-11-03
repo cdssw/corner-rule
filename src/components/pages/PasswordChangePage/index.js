@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useHistory, Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { PageTemplate, TitleHeader, PasswordSetting, Alert } from "components";
@@ -6,7 +6,7 @@ import * as User from "../../../services/User";
 
 export default function PasswordChangePage(props) {
   const history = useHistory();
-  const { login, userInfo } = useSelector(state => state.userInfo, []);
+  const { login } = useSelector(state => state.userInfo, []);
   const [loading, setLoading] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
   const [alertContent, setAlertContent] = useState('');

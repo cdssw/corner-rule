@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { PageTemplate, TitleHeader, SignupPolicy } from "components";
 import { useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setPolicy } from '../../../modules/policy';
 
 export default function SignupPolicyPage(props) {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory, Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { PageTemplate, TitleHeader, ImageList, RegForm, FileUploader } from "components";
@@ -8,7 +8,7 @@ import Utils from "../../Utils";
 
 export default function RegPage(props) {
   const history = useHistory();
-  const { login, userInfo } = useSelector(state => state.userInfo, []);
+  const { login } = useSelector(state => state.userInfo, []);
   const [loading, setLoading] = useState(false);
 
   const [fileUploader, setFileUploader] = useState(false);

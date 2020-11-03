@@ -1,4 +1,4 @@
-import React, { createElement, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ChatTemplate, TitleHeader, ChatContent } from "components";
 import { Redirect, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
