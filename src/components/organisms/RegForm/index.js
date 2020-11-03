@@ -77,7 +77,6 @@ export default function RegForm(props) {
     const { titleValid, contentValid, term, recruitment, address } = props.state;
     return titleValid
      && contentValid 
-     && term.endDtValid
      && recruitment
      && address.address2Valid
      && term.detailDayValid

@@ -72,7 +72,7 @@ export default function MyInfo(props) {
           <Avatar classes={{root: classes.avatarRoot}}>
             {props.userInfo.avatarPath
             ? <img src={process.env.REACT_APP_IMAGE + props.userInfo.avatarPath} alt='' />
-            : <Person classes={{fontSizeLarge: classes.fontSizeLarge}} fontSize='large' />
+            : <Person style={{fontSize: 50}} />
             }
           </Avatar>
         </div>

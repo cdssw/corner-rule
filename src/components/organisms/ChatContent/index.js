@@ -86,8 +86,12 @@ function Content(props) {
         window.scrollTo({top: p, left: 0});  
       }
       if(!props.focus && !load) {
-        // 글을 입력하면 스크롤을 맨 아래로 이동
-        window.scrollTo(0, props.height);
+        if(props.chat.length > 5) {
+          // 글을 입력하면 스크롤을 맨 아래로 이동
+          window.scrollTo(0, props.height);
+        } else {
+          window.scrollTo(0, 0);
+        }
       }
     } else { // 아이폰이 아니면
       // 입력창에 focus가 가고 history가 로딩이 아니면

@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Avatar } from '@material-ui/core';
 import Person from "@material-ui/icons/Person";
 import { Link } from "react-router-dom";
+import classnames from "classnames";
 import * as resources from "constants/resources";
 
 const useStyles = makeStyles((theme) => ({
@@ -27,17 +28,22 @@ const useStyles = makeStyles((theme) => ({
   avatarRoot: {
     width: '35px',
     height: '35px',
-    border: '2px solid white',
+    border: '2px solid white',    
   },
   avatarImg: {
     width: '100%',
     height: '100%',
     objectFit: 'cover',
   },
+  avatarColor: {
+    backgroundColor: '#6ADF54',
+  }
 }));
 
 export default function Header({userInfo, path}) {
   const classes = useStyles();
+
+  const avatarRoot = classnames(classes.avatarRoot, userInfo && classes.avatarColor);
 
   return (
     <div className={classes.root}>
@@ -47,7 +53,7 @@ export default function Header({userInfo, path}) {
       <div>
         <Link to={path}>
           <Avatar
-            classes={{root: classes.avatarRoot, img: classes.avatarImg}}
+            classes={{root: avatarRoot, img: classes.avatarImg}}
             alt={userInfo && userInfo.userNickNm}
             src={userInfo && userInfo.avatarPath && process.env.REACT_APP_IMAGE + userInfo.avatarPath}
           >

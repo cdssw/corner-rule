@@ -108,7 +108,7 @@ export default function Content({userInfo, meet, applicationMeet, onApplication,
           <div className={classes.space}>
             <div className={classes.title}>{meet.title}</div>
             <div className={classes.titleBottom}>
-              <div className={classes.regDate}>{Utils.parseDate(meet.modifyDt, '.')} {meet.modifyDt.split(' ')[1].substring(0, 5)}</div>
+              <div className={classes.regDate}>{Utils.parseDate(meet.modifyDt, '월 ')}일 {meet.modifyDt.split(' ')[1].substring(0, 5)}</div>
               <div className={classes.space}></div>
               <div className={classes.commWrap}>
                 <div className="ico"><img src={resources.chat} alt="chat" /></div>
@@ -123,8 +123,8 @@ export default function Content({userInfo, meet, applicationMeet, onApplication,
           <div className={classes.date}>
             <CalendarTodayIcon classes={{root: classes.iconSize}} />
             <div className={classes.detail}>
-              {Utils.parseDate(meet.term.startDt)} - {Utils.parseDate(meet.term.endDt)}{Utils.detailDay(meet.term)} 
-              ({meet.term.startTm} - {meet.term.endTm})
+              {Utils.parseDate(meet.term.startDt, '월 ')}일 ~ {Utils.parseDate(meet.term.endDt, '월 ')}일 {Utils.detailDay(meet.term)} 
+              ({meet.term.startTm} ~ {meet.term.endTm})
             </div>
           </div>
         </div>
@@ -132,14 +132,10 @@ export default function Content({userInfo, meet, applicationMeet, onApplication,
           <div className={classes.location}>
             <LocationOnIcon />
             <div className={classes.detail}>
-              {meet.address.address1}&nbsp;
-              {userInfo && userInfo.username !== meet.user.username
-                && meet.approvalYn
-                && meet.approvalDt != null
-                && meet.address.address2
-              }
-              {userInfo && userInfo.username === meet.user.username
-                && meet.address.address2
+              {(userInfo && userInfo.username === meet.user.username)
+               || (userInfo && userInfo.username !== meet.user.username && meet.approvalYn && meet.approvalDt != null)
+                ? (meet.address.address1 + ' ' + meet.address.address2)
+                : (meet.address.sido, meet.address.sgg)
               }
             </div>
           </div>
@@ -163,7 +159,7 @@ export default function Content({userInfo, meet, applicationMeet, onApplication,
             }
           </div>
         }
-        {userInfo && userInfo.username === meet.user.username &&
+        {userInfo && userInfo.username === meet.user.username && applicationMeet.length > 0 &&
           <>
             <div className={classes.wrap}>지원자 및 문의</div>
             {applicationMeet.map((m, index) => {
