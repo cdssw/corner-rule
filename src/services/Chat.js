@@ -17,3 +17,30 @@ export async function getHistory(props) {
     data: props.body
   });
 }
+
+export async function getCount(props) {
+  return axios.get(
+    url + '/count/' + props.meetId
+  );
+}
+
+export async function getUnread(props) {
+  return axios.get(
+    url + '/unread/' + props.meetId,
+    {headers: { Authorization: "Bearer " + props.token }}
+  );
+}
+
+export async function getUnreadUsers(props) {
+  return axios.get(
+    url + '/unread/users/' + props.meetId,
+    {headers: { Authorization: "Bearer " + props.token }}
+  );
+}
+
+export async function getContectList(props) {
+  return axios.get(
+    url + '/contect',
+    {headers: { Authorization: "Bearer " + props.token }}
+  );
+}

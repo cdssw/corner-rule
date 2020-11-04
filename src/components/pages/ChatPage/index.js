@@ -59,7 +59,7 @@ export default function ChatPage(props) {
 
   useEffect(() => {
     if(props.location.chatInfo !== undefined) {
-      setTopic(`/topic/${props.match.params.id}/${props.location.chatInfo.leaderName}-${props.location.chatInfo.chatName}`)
+      setTopic(`/topic/${props.match.params.id}/${props.location.chatInfo.leaderName}-${props.location.chatInfo.receiver}`)
     }
   }, [props.location.chatInfo])
 
@@ -69,8 +69,7 @@ export default function ChatPage(props) {
       const token = localStorage.getItem("token");
       const body = {
         meetId: props.match.params.id,
-        leaderName: props.location.chatInfo.leaderName,
-        username: props.location.chatInfo.chatName
+        sender: props.location.chatInfo.receiver,
       }
       if(chat.length > 0) body.id = chat[0].id;
       const response = await Chat.getHistory({token: JSON.parse(token).access_token, page: page, size: size, sort: 'id,desc', body});
@@ -93,11 +92,6 @@ export default function ChatPage(props) {
   }
 
   const handleMessageReceive = msg => {
-    // if(chat.length > 10) {
-    //   setChat(chat.splice(chat.length - 10, chat.length - 1).concat(msg));
-    // } else {
-    //   setChat(chat.concat(msg));
-    // }
     setChat(chat.concat(msg));
   }
 
@@ -137,7 +131,7 @@ export default function ChatPage(props) {
       const msgData = {
         'meetId': props.match.params.id,
         'leaderName': props.location.chatInfo.leaderName,
-        'username': props.location.chatInfo.chatName,
+        'receiver': props.location.chatInfo.receiver,
         'sender': userInfo.username,
         'message': message,
       }

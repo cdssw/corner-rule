@@ -4,6 +4,7 @@ import { PageTemplate, ImageHeader, TitleHeader, Content, ContentHeader, Confirm
 import * as Meet from "../../../services/Meet";
 import * as File from "../../../services/File";
 import * as User from "../../../services/User";
+import * as Chat from "../../../services/Chat";
 import Utils from "../../Utils";
 import { useHistory } from 'react-router-dom';
 
@@ -18,10 +19,10 @@ export default function ContentPage(props) {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [id, setId] = useState(undefined); // 선택한 사용자 ID
   const [title, setTitle] = useState(''); // 지원/확정에 따른 질문
+  const token = localStorage.getItem("token") ? JSON.parse(localStorage.getItem("token")).access_token : null;
 
   useEffect(e => {
-    const token = localStorage.getItem("token");
-    token ? getMeet(JSON.parse(token).access_token) : getMeet(null);
+    getMeet(token);
   }, []);
 
   const getMeet = async token => {
@@ -33,19 +34,50 @@ export default function ContentPage(props) {
         const imageList = await File.postImagesPath({fileList: meet.data.imgList});
         setImgPath(imageList);
       }
-
+      if(token !== null) {
+        if(meet.data.user.username === userInfo.username) { // 작성자 일경우
+          const applicationMeetUser = await Meet.getUserApplicationMeet({id: meet.data.id, token: token});
+          const chatList = await Chat.getUnreadUsers({token: token, meetId: meet.data.id});
+          // 지원자 중에 채팅 한사람이 있으면 미확인 채팅 카운트를 포함
+          const applicator = applicationMeetUser.data.map(m => {
+            const v = chatList.data.filter(f => {
+              return f.sender === m.username
+            });
+            if(v.length > 0) m.count = v[0].count;
+            return m;
+          });
+          // 채팅한 사람중 지원자 제외
+          const chatter = chatList.data.filter(m => {
+            const v = applicator.filter(f => f.username !== m.sender);
+            if(v.length > 0) {
+              m.username = m.sender;
+              return m;
+            }
+          });
+          const users = applicator.concat(chatter);
+          setApplicationMeet(users);
+        } else { // 문의자일 경우
+          getUnread(meet.data);
+        }
+      }
+      getCount(meet.data);
       const avatarPath = await User.getUserAvatar({username: meet.data.user.username, token: token});
       setAvatar(avatarPath.data);
-
-      if(token !== null) {
-        const applicationMeetUser = await Meet.getUserApplicationMeet({id: meet.data.id, token: token});
-        setApplicationMeet(applicationMeetUser.data);
-      }
     } catch(error) {
       Utils.alertError(error);
     } finally {
       setLoading(false);
     }
+  }
+
+  const getUnread = async meet => {
+    const data = await Chat.getUnread({token: token, meetId: meet.id});
+    meet.chatUnread = data.data;    
+  }
+
+  const getCount = async meet => {
+    const data = await Chat.getCount({meetId: meet.id});
+    meet.chatCnt = data.data;
   }
 
   const handleApplication = async e => {
@@ -111,7 +143,7 @@ export default function ContentPage(props) {
         avatarPath: avatar,
         userNickNm: meet.data.user.userNickNm,
         leaderName: meet.data.user.username,
-        chatName: userInfo.username,
+        receiver: meet.data.user.username, // 대화 대상자
       }
     } else {
       // 작성자 인경우
@@ -119,8 +151,8 @@ export default function ContentPage(props) {
       chatInfo = {
         avatarPath: user.avatarPath,
         userNickNm: user.userNickNm,
-        leaderName: userInfo.username,
-        chatName: user.username,
+        leaderName: meet.data.user.username,
+        receiver: user.username, // 대화 대상자
       }
     }
     history.push({

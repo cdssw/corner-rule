@@ -56,14 +56,14 @@ export default function MyTab(props) {
           variant="fullWidth"
         >
           <Tab label="내가 모집중" />
-          <Tab label="내가 지원중" />
+          <Tab label="내가 지원/문의중" />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <CardList path="/mypage" items={props.myOpened} />
+        <CardList path="/mypage" items={props.myOpened} fetchMoreData={props.openMoreData} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <CardList path="/mypage" items={props.myApplication} />
+        <CardList path="/mypage" items={props.myApplication} fetchMoreData={props.applicationMoreData} />
       </TabPanel>
     </div>
   );

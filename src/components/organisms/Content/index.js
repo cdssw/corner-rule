@@ -111,7 +111,7 @@ export default function Content({userInfo, meet, applicationMeet, onApplication,
               <div className={classes.space}></div>
               <div className={classes.commWrap}>
                 <div className="ico"><img src={resources.chat} alt="chat" /></div>
-                <div style={{paddingRight: '5px'}}>0</div>
+                <div style={{paddingRight: '5px'}}>{meet.chatCnt}</div>
                 <div className="ico"><img src={resources.man} alt="man" /></div>
                 <div>{meet.application}/{meet.recruitment}</div>
               </div>
@@ -146,7 +146,7 @@ export default function Content({userInfo, meet, applicationMeet, onApplication,
         <div style={{borderBottom: '1px solid #dfdfdf', width: '100%'}}></div><div style={{marginBottom: '20px'}}></div>
         {userInfo && userInfo.username !== meet.user.username &&
           <div className={classes.buttonWrap}>
-            <Badge classes={{badge: classes.badge}} badgeContent={4} color="secondary">
+            <Badge classes={{badge: classes.badge}} badgeContent={meet.chatUnread} color="secondary">
               <Button variant="contained" color='primary' onClick={onChatClick}>채팅문의</Button>
             </Badge>
             <div style={{width: '13px'}}></div>
@@ -175,9 +175,11 @@ export default function Content({userInfo, meet, applicationMeet, onApplication,
                   </div>
                   <div className={classes.userName}>{m.userNickNm}</div>        
                   <div className={classes.space}></div>
-                  <Button variant="contained" color='secondary' onClick={(e) => onApproval(m.id)} disabled={m.approvalYn}>{m.approvalYn ? m.approvalDt : '확정'}</Button>
+                  {m.approvalYn !== undefined &&
+                    <Button variant="contained" color='secondary' onClick={(e) => onApproval(m.id)} disabled={m.approvalYn}>{m.approvalYn ? m.approvalDt : '확정'}</Button>
+                  }
                   <div style={{width: '4px'}}></div>
-                  <Badge classes={{badge: classes.badge}} badgeContent={2} color="secondary">
+                  <Badge classes={{badge: classes.badge}} badgeContent={m.count} color="secondary">
                     <Button variant="contained" color='primary' onClick={() => onChatClick(m.id)}>채팅</Button>
                   </Badge>
                 </div>

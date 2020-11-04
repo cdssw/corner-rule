@@ -35,19 +35,31 @@ export async function postMeet(props) {
 }
 
 export async function postMyPageOpened(props) {
-  return axios.post(
-    url + "/mypage/opened",
-    props.body,
-    {headers: { Authorization: "Bearer " + props.token }}
-  );
+  return axios({
+    url: url + "/mypage/opened",
+    method: 'POST',
+    params: {
+      page: props.page,
+      size: props.size,
+      sort: props.sort,
+    },
+    data: props.body,
+    headers: { Authorization: "Bearer " + props.token }
+  });
 }
 
 export async function postMyPageApplication(props) {
-  return axios.post(
-    url + "/mypage/application",
-    props.body,
-    {headers: { Authorization: "Bearer " + props.token }}
-  );
+  return axios({
+    url: url + "/mypage/application",
+    method: 'POST',
+    params: {
+      page: props.page,
+      size: props.size,
+      sort: props.sort,
+    },
+    data: props.body,
+    headers: { Authorization: "Bearer " + props.token }
+  });
 }
 
 export async function getUserApplicationMeet(props) {

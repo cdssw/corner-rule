@@ -96,8 +96,7 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center',
       },
       '& .chat': {
-        padding: '1px 0',
-        width: '22px',
+        padding: '1px 7px',
         height: '22px',
         border: 'solid 1px #ffffff',
         backgroundColor: '#4a71dc',
@@ -106,13 +105,12 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center',
       },
       '& .application': {
-        padding: '1px 0',
-        width: '22px',
+        padding: '1px 7px',
         height: '22px',
         border: 'solid 1px #ffffff',
         backgroundColor: '#e63232',
         color: 'white',
-        borderRadius: '50%',
+        borderRadius: '90px',
         textAlign: 'center',
       }
     },
@@ -174,8 +172,8 @@ export default function Card({item, image, onContentClick}) {
             <div><CalendarTodayIcon fontSize="small" /></div>
             <div>{Utils.parseDate(item.term.startDt)} ~ {Utils.parseDate(item.term.endDt)}{Utils.detailDay(item.term)}</div>
             <div className="space"></div>
-            {item.chatCnt ? item.chatCnt > 0 && <div className="chat">0</div> : ''}
-            {item.toApprovalCnt ? item.toApprovalCnt > 0 && <div className="application">{item.toApprovalCnt}</div> : ''}
+            {item.chatCnt ? item.chatUnread > 0 && <div className="chat">CHAT {item.chatUnread}</div> : ''}
+            {item.toApprovalCnt ? item.toApprovalCnt > 0 && <div className="application">APPOVAL {item.toApprovalCnt}</div> : ''}
             {item.approval ? item.approval.approvalYn && <div className="approval">승인완료</div> : ''}
             <div>&nbsp;&nbsp;</div>
           </div>
@@ -185,7 +183,7 @@ export default function Card({item, image, onContentClick}) {
             </div>
             <div className="commWrap">
               <div className="ico"><img src={resources.chat} alt="chat" /></div>
-              <div>0</div>
+              <div>{item.chatCnt}</div>
               <div className="ico"><img src={resources.man} alt="man" /></div>
               <div>{item.application}/{item.recruitment}</div>
             </div>

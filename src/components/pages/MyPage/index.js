@@ -6,6 +6,7 @@ import { PageTemplate, TitleHeader, MyInfo, PlaceSetting, MyTab, Confirm } from 
 import * as User from "../../../services/User";
 import * as Meet from "../../../services/Meet";
 import * as File from "../../../services/File";
+import * as Chat from "../../../services/Chat";
 import Utils from "../../Utils";
 
 export default function MyPage(props) {
@@ -14,20 +15,23 @@ export default function MyPage(props) {
   const dispatch = useDispatch();
   const { login, userInfo } = useSelector(state => state.userInfo, []);
   const [myOpened, setMyOpened] = useState([]);
+  const [openPage, setOpenPage] = useState(0);
   const [myApplication, setMyApplication] = useState([]);
+  const [applicationPage, setApplicationPage] = useState(0);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [selectPlace, setSelectPlace] = useState({}); // 선택한 관심지역
+  const size = 10;
+  const token = localStorage.getItem("token") && JSON.parse(localStorage.getItem("token")).access_token;  
 
   useEffect(e => {
-    const token = localStorage.getItem("token");
     if(token) {
-      loadUserInfo(JSON.parse(token).access_token);
-      loadMyOpened(JSON.parse(token).access_token);
-      loadMyApplication(JSON.parse(token).access_token);
+      loadUserInfo();
+      loadMyOpened();
+      loadMyApplication();
     }
   }, []);
 
-  const loadUserInfo = async token => {
+  const loadUserInfo = async e => {
     setLoading(true);
     try {
       const res = await User.getUser(token);
@@ -39,14 +43,17 @@ export default function MyPage(props) {
     }
   }
 
-  const loadMyOpened = async token => {
+  const loadMyOpened = async e => {
     setLoading(true);
     try {
       const body = {
         toApproval: false
       };
-      const res = await Meet.postMyPageOpened({token: token, body: body})
-      const data = await getImagePath(res.data.content);
+      const res = await Meet.postMyPageOpened({token: token, body: body, page: openPage, size: size, sort: 'id,desc'})
+      const file = await getImagePath(res.data.content);
+      const unread = await getUnread(file);
+      const data = await getCount(unread);
+      setOpenPage(openPage + 1);
       setMyOpened(myOpened.concat(data));
     } catch(error) {
       Utils.alertError(error);
@@ -55,12 +62,15 @@ export default function MyPage(props) {
     }    
   }
 
-  const loadMyApplication = async token => {
+  const loadMyApplication = async e => {
     setLoading(true);
     try {
       const body = {};
-      const res = await Meet.postMyPageApplication({token: token, body: body})
-      const data = await getImagePath(res.data.content);
+      const res = await Meet.postMyPageApplication({token: token, body: body, page: applicationPage, size: size, sort: 'id,desc'})
+      const file = await getImagePath(res.data.content);
+      const unread = await getUnread(file);
+      const data = await getCount(unread);
+      setApplicationPage(applicationPage + 1);
       setMyApplication(myApplication.concat(data));
     } catch(error) {
       Utils.alertError(error);
@@ -73,6 +83,22 @@ export default function MyPage(props) {
     for (const m of arr) {
       const data = await File.postImagesPath({fileList: m.imgList});
       m.imgList = data.data;
+    }
+    return arr;
+  }
+
+  const getUnread = async arr => {
+    for (const m of arr) {
+      const data = await Chat.getUnread({token: token, meetId: m.id});
+      m.chatUnread = data.data;
+    }
+    return arr;
+  }
+
+  const getCount = async arr => {
+    for (const m of arr) {
+      const data = await Chat.getCount({meetId: m.id});
+      m.chatCnt = data.data;
     }
     return arr;
   }
@@ -96,7 +122,6 @@ export default function MyPage(props) {
     if(localStorage.getItem('place') === selectPlace.place)
       localStorage.setItem("place", "");
 
-    const token = JSON.parse(localStorage.getItem("token")).access_token;
     const param = { token, id: selectPlace.id };
     setLoading(true);
     try {
@@ -139,7 +164,12 @@ export default function MyPage(props) {
       <div style={{borderBottom: '1px solid #dfdfdf'}}></div><div style={{marginBottom: '10px'}}></div>
       <PlaceSetting userInfo={userInfo} onAddClick={handleAddClick} onPlaceClick={handleConfirmOpen} />
       <div style={{borderBottom: '1px solid #dfdfdf'}}></div><div style={{marginBottom: '10px'}}></div>
-      <MyTab myOpened={myOpened} myApplication={myApplication} />
+      <MyTab
+        myOpened={myOpened}
+        openMoreData={loadMyOpened}
+        myApplication={myApplication}
+        applicationMoreData={loadMyApplication}
+      />
       <Confirm
         state={confirmOpen}
         onCancel={handleConfirmCancel}
