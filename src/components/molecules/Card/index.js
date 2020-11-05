@@ -172,8 +172,8 @@ export default function Card({item, image, onContentClick}) {
             <div><CalendarTodayIcon fontSize="small" /></div>
             <div>{Utils.parseDate(item.term.startDt)} ~ {Utils.parseDate(item.term.endDt)}{Utils.detailDay(item.term)}</div>
             <div className="space"></div>
-            {item.chatCnt ? item.chatUnread > 0 && <div className="chat">CHAT {item.chatUnread}</div> : ''}
-            {item.toApprovalCnt ? item.toApprovalCnt > 0 && <div className="application">APPOVAL {item.toApprovalCnt}</div> : ''}
+            {item.chatCnt ? item.chatUnread > 0 && <div style={{padding: isSafari && '0 7px'}} className="chat">CHAT {item.chatUnread}</div> : ''}
+            {item.toApprovalCnt ? item.toApprovalCnt > 0 && <div style={{padding: isSafari && '0 7px'}} className="application">APPOVAL {item.toApprovalCnt}</div> : ''}
             {item.approval ? item.approval.approvalYn && <div className="approval">승인완료</div> : ''}
             <div>&nbsp;&nbsp;</div>
           </div>

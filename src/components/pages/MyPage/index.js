@@ -51,8 +51,7 @@ export default function MyPage(props) {
       };
       const res = await Meet.postMyPageOpened({token: token, body: body, page: openPage, size: size, sort: 'id,desc'})
       const file = await getImagePath(res.data.content);
-      const unread = await getUnread(file);
-      const data = await getCount(unread);
+      const data = await getUnread(file);
       setOpenPage(openPage + 1);
       setMyOpened(myOpened.concat(data));
     } catch(error) {
@@ -68,8 +67,7 @@ export default function MyPage(props) {
       const body = {};
       const res = await Meet.postMyPageApplication({token: token, body: body, page: applicationPage, size: size, sort: 'id,desc'})
       const file = await getImagePath(res.data.content);
-      const unread = await getUnread(file);
-      const data = await getCount(unread);
+      const data = await getUnread(file);
       setApplicationPage(applicationPage + 1);
       setMyApplication(myApplication.concat(data));
     } catch(error) {
@@ -95,14 +93,6 @@ export default function MyPage(props) {
     return arr;
   }
 
-  const getCount = async arr => {
-    for (const m of arr) {
-      const data = await Chat.getCount({meetId: m.id});
-      m.chatCnt = data.data;
-    }
-    return arr;
-  }
-  
   const handleLogout = e => {
     localStorage.removeItem('token');
     localStorage.removeItem('place');

@@ -28,12 +28,18 @@ export default function ContentPage(props) {
   const getMeet = async token => {
     setLoading(true);
     try {
+      // meet 정보
       const meet = await Meet.getMeet({id: props.match.params.id, token: token});
-      setMeet(meet);
+      // 첨부이미지 정보
       if(meet.data.imgList && meet.data.imgList.length > 0) {
         const imageList = await File.postImagesPath({fileList: meet.data.imgList});
         setImgPath(imageList);
       }
+      // 아바타 경로
+      const avatarPath = await User.getUserAvatar({username: meet.data.user.username, token: token});
+      setAvatar(avatarPath.data);
+
+      // 로그인 상태이면
       if(token !== null) {
         if(meet.data.user.username === userInfo.username) { // 작성자 일경우
           const applicationMeetUser = await Meet.getUserApplicationMeet({id: meet.data.id, token: token});
@@ -57,12 +63,10 @@ export default function ContentPage(props) {
           const users = applicator.concat(chatter);
           setApplicationMeet(users);
         } else { // 문의자일 경우
-          getUnread(meet.data);
+          meet.data = await getUnread(meet.data);
         }
       }
-      getCount(meet.data);
-      const avatarPath = await User.getUserAvatar({username: meet.data.user.username, token: token});
-      setAvatar(avatarPath.data);
+      setMeet(meet);
     } catch(error) {
       Utils.alertError(error);
     } finally {
@@ -72,12 +76,8 @@ export default function ContentPage(props) {
 
   const getUnread = async meet => {
     const data = await Chat.getUnread({token: token, meetId: meet.id});
-    meet.chatUnread = data.data;    
-  }
-
-  const getCount = async meet => {
-    const data = await Chat.getCount({meetId: meet.id});
-    meet.chatCnt = data.data;
+    meet.chatUnread = data.data;
+    return meet;
   }
 
   const handleApplication = async e => {

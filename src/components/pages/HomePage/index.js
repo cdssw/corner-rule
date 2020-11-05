@@ -111,8 +111,7 @@ export default function HomePage() {
     try {
       const p = init === 0 ? init : page;
       const response = await Meet.getMeetSearch({body: param, page: p, size: size, sort: 'id,desc'});
-      const file = await getImagePath(response.data.content);
-      const data = await getCount(file);
+      const data = await getImagePath(response.data.content);
       setPage(p + 1); // infinite scroll시 다음페이지 조회
       setItems(init === 0 ? data : items.concat(data));
     } catch(error) {
@@ -126,14 +125,6 @@ export default function HomePage() {
     for (const m of arr) {
       const data = await File.postImagesPath({fileList: m.imgList});
       m.imgList = data.data;
-    }
-    return arr;
-  }
-
-  const getCount = async arr => {
-    for (const m of arr) {
-      const data = await Chat.getCount({meetId: m.id});
-      m.chatCnt = data.data;
     }
     return arr;
   }
