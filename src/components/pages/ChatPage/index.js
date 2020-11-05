@@ -149,7 +149,8 @@ export default function ChatPage(props) {
   const handleBack = e => {
     history.push({
       pathname: "/content/" + props.match.params.id,
-      state: {path: null}
+      path: props.location.path,
+      tab: props.location.tab,
     });
   }
 

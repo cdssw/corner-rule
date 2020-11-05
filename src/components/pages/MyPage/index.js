@@ -16,6 +16,7 @@ export default function MyPage(props) {
   const { login, userInfo } = useSelector(state => state.userInfo, []);
   const [myOpened, setMyOpened] = useState([]);
   const [openPage, setOpenPage] = useState(0);
+  const [tab, setTab] = useState(0);
   const [myApplication, setMyApplication] = useState([]);
   const [applicationPage, setApplicationPage] = useState(0);
   const [confirmOpen, setConfirmOpen] = useState(false);
@@ -23,13 +24,18 @@ export default function MyPage(props) {
   const size = 10;
   const token = localStorage.getItem("token") && JSON.parse(localStorage.getItem("token")).access_token;  
 
-  useEffect(e => {
+  useEffect(() => {
     if(token) {
       loadUserInfo();
       loadMyOpened();
       loadMyApplication();
     }
   }, []);
+
+  // 이전 선택된 tab으로 자동 설정
+  useEffect(() => {
+    if(props.location.tab) setTab(props.location.tab);
+  }, [props.location.tab]);
 
   const loadUserInfo = async e => {
     setLoading(true);
@@ -124,6 +130,10 @@ export default function MyPage(props) {
     }
   }
 
+  const handleSelectTab = (e, newValue) => {
+    setTab(newValue);
+  }
+
   const handlePasswordChange = e => {
     history.push("/mypage/pass_change");
   }
@@ -146,15 +156,21 @@ export default function MyPage(props) {
     handlePlaceClick();
   };
 
+  const handleBack = () => {
+    history.push("/");
+  }
+
   if(!login) return <Redirect to='/login' />
 
   return (
-    <PageTemplate header={<TitleHeader path="/" {...props}>My Page</TitleHeader>} loading={loading}>
+    <PageTemplate header={<TitleHeader onBack={handleBack} {...props}>My Page</TitleHeader>} loading={loading}>
       <MyInfo userInfo={userInfo} onLogout={handleLogout} onMyInfoChange={handleMyInfoChange} onPasswordChange={handlePasswordChange} />
       <div style={{borderBottom: '1px solid #dfdfdf'}}></div><div style={{marginBottom: '10px'}}></div>
       <PlaceSetting userInfo={userInfo} onAddClick={handleAddClick} onPlaceClick={handleConfirmOpen} />
       <div style={{borderBottom: '1px solid #dfdfdf'}}></div><div style={{marginBottom: '10px'}}></div>
       <MyTab
+        tab={tab}
+        onSelectTab={handleSelectTab}
         myOpened={myOpened}
         openMoreData={loadMyOpened}
         myApplication={myApplication}

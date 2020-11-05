@@ -234,7 +234,7 @@ export default function RegPage(props) {
   if(!login) return <Redirect to='/' />
 
   return (
-    <PageTemplate header={<TitleHeader path='/' {...props}>글쓰기</TitleHeader>} loading={loading}>
+    <PageTemplate header={<TitleHeader {...props}>글쓰기</TitleHeader>} loading={loading}>
       <ImageList imgList={state.imgList} onFileChange={handleFileChange} onRemoveClick={handleRemoveClick} />
       {fileUploader && <FileUploader total={total} current={current} value={value} />}
       <div style={{borderBottom: '1px solid #dfdfdf'}} />

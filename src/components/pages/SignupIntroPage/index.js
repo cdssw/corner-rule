@@ -45,8 +45,12 @@ export default function SignupIntroPage(props) {
     history.push('/signup_policy');
   }
 
+  const handleBack = e => {
+    history.push("/login");
+  }
+
   return (
-    <PageTemplate header={<TitleHeader path='/login' {...props}>회원가입</TitleHeader>}>
+    <PageTemplate header={<TitleHeader onBack={handleBack} {...props}>회원가입</TitleHeader>}>
       <SignupIntro onStartClick={handleStart} />
     </PageTemplate>
   );

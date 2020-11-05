@@ -139,7 +139,7 @@ export default function HomePage() {
         </>
       }
       <div style={{marginBottom: '10px'}}></div>
-      <CardList fetchMoreData={fetchMoreData} items={items} />
+      <CardList path="/" fetchMoreData={fetchMoreData} items={items} />
       {login && 
         <Link to="/reg">
           <Fab color="primary" aria-label="add" className={classes.fab}>

@@ -142,7 +142,7 @@ export default function SignupStep3Page(props) {
   if(agree === false) return <Redirect to='/login' />
 
   return (
-    <PageTemplate loading={loading} header={<TitleHeader path='/signup_step2' onBack={handleBack} {...props}>회원가입</TitleHeader>}>
+    <PageTemplate loading={loading} header={<TitleHeader onBack={handleBack} {...props}>회원가입</TitleHeader>}>
       <SignupStep3
         state={state}
         onInputChange={handleInputChange}

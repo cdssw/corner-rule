@@ -138,12 +138,12 @@ export default function SignupStep1Page(props) {
     } catch(error) {
       Utils.alertError(error);
     }
-  }  
+  }
 
   if(agree === false) return <Redirect to='/login' />
 
   return (
-    <PageTemplate header={<TitleHeader path='/signup_policy' onBack={handleBackOpen} {...props}>회원가입</TitleHeader>}>
+    <PageTemplate header={<TitleHeader onBack={handleBackOpen} {...props}>회원가입</TitleHeader>}>
       <SignupStep1
         state={state}
         onInputChange={handleInputChange}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,15 +29,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function TitleHeader({children, history, path, onBack}) {
+export default function TitleHeader(props) {
   const classes = useStyles();
+  const history = useHistory();
 
   const handleBack = e => {
-    if(onBack === undefined) {
-      path ? history.push(path) : history.goBack(path);
-    } else {
-      onBack();
-    }
+    props.onBack ? props.onBack() : history.goBack(1);
   }
 
   return (
@@ -44,7 +42,7 @@ export default function TitleHeader({children, history, path, onBack}) {
       <div className={classes.arrowWrap}>
         <ArrowBackIcon className={classes.arrow} onClick={handleBack} />
       </div>
-      <div className={classes.title}>{children}</div>
+      <div className={classes.title}>{props.children}</div>
       <div className={classes.space}></div>
     </div>
   );

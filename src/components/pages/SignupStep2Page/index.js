@@ -140,7 +140,7 @@ export default function SignupStep2Page(props) {
   if(agree === false) return <Redirect to='/login' />
 
   return (
-    <PageTemplate header={<TitleHeader path='/signup_step1' onBack={handleBack} {...props}>회원가입</TitleHeader>}>
+    <PageTemplate header={<TitleHeader onBack={handleBack} {...props}>회원가입</TitleHeader>}>
       <SignupStep2
         state={state}
         onInputChange={handleInputChange}

@@ -4,6 +4,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import './styles.css';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,21 +28,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ImageHeader({imgPath, history, path}) {
+export default function ImageHeader(props) {
   const classes = useStyles();
+  const history = useHistory();
   const [images, setImages] = useState([]);
 
   useEffect(() => {
-    if(imgPath.data !== undefined) {
-      const imgList = Array.from(imgPath.data).map(img => {
+    if(props.imgPath.data !== undefined) {
+      const imgList = Array.from(props.imgPath.data).map(img => {
         return {original: process.env.REACT_APP_IMAGE + img.path + '/' + img.chgFileNm};
       });
       setImages(imgList);
     }
-  }, [imgPath]);
+  }, [props.imgPath]);
 
   const handleBack = e => {
-    path ? history.push(path) : history.goBack(path);
+    props.onBack ? props.onBack() : history.goBack(1);
   }
 
   return (

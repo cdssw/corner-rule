@@ -157,15 +157,29 @@ export default function ContentPage(props) {
     }
     history.push({
       pathname: '/chat/' + meet.data.id,
-      chatInfo: chatInfo
+      chatInfo: chatInfo,
+      path: props.location.path,
+      tab: props.location.tab
     });
   };
+
+  const handleBack = e => {
+    if(props.location.path) {
+      history.push({
+        pathname: props.location.path,
+        path: props.location.path,
+        tab: props.location.tab,
+      });
+    } else {
+      history.goBack(1);
+    }
+  }
 
   return (
     <PageTemplate imageWrap={imgPath && imgPath.data.length > 0 && true}
       header={imgPath && imgPath.data.length > 0
-        ? <ImageHeader path={props.location.state.path ? props.location.state.path : "/"} imgPath={imgPath} {...props} />
-        : <TitleHeader path={props.location.state.path ? props.location.state.path : "/"} {...props}>상세보기</TitleHeader>
+        ? <ImageHeader onBack={handleBack} imgPath={imgPath} {...props} />
+        : <TitleHeader onBack={handleBack} {...props}>상세보기</TitleHeader>
       } loading={loading}>
       <ContentHeader meet={meet.data} avatar={avatar} />
       <div style={{borderBottom: '1px solid #dfdfdf'}}></div><div style={{marginBottom: '20px'}}></div>

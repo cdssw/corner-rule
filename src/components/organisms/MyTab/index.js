@@ -39,19 +39,14 @@ function TabPanel(props) {
 
 export default function MyTab(props) {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
 
   return (
     <div className={classes.root}>
       <AppBar position="static" color="default" className={classes.appBar}>
         <Tabs
           classes={{root: classes.muiTabsRoot, indicator: classes.muiTabsIndicator}}
-          value={value}
-          onChange={handleChange}
+          value={props.tab}
+          onChange={props.onSelectTab}
           textColor="primary"
           variant="fullWidth"
         >
@@ -59,11 +54,11 @@ export default function MyTab(props) {
           <Tab label="내가 지원/문의중" />
         </Tabs>
       </AppBar>
-      <TabPanel value={value} index={0}>
-        <CardList path="/mypage" items={props.myOpened} fetchMoreData={props.openMoreData} />
+      <TabPanel value={props.tab} index={0}>
+        <CardList path="/mypage" tab={props.tab} items={props.myOpened} fetchMoreData={props.openMoreData} />
       </TabPanel>
-      <TabPanel value={value} index={1}>
-        <CardList path="/mypage" items={props.myApplication} fetchMoreData={props.applicationMoreData} />
+      <TabPanel value={props.tab} index={1}>
+        <CardList path="/mypage" tab={props.tab} items={props.myApplication} fetchMoreData={props.applicationMoreData} />
       </TabPanel>
     </div>
   );
