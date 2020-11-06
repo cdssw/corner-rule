@@ -21,7 +21,7 @@ export default function SignupStep3Page(props) {
     mainTalent: '',
     talent: [],
     interest: [],
-    avatarPath: '',
+    avatarPath: null,
   });
 
   useEffect(e => {

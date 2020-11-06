@@ -180,7 +180,7 @@ export default function Content({userInfo, meet, applicationMeet, onApplication,
                   }
                   <div style={{width: '4px'}}></div>
                   <Badge classes={{badge: classes.badge}} badgeContent={m.count} color="secondary">
-                    <Button variant="contained" color='primary' onClick={() => onChatClick(m.id)}>채팅</Button>
+                    <Button variant="contained" color='primary' onClick={() => onChatClick(m.username)}>채팅</Button>
                   </Badge>
                 </div>
               );

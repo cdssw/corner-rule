@@ -42,25 +42,29 @@ export default function ContentPage(props) {
       // 로그인 상태이면
       if(token !== null) {
         if(meet.data.user.username === userInfo.username) { // 작성자 일경우
-          const applicationMeetUser = await Meet.getUserApplicationMeet({id: meet.data.id, token: token});
-          const chatList = await Chat.getUnreadUsers({token: token, meetId: meet.data.id});
-          // 지원자 중에 채팅 한사람이 있으면 미확인 채팅 카운트를 포함
-          const applicator = applicationMeetUser.data.map(m => {
-            const v = chatList.data.filter(f => {
-              return f.sender === m.username
-            });
-            if(v.length > 0) m.count = v[0].count;
+          const applicationUser = await Meet.getUserApplicationMeet({id: meet.data.id, token: token});
+          const chatUser = await Chat.getUnreadUsers({token: token, meetId: meet.data.id});
+
+          // 지원자 리턴하되 채팅한 사람중에 있으면 count를 추가
+          const applicator = applicationUser.data.map(m => {
+            const chat = chatUser.data.filter(v => m.username === v.sender);
+            if(chat.length > 0) {
+              m.count = chat[0].count;
+            }
             return m;
           });
-          // 채팅한 사람중 지원자 제외
-          const chatter = chatList.data.filter(m => {
-            const v = applicator.filter(f => f.username !== m.sender);
-            if(v.length > 0) {
-              m.username = m.sender;
-              return m;
-            }
+          const chatter = chatUser.data.map(m => {
+            m.username = m.sender;
+            return m;
           });
-          const users = applicator.concat(chatter);
+          // 합친뒤 중복제거
+          const combine = applicator.concat(chatter);
+          const users = combine.reduce((prev, curr) => {
+            if(!prev.find(a => a.username === curr.username)) {
+              prev.push(curr);
+            }
+            return prev;
+          }, []);
           setApplicationMeet(users);
         } else { // 문의자일 경우
           meet.data = await getUnread(meet.data);
@@ -135,7 +139,7 @@ export default function ContentPage(props) {
     id === undefined ? handleApplication() : handleApproval();
   };
 
-  const handleChatClick = (userId) => {
+  const handleChatClick = (receiver) => {
     let chatInfo = {};    
     if(userInfo.username !== meet.data.user.username) {
       // 작성자가 아닌경우
@@ -147,7 +151,7 @@ export default function ContentPage(props) {
       }
     } else {
       // 작성자 인경우
-      const user = applicationMeet.find(v => { return v.id === userId });
+      const user = applicationMeet.find(v => { return v.username === receiver });
       chatInfo = {
         avatarPath: user.avatarPath,
         userNickNm: user.userNickNm,
