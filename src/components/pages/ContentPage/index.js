@@ -147,7 +147,7 @@ export default function ContentPage(props) {
         avatarPath: avatar,
         userNickNm: meet.data.user.userNickNm,
         leaderName: meet.data.user.username,
-        receiver: meet.data.user.username, // 대화 대상자
+        receiver: userInfo.username, // 대화 대상자
       }
     } else {
       // 작성자 인경우
