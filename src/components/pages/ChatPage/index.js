@@ -59,7 +59,11 @@ export default function ChatPage(props) {
 
   useEffect(() => {
     if(props.location.chatInfo !== undefined) {
-      setTopic(`/topic/${props.match.params.id}/${props.location.chatInfo.leaderName}-${props.location.chatInfo.receiver}`)
+      if(props.location.chatInfo.owner) {
+        setTopic(`/topic/${props.match.params.id}/${props.location.chatInfo.leaderName}-${props.location.chatInfo.receiver}`)
+      } else {
+        setTopic(`/topic/${props.match.params.id}/${props.location.chatInfo.leaderName}-${userInfo.username}`)
+      }
     }
   }, [props.location.chatInfo])
 
@@ -93,6 +97,9 @@ export default function ChatPage(props) {
 
   const handleMessageReceive = msg => {
     setChat(chat.concat(msg));
+    if(msg.receiver === userInfo.username) { // 받는 사람이 본인이면 읽음 처리
+      Chat.putRead({id: msg.id, token: token});
+    }
   }
 
   const handleFocus = e => {

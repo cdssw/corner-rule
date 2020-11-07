@@ -31,3 +31,11 @@ export async function getUnreadUsers(props) {
     {headers: { Authorization: "Bearer " + props.token }}
   );
 }
+
+export async function putRead(props) {
+  return axios.put(
+    url + '/read/' + props.id,
+    null,
+    {headers: { Authorization: "Bearer " + props.token }}
+  );
+}

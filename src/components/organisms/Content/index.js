@@ -147,7 +147,7 @@ export default function Content({userInfo, meet, applicationMeet, onApplication,
         {userInfo && userInfo.username !== meet.user.username &&
           <div className={classes.buttonWrap}>
             <Badge classes={{badge: classes.badge}} badgeContent={meet.chatUnread} color="secondary">
-              <Button variant="contained" color='primary' onClick={onChatClick}>채팅문의</Button>
+              <Button variant="contained" color='primary' onClick={() => onChatClick(meet.user.username)}>채팅문의</Button>
             </Badge>
             <div style={{width: '13px'}}></div>
             {meet.approvalYn

@@ -142,21 +142,23 @@ export default function ContentPage(props) {
   const handleChatClick = (receiver) => {
     let chatInfo = {};    
     if(userInfo.username !== meet.data.user.username) {
-      // 작성자가 아닌경우
+      // 지원자인 경우
       chatInfo = {
         avatarPath: avatar,
         userNickNm: meet.data.user.userNickNm,
-        leaderName: meet.data.user.username,
-        receiver: userInfo.username, // 대화 대상자
+        leaderName: meet.data.user.username,        
+        owner: false,
+        receiver: receiver
       }
     } else {
-      // 작성자 인경우
+      // 작성자인 경우
       const user = applicationMeet.find(v => { return v.username === receiver });
       chatInfo = {
         avatarPath: user.avatarPath,
         userNickNm: user.userNickNm,
         leaderName: meet.data.user.username,
-        receiver: user.username, // 대화 대상자
+        owner: true,
+        receiver: receiver
       }
     }
     history.push({
