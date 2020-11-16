@@ -42,7 +42,7 @@ export default function SignupIntroPage(props) {
   }, []);
 
   const handleStart = e => {
-    history.push('/signup_policy');
+    history.replace('/signup_policy');
   }
 
   const handleBack = e => {

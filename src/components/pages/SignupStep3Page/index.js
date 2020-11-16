@@ -103,7 +103,7 @@ export default function SignupStep3Page(props) {
   }  
 
   const handleBack = e => {
-    history.push({
+    history.replace({
       pathname: '/signup_step2',
       policy: policy,
       step1: step1,
@@ -130,7 +130,7 @@ export default function SignupStep3Page(props) {
       const response = await User.signup(body);
       // 결과에 따라 set
       if(response) {
-        history.push('/signup_finish');
+        history.replace('/signup_finish');
       }
     } catch(error) {
       Utils.alertError(error);

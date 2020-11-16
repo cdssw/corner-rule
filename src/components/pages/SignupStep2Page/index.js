@@ -118,7 +118,7 @@ export default function SignupStep2Page(props) {
   };
 
   const handleBack = e => {
-    history.push({
+    history.replace({
       pathname: '/signup_step1',
       policy: policy,
       step1: step1,
@@ -128,7 +128,7 @@ export default function SignupStep2Page(props) {
   }
 
   const handleNext = e => {
-    history.push({
+    history.replace({
       pathname: '/signup_step3',
       policy: policy,
       step1: step1,

@@ -39,7 +39,7 @@ export default function SignupIntroPage(props) {
   const { agree } = useSelector(state => state.policy, []);
   
   const handleStart = e => {
-    history.push('/login');
+    history.replace('/login');
   }
 
   if(agree === false) return <Redirect to='/login' />

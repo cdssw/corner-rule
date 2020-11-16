@@ -30,6 +30,9 @@ export default function SignupStep1Page(props) {
 
   useEffect(e => {
     window.scrollTo(0, 0);
+    if(props.location.policy === undefined) {
+      history.push('/signup_policy');
+    }
   }, []);
   
   useEffect(e => {
@@ -108,14 +111,14 @@ export default function SignupStep1Page(props) {
   };
 
   const handleBackOk = () => {
-    history.push({
+    history.replace({
       pathname: '/signup_policy',
       policy: policy
     });
   }
 
   const handleNext = e => {
-    history.push({
+    history.replace({
       pathname: '/signup_step2',
       policy: policy,
       step1: state,

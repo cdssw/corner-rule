@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import { Link } from "react-router-dom";
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import VpnKeyOutlinedIcon from '@material-ui/icons/VpnKeyOutlined';
 import RadioButtonUncheckedOutlinedIcon from '@material-ui/icons/RadioButtonUncheckedOutlined';
@@ -41,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function LoginForm({username, password, onInput, onLogin, saveId, onSaveId}) {
+export default function LoginForm({username, password, onInput, onLogin, saveId, onSaveId, onSignupIntro}) {
   const classes = useStyles();
 
   const handleKeyPress = e => {
@@ -109,7 +108,7 @@ export default function LoginForm({username, password, onInput, onLogin, saveId,
       </div>
       <div className={classes.signup}>
         <div>아이디가 없으신가요?</div>
-        <div className={classes.signup}><Link to="/signup_intro"><div>회원가입</div></Link></div>
+        <div className={classes.signup}><div onClick={onSignupIntro}>회원가입</div></div>
       </div>
     </div>
   );

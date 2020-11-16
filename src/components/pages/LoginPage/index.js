@@ -3,10 +3,11 @@ import * as Authorization from "../../../services/Authorization";
 import * as User from "../../../services/User";
 import { setLoginUserInfo, setLogin } from "../../../modules/userInfo";
 import { useSelector, useDispatch } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { LoginTemplate, LoginForm, Footer, Alert } from "components";
 
 export default function LoginPage() {
+  const history = useHistory();
   const { login } = useSelector(state => state.userInfo, []);
   const dispatch = useDispatch();
   const [loginData, setLoginData] = useState({
@@ -78,6 +79,10 @@ export default function LoginPage() {
     }
   }
 
+  const handleSignupIntro = e => {
+    history.push('/signup_intro');
+  }
+
   if(login) return <Redirect to='/' />
 
   return (
@@ -89,6 +94,7 @@ export default function LoginPage() {
         onSaveId={handleSaveId}
         username={loginData.username}
         password={loginData.password}
+        onSignupIntro={handleSignupIntro}
       />
       <Alert
         state={alertOpen}

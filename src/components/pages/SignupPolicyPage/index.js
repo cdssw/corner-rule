@@ -29,7 +29,7 @@ export default function SignupPolicyPage(props) {
 
   const handleAgree = e => {
     dispatch(setPolicy(true)); // policy 동의상태로 처리
-    history.push({
+    history.replace({
       pathname: '/signup_step1',
       policy: state
     });
