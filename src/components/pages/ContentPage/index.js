@@ -199,6 +199,12 @@ export default function ContentPage(props) {
     }
   }
 
+  const handleModify = e => {
+    history.replace({
+      pathname: '/reg/' + props.match.params.id,
+    });
+  }
+
   return (
     <PageTemplate imageWrap={imgPath && imgPath.data.length > 0 && true}
       header={imgPath && imgPath.data.length > 0
@@ -214,6 +220,7 @@ export default function ContentPage(props) {
         onApplication={handleConfirmOpen}
         onApproval={handleConfirmOpen}
         onChatClick={handleChatClick}
+        onModify={handleModify}
       />
       <Confirm
         state={confirmOpen}

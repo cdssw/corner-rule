@@ -34,6 +34,14 @@ export async function postMeet(props) {
   );
 }
 
+export async function putMeet(props) {
+  return axios.put(
+    url + "/" + props.id,
+    props.body,
+    {headers: { Authorization: "Bearer " + props.token }}
+  );
+}
+
 export async function postMyPageOpened(props) {
   return axios({
     url: url + "/mypage/opened",

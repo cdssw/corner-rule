@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
+import SettingsIcon from '@material-ui/icons/Settings';
 import Person from "@material-ui/icons/Person";
 import { Button, Badge, Avatar } from '@material-ui/core';
 import Utils from "../../Utils";
@@ -42,6 +43,10 @@ const useStyles = makeStyles((theme) => ({
   detail: {
     flexGrow: 1,
     marginLeft: '8px',
+  },
+  titleWrap: {
+    display: 'flex',
+    justifyContent: 'space-between',
   },
   title: {
     fontWeight: 'bold',
@@ -96,7 +101,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Content({userInfo, meet, applicationMeet, onApplication, onApproval, onChatClick}) {
+export default function Content({userInfo, meet, applicationMeet, onApplication, onApproval, onChatClick, onModify}) {
   const classes = useStyles();
 
   return (
@@ -105,7 +110,12 @@ export default function Content({userInfo, meet, applicationMeet, onApplication,
       <>
         <div className={classes.wrap}>
           <div className={classes.space}>
-            <div className={classes.title}>{meet.title}</div>
+            <div className={classes.titleWrap}>
+              <div className={classes.title}>{meet.title}</div>
+              {userInfo && userInfo.username === meet.user.username &&
+                <SettingsIcon onClick={onModify} style={{ color: '#5a6482', width: '20px' }} />
+              }
+            </div>
             <div className={classes.titleBottom}>
               <div className={classes.regDate}>{Utils.parseDate(meet.modifyDt, '월 ')}일 {meet.modifyDt.split(' ')[1].substring(0, 5)}</div>
               <div className={classes.space}></div>

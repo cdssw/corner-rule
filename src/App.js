@@ -39,6 +39,7 @@ function App() {
         <Route exact path="/mypage/pass_change" component={PasswordChangePage}/>
         <Route exact path="/mypage/info_change" component={MyInfoChangePage}/>
         <Route exact path="/reg" component={RegPage}/>
+        <Route exact path="/reg/:id" component={RegPage}/>
         <Route exact path="/content/:id" component={ContentPage}/>
         <Route exact path="/address" component={AddressPage}/>
         <Route exact path="/chat/:id" component={ChatPage}/>
