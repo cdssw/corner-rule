@@ -8,7 +8,6 @@ import AddIcon from '@material-ui/icons/Add';
 import * as User from "../../../services/User";
 import * as Meet from "../../../services/Meet";
 import * as File from "../../../services/File";
-import * as Chat from "../../../services/Chat";
 import { Link } from 'react-router-dom';
 import Utils from "../../Utils";
 

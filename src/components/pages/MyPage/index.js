@@ -8,6 +8,7 @@ import * as Meet from "../../../services/Meet";
 import * as File from "../../../services/File";
 import * as Chat from "../../../services/Chat";
 import Utils from "../../Utils";
+import { HistoryRounded } from '@material-ui/icons';
 
 export default function MyPage(props) {
   const history = useHistory();
@@ -29,6 +30,8 @@ export default function MyPage(props) {
       loadUserInfo();
       loadMyOpened();
       loadMyApplication();
+    } else {
+      history.replace('/');
     }
   }, []);
 
@@ -42,6 +45,7 @@ export default function MyPage(props) {
     try {
       const res = await User.getUser(token);
       dispatch(setLoginUserInfo(res.data)); // 가져온 user 정보를 redux에 저장
+      dispatch(setLogin(true)); // login 상태로 처리
     } catch(error) {
       Utils.alertError(error);
     } finally {
@@ -159,8 +163,6 @@ export default function MyPage(props) {
   const handleBack = () => {
     history.push("/");
   }
-
-  if(!login) return <Redirect to='/login' />
 
   return (
     <PageTemplate header={<TitleHeader onBack={handleBack} {...props}>My Page</TitleHeader>} loading={loading}>

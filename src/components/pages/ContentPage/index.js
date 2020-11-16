@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { PageTemplate, ImageHeader, TitleHeader, Content, ContentHeader, Confirm } from "components";
+import { setLoginUserInfo, setLogin } from "../../../modules/userInfo";
 import * as Meet from "../../../services/Meet";
 import * as File from "../../../services/File";
 import * as User from "../../../services/User";
@@ -10,6 +11,7 @@ import { useHistory } from 'react-router-dom';
 
 export default function ContentPage(props) {
   const history = useHistory();
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const { userInfo } = useSelector(state => state.userInfo, []);
   const [meet, setMeet] = useState({});
@@ -22,9 +24,25 @@ export default function ContentPage(props) {
   const token = localStorage.getItem("token") ? JSON.parse(localStorage.getItem("token")).access_token : null;
 
   useEffect(e => {
+    if(token) { // 로그인 되어 있으면 user정보 복구
+      loadUserInfo(token);
+    }
     getMeet(token);
   }, []);
 
+  const loadUserInfo = async token => {
+    setLoading(true);
+    try {
+      const userInfo = await User.getUser(token);
+      dispatch(setLoginUserInfo(userInfo.data)); // 가져온 user 정보를 redux에 저장
+      dispatch(setLogin(true)); // login 상태로 처리
+    } catch(error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  }
+  
   const getMeet = async token => {
     setLoading(true);
     try {
@@ -40,7 +58,7 @@ export default function ContentPage(props) {
       setAvatar(avatarPath.data);
 
       // 로그인 상태이면
-      if(token !== null) {
+      if(userInfo !== null) {
         if(meet.data.user.username === userInfo.username) { // 작성자 일경우
           const applicationUser = await Meet.getUserApplicationMeet({id: meet.data.id, token: token});
           const chatUser = await Chat.getUnreadUsers({token: token, meetId: meet.data.id});

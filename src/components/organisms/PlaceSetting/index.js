@@ -31,27 +31,30 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PlaceSetting({userInfo, onAddClick, onPlaceClick}) {
   const classes = useStyles();
-  const { hopePlaceList } = userInfo;
-
+  
   return (
     <div className={classes.root}>
-      <div className={classes.title}>관심지역</div>
-      <div className={classes.placeWrap}>
-        {hopePlaceList && hopePlaceList.map((v, i) => {
-          return (
-            <Button key={i} id={v.id} classes={{label: classes.buttonTextColor}} color='primary' variant="outlined" onClick={onPlaceClick}>
-              {v.sido + ' ' + v.sgg}
-            </Button>  
-          );
-        })}
-        {Array.from(Array(3 - hopePlaceList.length)).map((_, i) => {
-          return (
-            <Button key={i} classes={{label: classes.buttonTextColor}} color='primary' variant="outlined" onClick={onAddClick}>
-              <AddIcon />
-            </Button>
-          )
-        })}
-      </div>
+      {userInfo &&
+        <>
+          <div className={classes.title}>관심지역</div>
+          <div className={classes.placeWrap}>
+            {userInfo.hopePlaceList && userInfo.hopePlaceList.map((v, i) => {
+              return (
+                <Button key={i} id={v.id} classes={{label: classes.buttonTextColor}} color='primary' variant="outlined" onClick={onPlaceClick}>
+                  {v.sido + ' ' + v.sgg}
+                </Button>  
+              );
+            })}
+            {Array.from(Array(3 - userInfo.hopePlaceList.length)).map((_, i) => {
+              return (
+                <Button key={i} classes={{label: classes.buttonTextColor}} color='primary' variant="outlined" onClick={onAddClick}>
+                  <AddIcon />
+                </Button>
+              )
+            })}
+          </div>
+        </>
+      }
     </div>
   );
 }

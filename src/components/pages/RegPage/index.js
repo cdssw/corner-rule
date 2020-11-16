@@ -212,7 +212,7 @@ export default function RegPage(props) {
     try {
       const res = await Meet.postMeet(param);
       if(res !== undefined) {
-        history.push({
+        history.replace({
           pathname: '/content/' + res.data,
           state: {path: null}
         })
@@ -225,7 +225,7 @@ export default function RegPage(props) {
   }
 
   const handleAddress = e => {
-    history.push({
+    history.replace({
       pathname: '/address',
       state: state
     });

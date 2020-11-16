@@ -88,7 +88,7 @@ export default function AddressPage(props) {
     };
     const state = props.location.state;
     state.address = address;
-    history.push({
+    history.replace({
       pathname: '/reg',
       state: state,
     });

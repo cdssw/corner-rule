@@ -67,28 +67,32 @@ export default function MyInfo(props) {
 
   return (
     <div className={classes.root}>
-      <div className={classes.avatarWrap}>
-        <div className={classes.profile}>
-          <Avatar classes={{root: classes.avatarRoot}}>
-            {props.userInfo.avatarPath
-            ? <img src={process.env.REACT_APP_IMAGE + props.userInfo.avatarPath} alt='' />
-            : <Person style={{fontSize: 50}} />
-            }
-          </Avatar>
-        </div>
-      </div>
-      <div className={classes.infoWrap}>
-        <div>{props.userInfo.userNickNm}</div>
-        <div>{props.userInfo.userNm}</div>
-        <div>{props.userInfo.phone}</div>
-      </div>
-      <div className={classes.modifyWrap}>
-        <div className={classes.logoutWrap}>
-          <div onClick={props.onMyInfoChange}><SettingsIcon /></div>
-          <div onClick={props.onLogout}><PowerSettingsNewIcon /></div>
-        </div>
-        <Button classes={{label: classes.buttonTextColor}} color='primary' variant="outlined" fullWidth={true} onClick={props.onPasswordChange}>비밀번호 변경</Button>
-      </div>
+      {props.userInfo &&
+        <>
+          <div className={classes.avatarWrap}>
+            <div className={classes.profile}>
+              <Avatar classes={{root: classes.avatarRoot}}>
+                {props.userInfo.avatarPath
+                ? <img src={process.env.REACT_APP_IMAGE + props.userInfo.avatarPath} alt='' />
+                : <Person style={{fontSize: 50}} />
+                }
+              </Avatar>
+            </div>
+          </div>
+          <div className={classes.infoWrap}>
+            <div>{props.userInfo.userNickNm}</div>
+            <div>{props.userInfo.userNm}</div>
+            <div>{props.userInfo.phone}</div>
+          </div>
+          <div className={classes.modifyWrap}>
+            <div className={classes.logoutWrap}>
+              <div onClick={props.onMyInfoChange}><SettingsIcon /></div>
+              <div onClick={props.onLogout}><PowerSettingsNewIcon /></div>
+            </div>
+            <Button classes={{label: classes.buttonTextColor}} color='primary' variant="outlined" fullWidth={true} onClick={props.onPasswordChange}>비밀번호 변경</Button>
+          </div>
+        </>
+      }
     </div>
   );
 }
