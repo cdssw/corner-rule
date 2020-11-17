@@ -19,6 +19,8 @@ import {
   ContentPage,
   AddressPage,
   ChatPage,
+  ApplicatorPage,
+  EstimatePage,
 } from "components";
 
 function App() {
@@ -41,6 +43,8 @@ function App() {
         <Route exact path="/reg" component={RegPage}/>
         <Route exact path="/reg/:id" component={RegPage}/>
         <Route exact path="/content/:id" component={ContentPage}/>
+        <Route exact path="/applicator" component={ApplicatorPage}/>
+        <Route exact path="/estimate" component={EstimatePage}/>
         <Route exact path="/address" component={AddressPage}/>
         <Route exact path="/chat/:id" component={ChatPage}/>
       </Switch>

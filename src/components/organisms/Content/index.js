@@ -101,7 +101,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Content({userInfo, meet, applicationMeet, onApplication, onApproval, onChatClick, onModify}) {
+export default function Content({userInfo, meet, applicationMeet, onApplication, onApproval, onChatClick, onModify, onApplicator, onEstimate}) {
   const classes = useStyles();
 
   return (
@@ -179,6 +179,7 @@ export default function Content({userInfo, meet, applicationMeet, onApplication,
                       classes={{root: classes.avatarRoot, img: classes.avatarImg}}
                       alt={m.userNickNm}
                       src={m.avatarPath && process.env.REACT_APP_IMAGE + m.avatarPath}
+                      onClick={() => onApplicator(m.id)}
                     >
                       {(m.avatarPath == null) && <Person />}
                     </Avatar>
@@ -186,7 +187,13 @@ export default function Content({userInfo, meet, applicationMeet, onApplication,
                   <div className={classes.userName}>{m.userNickNm}</div>        
                   <div className={classes.space}></div>
                   {m.approvalYn !== undefined &&
-                    <Button variant="contained" color='secondary' onClick={(e) => onApproval(m.id)} disabled={m.approvalYn}>{m.approvalYn ? m.approvalDt : '확정'}</Button>
+                    <>
+                      <Button variant="contained" color='secondary' onClick={(e) => onApproval(m.id)} disabled={m.approvalYn}>{m.approvalYn ? Utils.parseDate(m.approvalDt, '/') + ' 확정' : '확정'}</Button>
+                      <div style={{width: '4px'}}></div>
+                    </>
+                  }
+                  {m.approvalYn === true &&
+                    <Button variant="contained" color='secondary' onClick={(e) => onEstimate(m.id)}>평가</Button>
                   }
                   <div style={{width: '4px'}}></div>
                   <Badge classes={{badge: classes.badge}} badgeContent={m.count} color="secondary">

@@ -205,6 +205,26 @@ export default function ContentPage(props) {
     });
   }
 
+  const handleApplicator = id => {
+    history.push({
+      pathname: '/applicator',
+      userId: id,
+      meetId: props.match.params.id,
+      path: props.location.path,
+      tab: props.location.tab
+    });
+  }
+
+  const handleEstimate = id => {
+    history.push({
+      pathname: '/estimate',
+      userId: id,
+      meetId: props.match.params.id,
+      path: props.location.path,
+      tab: props.location.tab
+    });
+  }
+
   return (
     <PageTemplate imageWrap={imgPath && imgPath.data.length > 0 && true}
       header={imgPath && imgPath.data.length > 0
@@ -221,6 +241,8 @@ export default function ContentPage(props) {
         onApproval={handleConfirmOpen}
         onChatClick={handleChatClick}
         onModify={handleModify}
+        onApplicator={handleApplicator}
+        onEstimate={handleEstimate}
       />
       <Confirm
         state={confirmOpen}
