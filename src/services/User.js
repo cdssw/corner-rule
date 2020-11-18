@@ -56,4 +56,6 @@ export async function getUserAvatar(props) {
     return axios.get(url + "/avatar", {params: { username: props.username }, headers: { Authorization: "Bearer " + props.token }});
 }
 
-
+export async function getApplicator(props) {
+  return axios.get(url + '/applicator/' + props.username, {headers: { Authorization: "Bearer " + props.token }});
+}

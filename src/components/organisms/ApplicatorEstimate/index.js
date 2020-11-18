@@ -83,47 +83,53 @@ export default function ApplicatorEstimate(props) {
       <div className={classes.wrap}>
         <div className={classes.space}>
           <div className={classes.titleWrap}>
-            <div className={classes.title}>아이 등원 요청</div>
+            <div className={classes.title}>{props.meet.title}</div>
           </div>
           <div className={classes.titleBottom}>
-            <div className={classes.regDate}>11월 17일 13:08</div>
+            <div className={classes.regDate}>{Utils.parseDate(props.meet.modifyDt, '월 ')}일</div>
           </div>
         </div>
       </div>
       <div style={{borderBottom: '1px solid #dfdfdf', width: '100%'}}></div><div style={{marginBottom: '10px'}}></div>
       <div className={classes.wrap}>
         <div>
-          <Avatar classes={{root: classes.avatarRoot, img: classes.avatarImg}}>
+          <Avatar classes={{root: classes.avatarRoot, img: classes.avatarImg}}
+            alt={props.applicator.userNickNm}
+            src={props.applicator.avatarPath && process.env.REACT_APP_IMAGE + props.applicator.avatarPath}
+          >
             <Person fontSize='large' />
           </Avatar>
         </div>
-        <div className={classes.userName}>닉네임</div>
+        <div className={classes.userName}>{props.applicator.userNickNm}</div>
         <div className={classes.space}></div>
         <div>
-          <img src={resources.star} />
-          <img src={resources.star} />
-          <img src={resources.starEmpty} />
+          {props.applicator.estimateAvg === null
+            ? '평가없음'
+            : [...Array(3)].map((_, i) => {
+              return (i < props.applicator.estimateAvg) ? <img key={i} src={resources.star} /> : <img key={i} src={resources.starEmpty} />
+            })
+          }
         </div>
       </div>
       <div className={classes.wrap}>
         <div className={classes.wrapRound}>
           <div className={classes.innerWrap}>
-            <div className={classes.starWrap}>
-              <div>괜찮아요</div>
+            <div className={classes.starWrap} onClick={() => props.onStarClick(1)}>
+              <div style={{fontWeight: props.star === 1 && "bold"}}>괜찮아요</div>
               <img src={resources.starLarge} />
             </div>
             <div style={{width: '10px'}}></div>
-            <div className={classes.starWrap}>
-              <div>좋아요</div>
-              <img src={resources.starLarge} />
+            <div className={classes.starWrap} onClick={() => props.onStarClick(2)}>
+              <div style={{fontWeight: props.star === 2 && "bold"}}>좋아요</div>
+              <img src={props.star < 2 ? resources.starLargeEmpty : resources.starLarge} />
             </div>
             <div style={{width: '10px'}}></div>
-            <div className={classes.starWrap}>
-              <div>최고에요</div>
-              <img src={resources.starLargeEmpty} />
+            <div className={classes.starWrap} onClick={() => props.onStarClick(3)}>
+              <div style={{fontWeight: props.star === 3 && "bold"}}>최고에요</div>
+              <img src={props.star < 3 ? resources.starLargeEmpty : resources.starLarge} />
             </div>
           </div>
-          <Button variant="contained" color='primary' onClick={() => alert("평가")}>평점주기</Button>
+          <Button variant="contained" color='primary' onClick={props.onEstimate}>평점주기</Button>
         </div>
       </div>      
     </div>

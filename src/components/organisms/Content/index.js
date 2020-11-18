@@ -104,6 +104,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Content({userInfo, meet, applicationMeet, onApplication, onApproval, onChatClick, onModify, onApplicator, onEstimate}) {
   const classes = useStyles();
 
+  console.log(applicationMeet);
   return (
     <div className={classes.root}>
     {meet && 
@@ -179,7 +180,7 @@ export default function Content({userInfo, meet, applicationMeet, onApplication,
                       classes={{root: classes.avatarRoot, img: classes.avatarImg}}
                       alt={m.userNickNm}
                       src={m.avatarPath && process.env.REACT_APP_IMAGE + m.avatarPath}
-                      onClick={() => onApplicator(m.id)}
+                      onClick={() => onApplicator(m.username)}
                     >
                       {(m.avatarPath == null) && <Person />}
                     </Avatar>
@@ -192,8 +193,8 @@ export default function Content({userInfo, meet, applicationMeet, onApplication,
                       <div style={{width: '4px'}}></div>
                     </>
                   }
-                  {m.approvalYn === true &&
-                    <Button variant="contained" color='secondary' onClick={(e) => onEstimate(m.id)}>평가</Button>
+                  {m.approvalYn === true && m.estimate === 0 && 
+                    <Button variant="contained" color='secondary' onClick={(e) => onEstimate(m.username)}>평가</Button>
                   }
                   <div style={{width: '4px'}}></div>
                   <Badge classes={{badge: classes.badge}} badgeContent={m.count} color="secondary">

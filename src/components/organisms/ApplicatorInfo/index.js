@@ -96,26 +96,32 @@ export default function ApplicatorInfo(props) {
       <div className={classes.wrap}>
         <div className={classes.space}>
           <div className={classes.titleWrap}>
-            <div className={classes.title}>아이 등원 요청</div>
+            <div className={classes.title}>{props.meet.title}</div>
           </div>
           <div className={classes.titleBottom}>
-            <div className={classes.regDate}>11월 17일 13:08</div>
+            <div className={classes.regDate}>{Utils.parseDate(props.meet.modifyDt, '월 ')}일</div>
           </div>
         </div>
       </div>
       <div style={{borderBottom: '1px solid #dfdfdf', width: '100%'}}></div><div style={{marginBottom: '10px'}}></div>
       <div className={classes.wrap}>
         <div>
-          <Avatar classes={{root: classes.avatarRoot, img: classes.avatarImg}}>
+          <Avatar classes={{root: classes.avatarRoot, img: classes.avatarImg}}
+            alt={props.applicator.userNickNm}
+            src={props.applicator.avatarPath && process.env.REACT_APP_IMAGE + props.applicator.avatarPath}
+          >
             <Person fontSize="large" />
           </Avatar>
         </div>
-        <div className={classes.userName}>닉네임</div>
+        <div className={classes.userName}>{props.applicator.userNickNm}</div>
         <div className={classes.space}></div>
         <div>
-          <img src={resources.star} />
-          <img src={resources.star} />
-          <img src={resources.starEmpty} />
+          {props.applicator.estimateAvg === null
+            ? '평가없음'
+            : [...Array(3)].map((_, i) => {
+              return (i < props.applicator.estimateAvg) ? <img key={i} src={resources.star} /> : <img key={i} src={resources.starEmpty} />
+            })
+          }
         </div>
       </div>
       <div className={classes.wrap}>
@@ -123,7 +129,7 @@ export default function ApplicatorInfo(props) {
           <img src={resources.check} style={{paddingRight: '10px'}} />
           <div>모집 참여 건수</div>
           <div className={classes.space}></div>
-          <div>7건</div>
+          <div>{props.applicator.meetCnt}건</div>
         </div>
       </div>
       <div className={classes.wrap}>
@@ -131,7 +137,7 @@ export default function ApplicatorInfo(props) {
           <img src={resources.check} style={{paddingRight: '10px'}} />
           <div>전문분야</div>
           <div className={classes.space}></div>
-          <div style={{color: '#18448f'}}>프로그램 개발</div>
+          <div style={{color: '#18448f'}}>{props.applicator.mainTalent}</div>
         </div>
       </div>
       <div className={classes.wrap}>
@@ -143,11 +149,9 @@ export default function ApplicatorInfo(props) {
           <div style={{display: 'flex'}}>
             <div style={{width: '23px'}}></div>
             <div className={classes.wrapInner}>
-              <div className={classes.chipRed}>디자인</div>
-              <div className={classes.chipRed}>부동산</div>
-              <div className={classes.chipRed}>프로그래밍</div>
-              <div className={classes.chipRed}>유튜브</div>
-              <div className={classes.chipRed}>포토샵</div>
+              {props.applicator.talent.split(',').map((m, i) => {
+                return <div key={i} className={classes.chipRed}>{m}</div>
+              })}
             </div>
           </div>
         </div>
@@ -161,9 +165,9 @@ export default function ApplicatorInfo(props) {
           <div style={{display: 'flex'}}>
             <div style={{width: '23px'}}></div>
             <div className={classes.wrapInner}>
-              <div className={classes.chipBlue}>음악</div>
-              <div className={classes.chipBlue}>영상</div>
-              <div className={classes.chipBlue}>음식 만들기</div>
+              {props.applicator.interest.split(',').map((m, i) => {
+                return <div key={i} className={classes.chipBlue}>{m}</div>
+              })}
             </div>
           </div>
         </div>

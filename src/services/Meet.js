@@ -89,3 +89,15 @@ export async function postApproval(props) {
     {headers: { Authorization: "Bearer " + props.token }}
   );
 }
+
+export async function getApplicatorInfo(props) {
+  return axios.get(url + `/application/info/${props.meetId}/${props.username}`, {headers: { Authorization: "Bearer " + props.token }});
+}
+
+export async function putEstimate(props) {
+  return axios.put(
+    url + "/application/estimate",
+    props.body,
+    {headers: { Authorization: "Bearer " + props.token }}
+  );
+}

@@ -106,7 +106,6 @@ export default function ContentPage(props) {
     const body = {
       meetId: meet.data.id
     }
-    const token = JSON.parse(localStorage.getItem("token")).access_token;
     const param = { token, body };
     setLoading(true);
     try {
@@ -124,7 +123,6 @@ export default function ContentPage(props) {
       meetId: meet.data.id,
       userId: id
     }
-    const token = JSON.parse(localStorage.getItem("token")).access_token;
     const param = { token, body };
     setLoading(true);
     try {
@@ -205,21 +203,21 @@ export default function ContentPage(props) {
     });
   }
 
-  const handleApplicator = id => {
+  const handleApplicator = username => {
     history.push({
       pathname: '/applicator',
-      userId: id,
-      meetId: props.match.params.id,
+      username: username,
+      meet: meet.data,
       path: props.location.path,
       tab: props.location.tab
     });
   }
 
-  const handleEstimate = id => {
+  const handleEstimate = username => {
     history.push({
       pathname: '/estimate',
-      userId: id,
-      meetId: props.match.params.id,
+      username: username,
+      meet: meet.data,
       path: props.location.path,
       tab: props.location.tab
     });
