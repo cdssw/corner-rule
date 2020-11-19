@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, Redirect } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { PageTemplate, TitleHeader, Alert } from "components";
 import PlaceSelect from '../../organisms/PlaceSelect';
 import * as Addr from "../../../services/Addr";
 import * as User from "../../../services/User";
 import Utils from "../../Utils";
+import { setLogin, setLoginUserInfo } from '../../../modules/userInfo';
 
 export default function HopePlacePage(props) {
   const history = useHistory();
-  const { login, userInfo } = useSelector(state => state.userInfo, []);
+  const { userInfo } = useSelector(state => state.userInfo, []);
+  const dispatch = useDispatch();
   const [sidoList, setSidoList] = useState([]);
   const [sggList, setSggList] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -20,10 +22,27 @@ export default function HopePlacePage(props) {
     sgg: '',
     sggValid: null
   });
+  const token = localStorage.getItem("token") ? JSON.parse(localStorage.getItem("token")).access_token : null;
 
   useEffect(e => {
+    if(token) {
+      loadUserInfo();
+    }
     getSidoList();
   }, []);
+
+  const loadUserInfo = async e => {
+    setLoading(true);
+    try {
+      const res = await User.getUser(token);
+      dispatch(setLoginUserInfo(res.data)); // 가져온 user 정보를 redux에 저장
+      dispatch(setLogin(true)); // login 상태로 처리
+    } catch(error) {
+      Utils.alertError(error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   const getSidoList = async event => {
     setLoading(true);
@@ -79,7 +98,6 @@ export default function HopePlacePage(props) {
 
     // place 저장
     const body = state;
-    const token = JSON.parse(localStorage.getItem("token")).access_token;
     const param = { token, body };
     setLoading(true);
     try {
@@ -93,7 +111,7 @@ export default function HopePlacePage(props) {
     history.push("/mypage");
   }
 
-  if(!login) return <Redirect to='/' />
+  if(!token) return <Redirect to='/' />
 
   return (
     <PageTemplate header={<TitleHeader {...props}>관심지역 선택</TitleHeader>} loading={loading}>

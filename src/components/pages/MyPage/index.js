@@ -8,13 +8,12 @@ import * as Meet from "../../../services/Meet";
 import * as File from "../../../services/File";
 import * as Chat from "../../../services/Chat";
 import Utils from "../../Utils";
-import { HistoryRounded } from '@material-ui/icons';
 
 export default function MyPage(props) {
   const history = useHistory();
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
-  const { login, userInfo } = useSelector(state => state.userInfo, []);
+  const { userInfo } = useSelector(state => state.userInfo, []);
   const [myOpened, setMyOpened] = useState([]);
   const [openPage, setOpenPage] = useState(0);
   const [tab, setTab] = useState(0);

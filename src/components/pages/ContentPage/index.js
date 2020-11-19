@@ -26,8 +26,9 @@ export default function ContentPage(props) {
   useEffect(e => {
     if(token) { // 로그인 되어 있으면 user정보 복구
       loadUserInfo(token);
-    }
-    getMeet(token);
+    } else {
+      getMeet(token, userInfo);
+    }    
   }, []);
 
   const loadUserInfo = async token => {
@@ -36,6 +37,7 @@ export default function ContentPage(props) {
       const userInfo = await User.getUser(token);
       dispatch(setLoginUserInfo(userInfo.data)); // 가져온 user 정보를 redux에 저장
       dispatch(setLogin(true)); // login 상태로 처리
+      getMeet(token, userInfo.data);
     } catch(error) {
       console.log(error);
     } finally {
@@ -43,7 +45,7 @@ export default function ContentPage(props) {
     }
   }
   
-  const getMeet = async token => {
+  const getMeet = async (token, userInfo) => {
     setLoading(true);
     try {
       // meet 정보

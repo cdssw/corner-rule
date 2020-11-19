@@ -295,16 +295,20 @@ export default function RegPage(props) {
   }
 
   const handleAddress = e => {
-    history.replace({
+    history.push({
       pathname: '/address',
       state: state
     });
   }
 
-  if(!login) return <Redirect to='/' />
+  const handleBack = e => {
+    history.replace('/');
+  }
+
+  if(!token) return <Redirect to='/' />
 
   return (
-    <PageTemplate header={<TitleHeader {...props}>글쓰기</TitleHeader>} loading={loading}>
+    <PageTemplate header={<TitleHeader onBack={handleBack} {...props}>글쓰기</TitleHeader>} loading={loading}>
       <ImageList imgList={state.imgList} onFileChange={handleFileChange} onRemoveClick={handleRemoveClick} />
       {fileUploader && <FileUploader total={total} current={current} value={value} />}
       <div style={{borderBottom: '1px solid #dfdfdf'}} />

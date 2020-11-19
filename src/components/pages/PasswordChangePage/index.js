@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import { useHistory, Redirect } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { PageTemplate, TitleHeader, PasswordSetting, Alert } from "components";
 import * as User from "../../../services/User";
 
 export default function PasswordChangePage(props) {
   const history = useHistory();
-  const { login } = useSelector(state => state.userInfo, []);
   const [loading, setLoading] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
   const [alertContent, setAlertContent] = useState('');
+  const token = localStorage.getItem("token") ? JSON.parse(localStorage.getItem("token")).access_token : null;
 
   const [state, setState] = useState({
     currentPassword: '',
@@ -64,8 +63,7 @@ export default function PasswordChangePage(props) {
       currentPassword : state.currentPassword,
       password: state.password
     }
-    const token = localStorage.getItem("token");
-    const param = { token: JSON.parse(token).access_token, body };
+    const param = { token: token, body };
     setLoading(true);
     try {
       const res = await User.postPasswordChange(param);
@@ -92,7 +90,7 @@ export default function PasswordChangePage(props) {
     }
   }
 
-  if(!login) return <Redirect to='/' />
+  if(!token) return <Redirect to='/' />
 
   return (
     <PageTemplate loading={loading} header={<TitleHeader {...props}>비밀번호 변경</TitleHeader>}>

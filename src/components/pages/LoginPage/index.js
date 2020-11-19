@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react';
 import * as Authorization from "../../../services/Authorization";
 import * as User from "../../../services/User";
 import { setLoginUserInfo, setLogin } from "../../../modules/userInfo";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Redirect, useHistory } from "react-router-dom";
 import { LoginTemplate, LoginForm, Footer, Alert } from "components";
 
 export default function LoginPage() {
   const history = useHistory();
-  const { login } = useSelector(state => state.userInfo, []);
   const dispatch = useDispatch();
   const [loginData, setLoginData] = useState({
     username: '',
@@ -18,6 +17,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
   const [alertContent, setAlertContent] = useState('');
+  const token = localStorage.getItem("token") ? JSON.parse(localStorage.getItem("token")).access_token : null;
 
   useEffect(e => {
     const username = localStorage.getItem('username');
@@ -83,7 +83,7 @@ export default function LoginPage() {
     history.push('/signup_intro');
   }
 
-  if(login) return <Redirect to='/' />
+  if(token) return <Redirect to='/' />
 
   return (
     <LoginTemplate footer={<Footer />} loading={loading}>

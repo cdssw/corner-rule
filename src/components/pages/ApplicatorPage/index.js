@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { PageTemplate, TitleHeader, ApplicatorInfo } from "components";
 import Utils from "../../Utils";
@@ -8,13 +8,15 @@ import * as User from "../../../services/User";
 
 export default function ApplicatorPage(props) {
   const history = useHistory();
-  const { login, userInfo } = useSelector(state => state.userInfo, []);
+  const { login } = useSelector(state => state.userInfo, []);
   const [applicator, setApplicator] = useState(null);
   const token = localStorage.getItem("token") && JSON.parse(localStorage.getItem("token")).access_token;  
 
   useEffect(() => {
     if(props.location.username) {
       getApplicator(props.location.username);
+    } else {
+      history.goBack();
     }
   }, []);
 
@@ -37,6 +39,8 @@ export default function ApplicatorPage(props) {
       tab: props.location.tab
     });
   }
+
+  if(!login) return <Redirect to='/' />
 
   return (
     <PageTemplate header={<TitleHeader onBack={handleBack} {...props}>지원자 보기</TitleHeader>}>

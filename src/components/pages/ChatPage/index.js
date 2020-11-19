@@ -33,16 +33,16 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ChatPage(props) {
   const history = useHistory();
-  const { login, userInfo } = useSelector(state => state.userInfo, []);
+  const { userInfo } = useSelector(state => state.userInfo, []);
   // const [contentHeight, setContentHeight] = useState(0);
   const [message, setMessage] = useState('');
-  const [token, setToken] = useState('');
   const [chat, setChat] = useState([]);
   const [topic, setTopic] = useState('');
   const [loading, setLoading] = useState(false);
   const [focus, setFocus] = useState(false);
   const [bottom, setBottom] = useState(50);
   const [page, setPage] = useState(0);
+  const token = localStorage.getItem("token") ? JSON.parse(localStorage.getItem("token")).access_token : null;
 
   const size = 10;
   const isSafari = navigator.vendor.includes('Apple');
@@ -52,9 +52,11 @@ export default function ChatPage(props) {
   const footerRef = useRef();
   
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    setToken(JSON.parse(token).access_token); // header에 전송시 필요    
-    fetchMoreData();
+    if(props.location.chatInfo) {
+      fetchMoreData();
+    } else {
+      history.goBack();
+    }
   }, []);
 
   useEffect(() => {
@@ -70,13 +72,12 @@ export default function ChatPage(props) {
   const fetchMoreData = async e => {
     setLoading(true);
     try {
-      const token = localStorage.getItem("token");
       const body = {
         meetId: props.match.params.id,
         sender: props.location.chatInfo.receiver,
       }
       if(chat.length > 0) body.id = chat[0].id;
-      const response = await Chat.getHistory({token: JSON.parse(token).access_token, page: page, size: size, sort: 'id,desc', body});
+      const response = await Chat.getHistory({token: token, page: page, size: size, sort: 'id,desc', body});
       setPage(page + 1);
       // 기존 데이터 앞에 추가
       setChat(response.data.content.concat(chat));
@@ -161,7 +162,7 @@ export default function ChatPage(props) {
     });
   }
 
-  if(!login) return <Redirect to='/' />
+  if(!token) return <Redirect to='/' />
 
   return (
     <ChatTemplate
@@ -214,15 +215,19 @@ function ChatHeader(props) {
 
   return (
     <div className={classes.root}>
-      <Avatar
-        classes={{root: classes.avatarRoot, img: classes.avatarImg}}
-        alt={props.location.chatInfo.userNickNm}
-        src={props.location.chatInfo.avatarPath && process.env.REACT_APP_IMAGE + props.location.chatInfo.avatarPath}
-      >
-        {(props.location.chatInfo.avatarPath === null || props.location.chatInfo.avatarPath === '') && <Person />}
-      </Avatar>
-      <div style={{width: '5px'}} />
-      <div className={classes.userName}>{props.location.chatInfo.userNickNm}</div>
+      {props.location.chatInfo &&
+        <>
+          <Avatar
+            classes={{root: classes.avatarRoot, img: classes.avatarImg}}
+            alt={props.location.chatInfo.userNickNm}
+            src={props.location.chatInfo.avatarPath && process.env.REACT_APP_IMAGE + props.location.chatInfo.avatarPath}
+          >
+            {(props.location.chatInfo.avatarPath === null || props.location.chatInfo.avatarPath === '') && <Person />}
+          </Avatar>
+          <div style={{width: '5px'}} />
+          <div className={classes.userName}>{props.location.chatInfo.userNickNm}</div>
+        </>
+      }
     </div>
   )
   

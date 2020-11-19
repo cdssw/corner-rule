@@ -4,11 +4,13 @@ import { Redirect, useHistory } from 'react-router-dom';
 import * as File from "../../../services/File";
 import * as User from "../../../services/User";
 import Utils from "../../Utils";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setLogin, setLoginUserInfo } from '../../../modules/userInfo';
 
 export default function MyInfoChangePage(props) {
   const history = useHistory();
-  const { login, userInfo } = useSelector(state => state.userInfo, []);
+  const { userInfo } = useSelector(state => state.userInfo, []);
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
   const [confirmOpen, setConfirmOpen] = useState(false);
@@ -20,10 +22,18 @@ export default function MyInfoChangePage(props) {
     avatarPath: '',
     phoneValid: null,
   });
+  const token = localStorage.getItem("token") ? JSON.parse(localStorage.getItem("token")).access_token : null;
+
+  useEffect(() => {
+    if(token) {
+      loadUserInfo();
+    }
+  }, []);
 
   useEffect(e => {
     if(userInfo) {
       setState({
+        ...state,
         phone: userInfo.phone,
         mainTalent: userInfo.mainTalent,
         talent: userInfo.talent === '' ? [] : userInfo.talent.split(','),
@@ -49,6 +59,19 @@ export default function MyInfoChangePage(props) {
       });
     }
   }, [state.phone]);  
+
+  const loadUserInfo = async e => {
+    setLoading(true);
+    try {
+      const res = await User.getUser(token);
+      dispatch(setLoginUserInfo(res.data)); // 가져온 user 정보를 redux에 저장
+      dispatch(setLogin(true)); // login 상태로 처리
+    } catch(error) {
+      Utils.alertError(error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   const handleConfirmOpen = () => {
     setConfirmOpen(true);
@@ -127,8 +150,7 @@ export default function MyInfoChangePage(props) {
       interest: state.interest.join(','),
       avatarPath: state.avatarPath
     }
-    const token = localStorage.getItem("token");
-    const param = { token: JSON.parse(token).access_token, body };
+    const param = { token: token, body };
     setLoading(true);
     try {
       const response = await User.putEditUser(param);
@@ -143,7 +165,7 @@ export default function MyInfoChangePage(props) {
     }    
   }
 
-  if(!login) return <Redirect to='/login' />
+  if(!token) return <Redirect to='/login' />
 
   return (
     <PageTemplate loading={loading} header={<TitleHeader {...props}>정보수정</TitleHeader>}>

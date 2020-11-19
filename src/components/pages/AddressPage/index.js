@@ -45,6 +45,7 @@ export default function AddressPage(props) {
   const [page, setPage] = useState(0);
   const [items, setItems] = useState([]);
   const [total, setTotal] = useState(0);
+  const token = localStorage.getItem("token") ? JSON.parse(localStorage.getItem("token")).access_token : null;
 
   const handleChange = event => {
     setSearch(event.target.value);
@@ -94,10 +95,17 @@ export default function AddressPage(props) {
     });
   }
 
-  if(!login) return <Redirect to='/' />
+  const handleBack = () => {
+    history.replace({
+      pathname: '/reg',
+      state: props.location.state,
+    });
+  }
+
+  if(!token) return <Redirect to='/' />
 
   return (
-    <PageTemplate header={<TitleHeader {...props}>도로명 주소</TitleHeader>} loading={loading}>
+    <PageTemplate header={<TitleHeader onBack={handleBack} {...props}>도로명 주소</TitleHeader>} loading={loading}>
       <AddressSearch onSearch={handleChange} search={search} onKeyPress={handleSearch} />
       <AddressResult items={items} total={total} fetchMoreData={fetchMoreData} onAddrClick={handleAddrClick} page={page} />
     </PageTemplate>

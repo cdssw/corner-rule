@@ -104,7 +104,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Content({userInfo, meet, applicationMeet, onApplication, onApproval, onChatClick, onModify, onApplicator, onEstimate}) {
   const classes = useStyles();
 
-  console.log(applicationMeet);
   return (
     <div className={classes.root}>
     {meet && 
