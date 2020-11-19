@@ -25,7 +25,7 @@ export default function MyInfoChangePage(props) {
   const token = localStorage.getItem("token") ? JSON.parse(localStorage.getItem("token")).access_token : null;
 
   useEffect(() => {
-    if(token) {
+    if(token && !userInfo) {
       loadUserInfo();
     }
   }, []);

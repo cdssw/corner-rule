@@ -25,7 +25,7 @@ export default function HopePlacePage(props) {
   const token = localStorage.getItem("token") ? JSON.parse(localStorage.getItem("token")).access_token : null;
 
   useEffect(e => {
-    if(token) {
+    if(token && !userInfo) {
       loadUserInfo();
     }
     getSidoList();

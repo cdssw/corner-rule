@@ -101,3 +101,15 @@ export async function putEstimate(props) {
     {headers: { Authorization: "Bearer " + props.token }}
   );
 }
+
+export async function getIsJoin(props) {
+  return axios.get(url + `/application/join/${props.meetId}`, {headers: { Authorization: "Bearer " + props.token }});
+}
+
+export async function putEndMeet(props) {
+  return axios.put(
+    url + "/end/" + props.id,
+    null,
+    {headers: { Authorization: "Bearer " + props.token }}
+  );
+}

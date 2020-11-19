@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PlaceSearch({userInfo, place, onPlace, onSearch, search, onKeyPress}) {
+export default function PlaceSearch({userInfo, place, onPlace, onSearch, search, onKeyPress, onSearchClick}) {
   const classes = useStyles();
   const { hopePlaceList } = userInfo;
 
@@ -55,7 +55,7 @@ export default function PlaceSearch({userInfo, place, onPlace, onSearch, search,
             endAdornment: (
               <InputAdornment position="end">
                 {search !== '' && <ClearIcon color="action" onClick={() => onSearch({target:{name: 'search', value: ''}})} />}
-                <SearchIcon color="disabled" />
+                <SearchIcon onClick={onSearchClick} color="disabled" />
               </InputAdornment>
             ),
           }}

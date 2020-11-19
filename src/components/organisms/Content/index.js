@@ -101,7 +101,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Content({userInfo, meet, applicationMeet, onApplication, onApproval, onChatClick, onModify, onApplicator, onEstimate}) {
+export default function Content({userInfo, meet, applicationMeet, onApplication, onApproval, onChatClick, onModify, onApplicator, onEstimate, onMeetEnd}) {
   const classes = useStyles();
 
   return (
@@ -202,6 +202,10 @@ export default function Content({userInfo, meet, applicationMeet, onApplication,
                 </div>
               );
             })}
+            <div style={{marginBottom: '50px'}}></div>
+            {meet.recruitment === meet.application &&
+              <Button variant="contained" color="primary" onClick={() => onMeetEnd(meet.id)} fullWidth={true}>종료</Button>
+            }
           </>
         }
         </>

@@ -19,12 +19,14 @@ export default function ContentPage(props) {
   const [avatar, setAvatar] = useState("");
   const [applicationMeet, setApplicationMeet] = useState([]);
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [confirmEnd, setConfirmEnd] = useState(false);
   const [id, setId] = useState(undefined); // 선택한 사용자 ID
   const [title, setTitle] = useState(''); // 지원/확정에 따른 질문
+  const [content, setContent] = useState('') // 확정시 모집완료됨 확인 메시지
   const token = localStorage.getItem("token") ? JSON.parse(localStorage.getItem("token")).access_token : null;
 
   useEffect(e => {
-    if(token) { // 로그인 되어 있으면 user정보 복구
+    if(token && !userInfo) { // 로그인 되어 있으면 user정보 복구
       loadUserInfo(token);
     } else {
       getMeet(token, userInfo);
@@ -50,6 +52,19 @@ export default function ContentPage(props) {
     try {
       // meet 정보
       const meet = await Meet.getMeet({id: props.match.params.id, token: token});
+
+      // 마감된 경우 리더 및 지원자가 아닌경우 리턴
+      if(meet.data.recruitment === meet.data.application) {
+        if(userInfo) {
+          const isJoin = await Meet.getIsJoin({meetId: props.match.params.id, token: token});
+          if(userInfo.username !== meet.data.user.username && !isJoin.data) {
+            history.replace('/');
+          }
+        } else {
+          history.replace('/');
+        }
+      }
+
       // 첨부이미지 정보
       if(meet.data.imgList && meet.data.imgList.length > 0) {
         const imageList = await File.postImagesPath({fileList: meet.data.imgList});
@@ -60,7 +75,7 @@ export default function ContentPage(props) {
       setAvatar(avatarPath.data);
 
       // 로그인 상태이면
-      if(userInfo !== null) {
+      if(userInfo) {
         if(meet.data.user.username === userInfo.username) { // 작성자 일경우
           const applicationUser = await Meet.getUserApplicationMeet({id: meet.data.id, token: token});
           const chatUser = await Chat.getUnreadUsers({token: token, meetId: meet.data.id});
@@ -112,7 +127,7 @@ export default function ContentPage(props) {
     setLoading(true);
     try {
       await Meet.postApplication(param);
-      getMeet(token);
+      getMeet(token, userInfo);
     } catch(error) {
       Utils.alertError(error);
     } finally {
@@ -129,7 +144,7 @@ export default function ContentPage(props) {
     setLoading(true);
     try {
       await Meet.postApproval(param);
-      getMeet(token);
+      getMeet(token, userInfo);
     } catch(error) {
       Utils.alertError(error);
     } finally {
@@ -141,6 +156,11 @@ export default function ContentPage(props) {
     if(id !== undefined) {
       setId(id);
       setTitle('확정 하시겠습니까?');
+      if(meet.data.recruitment - 1 === meet.data.application) {
+        setContent('확정시 모든 인원이 확정되므로 더이상 모집자를 받을수 없습니다.')
+      } else {
+        setContent('');
+      }
     } else {
       setId(undefined);
       setTitle('지원 하시겠습니까?');
@@ -156,6 +176,23 @@ export default function ContentPage(props) {
     setConfirmOpen(false);
     id === undefined ? handleApplication() : handleApproval();
   };
+
+  const handleConfirmEnd = id => {
+    setId(id);
+    setTitle('종료 하시겠습니까?');
+    setContent('종료시 더이상 해당 모집에 대하여 접근할수 없습니다.');
+    setConfirmEnd(true);
+  };
+
+  const handleConfirmEndCancel = () => {
+    setConfirmEnd(false);
+  };
+
+  const handleConfirmEndOk = () => {
+    setConfirmEnd(false);
+    handleMeetEnd();
+  };
+
 
   const handleChatClick = (receiver) => {
     let chatInfo = {};    
@@ -195,7 +232,7 @@ export default function ContentPage(props) {
         tab: props.location.tab,
       });
     } else {
-      history.goBack(1);
+      history.push('/');
     }
   }
 
@@ -225,6 +262,13 @@ export default function ContentPage(props) {
     });
   }
 
+  const handleMeetEnd = async () => {
+    await Meet.putEndMeet({id: id, token: token});
+    history.replace({
+      pathname: props.location.path ? props.location.path : '/'
+    });
+  }
+
   return (
     <PageTemplate imageWrap={imgPath && imgPath.data.length > 0 && true}
       header={imgPath && imgPath.data.length > 0
@@ -243,12 +287,21 @@ export default function ContentPage(props) {
         onModify={handleModify}
         onApplicator={handleApplicator}
         onEstimate={handleEstimate}
+        onMeetEnd={handleConfirmEnd}
       />
       <Confirm
         state={confirmOpen}
         onCancel={handleConfirmCancel}
         onOk={handleConfirmOk}
         title={title}
+        content={content}
+      />
+      <Confirm
+        state={confirmEnd}
+        onCancel={handleConfirmEndCancel}
+        onOk={handleConfirmEndOk}
+        title={title}
+        content={content}
       />
     </PageTemplate>
   );

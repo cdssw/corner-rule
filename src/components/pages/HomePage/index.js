@@ -33,11 +33,11 @@ export default function HomePage() {
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
   const size = 10;
+  const token = localStorage.getItem("token") ? JSON.parse(localStorage.getItem("token")).access_token : null;
 
   useEffect(e => {
-    const token = localStorage.getItem("token");
-    if(token) { // 로그인 되어 있으면 user정보 복구
-      loadUserInfo(JSON.parse(token).access_token);
+    if(token && !userInfo) { // 로그인 되어 있으면 user정보 복구
+      loadUserInfo(token);
     } else {
       fetchMoreData();
     }
@@ -71,6 +71,13 @@ export default function HomePage() {
 
   const handleKeyPressSearch = e => {
     if(e.key !== 'Enter') return;
+    setParam({
+      ...param,
+      title: search
+    });
+  }
+
+  const handleSearchClick = e => {
     setParam({
       ...param,
       title: search
@@ -133,7 +140,12 @@ export default function HomePage() {
     <PageTemplate header={<Header userInfo={userInfo} path={path} />} loading={loading}>
       {login && 
         <>
-          <PlaceSearch userInfo={userInfo} place={place} onPlace={handlePlace} onSearch={handleSearch} search={search} login={login} onKeyPress={handleKeyPressSearch} />
+          <PlaceSearch userInfo={userInfo} place={place} search={search} login={login}
+            onKeyPress={handleKeyPressSearch}
+            onPlace={handlePlace}
+            onSearch={handleSearch}
+            onSearchClick={handleSearchClick}
+          />
           <div style={{borderBottom: '1px solid #dfdfdf'}} />
         </>
       }
