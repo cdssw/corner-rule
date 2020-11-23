@@ -63,6 +63,7 @@ export default function PlaceSearch({userInfo, place, onPlace, onSearch, search,
           variant="outlined"
           placeholder="검색어를 입력하세요."
           name="search"
+          type="search"
           value={search}
           onChange={onSearch}
           onKeyPress={onKeyPress}
