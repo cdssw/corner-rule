@@ -64,6 +64,10 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: 'AppleSDGothicNeoM00',
     fontSize: '1rem',
   },
+  toggle: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
   toggleGrouped: {
     width: '40px',
   },
@@ -277,7 +281,7 @@ export default function RegForm(props) {
       </div>      
       <div style={{height: '15px'}} />
       <label className={classes.label}>요일</label>
-      <div>
+      <div className={classes.toggle}>
         <ToggleButtonGroup classes={{grouped: classes.toggleGrouped}} value={days} onChange={handleDays}>
           <ToggleButton classes={{root: classes.toggleRoot, selected: classes.toggleSelected}} selected={Utils.detailDayChecker(props.state.term, 64)} value={64}>일</ToggleButton>
           <ToggleButton classes={{root: classes.toggleRoot, selected: classes.toggleSelected}} selected={Utils.detailDayChecker(props.state.term, 32)} value={32}>월</ToggleButton>
@@ -302,9 +306,9 @@ export default function RegForm(props) {
           label={<span className={classes.checkboxTitle}>일정설정</span>}
         />
       </div>      
-      <div style={{borderBottom: '1px solid #dfdfdf'}} />
       {props.state.term.dtOption &&
         <>
+          <div style={{borderBottom: '1px solid #dfdfdf'}} />
           <div style={{marginBottom: '20px'}}></div>
           <div className={classes.labelWrap}>
             <div className={classes.label}>시작일</div>

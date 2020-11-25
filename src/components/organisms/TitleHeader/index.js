@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '0 20px',
     height: '100%',
     flex: 1,
+    backgroundColor: theme.color.white,
   },
   arrowWrap: {
     padding: '9px 0 5px 0',
