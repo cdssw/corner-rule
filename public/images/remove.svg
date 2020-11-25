@@ -4,9 +4,9 @@
             .cls-2{fill:none;stroke:#fff;stroke-width:2px}
         </style>
     </defs>
-    <g id="그룹_148" transform="translate(-95 -56)">
-        <circle id="타원_4" cx="10" cy="10" r="10" fill="#5a6482" transform="translate(95 56)"/>
-        <g id="그룹_142" transform="rotate(45 -15.148 154.624)">
+    <g id="remove" transform="translate(-98 -53)">
+        <circle id="타원_4" cx="10" cy="10" r="10" fill="#02846e" transform="translate(98 53)"/>
+        <g id="그룹_142" transform="rotate(45 -10.027 156.746)">
             <path id="선_9" d="M0 0L14 0" class="cls-2" transform="translate(0 7)"/>
             <path id="선_10" d="M0 0L14 0" class="cls-2" transform="rotate(90 3.5 3.5)"/>
         </g>

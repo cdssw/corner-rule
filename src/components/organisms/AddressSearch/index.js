@@ -1,8 +1,8 @@
 import React from "react";
 import { makeStyles } from '@material-ui/core/styles';
-import SearchIcon from '@material-ui/icons/Search';
 import ClearIcon from '@material-ui/icons/Clear';
 import { InputAdornment, TextField } from "@material-ui/core";
+import * as resources from "constants/resources";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,7 +35,7 @@ export default function AddressSearch({onSearch, search, onKeyPress}) {
             endAdornment: (
               <InputAdornment position="end">
                 {search !== '' && <ClearIcon color="action" onClick={() => onSearch({target:{name: 'search', value: ''}})} />}
-                <SearchIcon color="disabled" />
+                <img style={{width: '15px'}} src={resources.search} alt="search" />
               </InputAdornment>
             ),
           }}

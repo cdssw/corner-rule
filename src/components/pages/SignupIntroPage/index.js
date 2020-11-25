@@ -28,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
   },
   btnStart: {
     width: '90%',
-    padding: '10px 0',
     fontFamily: 'AppleSDGothicNeoM00',
     fontSize: '1rem',
   }

@@ -1,3 +1,14 @@
+.time_picker_preview {
+  height: 39px
+}
+.preview_container {
+  line-height: 39px;
+  height: 39px;
+}
+.preview_container svg {
+  top: 6px
+}
+
 .react_times_button, .modal_container, .time_picker_preview:not(.disabled).active {
   border-radius: 5px;
   border: 1px solid #C4C4C4;

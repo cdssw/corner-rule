@@ -27,15 +27,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     flexDirection: 'column',
     maxWidth: '600px',
-    padding: '0 10px',
-  },
-  imageContent: {
-    flexGrow: 1,
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'column',
-    maxWidth: '600px',
-    padding: '0 10px',
+    padding: '0 20px',
   },
   loading: {
     backgroundColor: 'rgba(0, 0, 0, 0)',
@@ -58,13 +50,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ChatTemplate(props) {
   const classes = useStyles();
-  const content = props.imageWrap ? classes.imageContent : classes.content;
-
+  
   return (
     <div className={classes.root}>
       {props.header && <header className={classes.headerWrap}>{props.header}</header>}
       <section className={classes.contentWrap}>
-        <div className={content}>
+        <div className={classes.content}>
           {props.loading &&
             <div className={classes.loading}>
               <CircularProgress size={30} />

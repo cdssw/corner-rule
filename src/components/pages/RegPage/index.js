@@ -33,8 +33,10 @@ export default function RegPage(props) {
       sgg: '',
     },
     term: {
+      dtOption: false,
       startDt: '',
       endDt: '',
+      tmOption: false,
       startTm: '09:00',
       endTm: '18:00',
       detailDay: 0,
@@ -66,7 +68,6 @@ export default function RegPage(props) {
     // 주소검색 페이지에서 돌아올때 위치 조정
     const current = props.location.state;
     setState(current);
-    window.scrollTo(0, document.body.scrollHeight); // 맨아래로 스크롤
   }, [props.location.state]);
 
   useEffect(() => {
@@ -90,6 +91,11 @@ export default function RegPage(props) {
     try {
       // meet 정보
       const meet = await Meet.getMeet({id: props.match.params.id, token: token});
+
+      const today = new Date();
+      const nextWeek = new Date();
+      nextWeek.setDate(nextWeek.getDate() + 7);
+
       let loadState = {
         title: meet.data.title,
         titleValid: true,
@@ -107,8 +113,10 @@ export default function RegPage(props) {
           sgg: meet.data.address.sgg,
         },
         term: {
-          startDt: meet.data.term.startDt,
-          endDt: meet.data.term.endDt,
+          dtOption: meet.data.term.dtOption,
+          startDt: meet.data.term.startDt === null ? today.toISOString().substring(0, 10) : meet.data.term.startDt,
+          endDt: meet.data.term.endDt === null ? nextWeek.toISOString().substring(0, 10) : meet.data.term.endDt,
+          tmOption: meet.data.term.tmOption,
           startTm: meet.data.term.startTm,
           endTm: meet.data.term.endTm,
           detailDay: meet.data.term.detailDay,
@@ -141,8 +149,10 @@ export default function RegPage(props) {
 
   const handleInputChange = e => {
     switch(e.target.name) {
+      case 'dtOption':
       case 'startDt':
       case 'endDt':
+      case 'tmOption':
       case 'startTm':
       case 'endTm':
         setState({
@@ -150,7 +160,6 @@ export default function RegPage(props) {
           term: {
             ...state.term,
             [e.target.name]: e.target.value,
-            [e.target.name + 'Valid']: e.target.value !== null
           }
         });
         break;

@@ -12,23 +12,25 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     maxWidth: '600px',
-    padding: '0 10px',
+    padding: '0 20px',
   },
   logo: {
-    width: '120px',
+    width: '45.1px',
     height: '35px',
   },
   space: {
     flexGrow: 1,
   },
   userName: {
-    color: theme.colorWhite,
+    color: theme.color.green,
     paddingRight: '5px',
   },
   avatarRoot: {
     width: '35px',
     height: '35px',
-    border: '2px solid white',    
+    padding: '1px 1px 0 0',
+    border: '2px solid ' + theme.color.border,
+    backgroundColor: theme.color.gray,
   },
   avatarImg: {
     width: '100%',
@@ -36,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     objectFit: 'cover',
   },
   avatarColor: {
-    backgroundColor: '#6ADF54',
+    backgroundColor: theme.color.green,
   }
 }));
 
@@ -47,7 +49,7 @@ export default function Header({userInfo, path}) {
 
   return (
     <div className={classes.root}>
-      <img className={classes.logo} src={resources.logoHorizon} alt="logo" />
+      <img className={classes.logo} src={resources.imgLogo2x} alt="logo" />
       <div className={classes.space}></div>
       <div className={classes.userName}>{userInfo && userInfo.userNickNm}</div>
       <div>
@@ -57,7 +59,8 @@ export default function Header({userInfo, path}) {
             alt={userInfo && userInfo.userNickNm}
             src={userInfo && userInfo.avatarPath && process.env.REACT_APP_IMAGE + userInfo.avatarPath}
           >
-            {(userInfo === null || userInfo.avatarPath === null || userInfo.avatarPath === '') && <Person />}</Avatar>
+            {userInfo === null && <img src={resources.login} alt="login" />}
+            {(userInfo && (userInfo.avatarPath === null || userInfo.avatarPath === '')) && <img src={resources.user} alt="user" />}</Avatar>
         </Link>
       </div>
     </div>

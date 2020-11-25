@@ -1,9 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import SettingsIcon from '@material-ui/icons/Settings';
-import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
-import Person from "@material-ui/icons/Person";
 import { Avatar, Button } from '@material-ui/core';
+import * as resources from "constants/resources";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,20 +15,20 @@ const useStyles = makeStyles((theme) => ({
   },
   profile: {
     position: 'absolute',
-    border: '2px solid #919394',
+    border: '2px solid ' + theme.color.border,
     borderRadius: '90px',
     width: '100%',
     height: '100%',
-    backgroundColor: 'lightgray',
   },  
   avatarRoot: {
     width: '86px',
     height: '86px',
-    '& img': {
-      width: '100%',
-      height: '100%',
-      objectFit: 'cover',
-    },
+    backgroundColor: theme.color.green,
+  },
+  avatar: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
   },
   infoWrap: {
     display: 'flex',
@@ -73,8 +71,8 @@ export default function MyInfo(props) {
             <div className={classes.profile}>
               <Avatar classes={{root: classes.avatarRoot}}>
                 {props.userInfo.avatarPath
-                ? <img src={process.env.REACT_APP_IMAGE + props.userInfo.avatarPath} alt='' />
-                : <Person style={{fontSize: 50}} />
+                ? <img className={classes.avatar} src={process.env.REACT_APP_IMAGE + props.userInfo.avatarPath} alt='' />
+                : <img src={resources.user} alt='user' style={{width: '44px'}} />
                 }
               </Avatar>
             </div>
@@ -86,10 +84,10 @@ export default function MyInfo(props) {
           </div>
           <div className={classes.modifyWrap}>
             <div className={classes.logoutWrap}>
-              <div onClick={props.onMyInfoChange}><SettingsIcon /></div>
-              <div onClick={props.onLogout}><PowerSettingsNewIcon /></div>
+              <div onClick={props.onMyInfoChange}><img src={resources.setting} alt='setting' /></div>
+              <div onClick={props.onLogout}><img src={resources.logout} alt='logout' /></div>
             </div>
-            <Button classes={{label: classes.buttonTextColor}} color='primary' variant="outlined" fullWidth={true} onClick={props.onPasswordChange}>비밀번호 변경</Button>
+            <Button classes={{label: classes.buttonTextColor}} variant="outlined" fullWidth={true} onClick={props.onPasswordChange}>비밀번호 변경</Button>
           </div>
         </>
       }

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, OutlinedInput  } from '@material-ui/core';
 import { withResizeDetector } from "react-resize-detector";
+import * as resources from "constants/resources";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -68,7 +69,7 @@ function Footer(props) {
             onClick={props.message ? props.onMessageSend : null}
             disabled={!props.message}
           >
-            <img alt="message_send" src={process.env.PUBLIC_URL + props.message ? "/images/ico_send_active.svg" : "/images/ico_send.svg"} />
+            <img alt="message_send" src={props.message ? resources.sendActive : resources.send} />
           </Button>
         </>
       </div>

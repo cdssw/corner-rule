@@ -25,8 +25,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#cbcbcb",
   },
   logo: {
-    width: '50px',
-    height: '42px',
+    width: '50px'
   },
 }));
 
@@ -35,7 +34,7 @@ export default function Footer(props) {
 
   return (
     <div className={classes.root}>
-      <img className={classes.logo} alt="logo-gray" src={resources.logoGray}/>
+      <img className={classes.logo} alt="ci" src={resources.ci}/>
       <div className={classes.text}>
         <div className={classes.address}>
           {strings.address}

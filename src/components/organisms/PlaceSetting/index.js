@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import AddIcon from '@material-ui/icons/Add';
 import { Button } from '@material-ui/core';
+import * as resources from "constants/resources";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     '& > button': {
-      padding: '5px 5px',
+      padding: '9px 5px',
       margin: '0 5px',
       flex: '1 1 0',
     },
@@ -47,8 +47,8 @@ export default function PlaceSetting({userInfo, onAddClick, onPlaceClick}) {
             })}
             {Array.from(Array(3 - userInfo.hopePlaceList.length)).map((_, i) => {
               return (
-                <Button key={i} classes={{label: classes.buttonTextColor}} color='primary' variant="outlined" onClick={onAddClick}>
-                  <AddIcon />
+                <Button key={i} classes={{label: classes.buttonTextColor}} variant="outlined" onClick={onAddClick}>
+                  <img src={resources.add} alt='add' style={{width: '15px'}} />
                 </Button>
               )
             })}

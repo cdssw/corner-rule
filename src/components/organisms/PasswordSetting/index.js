@@ -24,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: 'AppleSDGothicNeoM00',
   },  
   btnNext: {
-    padding: '10px 0',
     fontFamily: 'AppleSDGothicNeoM00',
     fontSize: '1rem',
   },
@@ -33,6 +32,17 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: 1.47,
     color: '#707070',
     marginBottom: '4px',
+  },
+  placeHolder: {
+    '& ::placeholder': {
+      fontFamily: 'AppleSDGothicNeoT00'
+    },
+    '& ::-webkit-input-placeholder': {
+      fontFamily: 'AppleSDGothicNeoT00'
+    },
+    '& ::-ms-input-placeholder': {
+      fontFamily: 'AppleSDGothicNeoT00'
+    }
   },
 }));
 
@@ -78,6 +88,7 @@ export default function PasswordSetting(props) {
         value={props.state.currentPassword}
         onChange={props.onInputChange}
         InputProps={{
+          className: classes.placeHolder,
           endAdornment: (
             <InputAdornment position="end">
               {props.state.currentPassword !== '' && <ClearIcon color="action" onClick={() => props.onInputChange({target:{name: 'currentPassword', value: ''}})} />}
@@ -95,6 +106,7 @@ export default function PasswordSetting(props) {
         value={props.state.password}
         onChange={props.onInputChange}
         InputProps={{
+          className: classes.placeHolder,
           endAdornment: (
             <InputAdornment position="end">
               {props.state.password !== '' && <ClearIcon color="action" onClick={() => props.onInputChange({target:{name: 'password', value: ''}})} />}
@@ -111,6 +123,7 @@ export default function PasswordSetting(props) {
         value={props.state.passwordCheck}
         onChange={props.onInputChange}
         InputProps={{
+          className: classes.placeHolder,
           endAdornment: (
             <InputAdornment position="end">
               {props.state.passwordCheck !== '' && <ClearIcon color="action" onClick={() => props.onInputChange({target:{name: 'passwordCheck', value: ''}})} />}

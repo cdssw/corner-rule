@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Person from "@material-ui/icons/Person";
-import { Avatar } from '@material-ui/core';
+import { Avatar, Button } from '@material-ui/core';
 import Utils from "../../Utils";
 import * as resources from "constants/resources";
 
@@ -44,16 +44,21 @@ const useStyles = makeStyles((theme) => ({
   avatarRoot: {
     width: '72px',
     height: '72px',
-    marginRight: '6px',
-    border: '2px solid #919394',
+    backgroundColor: theme.color.green,
+    border: '2px solid ' + theme.color.border,
   },
-  avatarImg: {
+  avatar: {
     width: '100%',
     height: '100%',
     objectFit: 'cover',
   },
+  avatarIcon: {
+    width: '30px',
+  },
   userName: {
+    paddingLeft: '8px',
     fontSize: '1rem',
+    fontFamily: 'AppleSDGothicNeoB00',
   },
   wrapRound: {
     width: '100%',
@@ -106,11 +111,11 @@ export default function ApplicatorInfo(props) {
       <div style={{borderBottom: '1px solid #dfdfdf', width: '100%'}}></div><div style={{marginBottom: '10px'}}></div>
       <div className={classes.wrap}>
         <div>
-          <Avatar classes={{root: classes.avatarRoot, img: classes.avatarImg}}
-            alt={props.applicator.userNickNm}
-            src={props.applicator.avatarPath && process.env.REACT_APP_IMAGE + props.applicator.avatarPath}
-          >
-            <Person fontSize="large" />
+          <Avatar classes={{root: classes.avatarRoot}}>
+            {props.applicator.avatarPath
+              ? <img className={classes.avatar} src={process.env.REACT_APP_IMAGE + props.applicator.avatarPath} alt='' />
+              : <img className={classes.avatarIcon} src={resources.user} alt="user" />            
+            }
           </Avatar>
         </div>
         <div className={classes.userName}>{props.applicator.userNickNm}</div>
@@ -126,7 +131,7 @@ export default function ApplicatorInfo(props) {
       </div>
       <div className={classes.wrap}>
         <div className={classes.wrapRound}>
-          <img src={resources.check} style={{paddingRight: '10px'}} />
+          <img src={resources.flag} style={{paddingRight: '10px'}} />
           <div>모집 참여 건수</div>
           <div className={classes.space}></div>
           <div>{props.applicator.meetCnt}건</div>
@@ -134,7 +139,7 @@ export default function ApplicatorInfo(props) {
       </div>
       <div className={classes.wrap}>
         <div className={classes.wrapRound}>
-          <img src={resources.check} style={{paddingRight: '10px'}} />
+          <img src={resources.flag} style={{paddingRight: '10px'}} />
           <div>전문분야</div>
           <div className={classes.space}></div>
           <div style={{color: '#18448f'}}>{props.applicator.mainTalent}</div>
@@ -143,7 +148,7 @@ export default function ApplicatorInfo(props) {
       <div className={classes.wrap}>
         <div className={classes.wrapRoundNoflex}>
           <div style={{display: 'flex', marginBottom: '5px'}}>
-            <img src={resources.check} style={{paddingRight: '10px'}} />
+            <img src={resources.flag} style={{paddingRight: '10px'}} />
             <div>특기</div>
           </div>
           <div style={{display: 'flex'}}>
@@ -159,7 +164,7 @@ export default function ApplicatorInfo(props) {
       <div className={classes.wrap}>
         <div className={classes.wrapRoundNoflex}>
           <div style={{display: 'flex', marginBottom: '5px'}}>
-            <img src={resources.check} style={{paddingRight: '10px'}} />
+            <img src={resources.flag} style={{paddingRight: '10px'}} />
             <div>관심사</div>
           </div>
           <div style={{display: 'flex'}}>
@@ -171,7 +176,7 @@ export default function ApplicatorInfo(props) {
             </div>
           </div>
         </div>
-      </div>      
+      </div> 
     </div>
   );
 }

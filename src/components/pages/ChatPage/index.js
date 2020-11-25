@@ -3,12 +3,12 @@ import { ChatTemplate, TitleHeader, ChatContent } from "components";
 import { Redirect, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Avatar } from '@material-ui/core';
-import Person from "@material-ui/icons/Person";
 import ChatFooter from '../../organisms/ChatFooter';
 import SockJsClient from "react-stomp";
 import { useSelector } from 'react-redux';
 import * as Chat from "../../../services/Chat";
 import Utils from "../../Utils";
+import * as resources from "constants/resources";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,9 +22,11 @@ const useStyles = makeStyles((theme) => ({
   avatarRoot: {
     width: '35px',
     height: '35px',
-    border: '2px solid white',
+    marginRight: '6px',
+    backgroundColor: theme.color.green,
+    border: '2px solid ' + theme.color.border,
   },
-  avatarImg: {
+  avatar: {
     width: '100%',
     height: '100%',
     objectFit: 'cover',
@@ -217,12 +219,11 @@ function ChatHeader(props) {
     <div className={classes.root}>
       {props.location.chatInfo &&
         <>
-          <Avatar
-            classes={{root: classes.avatarRoot, img: classes.avatarImg}}
-            alt={props.location.chatInfo.userNickNm}
-            src={props.location.chatInfo.avatarPath && process.env.REACT_APP_IMAGE + props.location.chatInfo.avatarPath}
-          >
-            {(props.location.chatInfo.avatarPath === null || props.location.chatInfo.avatarPath === '') && <Person />}
+          <Avatar classes={{root: classes.avatarRoot}}>
+            {props.location.chatInfo.avatarPath
+            ? <img className={classes.avatar} src={process.env.REACT_APP_IMAGE + props.location.chatInfo.avatarPath} alt='' />
+            : <img src={resources.user} alt="user" />
+            }
           </Avatar>
           <div style={{width: '5px'}} />
           <div className={classes.userName}>{props.location.chatInfo.userNickNm}</div>

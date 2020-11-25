@@ -1,10 +1,39 @@
-export const logoGray = '/images/logo-gray.svg';
-export const logo = '/images/logo.svg';
-export const logoHorizon = '/images/logo-horizon.svg';
+// svg
+export const user = "/images/user.svg";
+export const userGray = "/images/user_gray.svg";
+export const alarm = "/images/alarm.svg";
+export const ci = "/images/ci.svg";
+export const arrowLeft = "/images/arrow-left.svg";
+export const arrowLeftWrap = "/images/arrow-left-wrap.svg";
+export const eyeBlocked = "/images/eye-blocked.svg";
+export const check = '/images/check.svg';
+export const checkOn = '/images/check_on.svg';
+export const search = '/images/search.svg';
 export const chat = '/images/chat.svg';
-export const man = '/images/profile-male.svg';
-export const star = '/images/star_fill.svg';
+export const chatWhite = "/images/chat_white.svg";
+export const application = "/images/application.svg"
+export const applicationRed = "/images/application_red.svg"
+export const star = '/images/star.svg';
 export const starEmpty = '/images/star_empty.svg';
-export const check = '/images/ic_check_24px.svg';
-export const starLarge = '/images/star_l_fill.svg';
+export const starLarge = '/images/star_l.svg';
 export const starLargeEmpty = '/images/star_l_empty.svg';
+export const login = "/images/login.svg";
+export const logout = "/images/logout.svg";
+export const setting = "/images/setting.svg";
+export const add = "/images/add.svg";
+export const camera = "/images/camera.svg";
+export const subMenu = "/images/submenu.svg";
+export const subMenuWrap = "/images/submenu-wrap.svg";
+export const location = "/images/location.svg";
+export const estimate = "/images/estimate.svg";
+export const send = "/images/send.svg"
+export const sendActive = "/images/send_active.svg"
+export const flag = "/images/flag.svg"
+
+// img
+export const imgLogo1x = '/images/logo-1x.png';
+export const imgLogo2x = '/images/logo-2x.png';
+export const imgLogo3x = '/images/logo-3x.png';
+export const imgLogoLarge1x = '/images/logo_large-1x.png';
+export const imgLogoLarge2x = '/images/logo_large-2x.png';
+export const imgLogoLarge3x = '/images/logo_large-3x.png';

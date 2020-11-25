@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'fixed',
     bottom: theme.spacing(2),
     right: theme.spacing(2),
-  }
+  },
 }));
 
 export default function HomePage() {
@@ -139,22 +139,19 @@ export default function HomePage() {
   return (
     <PageTemplate header={<Header userInfo={userInfo} path={path} />} loading={loading}>
       {login && 
-        <>
-          <PlaceSearch userInfo={userInfo} place={place} search={search} login={login}
-            onKeyPress={handleKeyPressSearch}
-            onPlace={handlePlace}
-            onSearch={handleSearch}
-            onSearchClick={handleSearchClick}
-          />
-          <div style={{borderBottom: '1px solid #dfdfdf'}} />
-        </>
+        <PlaceSearch userInfo={userInfo} place={place} search={search} login={login}
+          onKeyPress={handleKeyPressSearch}
+          onPlace={handlePlace}
+          onSearch={handleSearch}
+          onSearchClick={handleSearchClick}
+        />
       }
-      <div style={{marginBottom: '10px'}}></div>
+      {/* <div style={{marginBottom: '10px'}}></div> */}
       <CardList path="/" fetchMoreData={fetchMoreData} items={items} />
       {login && 
         <Link to="/reg">
           <Fab color="primary" aria-label="add" className={classes.fab}>
-            <AddIcon />
+            <AddIcon fontSize='large' />
           </Fab>
         </Link>
       }

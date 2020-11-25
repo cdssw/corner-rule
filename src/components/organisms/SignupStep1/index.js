@@ -24,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: 'AppleSDGothicNeoM00',
   },  
   btnNext: {
-    padding: '10px 0',
     fontFamily: 'AppleSDGothicNeoM00',
     fontSize: '1rem',
   },
@@ -33,6 +32,17 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: 1.47,
     color: '#707070',
     marginBottom: '4px',
+  },
+  placeHolder: {
+    '& ::placeholder': {
+      fontFamily: 'AppleSDGothicNeoT00'
+    },
+    '& ::-webkit-input-placeholder': {
+      fontFamily: 'AppleSDGothicNeoT00'
+    },
+    '& ::-ms-input-placeholder': {
+      fontFamily: 'AppleSDGothicNeoT00'
+    }    
   },
 }));
 
@@ -80,6 +90,7 @@ export default function SignupStep1(props) {
         onChange={props.onInputChange}
         disabled={props.state.usernameConfirm}
         InputProps={{
+          className: classes.placeHolder,
           endAdornment: (
             <InputAdornment position="end">
               {props.state.username !== '' && <ClearIcon color="action" onClick={() => props.onInputChange({target:{name: 'username', value: ''}})} />}
@@ -88,7 +99,7 @@ export default function SignupStep1(props) {
         }}         
       />
       <div style={{height: '10px'}}></div>
-      <Button className={classes.btn} color='primary' variant="outlined" fullWidth={true}
+      <Button className={classes.btn} variant="outlined" fullWidth={true}
         disabled={props.state.usernameConfirm}
         onClick={(e) => {
           if(props.state.username === "") return;
@@ -108,6 +119,7 @@ export default function SignupStep1(props) {
         value={props.state.password}
         onChange={props.onInputChange}
         InputProps={{
+          className: classes.placeHolder,
           endAdornment: (
             <InputAdornment position="end">
               {props.state.password !== '' && <ClearIcon color="action" onClick={() => props.onInputChange({target:{name: 'password', value: ''}})} />}
@@ -124,6 +136,7 @@ export default function SignupStep1(props) {
         value={props.state.passwordCheck}
         onChange={props.onInputChange}
         InputProps={{
+          className: classes.placeHolder,
           endAdornment: (
             <InputAdornment position="end">
               {props.state.passwordCheck !== '' && <ClearIcon color="action" onClick={() => props.onInputChange({target:{name: 'passwordCheck', value: ''}})} />}

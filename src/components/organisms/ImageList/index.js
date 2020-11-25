@@ -14,7 +14,7 @@ export default function ImageList({imgList, onFileChange, onRemoveClick}) {
   const classes = useStyles();
 
   return (
-    <div className={classes.root} style={{width: window.innerWidth - 20}}>
+    <div className={classes.root} style={{width: window.innerWidth - 40}}>
       {imgList.map((img, i) => {
         return (
           <div key={i} style={{paddingRight: '10px'}}>

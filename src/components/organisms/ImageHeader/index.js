@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { useHistory } from 'react-router-dom';
+import { IconButton, Menu, MenuItem } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ImageGallery from "react-image-gallery";
+import * as resources from "constants/resources";
 import "react-image-gallery/styles/css/image-gallery.css";
 import './styles.css';
-import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -13,10 +15,17 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
     position: 'relative',
   },
+  menuWrap: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    height: '50px',
+  },
   arrowWrap: {
-    padding: '13px 0 5px 10px',
+    paddingLeft: '20px',
     zIndex: 1,
-    position: 'absolute',
+    display: 'flex',
+    justifyContent: 'space-between',
+    height: '50px',
   },
   arrow: {
     color: 'white',
@@ -24,7 +33,10 @@ const useStyles = makeStyles((theme) => ({
   carouselWrap: {
     position: 'absolute',
     width: '100%',
-    heigth: '269px',
+    height: '269px',
+  },
+  icoBtn: {
+    paddingRight: '20px',
   },
 }));
 
@@ -32,6 +44,7 @@ export default function ImageHeader(props) {
   const classes = useStyles();
   const history = useHistory();
   const [images, setImages] = useState([]);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   useEffect(() => {
     if(props.imgPath.data !== undefined) {
@@ -46,20 +59,58 @@ export default function ImageHeader(props) {
     props.onBack ? props.onBack() : history.goBack(1);
   }
 
+  const handleClick = e => {
+    setAnchorEl(e.currentTarget);
+  }
+
+  const handleClose = e => {
+    setAnchorEl(null);
+  }
+
+  const handleEnd = e => {
+    handleClose();
+    props.onMeetEnd();
+  }
+
+  const renderSubMenu = () => {
+    return (
+        <>
+          <IconButton
+            onClick={handleClick}
+            classes={{root: classes.icoBtn}}
+          >
+            <img src={resources.subMenuWrap} alt="submenu-wrap" />
+          </IconButton>
+          <Menu
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={props.onModify}>수정하기</MenuItem>
+            <MenuItem onClick={handleEnd}>종료하기</MenuItem>
+          </Menu>
+        </>
+    )
+  }  
+
   return (
     <div className={classes.root}>
-      <div className={classes.arrowWrap}>
-        <ArrowBackIcon className={classes.arrow} onClick={handleBack} />
-      </div>
-      <div className={classes.carouselWrap}>
-        <ImageGallery
-          items={images}
-          showNav={false}
-          showThumbnails={false}
-          showPlayButton={false}
-          showFullscreenButton={false}
-          showBullets={true}
-        />
+      <div className={classes.menuWrap}>
+        <div className={classes.arrowWrap}>
+          <img onClick={handleBack} src={resources.arrowLeftWrap} alt="arrowLeftWrap" />
+        </div>
+        <div className={classes.carouselWrap}>
+          <ImageGallery
+            items={images}
+            showNav={false}
+            showThumbnails={false}
+            showPlayButton={false}
+            showFullscreenButton={false}
+            showBullets={true}
+          />
+        </div>
+        {props.sub && renderSubMenu()}
       </div>
     </div>
   );

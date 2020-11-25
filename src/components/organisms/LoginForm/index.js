@@ -3,12 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
-import VpnKeyOutlinedIcon from '@material-ui/icons/VpnKeyOutlined';
-import RadioButtonUncheckedOutlinedIcon from '@material-ui/icons/RadioButtonUncheckedOutlined';
-import RadioButtonCheckedRoundedIcon from '@material-ui/icons/RadioButtonCheckedRounded';
 import ClearIcon from '@material-ui/icons/Clear';
 import { InputAdornment, TextField } from '@material-ui/core';
+import * as resources from "constants/resources";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,6 +15,10 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: '10px',
     },
   },
+  btn: {
+    fontFamily: 'AppleSDGothicNeoB00',
+    fontSize: '1rem',
+  },
   saveIdWrap: {
     alignSelf: 'flex-end',
   },
@@ -25,10 +26,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     '& div': {
-      color: 'white',
+      color: '#2d2d2d',
     },
-    '& a': {
-      textDecoration: 'none',
+    '& div:nth-child(2)': {
+      textDecoration: 'underline',
     }
   },
   checkboxWrap: {
@@ -55,8 +56,7 @@ export default function LoginForm({username, password, onInput, onLogin, saveId,
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                {username !== '' && <ClearIcon color="action" onClick={() => onInput({target:{name: 'username', value: ''}})} />}
-                <AccountCircleOutlinedIcon color="disabled" />
+                <img src={resources.userGray} alt="userGray" />
               </InputAdornment>
             ),
           }}
@@ -75,7 +75,7 @@ export default function LoginForm({username, password, onInput, onLogin, saveId,
             endAdornment: (
               <InputAdornment position="end">
                 {password !== '' && <ClearIcon color="action" onClick={() => onInput({target:{name: 'password', value: ''}})} />}
-                <VpnKeyOutlinedIcon color="disabled" />
+                <img src={resources.eyeBlocked} alt="eyeBlocked" />
               </InputAdornment>
             ),
           }}
@@ -92,23 +92,23 @@ export default function LoginForm({username, password, onInput, onLogin, saveId,
           className={classes.checkboxWrap}
           control={
             <Checkbox 
-              icon={<RadioButtonUncheckedOutlinedIcon />} 
-              checkedIcon={<RadioButtonCheckedRoundedIcon />} 
+              icon={<img src={resources.check} alt="check" />} 
+              checkedIcon={<img src={resources.checkOn} alt="checkOn" />} 
               checked={saveId} 
               onChange={onSaveId}
               style={{color: 'white', padding: '0 0 2px 0'}}
               size="small"
             />
           }
-          label={<span style={{color: 'white', paddingLeft: '5px'}}>아이디 저장</span>}
+          label={<span style={{color: '#2d2d2d', paddingLeft: '5px'}}>아이디 저장</span>}
         />
       </div>
       <div>
-        <Button color='primary' variant="contained" fullWidth={true} onClick={onLogin}>LOGIN</Button>
+        <Button classes={{label: classes.btn}} color='primary' variant="contained" fullWidth={true} onClick={onLogin}>LOGIN</Button>
       </div>
       <div className={classes.signup}>
         <div>아이디가 없으신가요?</div>
-        <div className={classes.signup}><div onClick={onSignupIntro}>회원가입</div></div>
+        <div onClick={onSignupIntro}>회원가입</div>
       </div>
     </div>
   );

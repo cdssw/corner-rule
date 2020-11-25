@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   me: {
     margin: 'auto',
     maxWidth: '90%',
-    backgroundColor: '#5a6482',
+    backgroundColor: theme.color.green,
     color: 'white',
     padding: '6px 14px',
     borderTopLeftRadius: '20px',

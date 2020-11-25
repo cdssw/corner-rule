@@ -1,8 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Avatar } from '@material-ui/core';
-import Person from "@material-ui/icons/Person";
 import Utils from "../../Utils";
+import * as resources from "constants/resources";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -10,8 +10,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     maxWidth: '600px',
-    padding: '15px 10px 0 0',
-    marginBottom: '15px',
+    marginBottom: '10px',
   },  
   userName: {
     color: '#212121',
@@ -21,9 +20,10 @@ const useStyles = makeStyles((theme) => ({
     width: '35px',
     height: '35px',
     marginRight: '6px',
-    border: '2px solid #919394',
+    backgroundColor: theme.color.green,
+    border: '2px solid ' + theme.color.border,
   },
-  avatarImg: {
+  avatar: {
     width: '100%',
     height: '100%',
     objectFit: 'cover',
@@ -41,17 +41,15 @@ const useStyles = makeStyles((theme) => ({
   },
   costWrap: {
     padding: '0 10px',
-    borderRadius: '12px',
-    backgroundColor: '#FFC7E3',
+    borderRadius: '15px',
+    border: '1px solid ' + theme.color.green,
     height: '22px',
     display: 'flex',
     alignItems: 'center',
     '& .cost': {
       paddingTop: '2px',
-      color: '#FF3096',
-      fontWeight: 'bold',
-      fontSize: '15px',
-      margin: '0 auto',
+      color: theme.color.green,
+      fontSize: '14px',
     },
   },
   desc: {
@@ -69,12 +67,11 @@ export default function ContentHeader({meet, avatar}) {
     {meet && 
       <>
         <div>
-          <Avatar
-            classes={{root: classes.avatarRoot, img: classes.avatarImg}}
-            alt={meet.user.userNickNm}
-            src={avatar !== "" ? process.env.REACT_APP_IMAGE + avatar : ""}
-          >
-            {avatar === "" && <Person />}
+          <Avatar classes={{root: classes.avatarRoot}}>
+            {avatar
+            ? <img className={classes.avatar} src={process.env.REACT_APP_IMAGE + avatar} alt='' />
+            : <img src={resources.user} alt="user" />
+            }
           </Avatar>
         </div>
         <div className={classes.userName}>{meet.user.userNickNm}</div>

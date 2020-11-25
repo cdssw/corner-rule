@@ -1,10 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
-import SettingsIcon from '@material-ui/icons/Settings';
-import Person from "@material-ui/icons/Person";
-import { Button, Badge, Avatar } from '@material-ui/core';
+import { Button, Badge, Avatar, withStyles } from '@material-ui/core';
 import Utils from "../../Utils";
 import * as resources from "constants/resources";
 
@@ -15,14 +11,13 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     maxWidth: '600px',
-    padding: '0 10px',
     marginBottom: '15px',
   },
   wrap: {
     display: 'flex',
     width: '100%',
     alignItems: 'center',
-    marginBottom: '8px',
+    marginBottom: '5px',
   },
   buttonWrap: {
     display: 'flex',
@@ -31,14 +26,13 @@ const useStyles = makeStyles((theme) => ({
   },
   date: {
     display: 'flex',    
-    alignItems: 'center',
     color: '#23c9bd',
-    paddingLeft: '3px',
   },
   location: {
     display: 'flex',    
     alignItems: 'center',
     color: '#5a6482',
+    paddingLeft: '1px',
   },
   detail: {
     flexGrow: 1,
@@ -49,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
   },
   title: {
-    fontWeight: 'bold',
+    fontFamily: 'AppleSDGothicNeoB00',
   },
   regDate: {
     fontSize: '13px',
@@ -81,15 +75,19 @@ const useStyles = makeStyles((theme) => ({
     width: '35px',
     height: '35px',
     marginRight: '6px',
-    border: '2px solid #919394',
+    border: '2px solid ' + theme.color.border,
+    backgroundColor: theme.color.green,
   },
-  avatarImg: {
+  avatar: {
     width: '100%',
     height: '100%',
     objectFit: 'cover',
   },
-  iconSize: {
-    fontSize: '1.2rem',
+  time: {
+    color: '#5985dc'
+  },
+  day: {
+    color: theme.color.green,
   },
   approval: {
     padding: '10px 10px',
@@ -100,6 +98,19 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
   },
 }));
+
+const ColorButton = withStyles((theme) => ({
+  root: {
+    color: theme.palette.getContrastText('#59b8dc'),
+    backgroundColor: '#59b8dc',
+    '&:hover': {
+      backgroundColor: '#3C93B4',
+    },
+  },
+  label: {
+    color: theme.color.white,
+  }
+}))(Button);
 
 export default function Content({userInfo, meet, applicationMeet, onApplication, onApproval, onChatClick, onModify, onApplicator, onEstimate, onMeetEnd}) {
   const classes = useStyles();
@@ -112,9 +123,6 @@ export default function Content({userInfo, meet, applicationMeet, onApplication,
           <div className={classes.space}>
             <div className={classes.titleWrap}>
               <div className={classes.title}>{meet.title}</div>
-              {userInfo && userInfo.username === meet.user.username &&
-                <SettingsIcon onClick={onModify} style={{ color: '#5a6482', width: '20px' }} />
-              }
             </div>
             <div className={classes.titleBottom}>
               <div className={classes.regDate}>{Utils.parseDate(meet.modifyDt, '월 ')}일 {meet.modifyDt.split(' ')[1].substring(0, 5)}</div>
@@ -122,24 +130,29 @@ export default function Content({userInfo, meet, applicationMeet, onApplication,
               <div className={classes.commWrap}>
                 <div className="ico"><img src={resources.chat} alt="chat" /></div>
                 <div style={{paddingRight: '5px'}}>{meet.chatCnt}</div>
-                <div className="ico"><img src={resources.man} alt="man" /></div>
-                <div>{meet.application}/{meet.recruitment}</div>
+                <div className="ico"><img src={resources.userGray} alt="user_gray" /></div>
+                <div>{meet.recruitment - meet.application}</div>
               </div>
             </div>
           </div>
         </div>
+        <div style={{marginBottom: '15px'}}></div>
         <div className={classes.wrap}>
           <div className={classes.date}>
-            <CalendarTodayIcon classes={{root: classes.iconSize}} />
+            <img src={resources.alarm} alt="alarm" />
             <div className={classes.detail}>
-              {Utils.parseDate(meet.term.startDt, '월 ')}일 ~ {Utils.parseDate(meet.term.endDt, '월 ')}일 {Utils.detailDay(meet.term)} 
-              ({meet.term.startTm} ~ {meet.term.endTm})
+              {meet.term.dtOption && <span>{Utils.parseDate(meet.term.startDt)} - {Utils.parseDate(meet.term.endDt)} </span>}
+              {meet.term.tmOption
+                ? <span className={classes.time}>시간협의 </span>
+                : <span className={classes.time}>{meet.term.startTm}~{meet.term.endTm} </span>
+              }
+              <span className={classes.day}>{Utils.detailDay(meet.term)}</span>
             </div>
           </div>
         </div>
         <div className={classes.wrap}>
           <div className={classes.location}>
-            <LocationOnIcon />
+            <img src={resources.location} alt="location" />
             <div className={classes.detail}>
               {(userInfo && userInfo.username === meet.user.username)
                || (userInfo && userInfo.username !== meet.user.username && meet.approvalYn && meet.approvalDt != null)
@@ -149,63 +162,66 @@ export default function Content({userInfo, meet, applicationMeet, onApplication,
             </div>
           </div>
         </div>
-        <div style={{borderBottom: '1px solid #dfdfdf', width: '100%'}}></div><div style={{marginBottom: '10px'}}></div>
+        <div style={{marginBottom: '20px'}}></div>
         <div className={classes.wrap}>
           <div>{meet.content.split('\n').map((line, i) => <span key={i}>{line}<br/></span>)}</div>
         </div>
-        <div style={{borderBottom: '1px solid #dfdfdf', width: '100%'}}></div><div style={{marginBottom: '20px'}}></div>
+        <div style={{marginBottom: '15px'}}></div>
         {userInfo && userInfo.username !== meet.user.username &&
-          <div className={classes.buttonWrap}>
-            <Badge classes={{badge: classes.badge}} badgeContent={meet.chatUnread} color="secondary">
-              <Button variant="contained" color='primary' onClick={() => onChatClick(meet.user.username)}>채팅문의</Button>
-            </Badge>
-            <div style={{width: '13px'}}></div>
-            {meet.approvalYn
-            ? meet.approvalDt != null
-              ? <div className={classes.approval}>승인완료</div>
-              : <Button variant="contained" color='secondary' disabled={true}>승인요청중</Button>
-            : <Button variant="contained" color='secondary' onClick={() => onApplication()} disabled={meet.approvalYn}>{meet.approvalYn ? '승인요청중' : '지원하기'}</Button>
-            }
-          </div>
+          <>
+            <div style={{borderBottom: '1px solid #dfdfdf', width: '100%'}}></div>
+            <div style={{marginBottom: '30px'}}></div>
+            <div className={classes.buttonWrap}>
+              {meet.approvalYn
+              ? meet.approvalDt != null
+                ? <Button startIcon={<img src={resources.applicationRed} alt="application_red" />} variant="outlined" color='secondary'>승인완료</Button>
+                : <Button startIcon={<img src={resources.application} alt="application" />} variant="contained" color='secondary' disabled={true}>승인요청중</Button>
+              : <Button startIcon={<img src={resources.application} alt="application" />} variant="contained" color='secondary' onClick={() => onApplication()} disabled={meet.approvalYn}>{meet.approvalYn ? '승인요청중' : '지원하기'}</Button>
+              }
+              <div style={{width: '13px'}}></div>
+              <Badge classes={{badge: classes.badge}} badgeContent={meet.chatUnread} color="secondary">
+                <Button startIcon={<img src={resources.chatWhite} alt="chat_white" />} variant="contained" color='primary' onClick={() => onChatClick(meet.user.username)}>채팅문의</Button>
+              </Badge>
+            </div>
+          </>
         }
         {userInfo && userInfo.username === meet.user.username && applicationMeet.length > 0 &&
           <>
             <div className={classes.wrap}>지원자 및 문의</div>
+            <div style={{borderBottom: '1px solid #dfdfdf', width: '100%'}}></div>
+            <div style={{marginBottom: '20px'}}></div>
             {applicationMeet.map((m, index) => {
               return (
                 <div key={index} className={classes.wrap}>
                   <div>
                     <Avatar
-                      classes={{root: classes.avatarRoot, img: classes.avatarImg}}
-                      alt={m.userNickNm}
-                      src={m.avatarPath && process.env.REACT_APP_IMAGE + m.avatarPath}
+                      classes={{root: classes.avatarRoot}}
                       onClick={() => onApplicator(m.username)}
                     >
-                      {(m.avatarPath == null) && <Person />}
+                      {m.avatarPath
+                      ? <img className={classes.avatar} src={process.env.REACT_APP_IMAGE + m.avatarPath} alt='' />
+                      : <img src={resources.user} alt="user" />
+                      }
                     </Avatar>
                   </div>
                   <div className={classes.userName}>{m.userNickNm}</div>        
                   <div className={classes.space}></div>
-                  {m.approvalYn !== undefined &&
+                  {m.approvalYn !== undefined && m.approvalYn === false &&
                     <>
-                      <Button variant="contained" color='secondary' onClick={(e) => onApproval(m.id)} disabled={m.approvalYn}>{m.approvalYn ? Utils.parseDate(m.approvalDt, '/') + ' 확정' : '확정'}</Button>
+                      <Button startIcon={<img style={{width: '16px'}} src={resources.application} alt="application" />} variant="contained" color='secondary' onClick={(e) => onApproval(m.id)}>승인</Button>
                       <div style={{width: '4px'}}></div>
                     </>
                   }
-                  {m.approvalYn === true && m.estimate === 0 && 
-                    <Button variant="contained" color='secondary' onClick={(e) => onEstimate(m.username)}>평가</Button>
+                  {m.approvalYn === true && m.estimate === null && 
+                    <ColorButton startIcon={<img style={{width: '16px'}} src={resources.estimate} alt="estimate" />} variant="contained" onClick={(e) => onEstimate(m.username)}>평가</ColorButton>
                   }
                   <div style={{width: '4px'}}></div>
                   <Badge classes={{badge: classes.badge}} badgeContent={m.count} color="secondary">
-                    <Button variant="contained" color='primary' onClick={() => onChatClick(m.username)}>채팅</Button>
+                    <Button startIcon={<img style={{width: '16px'}} src={resources.chatWhite} alt="chat_white" />} variant="contained" color='primary' onClick={() => onChatClick(m.username)}>채팅</Button>
                   </Badge>
                 </div>
               );
             })}
-            <div style={{marginBottom: '50px'}}></div>
-            {meet.recruitment === meet.application &&
-              <Button variant="contained" color="primary" onClick={() => onMeetEnd(meet.id)} fullWidth={true}>종료</Button>
-            }
           </>
         }
         </>

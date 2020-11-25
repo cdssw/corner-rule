@@ -7,13 +7,15 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
   },
   headerWrap: {
-    backgroundColor: theme.colorA,
+    backgroundColor: theme.color.white,
     display: 'flex',
     justifyContent: 'center',
     position: 'fixed',
-    width: '100%',
     height: '50px',
     zIndex: '1000',
+    top: 0,
+    left: 0,
+    right: 0,
   },
   imageWrap: {
     display: 'flex',
@@ -32,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     flexDirection: 'column',
     maxWidth: '600px',
-    padding: '0 10px',
+    padding: '0 20px',
   },
   imageContent: {
     flexGrow: 1,
@@ -40,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     flexDirection: 'column',
     maxWidth: '600px',
-    padding: '0 10px',
+    padding: '10px 20px',
   },
   loading: {
     backgroundColor: 'rgba(0, 0, 0, 0)',

@@ -9,13 +9,15 @@ const useStyles = makeStyles((theme) => ({
   root: {
   },
   muiTabsRoot: {
-    backgroundColor: '#f8f8f8',
+    backgroundColor: theme.color.white,
   },
   muiTabsIndicator: {
-    backgroundColor: '#5a6482',
+    backgroundColor: theme.color.green,
   },
   appBar: {
-    marginBottom: '12px',
+    marginBottom: '10px',
+    boxShadow: 'none',
+    border: '1px solid ' + theme.color.border,
   },
 }));
 

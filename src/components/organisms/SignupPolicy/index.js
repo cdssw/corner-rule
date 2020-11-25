@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Checkbox, FormControlLabel } from '@material-ui/core';
+import * as resources from "constants/resources";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '81px',
   },
   btnNext: {
-    padding: '10px 0',
     fontFamily: 'AppleSDGothicNeoM00',
     fontSize: '1rem',
   },
@@ -104,14 +104,18 @@ export default function SignupPolicy(props) {
         classes={{label: classes.alllabel}}
         id="all"
         control={
-          <Checkbox name="all" checked={props.state.all} className={classes.checkbox} onChange={handleCheckBox} />
+          <Checkbox
+            icon={<img src={resources.check} alt="check" />} 
+            checkedIcon={<img src={resources.checkOn} alt="checkOn" />}
+            name="all" checked={props.state.all} className={classes.checkbox} onChange={handleCheckBox}
+          />
         }        
         label='모두 동의합니다.'
       />
       <div className={classes.alldesc}>
-        전체동의는 필수 및 선택정보에 대한 동의도 포함되어 있으며,<br />
-        개별적으로도 동의를 선택하실수 있습니다. 선택항목에 대한<br />
-        동의를 거부하시는 경우에도 서비스는 이용이 가능합니다.<br />
+        전체동의는 필수 및 선택정보에 대한 동의도 포함되어 있으며, 개별적으로도 동의를 선택하실수 있습니다.<br />
+        선택항목에 대한 동의를 거부하시는 경우에도<br />
+        서비스 이용이 가능합니다.<br />
       </div>
       <div style={{borderBottom: '1px solid #dfdfdf'}}></div><div style={{marginBottom: '20px'}}></div>
       <div className={classes.wrap}>
@@ -119,7 +123,11 @@ export default function SignupPolicy(props) {
           className={classes.checkboxWrap}
           classes={{label: classes.label}}
           control={
-            <Checkbox name="service" checked={props.state.serviceYn} className={classes.checkbox} onChange={handleCheckBox} />
+            <Checkbox
+              icon={<img src={resources.check} alt="check" />} 
+              checkedIcon={<img src={resources.checkOn} alt="checkOn" />}            
+              name="service" checked={props.state.serviceYn} className={classes.checkbox} onChange={handleCheckBox}
+            />
           }
           label='[필수] 서비스 약관'
         />
@@ -130,7 +138,11 @@ export default function SignupPolicy(props) {
           className={classes.checkboxWrap}
           classes={{label: classes.label}}
           control={
-            <Checkbox name="private" checked={props.state.privateYn} className={classes.checkbox} onChange={handleCheckBox} />
+            <Checkbox
+              icon={<img src={resources.check} alt="check" />} 
+              checkedIcon={<img src={resources.checkOn} alt="checkOn" />}
+              name="private" checked={props.state.privateYn} className={classes.checkbox} onChange={handleCheckBox}
+            />
           }
           label='[필수] 개인정보 수집 및 이용 동의'
         />
@@ -141,7 +153,11 @@ export default function SignupPolicy(props) {
           className={classes.checkboxWrap}
           classes={{label: classes.label}}
           control={
-            <Checkbox name="profile" checked={props.state.profileYn} className={classes.checkbox} onChange={handleCheckBox} />
+            <Checkbox
+              icon={<img src={resources.check} alt="check" />} 
+              checkedIcon={<img src={resources.checkOn} alt="checkOn" />}
+              name="profile" checked={props.state.profileYn} className={classes.checkbox} onChange={handleCheckBox}
+            />
           }
           label='[선택] 프로필 정보 추가 수집 동의'
         />

@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Avatar, Button, Chip, TextField, InputAdornment } from '@material-ui/core';
-import Person from "@material-ui/icons/Person";
-import AddIcon from '@material-ui/icons/Add';
 import ClearIcon from '@material-ui/icons/Clear';
+import * as resources from "constants/resources";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: 'AppleSDGothicNeoM00',
   },  
   btnNext: {
-    padding: '10px 0',
     fontFamily: 'AppleSDGothicNeoM00',
     fontSize: '1rem',
   },
@@ -45,20 +43,23 @@ const useStyles = makeStyles((theme) => ({
   profile: {
     position: 'absolute',
     left: '-12px',
-    border: '2px solid #919394',
+    border: '2px solid ' + theme.color.border,
     borderRadius: '90px',
     width: '100%',
     height: '100%',
-    backgroundColor: 'lightgray',
   },
   avatarRoot: {
     width: '96px',
     height: '96px',
-    '& img': {
-      width: '100%',
-      height: '100%',
-      objectFit: 'cover',
-    },
+    backgroundColor: theme.color.green,
+  },
+  avatar: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+  },
+  avatarIcon: {
+    width: '44px',
   },
   fontSizeLarge: {
     fontSize: '3.5rem',
@@ -67,12 +68,14 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     width: '28px',
     height: '28px',
-    border: '2px solid #95989a',
+    border: '2px solid ' + theme.color.border,
     borderRadius: '90px',
     backgroundColor: 'white',
     right: '15px',
     bottom: 0,
     color: '#707070',
+    display: 'flex',
+    justifyContent: 'center',
   },
   area: {
     display: 'flex',
@@ -97,6 +100,17 @@ const useStyles = makeStyles((theme) => ({
     color: 'white',
     margin: '2px 4px 2px 0',
   },
+  placeHolder: {
+    '& ::placeholder': {
+      fontFamily: 'AppleSDGothicNeoT00'
+    },
+    '& ::-webkit-input-placeholder': {
+      fontFamily: 'AppleSDGothicNeoT00'
+    },
+    '& ::-ms-input-placeholder': {
+      fontFamily: 'AppleSDGothicNeoT00'
+    }    
+  },  
 }));
 
 export default function MyInfoForm(props) {
@@ -203,12 +217,12 @@ export default function MyInfoForm(props) {
           <div className={classes.profile}>
             <Avatar classes={{root: classes.avatarRoot}}>
               {props.state.avatarPath
-              ? <img src={process.env.REACT_APP_IMAGE + props.state.avatarPath} alt='' />
-              : <Person classes={{fontSizeLarge: classes.fontSizeLarge}} fontSize='large' />
+              ? <img className={classes.avatar} src={process.env.REACT_APP_IMAGE + props.state.avatarPath} alt='' />
+              : <img className={classes.avatarIcon} src={resources.user} alt="user" />
               }
             </Avatar>
           </div>
-          <div className={classes.profileAdd}><AddIcon /></div>
+          <div className={classes.profileAdd}><img src={resources.camera} alt="camera" /></div>
           <input id="upload-avatar" type="file" onChange={props.onSetAvatar} style={{display: 'none'}} />
         </div>
       </label>
@@ -221,6 +235,7 @@ export default function MyInfoForm(props) {
         value={props.state.phone}
         onChange={props.onInputChange}
         InputProps={{
+          className: classes.placeHolder,
           endAdornment: (
             <InputAdornment position="end">
               {props.state.phone !== '' && <ClearIcon color="action" onClick={() => props.onInputChange({target:{name: 'phone', value: ''}})} />}
@@ -235,6 +250,7 @@ export default function MyInfoForm(props) {
         value={props.state.mainTalent}
         onChange={props.onInputChange}
         InputProps={{
+          className: classes.placeHolder,
           endAdornment: (
             <InputAdornment position="end">
               {props.state.mainTalent !== '' && <ClearIcon color="action" onClick={() => props.onInputChange({target:{name: 'mainTalent', value: ''}})} />}
@@ -252,6 +268,7 @@ export default function MyInfoForm(props) {
         onChange={handleChangeTalent}
         onKeyPress={handleKeyPressTalent}
         InputProps={{
+          className: classes.placeHolder,
           endAdornment: (
             <InputAdornment position="end">
               {talent !== '' && <ClearIcon color="action" onClick={() => setTalent('')} />}
@@ -269,6 +286,7 @@ export default function MyInfoForm(props) {
         onChange={handleChangeInterest}
         onKeyPress={handleKeyPressInterest}
         InputProps={{
+          className: classes.placeHolder,
           endAdornment: (
             <InputAdornment position="end">
               {interest !== '' && <ClearIcon color="action" onClick={() => setInterest('')} />}

@@ -51,7 +51,7 @@ export default function SignupPolicyPage(props) {
       default:
         setState({
           ...state,
-          [e.target.name]: e.target.value,
+          [e.target.name + 'Yn']: e.target.value,
           [e.target.name + 'Valid']: e.target.value,
         });        
         break;

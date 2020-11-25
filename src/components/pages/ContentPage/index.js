@@ -23,6 +23,7 @@ export default function ContentPage(props) {
   const [id, setId] = useState(undefined); // 선택한 사용자 ID
   const [title, setTitle] = useState(''); // 지원/확정에 따른 질문
   const [content, setContent] = useState('') // 확정시 모집완료됨 확인 메시지
+  const [sub, setSub] = useState(false); // 작성자의 경우 submenu 활성화
   const token = localStorage.getItem("token") ? JSON.parse(localStorage.getItem("token")).access_token : null;
 
   useEffect(e => {
@@ -77,6 +78,7 @@ export default function ContentPage(props) {
       // 로그인 상태이면
       if(userInfo) {
         if(meet.data.user.username === userInfo.username) { // 작성자 일경우
+          setSub(true);
           const applicationUser = await Meet.getUserApplicationMeet({id: meet.data.id, token: token});
           const chatUser = await Chat.getUnreadUsers({token: token, meetId: meet.data.id});
 
@@ -155,9 +157,9 @@ export default function ContentPage(props) {
   const handleConfirmOpen = id => {
     if(id !== undefined) {
       setId(id);
-      setTitle('확정 하시겠습니까?');
+      setTitle('승인 하시겠습니까?');
       if(meet.data.recruitment - 1 === meet.data.application) {
-        setContent('확정시 모든 인원이 확정되므로 더이상 모집자를 받을수 없습니다.')
+        setContent('승인시 모든 인원이 확정되므로 더이상 모집자를 받을수 없습니다.')
       } else {
         setContent('');
       }
@@ -272,8 +274,8 @@ export default function ContentPage(props) {
   return (
     <PageTemplate imageWrap={imgPath && imgPath.data.length > 0 && true}
       header={imgPath && imgPath.data.length > 0
-        ? <ImageHeader onBack={handleBack} imgPath={imgPath} {...props} />
-        : <TitleHeader onBack={handleBack} {...props}>상세보기</TitleHeader>
+        ? <ImageHeader sub={sub} onBack={handleBack} onModify={handleModify} onMeetEnd={() => handleConfirmEnd(meet.data.id)} imgPath={imgPath} {...props} />
+        : <TitleHeader sub={sub} onBack={handleBack} onModify={handleModify} onMeetEnd={() => handleConfirmEnd(meet.data.id)} {...props}>상세보기</TitleHeader>
       } loading={loading}>
       <ContentHeader meet={meet.data} avatar={avatar} />
       <div style={{borderBottom: '1px solid #dfdfdf'}}></div><div style={{marginBottom: '20px'}}></div>

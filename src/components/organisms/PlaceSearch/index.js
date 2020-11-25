@@ -1,17 +1,17 @@
 import React from "react";
 import { makeStyles } from '@material-ui/core/styles';
-import SearchIcon from '@material-ui/icons/Search';
 import ClearIcon from '@material-ui/icons/Clear';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import { InputAdornment, TextField } from "@material-ui/core";
+import * as resources from "constants/resources";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     alignItems: 'center',
-    padding: "10px 0",
+    padding: "0 0 5px",
   },
   placeWrap: {
     marginRight: '5px',
@@ -21,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
   },
   searchWrap: {
     flexGrow: 1,
+  },
+  search: {
+    width: '15px'
   },
   selectOutlined: {
     backgroundColor: theme.colorWhite,
@@ -55,7 +58,7 @@ export default function PlaceSearch({userInfo, place, onPlace, onSearch, search,
             endAdornment: (
               <InputAdornment position="end">
                 {search !== '' && <ClearIcon color="action" onClick={() => onSearch({target:{name: 'search', value: ''}})} />}
-                <SearchIcon onClick={onSearchClick} color="disabled" />
+                <img className={classes.search} src={resources.search} alt="search" />
               </InputAdornment>
             ),
           }}

@@ -15,8 +15,14 @@ const store = createStore(rootReducer, composeWithDevTools());
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#1b2c48'
+      main: '#02846e',
     },
+    secondary: {
+      main: '#f73232',
+    },
+    default: {
+      main: '#cfcfcf',
+    },    
   }, 
   overrides: {
     MuiOutlinedInput: {
@@ -47,8 +53,13 @@ const theme = createMuiTheme({
       }
     }
   },
-  colorA: "#5a6482",
-  colorWhite: 'white',
+  color: {
+    green: '#02846e',
+    red: '#f73232',
+    white: 'white',
+    border: '#cfcfcf',
+    gray: '#bfbfbf'
+  }
 });
 
 ReactDOM.render(

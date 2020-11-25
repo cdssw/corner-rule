@@ -1,13 +1,11 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import * as resources from "constants/resources";
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { Link } from "react-router-dom";
 import { CircularProgress } from '@material-ui/core';
+import * as resources from "constants/resources";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.colorA,
     display: 'flex',
     flexDirection: 'column',
     height: '100vh',
@@ -23,15 +21,12 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '600px',
   },
   arrowWrap: {
-    padding: '12px 0 10px 10px',
-  },
-  arrow: {
-    color: 'white',
+    padding: '20px',
   },
   logoWrap: {
     display: 'flex',
     justifyContent: 'center',
-    padding: '40px',
+    padding: '50px',
   },
   logo: {
     width: '154px',
@@ -44,13 +39,13 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    padding: '0 30px',
+    padding: '0 40px',
     maxWidth: '600px',
   },
   footerWrap: {
     flexBasis: '50px',
     backgroundColor: 'white',
-    padding: '10px 0 30px 0',
+    padding: '10px 0 20px 0',
   },
   loading: {
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
@@ -75,13 +70,13 @@ export default function LoginTemplate(props) {
         <header className={classes.header}>
           <div className={classes.arrowWrap}>
             <Link to="/">
-              <ArrowBackIcon className={classes.arrow} />
+              <img src={resources.arrowLeft} alt="arrowLeft" />
             </Link>
           </div>
         </header>
       </div>
       <div className={classes.logoWrap}>
-        <img className={classes.logo} src={resources.logo} alt="logo" />
+        <img className={classes.logo} src={resources.imgLogoLarge2x} alt="logo" />
       </div>
       <div className={classes.contentWrap}>
         <section className={classes.content}>
