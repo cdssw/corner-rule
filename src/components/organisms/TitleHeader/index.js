@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.color.white,
   },
   arrowWrap: {
-    padding: '9px 0 5px 0',
+    padding: '10px 20px 10px 0',
   },
   title: {
     color: theme.color.green,
@@ -25,11 +25,11 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
   },
   space: {
-    width: '14px',
+    width: '34px',
   },
   btnRoot: {
-    padding: 0,
-    marginLeft: '10px',
+    padding: '10px 0 10px 30px',
+    borderRadius: 0,
   },
 }));
 
@@ -55,7 +55,7 @@ export default function TitleHeader(props) {
     props.onMeetEnd();
   }
 
-  const renderSubMenu = () => {
+  const renderContent = () => {
     return (
         <>
           <IconButton
@@ -77,13 +77,38 @@ export default function TitleHeader(props) {
     )
   }
 
+  const renderMyPage = () => {
+    return (
+        <>
+          <IconButton
+            onClick={handleClick}
+            classes={{root: classes.btnRoot}}
+          >
+            <img src={resources.subMenu} alt="submenu" />
+          </IconButton>
+          <Menu
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={props.onMyInfoChange}>내 정보수정</MenuItem>
+            <MenuItem onClick={props.onPasswordChange}>비밀번호 변경</MenuItem>
+          </Menu>
+        </>
+    )
+  }  
+
   return (
     <div className={classes.root}>
       <div className={classes.arrowWrap}>
         <img onClick={handleBack} src={resources.arrowLeft} alt="arrowLeft" />
       </div>
       <div className={classes.title}>{props.children}</div>
-      {props.sub ? renderSubMenu() : <div className={classes.space}></div>}
+      {props.sub === 'mypage'
+        ? renderMyPage()
+        : props.sub === 'content' ? renderContent() : <div className={classes.space}></div>
+      }
     </div>
   );
 }

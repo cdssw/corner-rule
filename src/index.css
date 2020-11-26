@@ -32,6 +32,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
   min-height: -webkit-fill-available;
+  font-size: 1rem !important;
 }
 
 code {

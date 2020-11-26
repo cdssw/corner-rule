@@ -23,7 +23,7 @@ export default function ContentPage(props) {
   const [id, setId] = useState(undefined); // 선택한 사용자 ID
   const [title, setTitle] = useState(''); // 지원/확정에 따른 질문
   const [content, setContent] = useState('') // 확정시 모집완료됨 확인 메시지
-  const [sub, setSub] = useState(false); // 작성자의 경우 submenu 활성화
+  const [sub, setSub] = useState(''); // 작성자의 경우 content submenu 활성화
   const token = localStorage.getItem("token") ? JSON.parse(localStorage.getItem("token")).access_token : null;
 
   useEffect(e => {
@@ -78,7 +78,7 @@ export default function ContentPage(props) {
       // 로그인 상태이면
       if(userInfo) {
         if(meet.data.user.username === userInfo.username) { // 작성자 일경우
-          setSub(true);
+          setSub('content');
           const applicationUser = await Meet.getUserApplicationMeet({id: meet.data.id, token: token});
           const chatUser = await Chat.getUnreadUsers({token: token, meetId: meet.data.id});
 

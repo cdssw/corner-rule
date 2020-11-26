@@ -36,10 +36,13 @@ export default function HomePage() {
   const token = localStorage.getItem("token") ? JSON.parse(localStorage.getItem("token")).access_token : null;
 
   useEffect(e => {
-    if(token && !userInfo) { // 로그인 되어 있으면 user정보 복구
+    if(token && userInfo === null) { // 로그인 되어 있으면 user정보 복구
       loadUserInfo(token);
     } else {
-      fetchMoreData();
+      if(userInfo.hopePlaceList.length > 0)
+        hopePlaceSet(userInfo);
+      else
+        fetchMoreData();
     }
     window.scrollTo(0, 0);
   }, []);
@@ -56,9 +59,7 @@ export default function HomePage() {
   }, [place]);
 
   useEffect(e => {
-    if((userInfo && userInfo.hopePlaceList.length === 0) || (Object.keys(param).length > 0)) {
-      fetchMoreData(0);
-    }
+    fetchMoreData(0);
   }, [param]);
 
   const handlePlace = event => {
@@ -84,25 +85,28 @@ export default function HomePage() {
     });
   }
 
-  const loadUserInfo = async token => {
-    setLoading(true);
-    try {
-      const userInfo = await User.getUser(token);
-      dispatch(setLoginUserInfo(userInfo.data)); // 가져온 user 정보를 redux에 저장
-      dispatch(setLogin(true)); // login 상태로 처리
-
-      const place = localStorage.getItem('place');
+  const hopePlaceSet = userInfo => {
+    const place = localStorage.getItem('place');
       if(place !== null && place !== '') {
         setPlace(place);
       } else {
-        if(userInfo.data.hopePlaceList.length > 0) {
-          setPlace(userInfo.data.hopePlaceList[0].sido + ' ' + userInfo.data.hopePlaceList[0].sgg);
+        if(userInfo && userInfo.hopePlaceList.length > 0) {
+          setPlace(userInfo.hopePlaceList[0].sido + ' ' + userInfo.hopePlaceList[0].sgg);
         } else {
           setParam({
             ...param,
           });
         }
       }
+  }
+
+  const loadUserInfo = async token => {
+    setLoading(true);
+    try {
+      const userInfo = await User.getUser(token);
+      dispatch(setLoginUserInfo(userInfo.data)); // 가져온 user 정보를 redux에 저장
+      dispatch(setLogin(true)); // login 상태로 처리
+      hopePlaceSet(userInfo.data);
     } catch(error) {
       console.log(error);
       localStorage.removeItem('token');

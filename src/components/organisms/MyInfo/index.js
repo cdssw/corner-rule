@@ -84,10 +84,8 @@ export default function MyInfo(props) {
           </div>
           <div className={classes.modifyWrap}>
             <div className={classes.logoutWrap}>
-              <div onClick={props.onMyInfoChange}><img src={resources.setting} alt='setting' /></div>
               <div onClick={props.onLogout}><img src={resources.logout} alt='logout' /></div>
             </div>
-            <Button classes={{label: classes.buttonTextColor}} variant="outlined" fullWidth={true} onClick={props.onPasswordChange}>비밀번호 변경</Button>
           </div>
         </>
       }

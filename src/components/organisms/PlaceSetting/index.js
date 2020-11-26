@@ -41,7 +41,7 @@ export default function PlaceSetting({userInfo, onAddClick, onPlaceClick}) {
             {userInfo.hopePlaceList && userInfo.hopePlaceList.map((v, i) => {
               return (
                 <Button key={i} id={v.id} classes={{label: classes.buttonTextColor}} color='primary' variant="outlined" onClick={onPlaceClick}>
-                  {v.sido + ' ' + v.sgg}
+                  {v.sido}<br/>{v.sgg}
                 </Button>  
               );
             })}

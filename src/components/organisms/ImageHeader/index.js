@@ -72,7 +72,7 @@ export default function ImageHeader(props) {
     props.onMeetEnd();
   }
 
-  const renderSubMenu = () => {
+  const renderContent = () => {
     return (
         <>
           <IconButton
@@ -110,7 +110,7 @@ export default function ImageHeader(props) {
             showBullets={true}
           />
         </div>
-        {props.sub && renderSubMenu()}
+        {props.sub && renderContent()}
       </div>
     </div>
   );
