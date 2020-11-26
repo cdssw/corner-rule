@@ -60,7 +60,9 @@ export default function HomePage() {
   }, [place]);
 
   useEffect(e => {
-    fetchMoreData(0);
+    if((userInfo && userInfo.hopePlaceList.length === 0) || (Object.keys(param).length > 0)) {
+      fetchMoreData(0);
+    }
   }, [param]);
 
   const handlePlace = event => {
