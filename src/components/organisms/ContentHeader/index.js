@@ -60,7 +60,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ContentHeader({meet, avatar}) {
   const classes = useStyles();
-  const isSafari = navigator.vendor.includes('Apple');
+  const filter = "win16|win32|win64|mac|macintel";
+  const mobile = filter.indexOf(navigator.platform.toLocaleLowerCase()) < 0;
   
   return (
     <div className={classes.root}>
@@ -78,7 +79,7 @@ export default function ContentHeader({meet, avatar}) {
         <div className={classes.costNgWrap}>
           <div className={classes.space}></div>
           <div className={classes.innerWrap}>
-            <div style={{padding: isSafari && '0 10px 2px'}} className={classes.costWrap}>
+            <div style={{padding: mobile && '0 10px 2px'}} className={classes.costWrap}>
               <div className="cost">{meet.cost === 0 ? 'Free' : `￦ ` + Utils.numberWithCommas(meet.cost)}</div>
             </div>
             {meet.costOption && <div className={classes.desc}>협의가능</div>}

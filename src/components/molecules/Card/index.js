@@ -10,7 +10,6 @@ const useStyles = makeStyles((theme) => ({
     boxSizing: 'border-box',
     marginBottom: '10px',
     border: '1px solid ' + theme.color.border,
-    height: '110px',
     borderRadius: '5px',
   },
   img: {
@@ -46,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
   date: {
     display: 'flex',
-    marginTop: '10px',
+    marginTop: '5px',
     color: '#707070',
     width: '100%',
     '& div:nth-child(2)': {
@@ -57,11 +56,12 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: '5px',
   },
   approval: {
-    padding: '2px 10px 0',
+    padding: '1px 10px 0',
     borderRadius: '5px',
     backgroundColor: theme.color.red,
     color: theme.color.white,
     textAlign: 'center',
+    fontSize: '14px',
   },
   badgeGreen: {
     border: '1px solid white',
@@ -125,7 +125,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Card({item, image, onContentClick}) {
   const classes = useStyles();
-  const isSafari = navigator.vendor.includes('Apple');
+  const filter = "win16|win32|win64|mac|macintel";
+  const mobile = filter.indexOf(navigator.platform.toLocaleLowerCase()) < 0;
 
   return (
     <div className={classes.root} onClick={onContentClick}>
@@ -134,7 +135,7 @@ export default function Card({item, image, onContentClick}) {
           <img alt="img" src={process.env.REACT_APP_IMAGE + item.imgList[0].path + '/' + item.imgList[0].chgFileNm} />
         </div>
       }
-      <div className={classes.content} style={{left : !image && '10px'}}>
+      <div className={classes.content}>
         <div className={classes.title}>{item.title}</div>
         <div className={classes.address}>{item.address.sgg}</div>
         <div className={classes.date}>
@@ -170,7 +171,7 @@ export default function Card({item, image, onContentClick}) {
           {item.approval ? item.approval.approvalYn && <div className={classes.approval}>승인완료</div> : ''}
         </div>
         <div className={classes.info}>
-          <div style={{padding: isSafari && '0 10px 2px'}} className="costWrap">
+          <div style={{padding: mobile && '0 10px 2px'}} className="costWrap">
             <div className="cost">{item.cost === 0 ? 'Free' : `￦ ` + Utils.numberWithCommas(item.cost)}</div>
           </div>
           <div className={classes.space}></div>
