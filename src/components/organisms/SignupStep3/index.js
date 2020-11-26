@@ -145,37 +145,33 @@ export default function SignupStep3(props) {
   }
 
   const renderTalent = () => {
-    if(props.state.talent.length > 0) {
-      return (
-        <div className={classes.area}>
-          {props.state.talent.map((m, i) => {
-            return (
-              <Chip key={i} classes={{root: classes.chipTalent}} color="secondary"
-                label={m}
-                onDelete={() => props.onChipDelete({name:'talent', value:m})}
-              />
-            );
-          })}
-        </div>
-      )
-    }
+    return (
+      <div className={classes.area}>
+        {props.state.talent.map((m, i) => {
+          return (
+            <Chip key={i} classes={{root: classes.chipTalent}} color="secondary"
+              label={m}
+              onDelete={() => props.onChipDelete({name:'talent', value:m})}
+            />
+          );
+        })}
+      </div>
+    );
   }  
 
   const renderInterest = () => {
-    if(props.state.interest.length > 0) {
-      return (
-        <div className={classes.area}>
-          {props.state.interest.map((m, i) => {
-            return (
-              <Chip key={i} classes={{root: classes.chipInterest, deleteIcon: classes.chipDeleteIcon}}
-                label={m}
-                onDelete={() => props.onChipDelete({name:'interest', value:m})}
-              />
-            );
-          })}
-        </div>
-      )
-    }
+    return (
+      <div className={classes.area}>
+        {props.state.interest.map((m, i) => {
+          return (
+            <Chip key={i} classes={{root: classes.chipInterest, deleteIcon: classes.chipDeleteIcon}}
+              label={m}
+              onDelete={() => props.onChipDelete({name:'interest', value:m})}
+            />
+          );
+        })}
+      </div>
+    )
   }   
 
   return (

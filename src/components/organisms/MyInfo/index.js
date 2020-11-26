@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Avatar, Button } from '@material-ui/core';
+import { Avatar } from '@material-ui/core';
 import * as resources from "constants/resources";
 
 const useStyles = makeStyles((theme) => ({
@@ -41,6 +41,12 @@ const useStyles = makeStyles((theme) => ({
       color: '#707070'
     }
   },
+  nickNm: {
+    fontFamily: 'AppleSDGothicNeoB00',    
+  },
+  name: {
+    fontFamily: 'AppleSDGothicNeoT00',
+  },
   modifyWrap: {
     display: 'flex',
     flexDirection: 'column',
@@ -78,9 +84,9 @@ export default function MyInfo(props) {
             </div>
           </div>
           <div className={classes.infoWrap}>
-            <div>{props.userInfo.userNickNm}</div>
-            <div>{props.userInfo.userNm}</div>
-            <div>{props.userInfo.phone}</div>
+            <div className={classes.nickNm}>{props.userInfo.userNickNm}</div>
+            <div className={classes.name}>{props.userInfo.userNm}</div>
+            <div className={classes.name}>{props.userInfo.phone}</div>
           </div>
           <div className={classes.modifyWrap}>
             <div className={classes.logoutWrap}>
