@@ -1,12 +1,12 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Avatar } from '@material-ui/core';
+import { Avatar, IconButton } from '@material-ui/core';
 import * as resources from "constants/resources";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    padding: '20px 10px 10px 10px',
+    padding: '20px 0 10px 15px',
   },
   avatarWrap: {
     width: '90px',
@@ -57,9 +57,6 @@ const useStyles = makeStyles((theme) => ({
   logoutWrap: {
     display: 'flex',
     justifyContent: 'flex-end',
-    '& > div': {
-      marginLeft: '15px',
-    },
   },
   buttonTextColor: {
     color: '#707070',
@@ -88,9 +85,16 @@ export default function MyInfo(props) {
             <div className={classes.name}>{props.userInfo.userNm}</div>
             <div className={classes.name}>{props.userInfo.phone}</div>
           </div>
+          <div className={classes.flexGrow}></div>
           <div className={classes.modifyWrap}>
             <div className={classes.logoutWrap}>
-              <div onClick={props.onLogout}><img src={resources.logout} alt='logout' /></div>
+              <IconButton
+                onClick={props.onLogout}
+                classes={{root: classes.btnRoot}}
+              >
+                <img src={resources.logout} alt='logout' />
+              </IconButton>
+              {/* <div onClick={props.onLogout}><img src={resources.logout} alt='logout' /></div> */}
             </div>
           </div>
         </>

@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.color.white,
   },
   arrowWrap: {
-    padding: '10px 20px 10px 0',
+    left: '-10px',
   },
   title: {
     color: theme.color.green,
@@ -28,8 +28,8 @@ const useStyles = makeStyles((theme) => ({
     width: '34px',
   },
   btnRoot: {
-    padding: '10px 0 10px 30px',
     borderRadius: 0,
+    right: '-10px',
   },
 }));
 
@@ -101,9 +101,12 @@ export default function TitleHeader(props) {
 
   return (
     <div className={classes.root}>
-      <div className={classes.arrowWrap}>
-        <img onClick={handleBack} src={resources.arrowLeft} alt="arrowLeft" />
-      </div>
+      <IconButton
+        onClick={handleBack}
+        classes={{root: classes.arrowWrap}}
+      >
+        <img src={resources.arrowLeft} alt="arrowLeft" />
+      </IconButton>      
       <div className={classes.title}>{props.children}</div>
       {props.sub === 'mypage'
         ? renderMyPage()

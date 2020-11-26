@@ -10,6 +10,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#f6f6f6',
     minHeight: '55px',
     borderTop: '1px solid #e2e2e2',
+    borderLeft: '1px solid #e2e2e2',
+    borderRight: '1px solid #e2e2e2',
   },
   wrap: {
     display: 'flex',

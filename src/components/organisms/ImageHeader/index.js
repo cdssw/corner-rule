@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     height: '50px',
   },
   arrowWrap: {
-    paddingLeft: '20px',
+    left: '3px',
     zIndex: 1,
     display: 'flex',
     justifyContent: 'space-between',
@@ -36,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
     height: '269px',
   },
   icoBtn: {
-    paddingRight: '20px',
   },
 }));
 
@@ -97,9 +96,12 @@ export default function ImageHeader(props) {
   return (
     <div className={classes.root}>
       <div className={classes.menuWrap}>
-        <div className={classes.arrowWrap}>
-          <img onClick={handleBack} src={resources.arrowLeftWrap} alt="arrowLeftWrap" />
-        </div>
+        <IconButton
+          onClick={handleBack}
+          classes={{root: classes.arrowWrap}}
+        >
+          <img src={resources.arrowLeftWrap} alt="arrowLeftWrap" />
+        </IconButton> 
         <div className={classes.carouselWrap}>
           <ImageGallery
             items={images}

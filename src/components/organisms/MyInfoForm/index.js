@@ -39,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100px',
     height: '100px',
     position: 'relative',
+    cursor: 'pointer',
   },
   profile: {
     position: 'absolute',

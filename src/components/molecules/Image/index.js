@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import * as resources from "constants/resources";
+import { IconButton } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -59,9 +60,12 @@ export default function Image({file, onRemoveClick, onFileChange, width = '100',
           </div>
         :
           <div className={classes.addWrap} style={{width: width + 'px', height: height + 'px'}}>
-            <div className={classes.add} onClick={handleClick}>
+            <IconButton
+              onClick={handleClick}
+              classes={{root: classes.add}}
+            >
               <img src={resources.add} alt='add' />
-            </div>
+            </IconButton>
             <input ref={fileRef} type="file" multiple name="file" onChange={onFileChange} style={{display: 'none'}} />
           </div>        
       }

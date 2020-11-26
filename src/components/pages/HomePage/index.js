@@ -17,8 +17,11 @@ const useStyles = makeStyles((theme) => ({
   },
   fab: {
     position: 'fixed',
+    right: 'calc(50% - 270px)',
     bottom: theme.spacing(2),
-    right: theme.spacing(2),
+    [theme.breakpoints.down(600)]: {
+      right: theme.spacing(2),
+    }
   },
 }));
 
@@ -156,7 +159,7 @@ export default function HomePage() {
       {/* <div style={{marginBottom: '10px'}}></div> */}
       <CardList path="/" fetchMoreData={fetchMoreData} items={items} />
       {login && 
-        <Link to="/reg">
+        <Link to="/reg" className={classes.link}>
           <Fab color="primary" aria-label="add" className={classes.fab}>
             <AddIcon fontSize='large' />
           </Fab>
