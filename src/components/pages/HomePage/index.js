@@ -36,13 +36,14 @@ export default function HomePage() {
   const token = localStorage.getItem("token") ? JSON.parse(localStorage.getItem("token")).access_token : null;
 
   useEffect(e => {
-    if(token && userInfo === null) { // 로그인 되어 있으면 user정보 복구
-      loadUserInfo(token);
-    } else {
-      if(userInfo.hopePlaceList.length > 0)
+    if(token) {
+      if(userInfo === null) { // 로그인 되어 있으면 user정보 복구
+        loadUserInfo(token);
+      } else if(userInfo.hopePlaceList.length > 0) {
         hopePlaceSet(userInfo);
-      else
-        fetchMoreData();
+      }
+    } else {
+      fetchMoreData();
     }
     window.scrollTo(0, 0);
   }, []);

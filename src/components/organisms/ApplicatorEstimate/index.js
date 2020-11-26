@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Avatar, Button, withStyles } from '@material-ui/core';
+import { BlueButton } from "components";
+import { Avatar } from '@material-ui/core';
 import Utils from "../../Utils";
 import * as resources from "constants/resources";
 
@@ -79,19 +80,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const ColorButton = withStyles((theme) => ({
-  root: {
-    color: theme.palette.getContrastText('#59b8dc'),
-    backgroundColor: '#59b8dc',
-    '&:hover': {
-      backgroundColor: '#3C93B4',
-    },
-  },
-  label: {
-    color: theme.color.white,
-  }
-}))(Button);
-
 export default function ApplicatorEstimate(props) {
   const classes = useStyles();
 
@@ -146,7 +134,7 @@ export default function ApplicatorEstimate(props) {
               <img src={props.star < 3 ? resources.starLargeEmpty : resources.starLarge} />
             </div>
           </div>
-          <ColorButton startIcon={<img style={{width: '16px'}} src={resources.estimate} alt="estimate" />} variant="contained" onClick={props.onEstimate}>평점주기</ColorButton>
+          <BlueButton startIcon={<img style={{width: '16px'}} src={resources.estimate} alt="estimate" />} variant="contained" onClick={props.onEstimate}>평점주기</BlueButton>
         </div>
       </div>      
     </div>

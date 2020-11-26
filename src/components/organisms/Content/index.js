@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, Badge, Avatar, withStyles } from '@material-ui/core';
+import { BlueButton } from "components";
+import { Button, Badge, Avatar } from '@material-ui/core';
 import Utils from "../../Utils";
 import * as resources from "constants/resources";
 
@@ -98,19 +99,6 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
   },
 }));
-
-const ColorButton = withStyles((theme) => ({
-  root: {
-    color: theme.palette.getContrastText('#59b8dc'),
-    backgroundColor: '#59b8dc',
-    '&:hover': {
-      backgroundColor: '#3C93B4',
-    },
-  },
-  label: {
-    color: theme.color.white,
-  }
-}))(Button);
 
 export default function Content({userInfo, meet, applicationMeet, onApplication, onApproval, onChatClick, onModify, onApplicator, onEstimate, onMeetEnd}) {
   const classes = useStyles();
@@ -212,8 +200,8 @@ export default function Content({userInfo, meet, applicationMeet, onApplication,
                       <div style={{width: '4px'}}></div>
                     </>
                   }
-                  {m.approvalYn === true && m.estimate === null && 
-                    <ColorButton startIcon={<img style={{width: '16px'}} src={resources.estimate} alt="estimate" />} variant="contained" onClick={(e) => onEstimate(m.username)}>평가</ColorButton>
+                  {m.approvalYn === true && m.estimate === 0 && 
+                    <BlueButton startIcon={<img style={{width: '16px'}} src={resources.estimate} alt="estimate" />} variant="contained" onClick={(e) => onEstimate(m.username)}>평가</BlueButton>
                   }
                   <div style={{width: '4px'}}></div>
                   <Badge classes={{badge: classes.badge}} badgeContent={m.count} color="secondary">
