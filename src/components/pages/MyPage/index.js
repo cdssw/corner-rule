@@ -164,8 +164,8 @@ export default function MyPage(props) {
   }
 
   return (
-    <PageTemplate header={<TitleHeader sub='mypage' onMyInfoChange={handleMyInfoChange} onPasswordChange={handlePasswordChange} onBack={handleBack} {...props}>My Page</TitleHeader>} loading={loading}>
-      <MyInfo userInfo={userInfo} onLogout={handleLogout} />
+    <PageTemplate header={<TitleHeader sub='mypage' onMyInfoChange={handleMyInfoChange} onPasswordChange={handlePasswordChange} onLogout={handleLogout} onBack={handleBack} {...props}>My Page</TitleHeader>} loading={loading}>
+      <MyInfo userInfo={userInfo} />
       <div style={{borderBottom: '1px solid #dfdfdf'}}></div><div style={{marginBottom: '10px'}}></div>
       <PlaceSetting userInfo={userInfo} onAddClick={handleAddClick} onPlaceClick={handleConfirmOpen} />
       <div style={{borderBottom: '1px solid #dfdfdf'}}></div><div style={{marginBottom: '10px'}}></div>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
-import { IconButton, Menu, MenuItem } from '@material-ui/core';
+import { IconButton, ListItemIcon, Menu, MenuItem } from '@material-ui/core';
 import * as resources from "constants/resources";
 
 const useStyles = makeStyles((theme) => ({
@@ -31,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 0,
     right: '-10px',
   },
+  listIconRoot: {
+    minWidth: '30px',
+  }
 }));
 
 export default function TitleHeader(props) {
@@ -70,8 +73,18 @@ export default function TitleHeader(props) {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem onClick={props.onModify}>수정하기</MenuItem>
-            <MenuItem onClick={handleEnd}>종료하기</MenuItem>
+            <MenuItem onClick={props.onModify}>
+              <ListItemIcon classes={{root: classes.listIconRoot}}>
+                <img src={resources.setting} alt='setting' />
+              </ListItemIcon>
+              수정하기
+            </MenuItem>
+            <MenuItem onClick={handleEnd}>
+              <ListItemIcon classes={{root: classes.listIconRoot}}>
+                <img src={resources.cross} alt='cross' />
+              </ListItemIcon>
+              종료하기
+            </MenuItem>
           </Menu>
         </>
     )
@@ -92,8 +105,24 @@ export default function TitleHeader(props) {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem onClick={props.onMyInfoChange}>내 정보수정</MenuItem>
-            <MenuItem onClick={props.onPasswordChange}>비밀번호 변경</MenuItem>
+            <MenuItem onClick={props.onMyInfoChange}>
+              <ListItemIcon classes={{root: classes.listIconRoot}}>
+                <img src={resources.setting} alt='setting' />
+              </ListItemIcon>
+              내 정보수정
+            </MenuItem>
+            <MenuItem onClick={props.onPasswordChange}>
+              <ListItemIcon classes={{root: classes.listIconRoot}}>
+                <img src={resources.key} alt='key' />
+              </ListItemIcon>
+              비밀번호 변경
+            </MenuItem>
+            <MenuItem onClick={props.onLogout}>
+              <ListItemIcon classes={{root: classes.listIconRoot}}>
+                <img src={resources.logout} alt='logout' />
+              </ListItemIcon>
+              로그아웃
+            </MenuItem>
           </Menu>
         </>
     )

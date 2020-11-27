@@ -284,7 +284,7 @@ export default function RegPage(props) {
         if(res !== undefined) {
           history.replace({
             pathname: '/content/' + props.match.params.id,
-            state: {path: null}
+            path: props.location.path,
           });
         }
       } else {
@@ -311,7 +311,14 @@ export default function RegPage(props) {
   }
 
   const handleBack = e => {
-    history.replace('/');
+    if(props.location.path) {
+      history.push({
+        pathname: props.location.path,
+        path: props.location.path,
+      });
+    } else {
+      history.push('/');
+    }
   }
 
   if(!token) return <Redirect to='/' />

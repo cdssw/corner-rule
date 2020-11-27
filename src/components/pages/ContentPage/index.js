@@ -241,6 +241,8 @@ export default function ContentPage(props) {
   const handleModify = e => {
     history.replace({
       pathname: '/reg/' + props.match.params.id,
+      path: props.location.path,
+      tab: props.location.tab,
     });
   }
 

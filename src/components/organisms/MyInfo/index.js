@@ -47,17 +47,6 @@ const useStyles = makeStyles((theme) => ({
   name: {
     fontFamily: 'AppleSDGothicNeoT00',
   },
-  modifyWrap: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    color: '#5a6482',
-    paddingBottom: '8px',
-  },
-  logoutWrap: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-  },
   buttonTextColor: {
     color: '#707070',
   },
@@ -86,17 +75,6 @@ export default function MyInfo(props) {
             <div className={classes.name}>{props.userInfo.phone}</div>
           </div>
           <div className={classes.flexGrow}></div>
-          <div className={classes.modifyWrap}>
-            <div className={classes.logoutWrap}>
-              <IconButton
-                onClick={props.onLogout}
-                classes={{root: classes.btnRoot}}
-              >
-                <img src={resources.logout} alt='logout' />
-              </IconButton>
-              {/* <div onClick={props.onLogout}><img src={resources.logout} alt='logout' /></div> */}
-            </div>
-          </div>
         </>
       }
     </div>
