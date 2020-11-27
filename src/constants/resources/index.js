@@ -31,6 +31,7 @@ export const sendActive = "/images/send_active.svg"
 export const flag = "/images/flag.svg"
 export const key = "/images/key.svg"
 export const cross = "/images/cross.svg"
+export const arrowRight = "/images/right_arrow.svg"
 
 // img
 export const imgLogo1x = '/images/logo-1x.png';

@@ -21,6 +21,9 @@ import {
   ChatPage,
   ApplicatorPage,
   EstimatePage,
+  PolicyTermPage,
+  PolicyPrivacyPage,
+  PolicyAppendixPage,
 } from "components";
 
 function App() {
@@ -47,6 +50,9 @@ function App() {
         <Route exact path="/estimate" component={EstimatePage}/>
         <Route exact path="/address" component={AddressPage}/>
         <Route exact path="/chat/:id" component={ChatPage}/>
+        <Route exact path="/policy/term" component={PolicyTermPage}/>
+        <Route exact path="/policy/privacy" component={PolicyPrivacyPage}/>
+        <Route exact path="/policy/appendix" component={PolicyAppendixPage}/>
       </Switch>
     </div>
   );

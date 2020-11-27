@@ -1,7 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, Checkbox, FormControlLabel } from '@material-ui/core';
+import { Button, Checkbox, FormControlLabel, IconButton } from '@material-ui/core';
 import * as resources from "constants/resources";
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,16 +52,19 @@ const useStyles = makeStyles((theme) => ({
   wrap: {
     display: 'flex',
     justifyContent: 'space-between',
-    marginBottom: '15px',
   },
   label: {
     fontFamily: 'AppleSDGothicNeoUL00',
     lineHeight: 1.47,
     color: '#707070',
   },
+  btnRoot: {
+    borderRadius: 0,
+  }
 }));
 
 export default function SignupPolicy(props) {
+  const history = useHistory();
   const classes = useStyles();
 
   const handleCheckBox = e => {
@@ -90,6 +94,18 @@ export default function SignupPolicy(props) {
         동의
       </Button>
     )
+  }
+
+  const handleTermClick = e => {
+    history.push("/policy/term");
+  }
+
+  const handlePrivacyClick = e => {
+    history.push("/policy/privacy");
+  }
+
+  const handleAppendixClick = e => {
+    history.push("/policy/appendix");
   }
 
   return (
@@ -131,7 +147,12 @@ export default function SignupPolicy(props) {
           }
           label='[필수] 서비스 약관'
         />
-        <img alt="right_arrow" src={process.env.PUBLIC_URL + "/images/right_arrow.svg"} />
+        <IconButton
+          onClick={handleTermClick}
+          classes={{root: classes.btnRoot}}
+        >
+          <img src={resources.arrowRight} alt="arrowRight" />
+        </IconButton>
       </div>
       <div className={classes.wrap}>
         <FormControlLabel
@@ -146,7 +167,12 @@ export default function SignupPolicy(props) {
           }
           label='[필수] 개인정보 수집 및 이용 동의'
         />
-        <img alt="right_arrow" src={process.env.PUBLIC_URL + "/images/right_arrow.svg"} />
+        <IconButton
+          onClick={handlePrivacyClick}
+          classes={{root: classes.btnRoot}}
+        >
+          <img src={resources.arrowRight} alt="arrowRight" />
+        </IconButton>
       </div>
       <div className={classes.wrap}>
         <FormControlLabel
@@ -159,9 +185,14 @@ export default function SignupPolicy(props) {
               name="profile" checked={props.state.profileYn} className={classes.checkbox} onChange={handleCheckBox}
             />
           }
-          label='[선택] 프로필 정보 추가 수집 동의'
+          label='[선택] 추가 정보 수집 동의'
         />
-        <img alt="right_arrow" src={process.env.PUBLIC_URL + "/images/right_arrow.svg"} />
+        <IconButton
+          onClick={handleAppendixClick}
+          classes={{root: classes.btnRoot}}
+        >
+          <img src={resources.arrowRight} alt="arrowRight" />
+        </IconButton>
       </div>
       <div style={{height: '45px'}}></div>
       {renderAgreeBtn()}
