@@ -42,17 +42,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ImageHeader(props) {
   const classes = useStyles();
   const history = useHistory();
-  const [images, setImages] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
-
-  useEffect(() => {
-    if(props.imgPath.data !== undefined) {
-      const imgList = Array.from(props.imgPath.data).map(img => {
-        return {original: process.env.REACT_APP_IMAGE + img.path + '/' + img.chgFileNm};
-      });
-      setImages(imgList);
-    }
-  }, [props.imgPath]);
 
   const handleBack = e => {
     props.onBack ? props.onBack() : history.goBack(1);
@@ -102,9 +92,9 @@ export default function ImageHeader(props) {
         >
           <img src={resources.arrowLeftWrap} alt="arrowLeftWrap" />
         </IconButton> 
-        <div className={classes.carouselWrap}>
+        <div onClick={props.onGrallery} className={classes.carouselWrap}>
           <ImageGallery
-            items={images}
+            items={props.images}
             showNav={false}
             showThumbnails={false}
             showPlayButton={false}

@@ -8,6 +8,8 @@ import * as User from "../../../services/User";
 import * as Chat from "../../../services/Chat";
 import Utils from "../../Utils";
 import { useHistory } from 'react-router-dom';
+import Lightbox from 'react-image-lightbox';
+import "react-image-lightbox/style.css";
 
 export default function ContentPage(props) {
   const history = useHistory();
@@ -15,7 +17,9 @@ export default function ContentPage(props) {
   const [loading, setLoading] = useState(false);
   const { userInfo } = useSelector(state => state.userInfo, []);
   const [meet, setMeet] = useState({});
-  const [imgPath, setImgPath] = useState(null);
+  const [images, setImages] = useState([]);
+  const [grallery, setGrallery] = useState(false);
+  const [photoIndex, setPhotoIndex] = useState(0);
   const [avatar, setAvatar] = useState("");
   const [applicationMeet, setApplicationMeet] = useState([]);
   const [confirmOpen, setConfirmOpen] = useState(false);
@@ -32,6 +36,7 @@ export default function ContentPage(props) {
     } else {
       getMeet(token, userInfo);
     }    
+    window.scrollTo(0, 0);
   }, []);
 
   const loadUserInfo = async token => {
@@ -69,7 +74,12 @@ export default function ContentPage(props) {
       // 첨부이미지 정보
       if(meet.data.imgList && meet.data.imgList.length > 0) {
         const imageList = await File.postImagesPath({fileList: meet.data.imgList});
-        setImgPath(imageList);
+        if(imageList.data !== undefined) {
+          const images = Array.from(imageList.data).map(img => {
+            return {original: process.env.REACT_APP_IMAGE + img.path + '/' + img.chgFileNm};
+          });
+          setImages(images);
+        }
       }
       // 아바타 경로
       const avatarPath = await User.getUserAvatar({username: meet.data.user.username, token: token});
@@ -273,11 +283,29 @@ export default function ContentPage(props) {
     });
   }
 
+  const handleGrallery = e => {
+    setGrallery(true);
+  }
+
   return (
-    <PageTemplate imageWrap={imgPath && imgPath.data.length > 0 && true}
-      header={imgPath && imgPath.data.length > 0
-        ? <ImageHeader sub={sub} onBack={handleBack} onModify={handleModify} onMeetEnd={() => handleConfirmEnd(meet.data.id)} imgPath={imgPath} {...props} />
-        : <TitleHeader sub={sub} onBack={handleBack} onModify={handleModify} onMeetEnd={() => handleConfirmEnd(meet.data.id)} {...props}>상세보기</TitleHeader>
+    <PageTemplate imageWrap={images && images.length > 0 && true}
+      header={images && images.length > 0
+        ? <ImageHeader
+            images={images}
+            sub={sub}
+            onBack={handleBack}
+            onModify={handleModify}
+            onMeetEnd={() => handleConfirmEnd(meet.data.id)}
+            onGrallery={handleGrallery}
+            {...props} />
+        : <TitleHeader
+            sub={sub}
+            onBack={handleBack}
+            onModify={handleModify}
+            onMeetEnd={() => handleConfirmEnd(meet.data.id)}
+            {...props}>
+              상세보기
+          </TitleHeader>
       } loading={loading}>
       <ContentHeader meet={meet.data} avatar={avatar} />
       <div style={{borderBottom: '1px solid #dfdfdf'}}></div><div style={{marginBottom: '20px'}}></div>
@@ -293,6 +321,23 @@ export default function ContentPage(props) {
         onEstimate={handleEstimate}
         onMeetEnd={handleConfirmEnd}
       />
+      {grallery && images.length > 0 &&
+          <Lightbox
+            mainSrc={images[photoIndex].original}
+            nextSrc={images[(photoIndex + 1) % images.length].original}
+            prevSrc={images[(photoIndex + images.length - 1) % images.length].original}
+            enableZoom={false}
+            onCloseRequest={() => setGrallery(false)}
+            onMovePrevRequest={() => {
+              console.log(photoIndex);
+              setPhotoIndex((photoIndex + images.length - 1) % images.length);
+            }}
+            onMoveNextRequest={() => {
+              console.log(photoIndex);
+              setPhotoIndex((photoIndex + 1) % images.length);
+            }}
+          />
+      }
       <Confirm
         state={confirmOpen}
         onCancel={handleConfirmCancel}
