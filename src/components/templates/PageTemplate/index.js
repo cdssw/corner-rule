@@ -24,8 +24,8 @@ const useStyles = makeStyles((theme) => ({
     height: '269px',
   },
   contentWrap: {
-    display: 'flex',
-    justifyContent: 'center',
+    // display: 'flex',
+    // justifyContent: 'center',
   },
   content: {
     marginTop: '50px',

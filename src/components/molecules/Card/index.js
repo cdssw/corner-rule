@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'hidden',    
     width: '110px',
     height: '110px',
+    flexShrink: 0,
     '& img': {
       borderRadius: '5px',
       width: '100%',
@@ -34,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: 'AppleSDGothicNeoB00',
     color: '#3e3e3e',
     textOverflow: 'ellipsis',
-    width: '95%',
+    width: '100%',
     overflow: 'hidden',
     whiteSpace: 'nowrap',
   },
@@ -135,7 +136,7 @@ export default function Card({item, image, onContentClick}) {
           <img alt="img" src={process.env.REACT_APP_IMAGE + item.imgList[0].path + '/' + item.imgList[0].chgFileNm} />
         </div>
       }
-      <div className={classes.content}>
+      <div style={{maxWidth: image && 'calc(100% - 110px)'}} className={classes.content}>
         <div className={classes.title}>{item.title}</div>
         <div className={classes.address}>{item.address.sgg}</div>
         <div className={classes.date}>

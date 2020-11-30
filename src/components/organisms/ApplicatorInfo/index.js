@@ -1,7 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Person from "@material-ui/icons/Person";
-import { Avatar, Button } from '@material-ui/core';
+import { Avatar } from '@material-ui/core';
 import Utils from "../../Utils";
 import * as resources from "constants/resources";
 
