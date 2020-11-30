@@ -24,11 +24,9 @@ const useStyles = makeStyles((theme) => ({
     height: '269px',
   },
   contentWrap: {
-    // display: 'flex',
-    // justifyContent: 'center',
   },
   content: {
-    marginTop: '50px',
+    margin: '50px auto 0',
     flexGrow: 1,
     display: 'flex',
     justifyContent: 'center',
