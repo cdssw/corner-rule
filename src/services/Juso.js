@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const url = process.env.REACT_APP_SERVICE_JUSO
-const key = 'devU01TX0FVVEgyMDIxMDQxNDEwMjAyMjExMTA0ODA=';
+const key = 'devU01TX0FVVEgyMDIxMDQxNDEwMzIxMTExMTA0ODQ=';
 
 export async function postJuso(props) {
   const req = url
