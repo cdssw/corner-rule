@@ -1,7 +1,8 @@
 {
-  "short_name": "Corner rule",
+  "short_name": "해바",
   "name": "Corner rule project",
   "start_url": ".",
+  "orientatioin": "portrait",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff",
